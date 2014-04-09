@@ -1,5 +1,5 @@
 <Alloy>
 	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, Blair</Label>
+		<Label id="label" onClick="doClick">Hello, Rory</Label>
 	</Window>
 </Alloy>
