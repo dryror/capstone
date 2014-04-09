@@ -3147,7 +3147,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"x$TITANIUM_CLI_XCODEBUILD\" == \"x\" ]; then\n    /usr/local/bin/node \"/usr/local/bin/titanium\" build --platform iphone --sdk 3.2.1.GA --no-prompt --no-progress-bars --no-banner --no-colors --build-only --xcode\n    exit $?\nelse\n    echo \"skipping pre-compile phase\"\nfi";
+			shellScript = "if [ \"x$TITANIUM_CLI_XCODEBUILD\" == \"x\" ]; then\n    /usr/local/bin/node \"/usr/local/bin/titanium\" build --platform iphone --sdk 3.2.2.GA --no-prompt --no-progress-bars --no-banner --no-colors --build-only --xcode\n    exit $?\nelse\n    echo \"skipping pre-compile phase\"\nfi";
 		};
 		24CA8D03111169070084E2DE /* Post-Compile */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3175,7 +3175,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"x$TITANIUM_CLI_XCODEBUILD\" == \"x\" ]; then\n    /usr/local/bin/node \"/usr/local/bin/titanium\" build --platform iphone --sdk 3.2.1.GA --no-prompt --no-progress-bars --no-banner --no-colors --build-only --xcode\n    exit $?\nelse\n    echo \"skipping pre-compile phase\"\nfi";
+			shellScript = "if [ \"x$TITANIUM_CLI_XCODEBUILD\" == \"x\" ]; then\n    /usr/local/bin/node \"/usr/local/bin/titanium\" build --platform iphone --sdk 3.2.2.GA --no-prompt --no-progress-bars --no-banner --no-colors --build-only --xcode\n    exit $?\nelse\n    echo \"skipping pre-compile phase\"\nfi";
 		};
 		24D8E4AD119B9D8A00F8CAA6 /* Post-Compile */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3203,7 +3203,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"x$TITANIUM_CLI_XCODEBUILD\" == \"x\" ]; then\n    /usr/local/bin/node \"/usr/local/bin/titanium\" build --platform iphone --sdk 3.2.1.GA --no-prompt --no-progress-bars --no-banner --no-colors --build-only --xcode\n    exit $?\nelse\n    echo \"skipping pre-compile phase\"\nfi";
+			shellScript = "if [ \"x$TITANIUM_CLI_XCODEBUILD\" == \"x\" ]; then\n    /usr/local/bin/node \"/usr/local/bin/titanium\" build --platform iphone --sdk 3.2.2.GA --no-prompt --no-progress-bars --no-banner --no-colors --build-only --xcode\n    exit $?\nelse\n    echo \"skipping pre-compile phase\"\nfi";
 		};
 		DABB37B812E8CB280026A6EA /* Post-Compile */ = {
 			isa = PBXShellScriptBuildPhase;

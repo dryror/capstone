@@ -1,12 +1,13 @@
 {
-	"target": "simulator",
-	"deployType": "development",
+	"target": "device",
+	"deployType": "test",
 	"deviceFamily": "ipad",
-	"iosSdkPath": "/Users/rory/Library/Application Support/Titanium/mobilesdk/osx/3.2.1.GA/iphone",
+	"developerName": "Rory Drysdale (TLF345KVMA)",
+	"iosSdkPath": "/Users/rory/Library/Application Support/Titanium/mobilesdk/osx/3.2.2.GA/iphone",
 	"tiCoreHash": "77157e1ffaec640cf559356a147b6a4c",
 	"modulesHash": "d41d8cd98f00b204e9800998ecf8427e",
 	"modulesNativeHash": "d41d8cd98f00b204e9800998ecf8427e",
-	"gitHash": "991027b",
+	"gitHash": "96e9a07",
 	"name": "LTEMA",
 	"id": "com.breakerarts.ltema",
 	"analytics": true,
@@ -16,8 +17,8 @@
 	"description": "not specified",
 	"copyright": "2014 by rory",
 	"guid": "6036a265-66dd-46f9-b5e4-f8e8e6b27567",
-	"skipJSMinification": true,
+	"skipJSMinification": false,
 	"forceCopy": false,
 	"forceCopyAll": false,
-	"encryptJS": false
+	"encryptJS": true
 }

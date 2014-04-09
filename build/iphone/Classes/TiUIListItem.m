@@ -66,6 +66,7 @@
 	[_currentValues release];
 	[_resetKeys release];
 	[_dataItem release];
+	[_proxy deregisterProxy:[_proxy pageContext]];
 	[_proxy release];
 	[_bindings release];
 	[gradientLayer release];
