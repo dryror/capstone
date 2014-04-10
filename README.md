@@ -1,7 +1,7 @@
 capstone
 ========
 
-Camosun College Computer Systems Technology \n
+Camosun College Computer Systems Technology <br>
 Capstone Project 2014 
 
 BC Parks Long-Term Ecological Monitoring Application \n
