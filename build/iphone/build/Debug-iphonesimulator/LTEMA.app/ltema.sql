@@ -1,1 +1,0 @@
-/Users/ltema/Documents/Titanium_Studio_Workspace/capstone/Resources/iphone/ltema.sql
