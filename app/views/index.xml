@@ -8,9 +8,8 @@
             	<Button id="addSite" title="Add" onClick="addBtn"/>
         	</RightNavButton>
        
-       		<TableView class="table">
-				<!--Placeholder row for testing screens-->
-				<TableViewRow title="Row 1" id="row1"></TableViewRow>
+       		<TableView class="table" id="tbl">
+				
 	   		</TableView>
     	</Window>
     </NavigationWindow>
