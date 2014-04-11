@@ -1,4 +1,24 @@
 
-".container" : {
+".container": {
 	backgroundColor:"white"
+},
+"#parkLbl": {
+	left: 40,
+	top: 40,
+},
+"Label": {
+	font: {fontSize: 20}
+},
+"#parkSrch": {
+	left: 200,
+	top: 30,
+	width: 500
+},
+"#biomeLbl": {
+	left: 40,
+	top: 100
+},
+"#protocolLbl": {
+	left: 40,
+	top: 160
 }

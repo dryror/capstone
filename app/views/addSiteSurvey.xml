@@ -1,4 +1,15 @@
 <Alloy>
-	<Window class="container">
+	<Window class="container" title="Add Survey">
+		<RightNavButton>
+			<Button id="doneAddSite" title="Done" onClick="doneBtn"/>
+        </RightNavButton>
+        
+        <Label id="parkLbl" text="Park Name:" />
+        <SearchBar id="parkSrch" />
+        
+        <Label id="biomeLbl" text="Biome:" />
+        
+        <Label id="protocolLbl" text="Protocol:" />
+    	
 	</Window>
 </Alloy>
