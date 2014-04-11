@@ -2,23 +2,63 @@
 ".container": {
 	backgroundColor:"white"
 },
+"Label": {
+	font: {fontSize: 20}
+},
+
+
+
 "#parkLbl": {
 	left: 40,
 	top: 40,
-},
-"Label": {
-	font: {fontSize: 20}
 },
 "#parkSrch": {
 	left: 200,
 	top: 30,
 	width: 500
 },
+
+
+
 "#biomeLbl": {
 	left: 40,
 	top: 100
 },
+"#pickBiome": {
+	left: 200,
+	top: 100,
+	color: "#157DFB"
+},
+"#biomePkr": {
+	height: 150,
+	bottom: 0,
+	selectionIndicator: true,
+	visable: false
+},
+
+
+
 "#protocolLbl": {
 	left: 40,
 	top: 160
+},
+"#pickProtocol": {
+	left: 200,
+	top: 160,
+	color: "#157DFB"
+},
+"#protocolPkr": {
+	height: 150,
+	bottom: 0,
+	selectionIndicator: true,
+	visable: false
+},
+
+"#doneBiomePkr": {
+	font: {fontSize: 20},
+	bottom: 220
+},
+"#doneProtocolPkr": {
+	font: {fontSize: 20},
+	bottom: 220
 }

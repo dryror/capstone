@@ -4,12 +4,45 @@
 			<Button id="doneAddSite" title="Done" onClick="doneBtn"/>
         </RightNavButton>
         
-        <Label id="parkLbl" text="Park Name:" />
-        <SearchBar id="parkSrch" />
+        <View id="formView">
+	        <Label id="parkLbl" text="Park Name:" />
+	        <SearchBar id="parkSrch" />
+	        
+	        <Label id="biomeLbl" text="Biome:" />
+	        <Label id="pickBiome" text="Select" onClick="biomeBtn"/>
+	         
+	        <Label id="protocolLbl" text="Protocol:" />
+	        <Label id="pickProtocol" text="Select" onClick="protocolBtn"/>
+        </View>
         
-        <Label id="biomeLbl" text="Biome:" />
         
-        <Label id="protocolLbl" text="Protocol:" />
-    	
+    	<View id="biomePkrView" visible="false">
+    		
+			<Button id="doneBiomePkr" title="Done" onClick="doneBiomePkrBtn"/>
+        	
+        	<Picker id="biomePkr">
+            	<!-- Test data to be replaced by database query -->
+            	<Row title="Grasslands"/>
+            	<Row title="Alpine"/>
+            	<Row title="Forest"/>
+            	<Row title="Wetland"/>
+            	<Row title="Intertidal"/>
+        	</Picker>
+        </View>
+ 
+        <View id="protocolPkrView" visible="false">
+        	
+			<Button id="doneProtocolPkr" title="Done" onClick="doneProtocolPkrBtn"/>
+        	
+        	<Picker id="protocolPkr">
+            	<!-- Test data to be replaced by database query -->
+            	<Row title="Grasslands"/>
+            	<Row title="Alpine"/>
+            	<Row title="Squirrels"/>
+            	<Row title="Berries"/>
+            	<Row title="Amphibians"/>
+        	</Picker>
+    	</View>
+
 	</Window>
 </Alloy>
