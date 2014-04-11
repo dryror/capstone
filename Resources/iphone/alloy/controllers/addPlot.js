@@ -6,7 +6,8 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.addPlot = Ti.UI.createView({
+    $.__views.addPlot = Ti.UI.createWindow({
+        backgroundColor: "white",
         id: "addPlot"
     });
     $.__views.addPlot && $.addTopLevelView($.__views.addPlot);

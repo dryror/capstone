@@ -1,4 +1,4 @@
 <Alloy>
-	<View class="container">
-	</View>
+	<Window class="container">
+	</Window>
 </Alloy>

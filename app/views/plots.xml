@@ -1,4 +1,16 @@
 <Alloy>
-	<View class="container">
-	</View>
+	<NavigationWindow id="navGroupWin">
+		<Window class="container" title="Plots">
+			<LeftNavButton>
+            	<Button id="editPlots" title="Edit" onClick="editBtn"/>
+        	</LeftNavButton>
+			<RightNavButton>
+            	<Button id="addPlot" title="Add" onClick="addBtn"/>
+        	</RightNavButton>
+       
+       		<TableView class="table">
+				<!--Table will be populated from database-->
+	   		</TableView>
+    	</Window>
+    </NavigationWindow>
 </Alloy>

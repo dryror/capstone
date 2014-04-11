@@ -6,7 +6,8 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.addTransect = Ti.UI.createView({
+    $.__views.addTransect = Ti.UI.createWindow({
+        backgroundColor: "white",
         id: "addTransect"
     });
     $.__views.addTransect && $.addTopLevelView($.__views.addTransect);
