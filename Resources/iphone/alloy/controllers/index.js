@@ -31,7 +31,14 @@ function Controller() {
     });
     addBtn ? $.__views.addSite.addEventListener("click", addBtn) : __defers["$.__views.addSite!click!addBtn"] = true;
     $.__views.__alloyId0.rightNavButton = $.__views.addSite;
+    var __alloyId4 = [];
+    $.__views.row1 = Ti.UI.createTableViewRow({
+        title: "Row 1",
+        id: "row1"
+    });
+    __alloyId4.push($.__views.row1);
     $.__views.__alloyId3 = Ti.UI.createTableView({
+        data: __alloyId4,
         id: "__alloyId3"
     });
     $.__views.__alloyId0.add($.__views.__alloyId3);
@@ -42,6 +49,10 @@ function Controller() {
     $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
     exports.destroy = function() {};
     _.extend($, $.__views);
+    $.row1.addEventListener("click", function() {
+        var transects = Alloy.createController("transects").getView();
+        $.navGroupWin.openWindow(transects);
+    });
     $.navGroupWin.open();
     __defers["$.__views.editSite!click!editBtn"] && $.__views.editSite.addEventListener("click", editBtn);
     __defers["$.__views.addSite!click!addBtn"] && $.__views.addSite.addEventListener("click", addBtn);

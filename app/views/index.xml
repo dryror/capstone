@@ -9,7 +9,8 @@
         	</RightNavButton>
        
        		<TableView class="table">
-				<!--Table will be populated from database-->
+				<!--Placeholder row for testing screens-->
+				<TableViewRow title="Row 1" id="row1"></TableViewRow>
 	   		</TableView>
     	</Window>
     </NavigationWindow>

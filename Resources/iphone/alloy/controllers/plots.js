@@ -14,29 +14,29 @@ function Controller() {
     var $ = this;
     var exports = {};
     var __defers = {};
-    $.__views.__alloyId8 = Ti.UI.createWindow({
+    $.__views.__alloyId9 = Ti.UI.createWindow({
         backgroundColor: "white",
         title: "Plots",
-        id: "__alloyId8"
+        id: "__alloyId9"
     });
     $.__views.editPlots = Ti.UI.createButton({
         id: "editPlots",
         title: "Edit"
     });
     editBtn ? $.__views.editPlots.addEventListener("click", editBtn) : __defers["$.__views.editPlots!click!editBtn"] = true;
-    $.__views.__alloyId8.leftNavButton = $.__views.editPlots;
+    $.__views.__alloyId9.leftNavButton = $.__views.editPlots;
     $.__views.addPlot = Ti.UI.createButton({
         id: "addPlot",
         title: "Add"
     });
     addBtn ? $.__views.addPlot.addEventListener("click", addBtn) : __defers["$.__views.addPlot!click!addBtn"] = true;
-    $.__views.__alloyId8.rightNavButton = $.__views.addPlot;
-    $.__views.__alloyId11 = Ti.UI.createTableView({
-        id: "__alloyId11"
+    $.__views.__alloyId9.rightNavButton = $.__views.addPlot;
+    $.__views.__alloyId12 = Ti.UI.createTableView({
+        id: "__alloyId12"
     });
-    $.__views.__alloyId8.add($.__views.__alloyId11);
+    $.__views.__alloyId9.add($.__views.__alloyId12);
     $.__views.navGroupWin = Ti.UI.iOS.createNavigationWindow({
-        window: $.__views.__alloyId8,
+        window: $.__views.__alloyId9,
         id: "navGroupWin"
     });
     $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
