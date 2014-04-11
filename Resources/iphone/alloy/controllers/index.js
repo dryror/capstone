@@ -31,17 +31,10 @@ function Controller() {
     });
     addBtn ? $.__views.addSite.addEventListener("click", addBtn) : __defers["$.__views.addSite!click!addBtn"] = true;
     $.__views.__alloyId13.rightNavButton = $.__views.addSite;
-    var __alloyId17 = [];
-    $.__views.row1 = Ti.UI.createTableViewRow({
-        title: "Row 1",
-        id: "row1"
+    $.__views.tbl = Ti.UI.createTableView({
+        id: "tbl"
     });
-    __alloyId17.push($.__views.row1);
-    $.__views.__alloyId16 = Ti.UI.createTableView({
-        data: __alloyId17,
-        id: "__alloyId16"
-    });
-    $.__views.__alloyId13.add($.__views.__alloyId16);
+    $.__views.__alloyId13.add($.__views.tbl);
     $.__views.navGroupWin = Ti.UI.iOS.createNavigationWindow({
         window: $.__views.__alloyId13,
         id: "navGroupWin"
@@ -49,7 +42,26 @@ function Controller() {
     $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    $.row1.addEventListener("click", function() {
+    Ti.Database.install("/ltema.sqlite", "ltemaDB");
+    var db = Ti.Database.open("ltemaDB");
+    rows = db.execute("SELECT year, protocol_name, park_name FROM site_survey s, protocol p, park prk WHERE s.protocol_id = p.protocol_id AND s.park_id = prk.park_id ");
+    var id_counter = 0;
+    while (rows.isValidRow()) {
+        id_counter++;
+        var year = rows.fieldByName("year");
+        var protocolName = rows.fieldByName("protocol_name");
+        var parkName = rows.fieldByName("park_name");
+        var siteSurvey = year + " - " + protocolName + " - " + parkName;
+        var newRow = Ti.UI.createTableViewRow({
+            title: siteSurvey,
+            id: "row " + id_counter
+        });
+        $.tbl.appendRow(newRow);
+        rows.next();
+    }
+    rows.close();
+    db.close();
+    $.tbl.addEventListener("click", function() {
         var transects = Alloy.createController("transects").getView();
         $.navGroupWin.openWindow(transects);
     });
