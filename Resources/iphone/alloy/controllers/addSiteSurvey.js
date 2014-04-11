@@ -6,13 +6,13 @@ function Controller() {
     arguments[0] ? arguments[0]["__itemTemplate"] : null;
     var $ = this;
     var exports = {};
-    $.__views.addSiteSurvey = Ti.UI.createView({
+    $.__views.addSiteSurvey = Ti.UI.createWindow({
+        backgroundColor: "white",
         id: "addSiteSurvey"
     });
     $.__views.addSiteSurvey && $.addTopLevelView($.__views.addSiteSurvey);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    arguments[0] || {};
     _.extend($, exports);
 }
 

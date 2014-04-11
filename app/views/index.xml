@@ -1,5 +1,16 @@
 <Alloy>
-	<Window class="container">
-		<Label id="label" onClick="doClick">Hello, World.  Nice to meet you.</Label>
-	</Window>
+	<NavigationWindow id="navGroupWin">
+		<Window class="container" title="Site Surveys">
+			<LeftNavButton>
+            	<Button id="editSite" title="Edit" onClick="editBtn"/>
+        	</LeftNavButton>
+			<RightNavButton>
+            	<Button id="addSite" title="Add" onClick="addBtn"/>
+        	</RightNavButton>
+       
+       		<TableView class="table">
+				<!--Table will be populated from database-->
+	   		</TableView>
+    	</Window>
+    </NavigationWindow>
 </Alloy>

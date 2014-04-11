@@ -1,6 +1,10 @@
 function Controller() {
-    function doClick() {
-        alert($.label.text);
+    function editBtn() {
+        alert("You Clicked the Edit Button");
+    }
+    function addBtn() {
+        var addSite = Alloy.createController("addSiteSurvey").getView();
+        $.navGroupWin.openWindow(addSite);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "index";
@@ -10,24 +14,37 @@ function Controller() {
     var $ = this;
     var exports = {};
     var __defers = {};
-    $.__views.index = Ti.UI.createWindow({
+    $.__views.__alloyId0 = Ti.UI.createWindow({
         backgroundColor: "white",
-        id: "index"
+        title: "Site Surveys",
+        id: "__alloyId0"
     });
-    $.__views.index && $.addTopLevelView($.__views.index);
-    $.__views.label = Ti.UI.createLabel({
-        width: Ti.UI.SIZE,
-        height: Ti.UI.SIZE,
-        color: "#000",
-        text: "Hello, World.  Nice to meet you.",
-        id: "label"
+    $.__views.editSite = Ti.UI.createButton({
+        id: "editSite",
+        title: "Edit"
     });
-    $.__views.index.add($.__views.label);
-    doClick ? $.__views.label.addEventListener("click", doClick) : __defers["$.__views.label!click!doClick"] = true;
+    editBtn ? $.__views.editSite.addEventListener("click", editBtn) : __defers["$.__views.editSite!click!editBtn"] = true;
+    $.__views.__alloyId0.leftNavButton = $.__views.editSite;
+    $.__views.addSite = Ti.UI.createButton({
+        id: "addSite",
+        title: "Add"
+    });
+    addBtn ? $.__views.addSite.addEventListener("click", addBtn) : __defers["$.__views.addSite!click!addBtn"] = true;
+    $.__views.__alloyId0.rightNavButton = $.__views.addSite;
+    $.__views.__alloyId3 = Ti.UI.createTableView({
+        id: "__alloyId3"
+    });
+    $.__views.__alloyId0.add($.__views.__alloyId3);
+    $.__views.navGroupWin = Ti.UI.iOS.createNavigationWindow({
+        window: $.__views.__alloyId0,
+        id: "navGroupWin"
+    });
+    $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    $.index.open();
-    __defers["$.__views.label!click!doClick"] && $.__views.label.addEventListener("click", doClick);
+    $.navGroupWin.open();
+    __defers["$.__views.editSite!click!editBtn"] && $.__views.editSite.addEventListener("click", editBtn);
+    __defers["$.__views.addSite!click!addBtn"] && $.__views.addSite.addEventListener("click", addBtn);
     _.extend($, exports);
 }
 
