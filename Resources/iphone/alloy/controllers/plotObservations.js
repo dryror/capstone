@@ -3,8 +3,8 @@ function Controller() {
         alert("You Clicked the Edit Button");
     }
     function addBtn() {
-        Alloy.createController("addPlotObservation").getView();
-        $.navGroupWin.openWindow(addSite);
+        var addObservation = Alloy.createController("addPlotObservation").getView();
+        $.navGroupWin.openWindow(addObservation);
     }
     require("alloy/controllers/BaseController").apply(this, Array.prototype.slice.call(arguments));
     this.__controllerPath = "plotObservations";

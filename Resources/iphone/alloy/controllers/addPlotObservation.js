@@ -13,7 +13,6 @@ function Controller() {
     $.__views.addPlotObservation && $.addTopLevelView($.__views.addPlotObservation);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    arguments[0] || {};
     _.extend($, exports);
 }
 

@@ -7,6 +7,6 @@ function editBtn(){
 function addBtn(){
 	//Navigation to addPlotObservatino
 	var addObservation = Alloy.createController("addPlotObservation").getView();
-	$.navGroupWin.openWindow(addSite);
+	$.navGroupWin.openWindow(addObservation);
 }
 

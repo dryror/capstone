@@ -14,34 +14,45 @@ function Controller() {
     var $ = this;
     var exports = {};
     var __defers = {};
-    $.__views.__alloyId13 = Ti.UI.createWindow({
+    $.__views.__alloyId14 = Ti.UI.createWindow({
         backgroundColor: "white",
         title: "Transects",
-        id: "__alloyId13"
+        id: "__alloyId14"
     });
     $.__views.editTransects = Ti.UI.createButton({
         id: "editTransects",
         title: "Edit"
     });
     editBtn ? $.__views.editTransects.addEventListener("click", editBtn) : __defers["$.__views.editTransects!click!editBtn"] = true;
-    $.__views.__alloyId13.leftNavButton = $.__views.editTransects;
+    $.__views.__alloyId14.leftNavButton = $.__views.editTransects;
     $.__views.addTransect = Ti.UI.createButton({
         id: "addTransect",
         title: "Add"
     });
     addBtn ? $.__views.addTransect.addEventListener("click", addBtn) : __defers["$.__views.addTransect!click!addBtn"] = true;
-    $.__views.__alloyId13.rightNavButton = $.__views.addTransect;
-    $.__views.__alloyId16 = Ti.UI.createTableView({
-        id: "__alloyId16"
+    $.__views.__alloyId14.rightNavButton = $.__views.addTransect;
+    var __alloyId18 = [];
+    $.__views.row1 = Ti.UI.createTableViewRow({
+        title: "Row 1",
+        id: "row1"
     });
-    $.__views.__alloyId13.add($.__views.__alloyId16);
+    __alloyId18.push($.__views.row1);
+    $.__views.__alloyId17 = Ti.UI.createTableView({
+        data: __alloyId18,
+        id: "__alloyId17"
+    });
+    $.__views.__alloyId14.add($.__views.__alloyId17);
     $.__views.navGroupWin = Ti.UI.iOS.createNavigationWindow({
-        window: $.__views.__alloyId13,
+        window: $.__views.__alloyId14,
         id: "navGroupWin"
     });
     $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
     exports.destroy = function() {};
     _.extend($, $.__views);
+    $.row1.addEventListener("click", function() {
+        var plots = Alloy.createController("plots").getView();
+        $.navGroupWin.openWindow(plots);
+    });
     __defers["$.__views.editTransects!click!editBtn"] && $.__views.editTransects.addEventListener("click", editBtn);
     __defers["$.__views.addTransect!click!addBtn"] && $.__views.addTransect.addEventListener("click", addBtn);
     _.extend($, exports);

@@ -10,4 +10,9 @@ function addBtn(){
 	$.navGroupWin.openWindow(addTransect);
 }
 
-
+//Needed to add this to get to the next screen for testing
+//Will be replaced once controller implemented
+$.row1.addEventListener('click', function(event){
+    var plots = Alloy.createController("plots").getView();
+    $.navGroupWin.openWindow(plots);
+}); 
