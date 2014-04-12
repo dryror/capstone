@@ -75,8 +75,20 @@ rows.close();
 db.close();
 
 //Place holder for edit button
-function editBtn(){
-	alert('You Clicked the Edit Button');
+function editBtn(e){
+	//enable or disable edit mode
+    if (e.source.title == "Edit") {
+    	$.tbl.editing = true;
+        e.source.title = "Done";
+        //disable the add button during edit mode
+        $.addSite.enabled = false;
+        
+    } else { 
+        $.tbl.editing = false;
+        e.source.title = "Edit";
+        //enable the add button
+        $.addSite.enabled = true;
+    }
 }
 
 //Place holder for add button
