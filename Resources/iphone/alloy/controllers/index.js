@@ -56,7 +56,37 @@ function Controller() {
             title: siteSurvey,
             id: "row " + id_counter
         });
+        var infoImage = Ti.UI.createImageView({
+            image: "images/info.png",
+            width: 36,
+            height: 36,
+            right: 5,
+            id: id_counter
+        });
+        newRow.add(infoImage);
         $.tbl.appendRow(newRow);
+        infoImage.addEventListener("click", function() {
+            var style = Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL;
+            var presentation = Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET;
+            var modalWindow = Ti.UI.createWindow({
+                backgroundColor: "white"
+            });
+            var closeBtn = Ti.UI.createButton({
+                title: "Close",
+                width: 100,
+                height: 30
+            });
+            closeBtn.addEventListener("click", function() {
+                modalWindow.close();
+            });
+            modalWindow.add(closeBtn);
+            modalWindow.open({
+                modal: true,
+                modalTransitionStyle: style,
+                modalStyle: presentation,
+                navBarHidden: true
+            });
+        });
         rows.next();
     }
     rows.close();
