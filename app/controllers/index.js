@@ -136,6 +136,8 @@ $.tbl.addEventListener('click', function(e) {
 		 modalClickHandler(e);
 	} else {
 		// code for navigating to transects would go here.
+		var transects = Alloy.createController("transects").getView();
+	    $.navGroupWin.openWindow(transects);
 	}
 });
 

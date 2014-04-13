@@ -1,4 +1,83 @@
-
-".container" : {
+".container": {
 	backgroundColor:"white"
+},
+"Label": {
+	font: {fontSize: 20}
+},
+"TextField": {
+	font: {fontSize: 20}
+},
+"Button": {
+	font: {fontSize: 20}
+},
+
+
+"#tsctNameLbl": {
+	left: 40,
+	top: 40
+},
+"#tsctName": {
+	left: 220,
+	top: 40,
+	width: 500,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#srvyNameLbl": {
+	left: 40,
+	top: 100
+},
+"#srvyName": {
+	left: 220,
+	top: 100,
+	width: 500,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#otherSrvyNameLbl": {
+	left: 40,
+	top: 160
+},
+"#otherSrvyName": {
+	left: 220,
+	top: 160,
+	width: 500,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#tsctNameLbl": {
+	left: 40,
+	top: 220
+},
+"#tsctName": {
+	left: 220,
+	top: 220,
+	width: 500,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#stakeLbl": {
+	left: 40,
+	top: 280
+},
+
+"#plotLbl": {
+	left: 40,
+	top: 340
+},
+
+"#commentLbl": {
+	left: 40,
+	top: 400
+},
+"#comments": {
+	left: 220,
+	top: 400,
+	width: 500,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#photoBtn": {
+	left: 40,
+	top: 460
 }

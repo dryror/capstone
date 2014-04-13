@@ -1,4 +1,27 @@
 <Alloy>
-	<Window class="container">
+	<Window class="container" title="Add Transect">
+		<RightNavButton>
+			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
+        </RightNavButton>
+        
+        <View id="formView">
+	        <Label id="tsctNameLbl" text="Transect Name:" />
+	        <TextField id="tsctName" />
+	        
+	        <Label id="srvyNameLbl" text="Head Surveyor:" />
+	        <TextField id="srvyName" />
+	        
+	        <Label id="otherSrvyNameLbl" text="Other Surveyors:" />
+	        <TextField id="otherSrvyName" />	       
+              
+	        <Label id="stakeLbl" text="Stake Orientation:" />
+	        
+	        <Label id="plotLbl" text="Plot Distance:" />
+	        
+	        <Label id="commentLbl" text="Comments:" />
+	        <TextField id="comments" />
+	        
+	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
+        </View>
 	</Window>
 </Alloy>
