@@ -1,6 +1,6 @@
 //Run these two commands to reset db if testing delete functions
-//var yourDb = Titanium.Database.open('ltemaDB');
-//yourDb.remove();﻿
+var yourDb = Titanium.Database.open('ltemaDB');
+yourDb.remove();﻿
 
 //Install Database
 Ti.Database.install('/ltema.sqlite', 'ltemaDB');
@@ -50,6 +50,41 @@ while (rows.isValidRow()) {
 }
 rows.close();
 db.close();
+
+//Will check if Edit button should be enabled/disabled - if no rows exist
+enableDisableEditBtn();
+
+
+//Enable or Disable the Edit button
+function enableDisableEditBtn(){
+	//get the number of total rows
+	var numRows = showTotalRowNumber();
+	//if no rows exist
+	if(numRows <= 0){
+		//disable Edit Button
+		$.editSite.enabled = false;
+		$.editSite.title = "Edit"
+        $.addSite.enabled = true;
+	}else{
+		//enable Edit Button
+		$.editSite.enabled = true;
+	}
+}
+
+// Function to get total number of rows (site surveys)
+function showTotalRowNumber(){
+	// Variable to get all section
+	var allSection = $.tbl.data;
+ 
+	var sectionNumber = 0;
+	var totalRows = 0;
+ 
+	for(sectionNumber = 0; sectionNumber < allSection.length; sectionNumber++){
+		// Get rows for each section
+		totalRows += allSection[sectionNumber].rowCount;
+	}
+	return totalRows;
+}
 
 //Place holder for edit button
 function editBtn(e){
@@ -120,8 +155,10 @@ $.tbl.addEventListener('delete', function(e) {
 	
 	//delete current row from the database
     var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
-
 	db.close();
+	
+	//check if Edit button should be enabled/disabled - if no rows exist
+	enableDisableEditBtn();
 });
 
 $.tbl.addEventListener('click', function(e) {
