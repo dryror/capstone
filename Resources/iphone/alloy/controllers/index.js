@@ -1,6 +1,14 @@
 function Controller() {
-    function editBtn() {
-        alert("You Clicked the Edit Button");
+    function editBtn(e) {
+        if ("Edit" == e.source.title) {
+            $.tbl.editing = true;
+            e.source.title = "Done";
+            $.addSite.enabled = false;
+        } else {
+            $.tbl.editing = false;
+            e.source.title = "Edit";
+            $.addSite.enabled = true;
+        }
     }
     function addBtn() {
         var addSite = Alloy.createController("addSiteSurvey").getView();
@@ -42,19 +50,23 @@ function Controller() {
     $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
     exports.destroy = function() {};
     _.extend($, $.__views);
+    var yourDb = Titanium.Database.open("ltemaDB");
+    yourDb.remove();
     Ti.Database.install("/ltema.sqlite", "ltemaDB");
     var db = Ti.Database.open("ltemaDB");
-    rows = db.execute("SELECT year, protocol_name, park_name FROM site_survey s, protocol p, park prk WHERE s.protocol_id = p.protocol_id AND s.park_id = prk.park_id ");
+    rows = db.execute("SELECT site_id, year, protocol_name, park_name FROM site_survey s, protocol p, park prk WHERE s.protocol_id = p.protocol_id AND s.park_id = prk.park_id ");
     var id_counter = 0;
     while (rows.isValidRow()) {
         id_counter++;
+        var siteID = rows.fieldByName("site_id");
         var year = rows.fieldByName("year");
         var protocolName = rows.fieldByName("protocol_name");
         var parkName = rows.fieldByName("park_name");
         var siteSurvey = year + " - " + protocolName + " - " + parkName;
         var newRow = Ti.UI.createTableViewRow({
             title: siteSurvey,
-            id: "row " + id_counter
+            id: "row " + id_counter,
+            siteID: siteID
         });
         var infoImage = Ti.UI.createImageView({
             image: "images/info.png",
@@ -91,6 +103,14 @@ function Controller() {
     }
     rows.close();
     db.close();
+    $.tbl.addEventListener("delete", function(e) {
+        Ti.API.info("you hit delete");
+        var currentSiteID = e.rowData.siteID;
+        Ti.API.info("site_id =  " + currentSiteID);
+        var db = Ti.Database.open("ltemaDB");
+        db.execute("DELETE FROM site_survey WHERE site_id = ?", currentSiteID);
+        db.close();
+    });
     $.tbl.addEventListener("click", function() {
         var transects = Alloy.createController("transects").getView();
         $.navGroupWin.openWindow(transects);

@@ -5,7 +5,7 @@ Ti.Database.install('/ltema.sqlite', 'ltemaDB');
 var db = Ti.Database.open('ltemaDB');
 
 //Query - Retrieve existing sites from database
-rows = db.execute('SELECT year, protocol_name, park_name ' + 
+rows = db.execute('SELECT site_id, year, protocol_name, park_name ' + 
 				'FROM site_survey s, protocol p, park prk ' + 
 				'WHERE s.protocol_id = p.protocol_id ' + 
 				'AND s.park_id = prk.park_id ');
@@ -14,6 +14,7 @@ rows = db.execute('SELECT year, protocol_name, park_name ' +
 var id_counter = 0;
 while (rows.isValidRow()) {
 	id_counter++;	
+	var siteID = rows.fieldByName('site_id');
 	var year = rows.fieldByName('year');
 	var protocolName = rows.fieldByName('protocol_name');
 	var parkName = rows.fieldByName('park_name');
@@ -24,7 +25,8 @@ while (rows.isValidRow()) {
 	//Create a new row
 		var newRow = Ti.UI.createTableViewRow({
 			title : siteSurvey,
-			id : 'row ' + id_counter
+			id : 'row ' + id_counter,
+			siteID : siteID
 		});
 		
 		//create and add info icon for the row
@@ -97,6 +99,23 @@ function addBtn(){
 	var addSite = Alloy.createController("addSiteSurvey").getView();
 	$.navGroupWin.openWindow(addSite);
 }
+
+//delete event listener
+$.tbl.addEventListener('delete', function(e) { 
+	Ti.API.info("you hit delete"); 
+	//get the site_id of the current row being deleted
+	var currentSiteID = e.rowData.siteID;
+    Ti.API.info("site_id =  " + currentSiteID);
+    
+    //Open Database
+	var db = Ti.Database.open('ltemaDB');
+	
+	//delete current row from the database
+    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
+
+	db.close();
+	});
+
 
 //Needed to add this to get to the next screen for testing
 //Will be replaced once controller implemented
