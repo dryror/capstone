@@ -1,3 +1,7 @@
+//Run these two commands to reset db if testing delete functions
+//var yourDb = Titanium.Database.open('ltemaDB');
+//yourDb.remove();﻿
+
 //Install Database
 Ti.Database.install('/ltema.sqlite', 'ltemaDB');
 
@@ -9,7 +13,11 @@ rows = db.execute('SELECT site_id, year, protocol_name, park_name ' +
 				'FROM site_survey s, protocol p, park prk ' + 
 				'WHERE s.protocol_id = p.protocol_id ' + 
 				'AND s.park_id = prk.park_id ');
-				
+
+
+// create table view data object
+var data = [];				
+
 //get requested data from each row in table
 var id_counter = 0;
 while (rows.isValidRow()) {
@@ -23,7 +31,7 @@ while (rows.isValidRow()) {
 	var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
 	
 	//Create a new row
-		var newRow = Ti.UI.createTableViewRow({
+		data[id_counter] = Ti.UI.createTableViewRow({
 			title : siteSurvey,
 			id : 'row ' + id_counter,
 			siteID : siteID
@@ -37,39 +45,13 @@ while (rows.isValidRow()) {
 			width : 48, 
 			id : id_counter
 		});
-		newRow.add(infoButton);
+		data[id_counter].add(infoButton);
 		
    		//Add row to the table view
-  		$.tbl.appendRow(newRow);
+  		$.tbl.appendRow(data[id_counter]);
   		
   		//info icon generates modal on click
-  		infoButton.addEventListener('click', function(e) {
-			var style = Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL;
-			var presentation = Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET;
-			
-			var modalWindow = Ti.UI.createWindow({
-				backgroundColor:'white'
-			});
-			
-			//modal has a simple close button for now
-			var closeBtn = Ti.UI.createButton({
-				title:'Close',
-				width:100,
-				height:30
-			});
-			
-			closeBtn.addEventListener('click',function() {
-				modalWindow.close();
-			});
-			modalWindow.add(closeBtn);
-			
-			modalWindow.open({
-				modal : true,
-				modalTransitionStyle : style,
-				modalStyle : presentation,
-				navBarHidden : true
-			});
-		});
+  		infoButton.addEventListener('click', modalClickHandler);
 	
 	rows.next();
 }
@@ -100,6 +82,35 @@ function addBtn(){
 	$.navGroupWin.openWindow(addSite);
 }
 
+//Modal Click Behaviour
+function modalClickHandler(e){			
+	var modalWindow = Ti.UI.createWindow({
+		backgroundColor:'white'
+	});
+	
+	//modal has a label and close button
+	var modalLabel1 = Ti.UI.createLabel({
+		text : data[id_counter].title,
+		top : 50
+	});
+	var closeBtn = Ti.UI.createButton({
+		title:'Close',
+		width:100,
+		height:30
+	});
+	closeBtn.addEventListener('click',function() {
+		modalWindow.close();
+	});
+	modalWindow.add(modalLabel1);
+	modalWindow.add(closeBtn);
+
+	modalWindow.open({
+		modal : true,
+		modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+		navBarHidden : true
+	});
+}
 //delete event listener
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
@@ -117,10 +128,10 @@ $.tbl.addEventListener('delete', function(e) {
 
 //Needed to add this to get to the next screen for testing
 //Will be replaced once controller implemented
-$.tbl.addEventListener('click', function(event){
-    var transects = Alloy.createController("transects").getView();
-    $.navGroupWin.openWindow(transects);
-}); 
+//$.tbl.addEventListener('click', function(event){
+//    var transects = Alloy.createController("transects").getView();
+//    $.navGroupWin.openWindow(transects);
+//}); 
 
 
 
