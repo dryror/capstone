@@ -82,6 +82,11 @@ function addBtn(){
 	$.navGroupWin.openWindow(addSite);
 }
 
+//Export data
+function exportBtn(){
+	alert('You Clicked the Export Button');
+}
+
 //Modal Click Behaviour
 function modalClickHandler(e){			
 	var modalWindow = Ti.UI.createWindow({

@@ -9,7 +9,9 @@
         	</RightNavButton>
        
        		<TableView class="table" id="tbl">
-				
+				<FooterView id="mainFooter">
+					<Button id="exportData" title="Export" onClick="exportBtn" />
+				</FooterView>
 	   		</TableView>
     	</Window>
     </NavigationWindow>
