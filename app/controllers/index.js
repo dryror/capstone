@@ -1,6 +1,6 @@
 //Run these two commands to reset db if testing delete functions
-var yourDb = Titanium.Database.open('ltemaDB');
-yourDb.remove();﻿
+//var yourDb = Titanium.Database.open('ltemaDB');
+//yourDb.remove();﻿
 
 //Install Database
 Ti.Database.install('/ltema.sqlite', 'ltemaDB');
