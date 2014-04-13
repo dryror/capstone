@@ -51,7 +51,7 @@ while (rows.isValidRow()) {
   		$.tbl.appendRow(data[id_counter]);
   		
   		//info icon generates modal on click
-  		infoButton.addEventListener('click', modalClickHandler);
+  		//infoButton.addEventListener('click', modalClickHandler);
 	
 	rows.next();
 }
@@ -90,7 +90,7 @@ function modalClickHandler(e){
 	
 	//modal has a label and close button
 	var modalLabel1 = Ti.UI.createLabel({
-		text : data[id_counter].title,
+		text : e.rowData.title,
 		top : 50
 	});
 	var closeBtn = Ti.UI.createButton({
@@ -111,6 +111,7 @@ function modalClickHandler(e){
 		navBarHidden : true
 	});
 }
+
 //delete event listener
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
@@ -123,8 +124,15 @@ $.tbl.addEventListener('delete', function(e) {
     var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
 
 	db.close();
-	});
+});
 
+$.tbl.addEventListener('click', function(e) {
+	if(e.source.toString() == '[object TiUIButton]') {
+		 modalClickHandler(e);
+	} else {
+		// code for navigating to transects would go here.
+	}
+});
 
 //Needed to add this to get to the next screen for testing
 //Will be replaced once controller implemented
