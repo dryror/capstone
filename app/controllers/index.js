@@ -30,20 +30,20 @@ while (rows.isValidRow()) {
 		});
 		
 		//create and add info icon for the row
-		var infoImage = Ti.UI.createImageView({
-			image : 'images/info.png',
-			width : 36,
-			height : 36,
-			right : 5,
+		var infoButton = Ti.UI.createButton({
+			style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
+			right : 10,
+			height : 48, //this is deciding the size of the rows at the moment
+			width : 48, 
 			id : id_counter
 		});
-		newRow.add(infoImage);
+		newRow.add(infoButton);
 		
    		//Add row to the table view
   		$.tbl.appendRow(newRow);
   		
   		//info icon generates modal on click
-  		infoImage.addEventListener('click', function(e) {
+  		infoButton.addEventListener('click', function(e) {
 			var style = Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL;
 			var presentation = Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET;
 			

@@ -66,16 +66,16 @@ function Controller() {
             id: "row " + id_counter,
             siteID: siteID
         });
-        var infoImage = Ti.UI.createImageView({
-            image: "images/info.png",
-            width: 36,
-            height: 36,
-            right: 5,
+        var infoButton = Ti.UI.createButton({
+            style: Titanium.UI.iPhone.SystemButton.INFO_DARK,
+            right: 10,
+            height: 48,
+            width: 48,
             id: id_counter
         });
-        newRow.add(infoImage);
+        newRow.add(infoButton);
         $.tbl.appendRow(newRow);
-        infoImage.addEventListener("click", function() {
+        infoButton.addEventListener("click", function() {
             var style = Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL;
             var presentation = Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET;
             var modalWindow = Ti.UI.createWindow({
