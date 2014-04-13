@@ -14,10 +14,6 @@ rows = db.execute('SELECT site_id, year, protocol_name, park_name ' +
 				'WHERE s.protocol_id = p.protocol_id ' + 
 				'AND s.park_id = prk.park_id ');
 
-
-// create table view data object
-var data = [];				
-
 //get requested data from each row in table
 var id_counter = 0;
 while (rows.isValidRow()) {
@@ -31,7 +27,7 @@ while (rows.isValidRow()) {
 	var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
 	
 	//Create a new row
-		data[id_counter] = Ti.UI.createTableViewRow({
+		var newRow = Ti.UI.createTableViewRow({
 			title : siteSurvey,
 			id : 'row ' + id_counter,
 			siteID : siteID
@@ -45,14 +41,11 @@ while (rows.isValidRow()) {
 			width : 48, 
 			id : id_counter
 		});
-		data[id_counter].add(infoButton);
+		newRow.add(infoButton);
 		
    		//Add row to the table view
-  		$.tbl.appendRow(data[id_counter]);
-  		
-  		//info icon generates modal on click
-  		//infoButton.addEventListener('click', modalClickHandler);
-	
+  		$.tbl.appendRow(newRow);
+
 	rows.next();
 }
 rows.close();
@@ -138,6 +131,7 @@ $.tbl.addEventListener('click', function(e) {
 		// code for navigating to transects would go here.
 		var transects = Alloy.createController("transects").getView();
 	    $.navGroupWin.openWindow(transects);
+
 	}
 });
 
