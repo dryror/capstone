@@ -50,8 +50,6 @@ function Controller() {
     $.__views.navGroupWin && $.addTopLevelView($.__views.navGroupWin);
     exports.destroy = function() {};
     _.extend($, $.__views);
-    var yourDb = Titanium.Database.open("ltemaDB");
-    yourDb.remove();
     Ti.Database.install("/ltema.sqlite", "ltemaDB");
     var db = Ti.Database.open("ltemaDB");
     rows = db.execute("SELECT site_id, year, protocol_name, park_name FROM site_survey s, protocol p, park prk WHERE s.protocol_id = p.protocol_id AND s.park_id = prk.park_id ");
@@ -104,9 +102,7 @@ function Controller() {
     rows.close();
     db.close();
     $.tbl.addEventListener("delete", function(e) {
-        Ti.API.info("you hit delete");
         var currentSiteID = e.rowData.siteID;
-        Ti.API.info("site_id =  " + currentSiteID);
         var db = Ti.Database.open("ltemaDB");
         db.execute("DELETE FROM site_survey WHERE site_id = ?", currentSiteID);
         db.close();

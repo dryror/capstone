@@ -102,10 +102,8 @@ function addBtn(){
 
 //delete event listener
 $.tbl.addEventListener('delete', function(e) { 
-	Ti.API.info("you hit delete"); 
 	//get the site_id of the current row being deleted
 	var currentSiteID = e.rowData.siteID;
-    Ti.API.info("site_id =  " + currentSiteID);
     
     //Open Database
 	var db = Ti.Database.open('ltemaDB');
