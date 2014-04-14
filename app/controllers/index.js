@@ -1,6 +1,6 @@
 //Run these two commands to reset db if testing delete functions
-//var yourDb = Titanium.Database.open('ltemaDB');
-//yourDb.remove();﻿
+var yourDb = Titanium.Database.open('ltemaDB');
+yourDb.remove();﻿
 
 //Install Database
 Ti.Database.install('/ltema.sqlite', 'ltemaDB');
@@ -166,7 +166,7 @@ $.tbl.addEventListener('click', function(e) {
 		 modalClickHandler(e);
 	} else {
 		// code for navigating to transects would go here.
-		var transects = Alloy.createController("transects").getView();
+		var transects = Alloy.createController("transects", {siteID:e.rowData.siteID}).getView();
 	    $.navGroupWin.openWindow(transects);
 
 	}
