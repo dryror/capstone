@@ -15,8 +15,15 @@
 	        <TextField id="otherSrvyName" />	       
               
 	        <Label id="stakeLbl" text="Stake Orientation:" />
+	        <TabbedBar id="pickStake">           
+            	<Labels>
+          			<Label text="tlbr">Top Left / Bottom Right</Label>
+                	<Label text="trbl">Top Right / Bottom Left</Label>
+            	</Labels>         
+        	</TabbedBar>
 	        
 	        <Label id="plotLbl" text="Plot Distance:" />
+	        <TextField id="plotDist" />
 	        
 	        <Label id="commentLbl" text="Comments:" />
 	        <TextField id="comments" />

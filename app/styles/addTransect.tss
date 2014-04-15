@@ -60,10 +60,21 @@
 	left: 40,
 	top: 280
 },
+"#pickStake": {
+	left: 220,
+	top: 280
+},
 
 "#plotLbl": {
 	left: 40,
 	top: 340
+},
+"#plotDist": {
+	left: 220,
+	top:340,
+	width: 500,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
 },
 
 "#commentLbl": {

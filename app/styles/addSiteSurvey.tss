@@ -26,14 +26,7 @@
 },
 "#pickBiome": {
 	left: 200,
-	top: 100,
-	color: "#157DFB"
-},
-"#biomePkr": {
-	height: 150,
-	bottom: 0,
-	selectionIndicator: true,
-	visable: false
+	top: 100
 },
 
 
@@ -45,8 +38,16 @@
 "#pickProtocol": {
 	left: 200,
 	top: 160,
-	color: "#157DFB"
+}
+
+/* Not using picker, keep for reference
+"#biomePkr": {
+	height: 150,
+	bottom: 0,
+	selectionIndicator: true,
+	visable: false
 },
+
 "#protocolPkr": {
 	height: 150,
 	bottom: 0,
@@ -62,3 +63,4 @@
 	font: {fontSize: 20},
 	bottom: 220
 }
+*/

@@ -9,19 +9,41 @@
 	        <SearchBar id="parkSrch" />
 	        
 	        <Label id="biomeLbl" text="Biome:" />
+	        <TabbedBar id="pickBiome">           
+            	<Labels>
+          			<Label text="Grasslands">Grasslands</Label>
+                	<Label text="Alpine">Alpine</Label>
+                	<Label text="Forest">Forest</Label>
+                	<Label text="Wetlands">Wetlands</Label>
+                	<Label text="Intertidal">Intertidal</Label>
+            	</Labels>         
+        	</TabbedBar>
+	        <!--
 	        <Label id="pickBiome" text="Select" onClick="biomeBtn"/>
+	        -->
 	         
 	        <Label id="protocolLbl" text="Protocol:" />
+	        <TabbedBar id="pickProtocol">           
+            	<Labels>
+          			<Label text="Grasslands">Grasslands</Label>
+                	<Label text="Alpine">Alpine</Label>
+                	<Label text="Squirrels">Squirrels</Label>
+                	<Label text="Berries">Berries</Label>
+                	<Label text="Amphibians">Amphibians</Label>
+            	</Labels>         
+        	</TabbedBar>
+	        <!--
 	        <Label id="pickProtocol" text="Select" onClick="protocolBtn"/>
+	        -->
         </View>
         
-        
+        <!-- Picker not being used, but save for reference
     	<View id="biomePkrView" visible="false">
     		
 			<Button id="doneBiomePkr" title="Done" onClick="doneBiomePkrBtn"/>
         	
         	<Picker id="biomePkr">
-            	<!-- Test data to be replaced by database query -->
+            	
             	<Row title="Grasslands"/>
             	<Row title="Alpine"/>
             	<Row title="Forest"/>
@@ -35,7 +57,7 @@
 			<Button id="doneProtocolPkr" title="Done" onClick="doneProtocolPkrBtn"/>
         	
         	<Picker id="protocolPkr">
-            	<!-- Test data to be replaced by database query -->
+            	
             	<Row title="Grasslands"/>
             	<Row title="Alpine"/>
             	<Row title="Squirrels"/>
@@ -43,6 +65,7 @@
             	<Row title="Amphibians"/>
         	</Picker>
     	</View>
-
+	-->
+	
 	</Window>
 </Alloy>
