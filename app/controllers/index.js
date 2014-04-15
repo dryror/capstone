@@ -1,12 +1,9 @@
 //Run these two commands to reset db if testing delete functions
 var yourDb = Titanium.Database.open('ltemaDB');
-yourDb.remove();﻿
+yourDb.remove();
 
-//Install Database
-Ti.Database.install('/ltema.sqlite', 'ltemaDB');
-
-//Open Database
-var db = Ti.Database.open('ltemaDB');
+//Install and open database
+var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
 
 //Query - Retrieve existing sites from database
 rows = db.execute('SELECT site_id, year, protocol_name, park_name ' + 
@@ -63,7 +60,7 @@ function enableDisableEditBtn(){
 	if(numRows <= 0){
 		//disable Edit Button
 		$.editSite.enabled = false;
-		$.editSite.title = "Edit"
+		$.editSite.title = "Edit";
         $.addSite.enabled = true;
 	}else{
 		//enable Edit Button
