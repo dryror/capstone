@@ -11,7 +11,7 @@ rows = db.execute('SELECT site_id, year, protocol_name, park_name ' +
 				'WHERE s.protocol_id = p.protocol_id ' + 
 				'AND s.park_id = prk.park_id ');
 
-//get requested data from each row in table
+//Get requested data from each row in table
 var id_counter = 0;
 while (rows.isValidRow()) {
 	id_counter++;	
@@ -23,7 +23,7 @@ while (rows.isValidRow()) {
 	//create a string from each entry
 	var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
 	
-	//Create a new row
+	//create a new row
 		var newRow = Ti.UI.createTableViewRow({
 			title : siteSurvey,
 			id : 'row ' + id_counter,
@@ -68,7 +68,7 @@ function enableDisableEditBtn(){
 	}
 }
 
-// Function to get total number of rows (site surveys)
+//Function to get total number of rows (site surveys)
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
@@ -83,7 +83,7 @@ function showTotalRowNumber(){
 	return totalRows;
 }
 
-//Place holder for edit button
+//Edit button toggle
 function editBtn(e){
 	//enable or disable edit mode
     if (e.source.title == "Edit") {
@@ -100,9 +100,8 @@ function editBtn(e){
     }
 }
 
-//Place holder for add button
+//Navigate to site survey creation screen
 function addBtn(){
-	//Navigation to addSiteSurvey
 	var addSite = Alloy.createController("addSiteSurvey").getView();
 	$.navGroupWin.openWindow(addSite);
 }
@@ -112,7 +111,7 @@ function exportBtn(){
 	alert('You Clicked the Export Button');
 }
 
-//Modal Click Behaviour
+//Modal generation and behaviour
 function modalClickHandler(e){			
 	var modalWindow = Ti.UI.createWindow({
 		backgroundColor:'white'
@@ -142,12 +141,12 @@ function modalClickHandler(e){
 	});
 }
 
-//delete event listener
+//Delete event listener
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
 	var currentSiteID = e.rowData.siteID;
     
-    //Open Database
+    //open database
 	var db = Ti.Database.open('ltemaDB');
 	
 	//delete current row from the database
@@ -158,25 +157,17 @@ $.tbl.addEventListener('delete', function(e) {
 	enableDisableEditBtn();
 });
 
+//Main TableView event listener
 $.tbl.addEventListener('click', function(e) {
+	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
 		 modalClickHandler(e);
+	//row clicked, get transect view
 	} else {
-		// code for navigating to transects would go here.
 		var transects = Alloy.createController("transects", {siteID:e.rowData.siteID}).getView();
 	    $.navGroupWin.openWindow(transects);
-
 	}
 });
-
-//Needed to add this to get to the next screen for testing
-//Will be replaced once controller implemented
-//$.tbl.addEventListener('click', function(event){
-//    var transects = Alloy.createController("transects").getView();
-//    $.navGroupWin.openWindow(transects);
-//}); 
-
-
 
 //This should always happen last
 $.navGroupWin.open();
