@@ -1,4 +1,35 @@
 <Alloy>
-	<Window class="container">
+	<Window class="container" title="Add Transect">
+		<RightNavButton>
+			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
+        </RightNavButton>
+        
+        <View id="formView">
+	        <Label id="plotNumberLbl" text="Plot Number:" />
+	        <Label id="numberLbl" text="1" />
+	        
+	        <Label id="stakeLbl" text="Stake Orientation:" />
+	        <TabbedBar id="pickStake">         
+            	<Labels>
+          			<Label text="default">Transect Default</Label>
+                	<Label text="other">Other</Label>
+            	</Labels>         
+        	</TabbedBar>
+        	<TextField id="stakeDeviation" />
+	        
+	        <Label id="plotLbl" text="Plot Distance:" />
+	        <TabbedBar id="pickDistance">           
+            	<Labels>
+          			<Label text="default">Transect Default</Label>
+                	<Label text="other">Other</Label>
+            	</Labels>         
+        	</TabbedBar>
+        	<TextField id="plotDeviation" />>
+	      	        
+	        <Label id="commentLbl" text="Comments:" />
+	        <TextField id="comments" />
+	        
+	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
+        </View>
 	</Window>
 </Alloy>

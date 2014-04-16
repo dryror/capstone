@@ -1,4 +1,71 @@
-
-".container" : {
+".container": {
 	backgroundColor:"white"
+},
+"Label": {
+	font: {fontSize: 20}
+},
+"TextField": {
+	font: {fontSize: 20}
+},
+"Button": {
+	font: {fontSize: 20}
+},
+
+
+"#plotNumberLbl": {
+	left: 40,
+	top: 40
+},
+"#numberLbl": {
+	left: 220,
+	top: 40,
+},
+
+"#stakeLbl": {
+	left: 40,
+	top: 100
+},
+"#pickStake": {
+	left: 220,
+	right: 40,
+	top: 100
+},
+"#stakeDeviation": {
+	left: 220,
+	right: 40,
+	top: 160,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#plotLbl": {
+	left: 40,
+	top: 220
+},
+"#pickDistance": {
+	left: 220,
+	right: 40,
+	top: 220
+},
+"#plotDeviation": {
+	left: 220,
+	right: 40,
+	top: 280,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
+},
+
+"#commentLbl": {
+	left: 40,
+	top: 340
+},
+"#comments": {
+	left: 220,
+	right: 40,
+	top:340,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#photoBtn": {
+	left: 40,
+	top: 400
 }
