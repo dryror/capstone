@@ -68,4 +68,10 @@
 "#photoBtn": {
 	left: 40,
 	top: 400
+},
+
+"#info": {
+	left: 40,
+	right: 40,
+	top: 460
 }

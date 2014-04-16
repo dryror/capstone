@@ -40,6 +40,13 @@
 	left: 200,
 	right: 40,
 	top: 160
+},
+
+
+"#info": {
+	left: 40,
+	right: 40,
+	top: 220
 }
 
 /* Not using picker, keep for reference
