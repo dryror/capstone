@@ -49,11 +49,11 @@ rows.close();
 db.close();
 
 //Will check if Edit button should be enabled/disabled - if no rows exist
-enableDisableEditBtn();
+toggleEditBtn();
 
 
 //Enable or Disable the Edit button
-function enableDisableEditBtn(){
+function toggleEditBtn(){
 	//get the number of total rows
 	var numRows = showTotalRowNumber();
 	//if no rows exist
@@ -154,7 +154,7 @@ $.tbl.addEventListener('delete', function(e) {
 	db.close();
 	
 	//check if Edit button should be enabled/disabled - if no rows exist
-	enableDisableEditBtn();
+	toggleEditBtn();
 });
 
 //Main TableView event listener
