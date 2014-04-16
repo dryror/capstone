@@ -18,8 +18,8 @@
 },
 "#tsctName": {
 	left: 220,
+	right: 40,
 	top: 40,
-	width: 500,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
@@ -29,8 +29,8 @@
 },
 "#srvyName": {
 	left: 220,
+	right: 40,
 	top: 100,
-	width: 500,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
@@ -40,8 +40,8 @@
 },
 "#otherSrvyName": {
 	left: 220,
+	right: 40,
 	top: 160,
-	width: 500,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
@@ -51,8 +51,8 @@
 },
 "#tsctName": {
 	left: 220,
+	right: 40,
 	top: 220,
-	width: 500,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
@@ -62,6 +62,7 @@
 },
 "#pickStake": {
 	left: 220,
+	right: 40,
 	top: 280
 },
 
@@ -71,8 +72,8 @@
 },
 "#plotDist": {
 	left: 220,
+	right: 40,
 	top:340,
-	width: 500,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
 },
@@ -83,8 +84,8 @@
 },
 "#comments": {
 	left: 220,
+	right: 40,
 	top: 400,
-	width: 500,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 

@@ -14,8 +14,8 @@
 },
 "#parkSrch": {
 	left: 200,
-	top: 30,
-	width: 500
+	right: 40,
+	top: 30
 },
 
 
@@ -26,6 +26,7 @@
 },
 "#pickBiome": {
 	left: 200,
+	right: 40,
 	top: 100
 },
 
@@ -37,7 +38,8 @@
 },
 "#pickProtocol": {
 	left: 200,
-	top: 160,
+	right: 40,
+	top: 160
 }
 
 /* Not using picker, keep for reference
