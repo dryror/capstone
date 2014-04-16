@@ -1,4 +1,28 @@
 <Alloy>
-	<Window class="container">
+	<Window class="container" title="Add Transect">
+		<RightNavButton>
+			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
+        </RightNavButton>
+        
+        <View id="formView">
+        	<Label id="observationLbl" text="Observation Type:" />
+	        <TabbedBar id="pickType">         
+            	<Labels>
+          			<Label text="plant">Plant</Label>
+                	<Label text="other">Other</Label>
+            	</Labels>         
+        	</TabbedBar>
+        	
+        	<Label id="speciesLbl" text="Species:" />
+	        <TextField id="species" />
+        	
+        	<Label id="percentLbl" text="Percent Coverage:" />
+	        <TextField id="percent" />
+	        
+	       	<Label id="commentLbl" text="Comments:" />
+	        <TextField id="comments" />
+	        
+	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
+        </View>
 	</Window>
 </Alloy>

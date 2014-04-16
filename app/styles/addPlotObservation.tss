@@ -1,4 +1,61 @@
-
-".container" : {
+".container": {
 	backgroundColor:"white"
+},
+"Label": {
+	font: {fontSize: 20}
+},
+"TextField": {
+	font: {fontSize: 20}
+},
+"Button": {
+	font: {fontSize: 20}
+},
+
+
+"#observationLbl": {
+	left: 40,
+	top: 40
+},
+"#pickType": {
+	left: 220,
+	right: 40,
+	top: 40
+},
+
+"#speciesLbl": {
+	left: 40,
+	top: 100
+},
+"#species": {
+	left: 220,
+	right: 40,
+	top:100,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
+"#percentLbl": {
+	left: 40,
+	top: 160
+},
+"#percent": {
+	left: 220,
+	right: 40,
+	top: 160,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
+},
+
+"#commentLbl": {
+	left: 40,
+	top: 220
+},
+"#comments": {
+	left: 220,
+	right: 40,
+	top: 220,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+"#photoBtn": {
+	left: 40,
+	top: 280,
 }
