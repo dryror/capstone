@@ -3,5 +3,9 @@ function doneBtn(){
 }
 
 function takePhoto(){
-	alert('You took a photo!');
+	//call camera module and set thumbnail
+	var pic = require('camera');
+	pic.getPhoto(function(myPhoto) {
+		$.transectThumbnail.image = myPhoto;
+	});
 }
