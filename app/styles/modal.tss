@@ -1,6 +1,17 @@
 ".container": {
 	backgroundColor:"white"
 },
+"#backBtn": {
+	font: {fontSize: 20},
+	top: 40,
+	left: 40
+},
+"#editBtn": {
+	font: {fontSize: 20},
+	top: 40,
+	right: 40
+},
+
 "Label": {
 	font: {fontSize: 20}
 },
@@ -15,13 +26,33 @@
 	top: 140
 },
 
-"#backBtn": {
-	font: {fontSize: 20},
-	top: 40,
-	left: 40
+"#siteLbl": {
+	left: 40,
+	top: 240,
 },
-"#editBtn": {
-	font: {fontSize: 20},
-	top: 40,
-	right: 40
+"#siteID": {
+	left: 200,
+	right:40,
+	top: 240
+},
+"#yearLbl": {
+	left: 40,
+	top: 340,
+},
+"#siteYear": {
+	left: 200,
+	right:40,
+	top: 340
+},
+"#protocolLbl": {
+	left: 40,
+	top: 440,
+},
+"#protocolName": {
+	left: 200,
+	right:40,
+	top: 440
 }
+
+
+

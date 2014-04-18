@@ -1,8 +1,20 @@
 <Alloy>
 	<Window class="container" title="Food" id="modalWin">
+		
+		<Button id="backBtn" title="Back" onClick="backBtnClick" />
+		<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+		
 		<Label id="parkLbl" text="Park Name:" />
 		<Label id="parkName" />
-		<Button id="editBtn" title="Edit" onClick="editBtnClick" />
-		<Button id="backBtn" title="Back" onClick="backBtnClick" />
+		
+		<Label id="siteLbl" text="site ID:" />
+		<Label id="siteID" />
+		
+		<Label id="yearLbl" text="site Year:" />
+		<Label id="siteYear" />
+		
+		<Label id="protocolLbl" text="Protocol Name:" />
+		<Label id="protocolName" />
+		
 	</Window>
 </Alloy>

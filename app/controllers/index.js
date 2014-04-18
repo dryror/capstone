@@ -28,6 +28,8 @@ while (rows.isValidRow()) {
 			title : siteSurvey,
 			id : 'row ' + id_counter,
 			siteID : siteID,
+			siteYear : year,
+			protocolName : protocolName,
 			parkName : parkName
 		});
 		
@@ -132,12 +134,12 @@ $.tbl.addEventListener('delete', function(e) {
 $.tbl.addEventListener('click', function(e) {
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("modal", {parkName:e.rowData.parkName, siteID:e.rowData.siteID}).getView();
+		var modal = Alloy.createController("modal", {parkName:e.rowData.parkName, siteID:e.rowData.siteID, siteYear:e.rowData.siteYear, protocolName:e.rowData.protocolName}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
 			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
-			navBarHidden : true
+			navBarHidden : false
 		});
 	//row clicked, get transect view
 	} else {
