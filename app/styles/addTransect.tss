@@ -87,11 +87,12 @@
 	width: 64,
 	height: 64,
 	left: 220,
-	top: 400
+	top: 400,
+	borderRadius: 10
 },
 
 "#info": {
 	left: 40,
 	right: 40,
-	top: 460
+	top: 500
 }
