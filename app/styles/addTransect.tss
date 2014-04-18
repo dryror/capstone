@@ -83,6 +83,13 @@
 	top: 400
 },
 
+"#transectThumbnail": {
+	width: 64,
+	height: 64,
+	left: 220,
+	top: 400
+},
+
 "#info": {
 	left: 40,
 	right: 40,
