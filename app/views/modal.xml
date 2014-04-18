@@ -1,0 +1,8 @@
+<Alloy>
+	<Window class="container" title="Food" id="modalWin">
+		<Label id="parkLbl" text="Park Name:" />
+		<Label id="parkName" text="incomplete" />
+		<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+		<Button id="backBtn" title="Back" onClick="backBtnClick" />
+	</Window>
+</Alloy>

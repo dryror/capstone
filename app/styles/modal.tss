@@ -1,0 +1,27 @@
+".container": {
+	backgroundColor:"white"
+},
+"Label": {
+	font: {fontSize: 20}
+},
+
+"#parkLbl": {
+	left: 40,
+	top: 140,
+},
+"#parkName": {
+	left: 200,
+	right:40,
+	top: 140
+},
+
+"#backBtn": {
+	font: {fontSize: 20},
+	top: 40,
+	left: 40
+},
+"#editBtn": {
+	font: {fontSize: 20},
+	top: 40,
+	right: 40
+}

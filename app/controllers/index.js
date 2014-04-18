@@ -111,36 +111,6 @@ function exportBtn(){
 	alert('You Clicked the Export Button');
 }
 
-//Modal generation and behaviour
-function modalClickHandler(e){			
-	var modalWindow = Ti.UI.createWindow({
-		backgroundColor:'white'
-	});
-	
-	//modal has a label and close button
-	var modalLabel1 = Ti.UI.createLabel({
-		text : e.rowData.title,
-		top : 50
-	});
-	var closeBtn = Ti.UI.createButton({
-		title:'Close',
-		width:100,
-		height:30
-	});
-	closeBtn.addEventListener('click',function() {
-		modalWindow.close();
-	});
-	modalWindow.add(modalLabel1);
-	modalWindow.add(closeBtn);
-
-	modalWindow.open({
-		modal : true,
-		modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
-		navBarHidden : true
-	});
-}
-
 //Delete event listener
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
@@ -161,7 +131,13 @@ $.tbl.addEventListener('delete', function(e) {
 $.tbl.addEventListener('click', function(e) {
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		 modalClickHandler(e);
+		var modal = Alloy.createController("modal").getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			navBarHidden : true
+		});
 	//row clicked, get transect view
 	} else {
 		var transects = Alloy.createController("transects", {siteID:e.rowData.siteID}).getView();
