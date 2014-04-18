@@ -31,7 +31,7 @@ function getPhoto(callback) {
 		},
 		saveToPhotoGallery : true,
 		allowEditing : false,
-		mediaTypes : [Ti.Media.MEDIA_TYPE_VIDEO, Ti.Media.MEDIA_TYPE_PHOTO]
+		mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO]
 	});
 }
 
