@@ -1,0 +1,14 @@
+<Alloy>
+	<Window class="container" title="Transects" id="modalWin">
+		
+		<Button id="backBtn" title="Back" onClick="backBtnClick" />
+		<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+		
+		<Label id="transectLbl" text="Transect Name:" />
+		<Label id="transectName" />
+		
+		<Label id="surveyorLbl" text="Surveyor:" />
+		<Label id="surveyor" />
+		
+	</Window>
+</Alloy>

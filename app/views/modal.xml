@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" title="Food" id="modalWin">
+	<Window class="container" title="siteSurveyModal" id="modalWin">
 		
 		<Button id="backBtn" title="Back" onClick="backBtnClick" />
 		<Button id="editBtn" title="Edit" onClick="editBtnClick" />

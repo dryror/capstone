@@ -23,7 +23,9 @@ while (rows.isValidRow()) {
 	//Create a new row
 		var newRow = Ti.UI.createTableViewRow({
 			title : transectDesc,
-			id : 'row ' + id_counter
+			id : 'row ' + id_counter,
+			transectName : transectName,
+			surveyor : surveyor
 		});
 		
 		//create and add info icon for the row
@@ -56,9 +58,20 @@ function addBtn(){
 	$.navGroupWin.openWindow(addTransect);
 }
 
-//Needed to add this to get to the next screen for testing
-//Will be replaced once controller implemented
-$.tbl.addEventListener('click', function(event){
-    var plots = Alloy.createController("plots").getView();
-    $.navGroupWin.openWindow(plots);
+
+$.tbl.addEventListener('click', function(e){
+	
+	if(e.source.toString() == '[object TiUIButton]') {
+		var modal = Alloy.createController("transectsModal", {transectName:e.rowData.transectName, surveyor:e.rowData.surveyor}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			navBarHidden : false
+		});
+	//row clicked, get transect view
+	} else {
+		var plots = Alloy.createController("plots").getView();
+    	$.navGroupWin.openWindow(plots);
+	} 
 }); 

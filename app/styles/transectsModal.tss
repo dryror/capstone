@@ -1,0 +1,41 @@
+".container": {
+	backgroundColor:"white"
+},
+
+"Label": {
+	font: {fontSize: 20}
+},
+
+"#backBtn": {
+	font: {fontSize: 20},
+	top: 40,
+	left: 40
+},
+"#editBtn": {
+	font: {fontSize: 20},
+	top: 40,
+	right: 40
+},
+
+"#transectLbl": {
+	left: 40,
+	top: 140,
+},
+"#transectName": {
+	left: 200,
+	right:40,
+	top: 140
+},
+
+"#surveyorLbl": {
+	left: 40,
+	top: 240,
+},
+"#surveyor": {
+	left: 200,
+	right:40,
+	top: 240
+}
+
+
+
