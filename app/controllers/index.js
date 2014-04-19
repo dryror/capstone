@@ -26,11 +26,7 @@ while (rows.isValidRow()) {
 	//create a new row
 		var newRow = Ti.UI.createTableViewRow({
 			title : siteSurvey,
-			id : 'row ' + id_counter,
-			siteID : siteID,
-			siteYear : year,
-			protocolName : protocolName,
-			parkName : parkName
+			siteID : siteID
 		});
 		
 		//create and add info icon for the row
@@ -39,7 +35,6 @@ while (rows.isValidRow()) {
 			right : 10,
 			height : 48, //this is deciding the size of the rows at the moment
 			width : 48, 
-			id : id_counter
 		});
 		newRow.add(infoButton);
 		
@@ -134,7 +129,7 @@ $.tbl.addEventListener('delete', function(e) {
 $.tbl.addEventListener('click', function(e) {
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("modal", {parkName:e.rowData.parkName, siteID:e.rowData.siteID, siteYear:e.rowData.siteYear, protocolName:e.rowData.protocolName}).getView();
+		var modal = Alloy.createController("siteSurveyModal", {siteID:e.rowData.siteID}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
