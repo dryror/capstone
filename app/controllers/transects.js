@@ -54,7 +54,8 @@ function editBtn(){
 function addBtn(){
 	//Navigation to addTransect
 	var addTransect = Alloy.createController("addTransect").getView();
-	$.navGroupWin.openWindow(addTransect);
+	var nav = Alloy.Globals.navMenu;
+	nav.openWindow(addTransect);
 }
 
 
@@ -71,6 +72,7 @@ $.tbl.addEventListener('click', function(e){
 	//row clicked, get transect view
 	} else {
 		var plots = Alloy.createController("plots").getView();
-    	$.navGroupWin.openWindow(plots);
+    	var nav = Alloy.Globals.navMenu;
+    	nav.openWindow(plots);
 	} 
 }); 

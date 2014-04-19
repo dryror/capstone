@@ -1,25 +1,23 @@
 <Alloy>
-	<NavigationWindow id="navGroupWin">
-		<Window class="container" title="Plot Observations">
-			<RightNavButton>
-            	<Button id="editSite" title="Edit" onClick="editBtn"/>
-        	</RightNavButton>
+	<Window class="container" title="Plot Observations">
+		<RightNavButton>
+        	<Button id="editSite" title="Edit" onClick="editBtn"/>
+    	</RightNavButton>
+		
+        <TableView class="table" id="tbl">
+   			<HeaderView id="mainHeader">
+   				<View id="headerView">
+   					<Button id="addSite" title="Add" onClick="addBtn"/>
+   				</View>
+   			</HeaderView>
 			
-            <TableView class="table" id="tbl">
-       			<HeaderView id="mainHeader">
-       				<View id="headerView">
-       					<Button id="addSite" title="Add" onClick="addBtn"/>
-       				</View>
-       			</HeaderView>
-				
-				<FooterView id="tblFooter">
-					<View id="footerView">
-						<Label id="percentLbl" text="Total Percent Coverage: "/>
-						<Label id="percent" text="2%"/>
-						<Button id="done" title="Done" onClick="doneBtn" />
-					</View>
-				</FooterView>
-	   		</TableView>
-    	</Window>
-    </NavigationWindow>
+			<FooterView id="tblFooter">
+				<View id="footerView">
+					<Label id="percentLbl" text="Total Percent Coverage: "/>
+					<Label id="percent" text="2%"/>
+					<Button id="done" title="Done" onClick="doneBtn" />
+				</View>
+			</FooterView>
+   		</TableView>
+	</Window>
 </Alloy>

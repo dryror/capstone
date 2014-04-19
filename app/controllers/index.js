@@ -144,4 +144,5 @@ $.tbl.addEventListener('click', function(e) {
 });
 
 //This should always happen last
+Alloy.Globals.navMenu = $.navGroupWin;
 $.navGroupWin.open();
