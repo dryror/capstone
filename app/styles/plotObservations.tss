@@ -1,4 +1,20 @@
 
 ".container" : {
 	backgroundColor:"white"
+},
+"Label": {
+	font: {fontSize: 20}
+},
+"#done": {
+	right: 20,
+	top: 40,
+	font: {fontSize: 20}
+},
+"#percentLbl": {
+	right: 80,
+	top: 20
+},
+"#percent": {
+	right: 20,
+	top: 20
 }

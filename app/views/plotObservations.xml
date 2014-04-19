@@ -9,7 +9,14 @@
         	</RightNavButton>
        
        		<TableView class="table">
-				<!--Table will be populated from database-->
+				
+				<FooterView id="tblFooter">
+					<View id="footerView">
+						<Label id="percentLbl" text="Total Percent Coverage: "/>
+						<Label id="percent" text="2%"/>
+						<Button id="done" title="Done" onClick="doneBtn" />
+					</View>
+				</FooterView>
 	   		</TableView>
     	</Window>
     </NavigationWindow>
