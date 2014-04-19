@@ -87,14 +87,16 @@ function editBtn(e){
     if (e.source.title == "Edit") {
     	$.tbl.editing = true;
         e.source.title = "Done";
-        //disable the add button during edit mode
+        //disable the add and export buttons during edit mode
         $.addSite.enabled = false;
+        $.exportData.enabled = false;
         
     } else { 
         $.tbl.editing = false;
         e.source.title = "Edit";
-        //enable the add button
+        //enable the add and export button
         $.addSite.enabled = true;
+        $.exportData.enabled = true;
     }
 }
 
