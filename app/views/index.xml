@@ -1,16 +1,20 @@
 <Alloy>
 	<NavigationWindow id="navGroupWin">
 		<Window class="container" title="Site Surveys">
-			<LeftNavButton>
-            	<Button id="editSite" title="Edit" onClick="editBtn"/>
-        	</LeftNavButton>
 			<RightNavButton>
-            	<Button id="addSite" title="Add" onClick="addBtn"/>
+            	<Button id="editSite" title="Edit" onClick="editBtn"/>
         	</RightNavButton>
-       
-       		<TableView class="table" id="tbl">
+			
+            <TableView class="table" id="tbl">
+       			<HeaderView id="mainHeader">
+       				<View id="headerView">
+       					<Button id="addSite" title="Add" onClick="addBtn"/>
+       				</View>
+       			</HeaderView>
 				<FooterView id="mainFooter">
-					<Button id="exportData" title="Export" onClick="exportBtn" />
+					<View id="footerView">
+						<Button id="exportData" title="Export" onClick="exportBtn" />
+					</View>
 				</FooterView>
 	   		</TableView>
     	</Window>

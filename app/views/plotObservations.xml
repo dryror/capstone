@@ -1,14 +1,16 @@
 <Alloy>
 	<NavigationWindow id="navGroupWin">
 		<Window class="container" title="Plot Observations">
-			<LeftNavButton>
-            	<Button id="editObservations" title="Edit" onClick="editBtn"/>
-        	</LeftNavButton>
 			<RightNavButton>
-            	<Button id="addObservation" title="Add" onClick="addBtn"/>
+            	<Button id="editSite" title="Edit" onClick="editBtn"/>
         	</RightNavButton>
-       
-       		<TableView class="table">
+			
+            <TableView class="table" id="tbl">
+       			<HeaderView id="mainHeader">
+       				<View id="headerView">
+       					<Button id="addSite" title="Add" onClick="addBtn"/>
+       				</View>
+       			</HeaderView>
 				
 				<FooterView id="tblFooter">
 					<View id="footerView">

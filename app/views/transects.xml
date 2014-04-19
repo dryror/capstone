@@ -1,15 +1,17 @@
 <Alloy>
 	<NavigationWindow id="navGroupWin">
 		<Window class="container" title="Transects">
-			<LeftNavButton>
-            	<Button id="editTransects" title="Edit" onClick="editBtn"/>
-        	</LeftNavButton>
+			
 			<RightNavButton>
-            	<Button id="addTransect" title="Add" onClick="addBtn"/>
+            	<Button id="editTransects" title="Edit" onClick="editBtn"/>
         	</RightNavButton>
        
        		<TableView class="table" id="tbl">
-				
+				<HeaderView id="mainHeader">
+       				<View id="headerView">
+       					<Button id="addSite" title="Add" onClick="addBtn"/>
+       				</View>
+       			</HeaderView>
 	   		</TableView>
     	</Window>
     </NavigationWindow>

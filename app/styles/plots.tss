@@ -1,4 +1,14 @@
 
 ".container" : {
 	backgroundColor:"white"
+},
+"Button": {
+	font: {fontSize: 20}
+},
+"#headerView": {
+	height: Ti.UI.SIZE
+},
+"#addSite": {
+	top: 10,
+	left: 18
 }
