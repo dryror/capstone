@@ -10,5 +10,14 @@
 		<Label id="surveyorLbl" text="Surveyor:" />
 		<Label id="surveyor" />
 		
+		<Label id="plotDistLbl" text="Plot Distance:" />
+		<Label id="plotDistance" />
+		
+		<Label id="stakeOriLbl" text="Stake Orientation:" />
+		<Label id="stakeOrientation" />
+		
+		<Label id="commentsLbl" text="Comments:" />
+		<Label id="comments" />
+		
 	</Window>
 </Alloy>

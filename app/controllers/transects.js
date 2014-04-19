@@ -6,14 +6,15 @@ $.tbl.siteID = args.siteID;
 var db = Ti.Database.open('ltemaDB');
 
 //Query - Retrieve existing sites from database
-rows = db.execute('SELECT transect_name, surveyor ' + 
+rows = db.execute('SELECT transect_id, transect_name, surveyor ' + 
 				'FROM transect ' + 
 				'WHERE site_id = '+ $.tbl.siteID); 
 
 //get requested data from each row in table
 var id_counter = 0;
 while (rows.isValidRow()) {
-	id_counter++;	
+	id_counter++;
+	var transectID = rows.fieldByName('transect_id');	
 	var transectName = rows.fieldByName('transect_name');
 	var surveyor = rows.fieldByName('surveyor');
 
@@ -23,9 +24,7 @@ while (rows.isValidRow()) {
 	//Create a new row
 		var newRow = Ti.UI.createTableViewRow({
 			title : transectDesc,
-			id : 'row ' + id_counter,
-			transectName : transectName,
-			surveyor : surveyor
+			transectID : transectID
 		});
 		
 		//create and add info icon for the row
@@ -62,7 +61,7 @@ function addBtn(){
 $.tbl.addEventListener('click', function(e){
 	
 	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("transectsModal", {transectName:e.rowData.transectName, surveyor:e.rowData.surveyor}).getView();
+		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,

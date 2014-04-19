@@ -19,23 +19,49 @@
 
 "#transectLbl": {
 	left: 40,
-	top: 140,
+	top: 100,
 },
 "#transectName": {
 	left: 200,
 	right:40,
-	top: 140
+	top: 100
 },
 
 "#surveyorLbl": {
 	left: 40,
-	top: 240,
+	top: 150,
 },
 "#surveyor": {
 	left: 200,
 	right:40,
-	top: 240
+	top: 150
+},
+"#plotDistLbl": {
+	left: 40,
+	top: 200,
+},
+"#plotDistance": {
+	left: 200,
+	right:40,
+	top: 200
+},
+"#stakeOriLbl": {
+	left: 40,
+	top: 250,
+},
+"#stakeOrientation": {
+	left: 200,
+	right:40,
+	top: 250
+},
+"#commentsLbl": {
+	left: 40,
+	top: 300,
+},
+"#comments": {
+	left: 200,
+	right:40,
+	top: 300
 }
-
 
 
