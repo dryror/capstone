@@ -2,13 +2,16 @@
 	<Window class="container" title="Transects" id="modalWin">
 		
 		<Button id="backBtn" title="Back" onClick="backBtnClick" />
-		<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+		
+		<Switch id="toggleEditSwitch" value="false" onChange="toggleEdit" />
+		<Label id="toggleLbl" text="Slide to Edit" />
+		<Button id="toggleSaveBtn" title="Click to Save" onClick="saveEdit" />
 		
 		<Label id="transectLbl" text="Transect Name:" />
-		<Label id="transectName" />
+		<TextField id="transectName" />
 		
 		<Label id="surveyorLbl" text="Surveyor:" />
-		<Label id="surveyor" />
+		<TextField id="surveyor" />
 		
 		<Label id="plotDistLbl" text="Plot Distance:" />
 		<Label id="plotDistance" />
@@ -17,7 +20,7 @@
 		<Label id="stakeOrientation" />
 		
 		<Label id="commentsLbl" text="Comments:" />
-		<Label id="comments" />
+		<TextField id="comments" />
 		
 	</Window>
 </Alloy>

@@ -5,63 +5,81 @@
 "Label": {
 	font: {fontSize: 20}
 },
+"TextField": {
+	font: {fontSize: 20}
+},
+"Button": {
+	font: {fontSize: 20}
+},
 
 "#backBtn": {
 	font: {fontSize: 20},
-	top: 40,
-	left: 40
+	top: 20,
+	left: 20
 },
-"#editBtn": {
-	font: {fontSize: 20},
-	top: 40,
-	right: 40
+
+"#toggleEditSwitch": {
+	left:150,
+	top: 60
+}
+"#toggleLbl": {
+	left: 220,
+	top: 60
+}
+"#toggleSaveBtn": {
+	left: 220,
+	top: 60
 },
 
 "#transectLbl": {
 	left: 40,
-	top: 100,
+	top: 160,
 },
 "#transectName": {
-	left: 200,
-	right:40,
-	top: 100
+	left: 220,
+	right: 40,
+	top: 160,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
 "#surveyorLbl": {
 	left: 40,
-	top: 150,
+	top: 220
 },
 "#surveyor": {
-	left: 200,
+	left: 220,
 	right:40,
-	top: 150
+	top: 220,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
+
 "#plotDistLbl": {
 	left: 40,
-	top: 200,
+	top: 280,
 },
 "#plotDistance": {
-	left: 200,
+	left: 220,
 	right:40,
-	top: 200
+	top: 280
 },
+
 "#stakeOriLbl": {
 	left: 40,
-	top: 250,
+	top: 340,
 },
 "#stakeOrientation": {
-	left: 200,
+	left: 220,
 	right:40,
-	top: 250
+	top: 340
 },
+
 "#commentsLbl": {
 	left: 40,
-	top: 300,
+	top: 400,
 },
 "#comments": {
-	left: 200,
+	left: 220,
 	right:40,
-	top: 300
+	top: 400,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 }
-
-

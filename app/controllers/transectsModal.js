@@ -1,6 +1,6 @@
+//transectID expected to be passed by parent window
 var args = arguments[0];
 var transectID = args.transectID;
-
 
 //Open database
 var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
@@ -20,15 +20,47 @@ row.close();
 db.close();
 
 //Assign label text fields
-$.transectName.text = transectName;
-$.surveyor.text = surveyor;
+$.transectName.value = transectName;
+$.surveyor.value = surveyor;
 $.plotDistance.text = plotDistance;
 $.stakeOrientation.text = stakeOrientation;
-$.comments.text = comments;
+$.comments.value = comments;
 
-function editBtnClick(){
-	alert("You clicked the edit button");
-}
+//Save changes button is only visible when edit toggle enabled
+$.toggleSaveBtn.visible = false;    // in titanium getters and setters have not been implemented on very UI object.
+									// this is one such case
+//initially disable fields
+$.transectName.editable = false;
+$.surveyor.editable = false;
+$.comments.editable = false;
+
 function backBtnClick(){
 	$.modalWin.close();
+}
+
+//swaps editable property of fields
+function toggleEdit(){
+	if ($.toggleEditSwitch.value == true) {
+		$.toggleLbl.visible = false;
+		$.toggleSaveBtn.visible = true;
+		
+		$.transectName.editable = true;
+		$.surveyor.editable = true;
+		$.comments.editable = true;
+		
+	} else if ($.toggleEditSwitch.value == false) {
+		$.toggleSaveBtn.visible = false;
+		$.toggleLbl.visible = true;
+		
+		$.transectName.editable = false;
+		$.surveyor.editable = false;
+		$.comments.editable = false;
+						
+	} else {
+		alert("non-boolean toggleEditSwitch value");
+	};	
+}
+
+function saveEdit(){
+	alert("saveEdit clicked");
 }
