@@ -12,74 +12,54 @@
 	font: {fontSize: 20}
 },
 
-"#backBtn": {
-	font: {fontSize: 20},
-	top: 20,
-	left: 20
-},
-
-"#toggleEditSwitch": {
-	left:150,
-	top: 60
-}
-"#toggleLbl": {
-	left: 220,
-	top: 60
-}
-"#toggleSaveBtn": {
-	left: 220,
-	top: 60
-},
 
 "#transectLbl": {
 	left: 40,
-	top: 160,
+	top: 40,
 },
 "#transectName": {
 	left: 220,
 	right: 40,
-	top: 160,
+	top: 40,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
 "#surveyorLbl": {
 	left: 40,
-	top: 220
+	top: 100
 },
 "#surveyor": {
 	left: 220,
-	right:40,
-	top: 220,
+	right: 40,
+	top: 100,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
 "#plotDistLbl": {
 	left: 40,
-	top: 280,
+	top: 160,
 },
 "#plotDistance": {
 	left: 220,
-	right:40,
-	top: 280
+	top: 160
 },
 
 "#stakeOriLbl": {
 	left: 40,
-	top: 340,
+	top: 220,
 },
 "#stakeOrientation": {
 	left: 220,
-	right:40,
-	top: 340
+	top: 220
 },
 
 "#commentsLbl": {
 	left: 40,
-	top: 400,
+	top: 280,
 },
 "#comments": {
 	left: 220,
 	right:40,
-	top: 400,
+	top: 280,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 }
