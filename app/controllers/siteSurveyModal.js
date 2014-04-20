@@ -17,6 +17,7 @@ var parkName = row.fieldByName('park_name');
 row.close();
 db.close();
 
+$.modalWin.title = siteYear + " - " + protocolName + " - " + parkName;
 $.parkName.text = parkName;
 $.siteID.text = siteID;
 $.siteYear.text = siteYear;
@@ -26,5 +27,5 @@ function editBtnClick(){
 	alert("You clicked the edit button");
 }
 function backBtnClick(){
-	$.modalWin.close();
+	$.modalNav.close();
 }

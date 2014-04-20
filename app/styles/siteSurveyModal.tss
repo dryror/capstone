@@ -1,16 +1,6 @@
 ".container": {
 	backgroundColor:"white"
 },
-"#backBtn": {
-	font: {fontSize: 20},
-	top: 40,
-	left: 40
-},
-"#editBtn": {
-	font: {fontSize: 20},
-	top: 40,
-	right: 40
-},
 
 "Label": {
 	font: {fontSize: 20}
@@ -18,40 +8,36 @@
 
 "#parkLbl": {
 	left: 40,
-	top: 140,
+	top: 40
 },
 "#parkName": {
 	left: 200,
-	right:40,
-	top: 140
+	top: 40
 },
 
 "#siteLbl": {
 	left: 40,
-	top: 240,
+	top: 100,
 },
 "#siteID": {
 	left: 200,
-	right:40,
-	top: 240
+	top: 100
 },
 "#yearLbl": {
 	left: 40,
-	top: 340,
+	top: 160
 },
 "#siteYear": {
 	left: 200,
-	right:40,
-	top: 340
+	top: 160
 },
 "#protocolLbl": {
 	left: 40,
-	top: 440,
+	top: 220,
 },
 "#protocolName": {
 	left: 200,
-	right:40,
-	top: 440
+	top: 220
 }
 
 

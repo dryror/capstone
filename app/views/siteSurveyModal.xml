@@ -1,20 +1,28 @@
 <Alloy>
-	<Window class="container" title="siteSurveyModal" id="modalWin">
+	<NavigationWindow id="modalNav">
 		
-		<Button id="backBtn" title="Back" onClick="backBtnClick" />
-		<Button id="editBtn" title="Edit" onClick="editBtnClick" />
-		
-		<Label id="parkLbl" text="Park Name:" />
-		<Label id="parkName" />
-		
-		<Label id="siteLbl" text="site ID:" />
-		<Label id="siteID" />
-		
-		<Label id="yearLbl" text="site Year:" />
-		<Label id="siteYear" />
-		
-		<Label id="protocolLbl" text="Protocol Name:" />
-		<Label id="protocolName" />
-		
-	</Window>
+		<Window class="container" title="siteSurveyModal" id="modalWin">
+			
+			<RightNavButton>
+	        	<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+	    	</RightNavButton>
+	    	
+	    	<LeftNavButton>
+	    		<Button id="backBtn" title="Back" onClick="backBtnClick" />
+	    	</LeftNavButton>
+	    	
+			<Label id="parkLbl" text="Park Name:" />
+			<Label id="parkName" />
+			
+			<Label id="siteLbl" text="Site ID:" />
+			<Label id="siteID" />
+			
+			<Label id="yearLbl" text="Year:" />
+			<Label id="siteYear" />
+			
+			<Label id="protocolLbl" text="Protocol Name:" />
+			<Label id="protocolName" />
+			
+		</Window>
+	</NavigationWindow>
 </Alloy>
