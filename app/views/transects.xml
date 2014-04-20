@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" title="Transects">	
+	<Window class="container" title="Transects" id="transectsWin">	
 		<RightNavButton>
         	<Button id="editTransects" title="Edit" onClick="editBtn"/>
     	</RightNavButton>

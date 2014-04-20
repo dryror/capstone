@@ -1,4 +1,4 @@
-//retieve siteID
+//get siteID from calling window
 var args = arguments[0];
 $.tbl.siteID = args.siteID;
 
@@ -45,22 +45,9 @@ while (rows.isValidRow()) {
 rows.close();
 db.close();
 
-//Place holder for edit button
-function editBtn(){
-	alert('You Clicked the Edit Button');
-}
-
-//Place holder for add button
-function addBtn(){
-	//Navigation to addTransect
-	var addTransect = Alloy.createController("addTransect").getView();
-	var nav = Alloy.Globals.navMenu;
-	nav.openWindow(addTransect);
-}
-
 
 $.tbl.addEventListener('click', function(e){
-	
+	//info icon clicked, get modal
 	if(e.source.toString() == '[object TiUIButton]') {
 		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID}).getView();
 		modal.open({
@@ -75,4 +62,20 @@ $.tbl.addEventListener('click', function(e){
     	var nav = Alloy.Globals.navMenu;
     	nav.openWindow(plots);
 	} 
-}); 
+});
+
+Ti.App.addEventListener('updateTransects', function() {
+	alert('updateTransects called');
+});
+
+//Edit button toggle
+function editBtn(){
+	alert('You Clicked the Edit Button');
+}
+
+//Navigate to addTransect - transect creation screen
+function addBtn(){
+	var addTransect = Alloy.createController("addTransect").getView();
+	var nav = Alloy.Globals.navMenu;
+	nav.openWindow(addTransect);
+}
