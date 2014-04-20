@@ -31,13 +31,22 @@
 	left: 200,
 	top: 160
 },
-"#protocolLbl": {
+"#biomeLbl": {
 	left: 40,
 	top: 220,
 },
-"#protocolName": {
+"#biome": {
 	left: 200,
 	top: 220
+},
+
+"#protocolLbl": {
+	left: 40,
+	top: 280,
+},
+"#protocolName": {
+	left: 200,
+	top: 280
 }
 
 

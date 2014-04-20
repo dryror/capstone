@@ -20,7 +20,10 @@
 			<Label id="yearLbl" text="Year:" />
 			<Label id="siteYear" />
 			
-			<Label id="protocolLbl" text="Protocol Name:" />
+			<Label id="biomeLbl" text="Biome:" />
+			<Label id="biome" />
+			
+			<Label id="protocolLbl" text="Protocol:" />
 			<Label id="protocolName" />
 			
 		</Window>
