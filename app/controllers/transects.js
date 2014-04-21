@@ -50,27 +50,27 @@ function populateTable() {
 	}
 	rows.close();
 	db.close();
-
-
-	$.tbl.addEventListener('click', function(e){
-		//info icon clicked, get modal
-		if(e.source.toString() == '[object TiUIButton]') {
-			var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID}).getView();
-			modal.open({
-				modal : true,
-				modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-				modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
-				navBarHidden : false
-			});
-		//row clicked, get transect view
-		} else {
-			var plots = Alloy.createController("plots").getView();
-	    	var nav = Alloy.Globals.navMenu;
-	    	nav.openWindow(plots);
-		} 
-	});
 }
 
+populateTable();
+
+$.tbl.addEventListener('click', function(e){
+	//info icon clicked, get modal
+	if(e.source.toString() == '[object TiUIButton]') {
+		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			navBarHidden : false
+		});
+	//row clicked, get transect view
+	} else {
+		var plots = Alloy.createController("plots").getView();
+    	var nav = Alloy.Globals.navMenu;
+    	nav.openWindow(plots);
+	} 
+});
 
 Ti.App.addEventListener("app:refreshTransects", function(e) {
 	populateTable();
@@ -94,4 +94,4 @@ function addBtn(){
 	nav.openWindow(addTransect);
 }
 
-populateTable();
+
