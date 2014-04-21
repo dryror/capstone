@@ -1,6 +1,18 @@
-//Place holder for edit button
-function doneBtn(){
-	alert('You Clicked the Done Button');
+//Test for form completeness before adding to database
+function doneBtn(){	
+	if ($.parkSrch.value == null) {
+		alert('No park name entered');
+		return;
+	}else if ($.pickBiome.index == null) {
+		alert('No biome picked');
+		return;
+	}else if ($.pickProtocol.index == null) {
+		alert('No protocol picked');
+		return;
+	} else {
+		alert('Biome index ' + $.pickBiome.index + ' picked, and \n' +
+			 'protocol index ' + $.pickProtocol.index +' picked.');
+	}
 }
 
 function biomeBtn(){
