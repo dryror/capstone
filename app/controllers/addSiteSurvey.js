@@ -8,6 +8,7 @@ function doneBtn(){
 		return;
 	}else if ($.pickProtocol.index == null) {
 		alert('No protocol picked');
+		return;
 	} else {
 		alert('Biome index ' + $.pickBiome.index + ' picked, and \n' +
 			 'protocol index ' + $.pickProtocol.index +' picked.');
