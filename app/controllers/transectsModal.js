@@ -26,6 +26,11 @@ $.plotDistance.text = plotDistance;
 $.stakeOrientation.text = stakeOrientation;
 $.comments.value = comments;
 
+//Listen for keyboard return key, dismiss keyboard (not working at present)
+$.transectName.addEventListener('return', function(e) {alert('fire!');$.transectName.blur();});
+$.surveyor.addEventListener('return', function() {alert('fire!');$.surveyor.blur();});
+$.comments.addEventListener('return', function() {alert('fire!');$.comments.blur();});
+
 //initially disable fields
 $.transectName.editable = false;
 $.surveyor.editable = false;
