@@ -108,7 +108,7 @@ function addBtn(){
 
 //Export data
 function exportBtn(){
-	alert('You Clicked the Export Button');
+	var csv = require('export');
 }
 
 //Delete event listener
