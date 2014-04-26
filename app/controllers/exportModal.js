@@ -68,7 +68,7 @@ function makeCSV(siteID) {
 	
 	var rows = db.execute('SELECT prk.park_name, tct.transect_name, plt.plot_name, ' +
 	   'plt.utm_zone, plt.utm_easting, plt.utm_northing, plt.stake_deviation, ' +
-	   'plt.distance_deviation, plt.utc, tct.surveyor, pob.observation, 	   pob."count", pob.comments, pob.ground_cover, ' +
+	   'plt.distance_deviation, plt.utc, tct.surveyor, pob.observation, pob."count", pob.comments, pob.ground_cover, ' +
 	   '(SELECT media_name FROM media, transect WHERE transect.media_id = media.media_id) AS transect_photo, ' +
 	   '(SELECT media_name FROM media, plot WHERE plot.media_id = media.media_id) AS plot_photo, ' +
 	   '(SELECT media_name FROM media, plot_observation WHERE plot_observation.media_id = media.media_id) AS observation_photo ' +
@@ -80,15 +80,45 @@ function makeCSV(siteID) {
 	   'plt.plot_id = pob.plot_id AND ' +
 	   'svy.site_id = ?', siteID);
 	
-	alert('Exported ' + rows.rowCount + ' rows');
-	
-	//Convert the result set into CSV
-	
-	
-	//Write the CSV stings to Files
+	//Convert the result set into csv
+	var sampleStationTxt = "";
+	var dq = '"';
+	var nl = '\n';
+	var c = ',';
+	while (rows.isValidRow()) {	
+		
+		var parkName = dq + rows.fieldByName('park_name') + dq;
+		var sampleStationName = dq + rows.fieldByName('transect_name') + " " + rows.fieldByName('plot_name') + dq;
+		var plotUTMZone = dq + rows.fieldByName('utm_zone') + dq;
+		var plotUTMEast = dq + rows.fieldByName('utm_easting') + dq;
+		var plotUTMNorth = dq + rows.fieldByName('utm_northing') + dq;
+		var plotPhoto = dq + rows.fieldByName('plot_photo') + dq;
+		
+		sampleStationTxt += parkName + c + sampleStationName + c + plotUTMZone + c + plotUTMEast + c +
+			plotUTMNorth + c + plotPhoto + nl;
+		
+		rows.next();
+	}
+ 	
+    // creating output file in application data directory
+    var fileName = "Sample Station " + $.surveyPkr.getSelectedRow(0).title + ".csv";
+    var sampleStationFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, fileName);
+    
+    // writing data in output file 
+    sampleStationFile.write(sampleStationTxt); 
+ 
+ 	// email the file	
+    if(sampleStationFile.exists){
+        var emailDialog = Ti.UI.createEmailDialog();
+		emailDialog.subject = "Test export";
+		emailDialog.toRecipients = ['test@test.com'];
+		var blob = sampleStationFile.read();
+		var readText = blob.text;
+		emailDialog.messageBody = readText;
+		emailDialog.addAttachment(sampleStationFile);
+		emailDialog.open();
+    }
 	
 	rows.close();
 	db.close();
-	
-	
 }
