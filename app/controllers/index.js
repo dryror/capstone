@@ -108,7 +108,13 @@ function addBtn(){
 
 //Export data
 function exportBtn(){
-	var csv = require('export');
+	var modal = Alloy.createController("exportModal").getView();
+	modal.open({
+		modal : true,
+		modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+		navBarHidden : false
+	});
 }
 
 //Delete event listener

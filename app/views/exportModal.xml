@@ -1,0 +1,18 @@
+<Alloy>
+	<NavigationWindow id="modalNav">
+		
+		<Window class="container" title="Export" id="exportWin">
+			<!--
+			<RightNavButton>
+	        	<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+	    	</RightNavButton>
+	    	-->
+	    	<LeftNavButton>
+	    		<Button id="backBtn" title="Back" onClick="backBtnClick" />
+	    	</LeftNavButton>
+	    	
+			
+			
+		</Window>
+	</NavigationWindow>
+</Alloy>
