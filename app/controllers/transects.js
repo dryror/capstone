@@ -76,12 +76,6 @@ Ti.App.addEventListener("app:refreshTransects", function(e) {
 	populateTable();
 });
 
-/*
-Ti.App.addEventListener('updateTransects', function() {
-	alert('updateTransects called');
-});
-*/
-
 //Edit button toggle
 function editBtn(){
 	alert('You Clicked the Edit Button');

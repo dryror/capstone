@@ -1,3 +1,6 @@
+/* Site survey creation screen with validation */
+
+
 //Test for form completeness before adding to database
 function doneBtn(){	
 	if ($.parkSrch.value == null) {

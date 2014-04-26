@@ -1,9 +1,12 @@
+/* A screen to dislay or possibly edit site survey details */
+
+//get siteID from calling window
 var args = arguments[0];
 var siteID = args.siteID;
-//Open database
+
+//Query the database for values associated with the siteID
 var db = Ti.Database.open('ltemaDB');
 
-//Query - retrieve site values
 row = db.execute(	'SELECT site_id, year, protocol_name, park_name, biome_name ' +
 					'FROM site_survey s, protocol p, park prk, biome bio ' + 
 					'WHERE p.biome_id = bio.biome_id ' +
@@ -19,12 +22,16 @@ var parkName = row.fieldByName('park_name');
 row.close();
 db.close();
 
+//Assign view labels
 $.modalWin.title = siteYear + " - " + protocolName + " - " + parkName;
 $.parkName.text = parkName;
 $.siteID.text = siteID;
 $.siteYear.text = siteYear;
 $.protocolName.text = protocolName;
 $.biome.text = biome;
+
+
+/* Functions */
 
 function editBtnClick(){
 	alert("You clicked the edit button");
