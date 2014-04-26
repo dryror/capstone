@@ -2,11 +2,11 @@
 	<NavigationWindow id="modalNav">
 		
 		<Window class="container" title="siteSurveyModal" id="modalWin">
-			
+			<!--
 			<RightNavButton>
 	        	<Button id="editBtn" title="Edit" onClick="editBtnClick" />
 	    	</RightNavButton>
-	    	
+	    	-->
 	    	<LeftNavButton>
 	    		<Button id="backBtn" title="Back" onClick="backBtnClick" />
 	    	</LeftNavButton>

@@ -32,10 +32,11 @@ $.biome.text = biome;
 
 
 /* Functions */
-
+/*
 function editBtnClick(){
 	alert("You clicked the edit button");
 }
+*/
 function backBtnClick(){
 	$.modalNav.close();
 }
