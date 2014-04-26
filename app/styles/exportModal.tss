@@ -1,3 +1,33 @@
 ".container": {
 	backgroundColor:"white"
+},
+"Label": {
+	font: {fontSize: 20}
+},
+"Button": {
+	font: {fontSize: 20}
+},
+
+"#surveyLbl": {
+	left: 40,
+	top: 40
+},
+"#selectLbl": {
+	left: 180,
+	top: 40,
+	color: "#157DFB"
+},
+"#surveyPkr": {
+	bottom: 0,
+	selectionIndicator: true,
+	visable: false
+},
+"#doneSurveyPkr": {
+	font: {fontSize: 20},
+	bottom: 210
+},
+"#exportBtn": {
+	top: 100,
+	left: 40,
+	enabled: false
 }
