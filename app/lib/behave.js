@@ -12,7 +12,7 @@ function log(text) {
 }
 	
 function Suite(descText) {
-	this.desc = descText
+	this.desc = descText;
 	this.specs = [];
 }
 
