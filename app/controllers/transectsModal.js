@@ -75,15 +75,15 @@ function editBtnClick(e){
     }
 }
 
+//Save changes and close
 function saveEdit(){
-	//Connect to database
 	var db = Ti.Database.open('ltemaDB');
-
-	//Query - update transect
 	db.execute(	'UPDATE OR FAIL transect ' + 
 				'SET transect_name = \'' + $.transectName.value + '\' ' +
 				', surveyor = \'' + $.surveyor.value + '\' ' +
 				', comments = \'' + $.comments.value + '\' ' +
 				'WHERE transect_id = ' + transectID);
 	db.close();
+	Ti.App.fireEvent("app:refreshTransects");
+	$.modalNav.close();
 }
