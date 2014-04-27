@@ -54,8 +54,9 @@
 	left: 40,
 	top: 220,
 },
-"#stakeOrientation": {
+"#pickStake": {
 	left: 220,
+	right: 40,
 	top: 220
 },
 

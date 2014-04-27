@@ -1,6 +1,7 @@
 <Alloy>
 	<NavigationWindow id="modalNav">
 		<Window class="container" title="Transects" id="modalWin">
+			
 			<LeftNavButton>
 				<Button id="backBtn" title="Back" onClick="backBtnClick" />
 			</LeftNavButton>
@@ -19,7 +20,12 @@
 			<TextField id="plotDistance" />
 			
 			<Label id="stakeOriLbl" text="Stake Orientation:" />
-			<Label id="stakeOrientation" />
+			<TabbedBar id="pickStake">
+				<Labels>
+					<Label enabled="false" title="Top Left / Bottom Right" />
+                	<Label enabled="false" title="Top Right / Bottom Left" />
+				</Labels>
+			</TabbedBar>
 			
 			<Label id="commentsLbl" text="Comments:" />
 			<TextField id="comments" />

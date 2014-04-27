@@ -24,8 +24,15 @@ db.close();
 $.transectName.value = transectName;
 $.surveyor.value = surveyor;
 $.plotDistance.value = plotDistance;
-$.stakeOrientation.text = stakeOrientation;
 $.comments.value = comments;
+
+if (stakeOrientation === "Top Left / Bottom Right") {
+	$.pickStake.index = 0;
+} else if (stakeOrientation === "Top Right / Bottom Left") {
+	$.pickStake.index = 1;
+} else {
+	alert('invalid stakeOrientation value');
+}
 
 //Listen for keyboard return key, attempt to dismiss keyboard (not working at present - Issue # 11)
 $.transectName.addEventListener('return', function(e) {$.transectName.blur();});
@@ -69,6 +76,8 @@ function editBtnClick(e){
         $.transectName.editable = true;
 		$.surveyor.editable = true;
 		$.plotDistance.editable = true;
+		$.pickStake.labels[0].enabled = true;
+		$.pickStake.labels[1].enabled = true;
 		$.comments.editable = true;
         
         //disable the button button during edit mode
@@ -84,6 +93,8 @@ function editBtnClick(e){
         $.transectName.editable = false;
 		$.surveyor.editable = false;
 		$.plotDistance.editable = false;
+		$.pickStake.labels[0].enabled = false;
+		$.pickStake.labels[1].enabled = false;
 		$.comments.editable = false;
 		saveEdit();
     }
