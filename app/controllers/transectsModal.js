@@ -38,6 +38,11 @@ $.plotDistance.addEventListener('change', function(e) {
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 });
 
+//Listen and replace bad input on transectName
+//$.transectName.addEventListener('change', function (e) {
+//	e.source.value = e.source.value.replace(/[^0-9a-zA-Z ()_,.-]/,"");
+//});
+
 //initially disable fields
 $.transectName.editable = false;
 $.surveyor.editable = false;
