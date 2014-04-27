@@ -61,10 +61,7 @@ $.tbl.addEventListener('click', function(e){
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
-			//FORMSHEET does not support TextField.blur() as per issue #11 - resolution is under design discussion
-			//a solution is to use PAGESHEET instead, which fills the screen
-			//modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
 			navBarHidden : false
 		});
 	//row clicked, get transect view
