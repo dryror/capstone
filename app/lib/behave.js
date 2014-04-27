@@ -1,3 +1,14 @@
+/*
+ * Source: https://github.com/denvers/unit-test-titanium-alloy-project
+ * 
+ * How it works:
+ * -alloy.js calls behave.js
+ * -create a test (a spec) in /app/assets/spec
+ * -require the spec in alloy.js
+ * -Compile produces /tmp/junit-buildresults.xml
+ */
+
+
 var suites = [],
 	output = [],
 	specCount = 0,
