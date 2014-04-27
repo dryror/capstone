@@ -110,26 +110,27 @@ function saveEdit(){
 	var didError = false;
 	if ($.transectName.value.length < 2) {
 		alert('Transect Name should be at least 2 letters');
-		$.transectName.value = initialTransectName;
 		didError = true;
 	}
 	if ($.surveyor.value.length < 2) {
 		alert('Head surveyor name should be at least 2 letters');
-		$.surveyor.value = initialSurveyor;
 		didError = true;
 	}
 	if ($.plotDistance.value < 1) {
 		alert('Minimum plot distance is 1 meter');
-		$.plotDistance.value = initialPlotDistance;
 		didError = true;
 	}
 	if ($.plotDistance.value > 99) {
 		alert('Maximum plot distance is 99 meters');
-		$.plotDistance.value = initialPlotDistance;
 		didError = true;
 	}
 	
 	if (didError) {
+		//if a test failed, reset all values
+		$.transectName.value = initialTransectName;
+		$.surveyor.value = initialSurveyor;
+		$.plotDistance.value = initialPlotDistance;
+		$.plotDistance.value = initialPlotDistance;
 		return;
 	}
 	
