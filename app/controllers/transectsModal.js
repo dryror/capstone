@@ -28,9 +28,9 @@ $.stakeOrientation.text = stakeOrientation;
 $.comments.value = comments;
 
 //Listen for keyboard return key, attempt to dismiss keyboard (not working at present - Issue # 11)
-$.transectName.addEventListener('return', function(e) {alert('return key pressed');$.transectName.blur();});
-$.surveyor.addEventListener('return', function() {alert('return key pressed');$.surveyor.blur();});
-$.comments.addEventListener('return', function() {alert('return key pressed');$.comments.blur();});
+$.transectName.addEventListener('return', function(e) {$.transectName.blur();});
+$.surveyor.addEventListener('return', function() {$.surveyor.blur();});
+$.comments.addEventListener('return', function() {$.comments.blur();});
 
 //initially disable fields
 $.transectName.editable = false;
