@@ -16,7 +16,7 @@
 			<TextField id="surveyor" />
 			
 			<Label id="plotDistLbl" text="Plot Distance:" />
-			<Label id="plotDistance" />
+			<TextField id="plotDistance" />
 			
 			<Label id="stakeOriLbl" text="Stake Orientation:" />
 			<Label id="stakeOrientation" />

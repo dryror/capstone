@@ -23,18 +23,20 @@ db.close();
 //Assign label text fields
 $.transectName.value = transectName;
 $.surveyor.value = surveyor;
-$.plotDistance.text = plotDistance;
+$.plotDistance.value = plotDistance;
 $.stakeOrientation.text = stakeOrientation;
 $.comments.value = comments;
 
 //Listen for keyboard return key, attempt to dismiss keyboard (not working at present - Issue # 11)
 $.transectName.addEventListener('return', function(e) {$.transectName.blur();});
 $.surveyor.addEventListener('return', function() {$.surveyor.blur();});
+$.plotDistance.addEventListener('return', function() {$.plotDistance.blur();});
 $.comments.addEventListener('return', function() {$.comments.blur();});
 
 //initially disable fields
 $.transectName.editable = false;
 $.surveyor.editable = false;
+$.plotDistance.editable = false;
 $.comments.editable = false;
 
 
@@ -56,6 +58,7 @@ function editBtnClick(e){
         //Enable editing
         $.transectName.editable = true;
 		$.surveyor.editable = true;
+		$.plotDistance.editable = true;
 		$.comments.editable = true;
         
         //disable the button button during edit mode
@@ -70,6 +73,7 @@ function editBtnClick(e){
         //disable editing
         $.transectName.editable = false;
 		$.surveyor.editable = false;
+		$.plotDistance.editable = false;
 		$.comments.editable = false;
 		saveEdit();
     }
@@ -78,7 +82,7 @@ function editBtnClick(e){
 //Save changes to transect
 function saveEdit(){
 	var db = Ti.Database.open('ltemaDB');
-	db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, comments= ? WHERE transect_id= ?',
-				$.transectName.value, $.surveyor.value, $.comments.value, transectID);
+	db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, plot_distance= ?, comments= ? WHERE transect_id= ?',
+				$.transectName.value, $.surveyor.value, $.plotDistance.value, $.comments.value, transectID);
 	db.close();
 }
