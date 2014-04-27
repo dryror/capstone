@@ -33,6 +33,11 @@ $.surveyor.addEventListener('return', function() {$.surveyor.blur();});
 $.plotDistance.addEventListener('return', function() {$.plotDistance.blur();});
 $.comments.addEventListener('return', function() {$.comments.blur();});
 
+//Listen and replace bad input (non-numbers) on plotDistance
+$.plotDistance.addEventListener('change', function(e) {
+	e.source.value = e.source.value.replace(/[^0-9]+/,"");
+});
+
 //initially disable fields
 $.transectName.editable = false;
 $.surveyor.editable = false;
