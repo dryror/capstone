@@ -1,4 +1,4 @@
-/* A screen to edit transect details */
+/* A screen to view and edit transect details */
 
 //get transectID from calling window
 var args = arguments[0];
@@ -78,11 +78,8 @@ function editBtnClick(e){
 //Save changes and close
 function saveEdit(){
 	var db = Ti.Database.open('ltemaDB');
-	db.execute(	'UPDATE OR FAIL transect ' + 
-				'SET transect_name = \'' + $.transectName.value + '\' ' +
-				', surveyor = \'' + $.surveyor.value + '\' ' +
-				', comments = \'' + $.comments.value + '\' ' +
-				'WHERE transect_id = ' + transectID);
+	db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, comments= ? WHERE transect_id= ?',
+				$.transectName.value, $.surveyor.value, $.comments.value, transectID);
 	db.close();
 	Ti.App.fireEvent("app:refreshTransects");
 	$.modalNav.close();
