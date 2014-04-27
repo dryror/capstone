@@ -63,6 +63,7 @@ function exportBtn() {
 }
 
 function makeCSV(siteID) {
+	
 	//Query the database based on the siteID selected
 	var db = Ti.Database.open('ltemaDB');
 	
@@ -80,42 +81,64 @@ function makeCSV(siteID) {
 	   'plt.plot_id = pob.plot_id AND ' +
 	   'svy.site_id = ?', siteID);
 	
-	//Convert the result set into csv
+	//Get all the results and wrap them in double quotes
+	var fields = [];
+	for(var i = 0; i < rows.fieldCount();i++) {
+	    fields.push(rows.fieldName(i));
+	};
+	
+	var results = [];
+	var index = 0;
+	while (rows.isValidRow()) {
+		results[index] = {};
+		var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
+		results[index]['sampleStationName'] = ssName;
+	    for(var i=0; i < fields.length; i++) {
+	       results[index][fields[i]] = '"' + rows.fieldByName(fields[i]) + '"';
+	    }
+	    index++;
+	    rows.next();
+	};
+	
+	//Prepare the CSV files
 	var sampleStationTxt = "";
-	var dq = '"';
+	var generalSurveyTxt = "";
 	var nl = '\n';
 	var c = ',';
-	while (rows.isValidRow()) {	
-		
-		var parkName = dq + rows.fieldByName('park_name') + dq;
-		var sampleStationName = dq + rows.fieldByName('transect_name') + " " + rows.fieldByName('plot_name') + dq;
-		var plotUTMZone = dq + rows.fieldByName('utm_zone') + dq;
-		var plotUTMEast = dq + rows.fieldByName('utm_easting') + dq;
-		var plotUTMNorth = dq + rows.fieldByName('utm_northing') + dq;
-		var plotPhoto = dq + rows.fieldByName('plot_photo') + dq;
-		
-		sampleStationTxt += parkName + c + sampleStationName + c + plotUTMZone + c + plotUTMEast + c +
-			plotUTMNorth + c + plotPhoto + nl;
-		
-		rows.next();
+	
+	for (var i=0; i < results.length; i++) {
+		sampleStationTxt += results[i].park_name + c + results[i].sampleStationName + c +
+			results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
+			c + results[i].plot_photo + nl;
+		//TODO: Build generalSurvey string
 	}
  	
-    // creating output file in application data directory
-    var fileName = "Sample Station " + $.surveyPkr.getSelectedRow(0).title + ".csv";
-    var sampleStationFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, fileName);
+    // creating output files in application data directory
+    var ssFileName = "Sample Station " + $.surveyPkr.getSelectedRow(0).title + ".csv";
+    var sampleStationFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, ssFileName);
     
-    // writing data in output file 
+    var gsFileName = "General Survey " + $.surveyPkr.getSelectedRow(0).title + ".csv";
+    var generalSurveyFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, gsFileName);
+    
+    // writing data to output files
     sampleStationFile.write(sampleStationTxt); 
+    generalSurveyFile.write(generalSurveyTxt);
  
- 	// email the file	
+ 	// email the files	
     if(sampleStationFile.exists){
         var emailDialog = Ti.UI.createEmailDialog();
 		emailDialog.subject = "Test export";
 		emailDialog.toRecipients = ['test@test.com'];
-		var blob = sampleStationFile.read();
-		var readText = blob.text;
-		emailDialog.messageBody = readText;
+		
+		// For testing to see csv file data
+		var ssBlob = sampleStationFile.read();
+		var ssReadText = ssBlob.text;
+		var gsBlob = generalSurveyFile.read();
+		var gsReadText = gsBlob.text;
+		
+		emailDialog.messageBody = ssReadText + '\n' + gsReadText;
 		emailDialog.addAttachment(sampleStationFile);
+		emailDialog.addAttachment(generalSurveyFile);
 		emailDialog.open();
     }
 	
