@@ -110,7 +110,15 @@ function makeCSV(siteID) {
 		sampleStationTxt += results[i].park_name + c + results[i].sampleStationName + c +
 			results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
 			c + results[i].plot_photo + nl;
-		//TODO: Build generalSurvey string
+		
+		//TODO convert utc to date and time
+		var plotDate = results[i].utc;
+		var plotTime = results[i].utc;
+		
+		generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
+			plotDate + c + plotTime + c + results[i].surveyor + c + results[i].observation +
+			c + results[i].count + c + c + c + c + results[i].comments + c + results[i].ground_cover +
+			c + results[i].observation_photo + nl;
 	}
  	
     // creating output files in application data directory
@@ -127,7 +135,7 @@ function makeCSV(siteID) {
  	// email the files	
     if(sampleStationFile.exists){
         var emailDialog = Ti.UI.createEmailDialog();
-		emailDialog.subject = "Test export";
+		emailDialog.subject = 'LTEMA Export: ' + $.surveyPkr.getSelectedRow(0).title;
 		emailDialog.toRecipients = ['test@test.com'];
 		
 		// For testing to see csv file data
