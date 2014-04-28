@@ -7,8 +7,18 @@ function getPhoto(callback) {
 			Ti.API.debug('Our type was: ' + event.mediaType);
 			if (event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
 				
-				var myPhoto = event.media;
-				callback(myPhoto);
+			// THE PHOTO TAKEN
+			var myPhoto = event.media;
+			
+			// THE UTM IS CALLED HERE
+			//get the location when the phone was taken - UTM
+				var gps = require('gps');
+				gps.getCurrentLocation(function(UTMEasting, UTMNorthing, n_UTMZone) {
+					//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
+					
+					// CALLBACK - photo & utm information
+					callback(myPhoto, UTMEasting, UTMNorthing, n_UTMZone); 
+				});
 
 			} else {
 				alert("got the wrong type back =" + event.mediaType);
