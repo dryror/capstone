@@ -42,10 +42,15 @@ function doneBtn(){
 	}
 }
 
-function takePhoto(){
+function takePhoto() {		
+	
 	//call camera module and set thumbnail
 	var pic = require('camera');
-	pic.getPhoto(function(myPhoto) {
+	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+		//Set thumbnail
 		$.transectThumbnail.image = myPhoto;
+		
+		alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
+	
 	});
 }
