@@ -12,7 +12,8 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Retrieve existing sites from database
-		rows = db.execute('SELECT transect_id, transect_name, surveyor \
+		rows = db.execute('SELECT transect_id, transect_name, surveyor, \
+						utm_zone, utm_easting, utm_northing \
 						FROM transect \
 						WHERE site_id = ?', $.tbl.siteID); 
 		
@@ -23,9 +24,13 @@ function populateTable() {
 			var transectID = rows.fieldByName('transect_id');	
 			var transectName = rows.fieldByName('transect_name');
 			var surveyor = rows.fieldByName('surveyor');
+			var utmZone = rows.fieldByName('utm_zone');
+			var utmEasting = rows.fieldByName('utm_easting');
+			var utmNorthing = rows.fieldByName('utm_northing');
 		
 			//create a string to display from each entry
-			var transectDesc =  transectName + ' - ' + surveyor; 
+			var transectDesc =  transectName + ' - UTM Z:' + 
+					utmZone + ' E:' + utmEasting + ' N:' + utmNorthing; 
 			
 			//Create a new row
 				var newRow = Ti.UI.createTableViewRow({
