@@ -66,7 +66,7 @@ $.tbl.addEventListener('click', function(e){
 		});
 	//row clicked, get transect view
 	} else {
-		var plots = Alloy.createController("plots").getView();
+		var plots = Alloy.createController("plots", {transectID:e.rowData.transectID}).getView();
     	var nav = Alloy.Globals.navMenu;
     	nav.openWindow(plots);
 	} 
@@ -77,9 +77,69 @@ Ti.App.addEventListener("app:refreshTransects", function(e) {
 });
 
 //Edit button toggle
-function editBtn(){
-	alert('You Clicked the Edit Button');
+function editBtn(e){
+		//enable or disable edit mode
+    if (e.source.title == "Edit") {
+    	$.tbl.editing = true;
+        e.source.title = "Done";
+        //disable the add and export buttons during edit mode
+        $.addTransect.enabled = false;
+        
+        
+    } else { 
+        $.tbl.editing = false;
+        e.source.title = "Edit";
+        //enable the add and export button
+        $.addTransect.enabled = true;
+    }
 }
+
+//Enable or Disable the Edit button
+function toggleEditBtn(){
+	//get the number of total rows
+	var numRows = showTotalRowNumber();
+	//if no rows exist
+	if(numRows <= 0){
+		//disable Edit Button
+		$.editTransects.enabled = false;
+		$.editTransects.title = "Edit";
+        $.addTransect.enabled = true;
+	}else{
+		//enable Edit Button
+		$.editTransects.enabled = true;
+	}
+}
+
+//Function to get total number of rows (site surveys)
+function showTotalRowNumber(){
+	// Variable to get all section
+	var allSection = $.tbl.data;
+ 
+	var sectionNumber = 0;
+	var totalRows = 0;
+ 
+	for(sectionNumber = 0; sectionNumber < allSection.length; sectionNumber++){
+		// Get rows for each section
+		totalRows += allSection[sectionNumber].rowCount;
+	}
+	return totalRows;
+}
+
+//Delete event listener
+$.tbl.addEventListener('delete', function(e) { 
+	//get the site_id of the current row being deleted
+	var currentTransectID = e.rowData.transectID;
+    
+    //open database
+	var db = Ti.Database.open('ltemaDB');
+	
+	//delete current row from the database
+    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
+	db.close();
+	
+	//check if Edit button should be enabled/disabled - if no rows exist
+	toggleEditBtn();
+});
 
 //Navigate to addTransect - transect creation screen
 function addBtn(){

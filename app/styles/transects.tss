@@ -8,7 +8,7 @@
 "#headerView": {
 	height: Ti.UI.SIZE
 },
-"#addSite": {
+"#addTransect": {
 	top: 10,
 	left: 18
 }

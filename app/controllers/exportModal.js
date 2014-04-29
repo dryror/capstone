@@ -116,7 +116,7 @@ function makeCSV(siteID) {
 		var plotTime = results[i].utc;
 		
 		generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
-			plotDate + c + plotTime + c + results[i].surveyor + c + results[i].observation +
+			plotDate + c + plotTime + c + c + results[i].surveyor + c + results[i].observation +
 			c + results[i].count + c + c + c + c + results[i].comments + c + results[i].ground_cover +
 			c + results[i].observation_photo + nl;
 	}
@@ -136,7 +136,7 @@ function makeCSV(siteID) {
     if(sampleStationFile.exists){
         var emailDialog = Ti.UI.createEmailDialog();
 		emailDialog.subject = 'LTEMA Export: ' + $.surveyPkr.getSelectedRow(0).title;
-		emailDialog.toRecipients = ['test@test.com'];
+		emailDialog.toRecipients = ['rorydrysdale@gmail.com'];
 		
 		// For testing to see csv file data
 		var ssBlob = sampleStationFile.read();
