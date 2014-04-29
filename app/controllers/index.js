@@ -2,49 +2,52 @@
 var yourDb = Titanium.Database.open('ltemaDB');
 yourDb.remove();
 
-//Install and open database
-var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
-
-//Query - Retrieve existing sites from database
-rows = db.execute('SELECT site_id, year, protocol_name, park_name ' + 
-				'FROM site_survey s, protocol p, park prk ' + 
-				'WHERE s.protocol_id = p.protocol_id ' + 
-				'AND s.park_id = prk.park_id ');
-
-//Get requested data from each row in table
-var id_counter = 0;
-while (rows.isValidRow()) {
-	id_counter++;	
-	var siteID = rows.fieldByName('site_id');
-	var year = rows.fieldByName('year');
-	var protocolName = rows.fieldByName('protocol_name');
-	var parkName = rows.fieldByName('park_name');
+try {
+	//Install and open database
+	var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
 	
-	//create a string from each entry
-	var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
+	//Query - Retrieve existing sites from database
+	rows = db.execute('SELECT site_id, year, protocol_name, park_name \
+					FROM site_survey s, protocol p, park prk \
+					WHERE s.protocol_id = p.protocol_id \
+					AND s.park_id = prk.park_id ');
 	
-	//create a new row
-		var newRow = Ti.UI.createTableViewRow({
-			title : siteSurvey,
-			siteID : siteID
-		});
+	//Get requested data from each row in table
+	while (rows.isValidRow()) {	
+		var siteID = rows.fieldByName('site_id');
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
 		
-		//create and add info icon for the row
-		var infoButton = Ti.UI.createButton({
-			style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
-			right : 10,
-			height : 48, //this is deciding the size of the rows at the moment
-			width : 48, 
-		});
-		newRow.add(infoButton);
+		//create a string from each entry
+		var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
 		
-   		//Add row to the table view
-  		$.tbl.appendRow(newRow);
-
-	rows.next();
+		//create a new row
+			var newRow = Ti.UI.createTableViewRow({
+				title : siteSurvey,
+				siteID : siteID
+			});
+			
+			//create and add info icon for the row
+			var infoButton = Ti.UI.createButton({
+				style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
+				right : 10,
+				height : 48, //this is deciding the size of the rows at the moment
+				width : 48, 
+			});
+			newRow.add(infoButton);
+			
+	   		//Add row to the table view
+	  		$.tbl.appendRow(newRow);
+	
+		rows.next();
+	}
+} catch(e){
+	
+} finally {
+	rows.close();
+	db.close();
 }
-rows.close();
-db.close();
 
 //Will check if Edit button should be enabled/disabled - if no rows exist
 toggleEditBtn();
@@ -112,7 +115,7 @@ function exportBtn(){
 	modal.open({
 		modal : true,
 		modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
 		navBarHidden : false
 	});
 }
@@ -121,13 +124,17 @@ function exportBtn(){
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
 	var currentSiteID = e.rowData.siteID;
-    
-    //open database
-	var db = Ti.Database.open('ltemaDB');
-	
-	//delete current row from the database
-    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
-	db.close();
+    try{
+	    //open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//delete current row from the database
+	    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
+	} catch(e) {
+		
+	} finally {
+		db.close();
+	}
 	
 	//check if Edit button should be enabled/disabled - if no rows exist
 	toggleEditBtn();
@@ -141,7 +148,7 @@ $.tbl.addEventListener('click', function(e) {
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
 			navBarHidden : false
 		});
 	//row clicked, get transect view

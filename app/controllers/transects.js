@@ -7,49 +7,53 @@ function populateTable() {
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
-	
-	//Open Database
-	var db = Ti.Database.open('ltemaDB');
-	
-	//Query - Retrieve existing sites from database
-	rows = db.execute('SELECT transect_id, transect_name, surveyor ' + 
-					'FROM transect ' + 
-					'WHERE site_id = '+ $.tbl.siteID); 
-	
-	//get requested data from each row in table
-	var id_counter = 0;
-	while (rows.isValidRow()) {
-		id_counter++;
-		var transectID = rows.fieldByName('transect_id');	
-		var transectName = rows.fieldByName('transect_name');
-		var surveyor = rows.fieldByName('surveyor');
-	
-		//create a string to display from each entry
-		var transectDesc =  transectName + ' - ' + surveyor; 
+	try {
+		//Open Database
+		var db = Ti.Database.open('ltemaDB');
 		
-		//Create a new row
-			var newRow = Ti.UI.createTableViewRow({
-				title : transectDesc,
-				transectID : transectID
-			});
+		//Query - Retrieve existing sites from database
+		rows = db.execute('SELECT transect_id, transect_name, surveyor \
+						FROM transect \
+						WHERE site_id = ?', $.tbl.siteID); 
+		
+		//get requested data from each row in table
+		var id_counter = 0;
+		while (rows.isValidRow()) {
+			id_counter++;
+			var transectID = rows.fieldByName('transect_id');	
+			var transectName = rows.fieldByName('transect_name');
+			var surveyor = rows.fieldByName('surveyor');
+		
+			//create a string to display from each entry
+			var transectDesc =  transectName + ' - ' + surveyor; 
 			
-			//create and add info icon for the row
-			var infoButton = Ti.UI.createButton({
-				style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
-				right : 10,
-				height : 48, //this is deciding the size of the rows at the moment
-				width : 48, 
-				id : id_counter
-			});
-			newRow.add(infoButton);
-			
-	   		//Add row to the table view
-	  		$.tbl.appendRow(newRow);
-	
-		rows.next();
+			//Create a new row
+				var newRow = Ti.UI.createTableViewRow({
+					title : transectDesc,
+					transectID : transectID
+				});
+				
+				//create and add info icon for the row
+				var infoButton = Ti.UI.createButton({
+					style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
+					right : 10,
+					height : 48, //this is deciding the size of the rows at the moment
+					width : 48, 
+					id : id_counter
+				});
+				newRow.add(infoButton);
+				
+		   		//Add row to the table view
+		  		$.tbl.appendRow(newRow);
+		
+			rows.next();
+		}
+	} catch(e) {
+		
+	} finally {
+		rows.close();
+		db.close();
 	}
-	rows.close();
-	db.close();
 }
 
 populateTable();
@@ -110,7 +114,7 @@ function toggleEditBtn(){
 	}
 }
 
-//Function to get total number of rows (site surveys)
+//Function to get total number of rows (transects)
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
@@ -130,12 +134,17 @@ $.tbl.addEventListener('delete', function(e) {
 	//get the site_id of the current row being deleted
 	var currentTransectID = e.rowData.transectID;
     
-    //open database
-	var db = Ti.Database.open('ltemaDB');
-	
-	//delete current row from the database
-    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
-	db.close();
+    try {
+	    //open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//delete current row from the database
+	    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
+	} catch(e) {
+		
+	} finally { 
+		db.close();
+	}
 	
 	//check if Edit button should be enabled/disabled - if no rows exist
 	toggleEditBtn();
