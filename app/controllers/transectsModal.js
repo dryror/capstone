@@ -18,10 +18,6 @@ try {
 	var stakeOrientation = resultRow.fieldByName('stake_orientation');
 	var comments = resultRow.fieldByName('comments'); 
 	
-	var initialTransectName = transectName;
-	var initialSurveyor = surveyor;
-	var initialPlotDistance = plotDistance;
-	
 	//Assign editable TextField values
 	$.transectName.value = transectName;
 	$.surveyor.value = surveyor;
@@ -51,6 +47,42 @@ $.comments.editable = false;
 
 
 /* Listeners */
+
+//TODO: Confirm all conditions with project specs, project sponsor
+// When an input field loses focus check for errors
+$.transectName.addEventListener('blur', function(e) {
+	if ($.transectName.value.length < 2) {
+		$.transectError.visible = true;
+		$.transectError.text = "Transect name should be at least 2 characters";
+	} else {
+		$.transectError.visible = false;
+	}
+});
+$.surveyor.addEventListener('blur', function(e) {
+	if ($.surveyor.value.length < 2) {
+		$.surveyorError.visible = true;
+		$.surveyorError.text = "Surveyor should have at least 2 characters";
+	} else {
+		$.surveyorError.visible = false;
+	}
+});
+$.plotDistance.addEventListener('blur', function(e) {
+	if ($.plotDistance.value < 1) {
+		$.plotDistanceError.visible = true;
+		$.plotDistanceError.text = "Plot distance should be at least 1 meter";
+	} else if ($.plotDistance.value > 50) {
+		$.plotDistanceError.visible = true;
+		$.plotDistanceError.text = "Plot distance should be at most 50 meters";
+	} else {
+		$.plotDistanceError.visible = false;
+	}
+});
+$.stakeBar.addEventListener('blur', function(e) {
+	//TODO
+});
+$.comments.addEventListener('blur', function(e) {
+	//TODO
+});
 
 // Replace bad input (non-numbers) on plotDistance TextField
 $.plotDistance.addEventListener('change', function(e) {
@@ -84,7 +116,15 @@ function editBtnClick(e){
         //disable the button button during edit mode
         $.backBtn.enabled = false;
         
-    } else { 
+    } else { //title is "Done"
+    	//fire error-checking listeners
+    	$.transectName.blur();
+    	$.surveyor.blur();
+    	$.plotDistance.blur();
+   		if (($.transectError.visible == true)||($.surveyorError.visible == true)||($.plotDistanceError.visible == true)) {
+   			return;
+   		}
+    	
         $.modalWin.editing = false;
         e.source.title = "Edit";
         //enable the back button
@@ -97,51 +137,28 @@ function editBtnClick(e){
 		$.stakeBar.labels[0].enabled = false;
 		$.stakeBar.labels[1].enabled = false;
 		$.comments.editable = false;
+		
+		//dismiss error labels - corresponding fields have been set to initial values
+		$.transectError.visible = false;
+		$.surveyorError.visible = false;
+		$.plotDistanceError.visible = false;
+		
 		saveEdit();
     }
 }
 
 //Save changes to transect
 function saveEdit(){
-	//validate input
-	//TODO: Confirm all conditions with project specs, project sponsor
-	var didError = false;
-	if ($.transectName.value.length < 2) {
-		alert('Transect Name should be at least 2 letters');
-		didError = true;
-	}
-	if ($.surveyor.value.length < 2) {
-		alert('Head surveyor name should be at least 2 letters');
-		didError = true;
-	}
-	if ($.plotDistance.value < 1) {
-		alert('Minimum plot distance is 1 meter');
-		didError = true;
-	}
-	if ($.plotDistance.value > 99) {
-		alert('Maximum plot distance is 99 meters');
-		didError = true;
+	try {
+		var db = Ti.Database.open('ltemaDB');
+		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, plot_distance= ?, comments= ? WHERE transect_id= ?',
+					$.transectName.value, $.surveyor.value, $.plotDistance.value, $.comments.value, transectID);		
+	} catch (e){
+		alert ('DEV ALERT: transectsModal saveEdit() catch');
+	} finally {
+		db.close();
 	}
 	
-	if (didError) {
-		//if a test failed, reset all values
-		$.transectName.value = initialTransectName;
-		$.surveyor.value = initialSurveyor;
-		$.plotDistance.value = initialPlotDistance;
-		$.plotDistance.value = initialPlotDistance;
-		return;
-	}
-	
-	//input is valid, store it
-	var db = Ti.Database.open('ltemaDB');
-	db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, plot_distance= ?, comments= ? WHERE transect_id= ?',
-				$.transectName.value, $.surveyor.value, $.plotDistance.value, $.comments.value, transectID);
-	db.close();
-	
-	//refresh successfully stored values to cope with multiple edits
-	initialTransectName = $.transectName.value;
-	initialSurveyor = $.surveyor.value;
-	initialPlotDistance = $.plotDistance.value;
 }
 
 //Navigate back
