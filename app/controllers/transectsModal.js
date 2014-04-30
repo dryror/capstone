@@ -49,13 +49,10 @@ $.surveyor.editable = false;
 $.plotDistance.editable = false;
 $.comments.editable = false;
 
-// Listen for keyboard 'return' key and dismiss keyboard layout (//TODO: remove, PAGEVIEW modal style fixes)
-$.transectName.addEventListener('return', function(e) {$.transectName.blur();});
-$.surveyor.addEventListener('return', function() {$.surveyor.blur();});
-$.plotDistance.addEventListener('return', function() {$.plotDistance.blur();});
-$.comments.addEventListener('return', function() {$.comments.blur();});
 
-//Listen and replace bad input (non-numbers) on plotDistance
+/* Listeners */
+
+// Replace bad input (non-numbers) on plotDistance TextField
 $.plotDistance.addEventListener('change', function(e) {
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 });
