@@ -12,6 +12,10 @@
 	font: {fontSize: 20}
 },
 
+".error": {
+	font: {fontSize: 14},
+	color: "Red"
+},
 
 "#transectLbl": {
 	left: 40,
@@ -24,6 +28,10 @@
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
 },
+"#transectError": {
+	left: 225,
+	top: 70
+},
 
 "#surveyorLbl": {
 	left: 40,
@@ -35,6 +43,10 @@
 	top: 100,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
+},
+"#surveyorError": {
+	left: 225,
+	top: 130
 },
 
 "#plotDistLbl": {
@@ -49,15 +61,23 @@
 	keyboardType:Ti.UI.KEYBOARD_NUMBER_PAD,
 	maxLength:128
 },
+"#plotDistanceError": {
+	left: 225,
+	top: 190
+},
 
 "#stakeOriLbl": {
 	left: 40,
 	top: 220,
 },
-"#pickStake": {
+"#stakeBar": {
 	left: 220,
 	right: 40,
 	top: 220
+},
+"#stakeError": {
+	left: 225,
+	top: 250
 },
 
 "#commentsLbl": {
@@ -70,4 +90,8 @@
 	top: 280,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
+},
+"#commentsError": {
+	left: 225,
+	top: 310
 }

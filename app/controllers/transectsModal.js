@@ -30,9 +30,9 @@ try {
 	
 	//TODO: perhaps an ENUM or CONSTANT would be useful here
 	if (stakeOrientation === "Top Left / Bottom Right") {
-		$.pickStake.index = 0;
+		$.stakeBar.index = 0;
 	} else if (stakeOrientation === "Top Right / Bottom Left") {
-		$.pickStake.index = 1;
+		$.stakeBar.index = 1;
 	} else {
 		alert('invalid stakeOrientation value');
 	}
@@ -77,8 +77,8 @@ function editBtnClick(e){
         $.transectName.editable = true;
 		$.surveyor.editable = true;
 		$.plotDistance.editable = true;
-		$.pickStake.labels[0].enabled = true;
-		$.pickStake.labels[1].enabled = true;
+		$.stakeBar.labels[0].enabled = true;
+		$.stakeBar.labels[1].enabled = true;
 		$.comments.editable = true;
         
         //disable the button button during edit mode
@@ -94,8 +94,8 @@ function editBtnClick(e){
         $.transectName.editable = false;
 		$.surveyor.editable = false;
 		$.plotDistance.editable = false;
-		$.pickStake.labels[0].enabled = false;
-		$.pickStake.labels[1].enabled = false;
+		$.stakeBar.labels[0].enabled = false;
+		$.stakeBar.labels[1].enabled = false;
 		$.comments.editable = false;
 		saveEdit();
     }
