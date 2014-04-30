@@ -1,43 +1,55 @@
 /* A screen to view and edit transect details */
 
-//get transectID from calling window
+// Get transectID from calling window
 var args = arguments[0];
 var transectID = args.transectID;
 
-//Query the database for values associated with a transectID
-var db = Ti.Database.open('ltemaDB');
-
-row = db.execute(	'SELECT transect_id, transect_name, surveyor, plot_distance, stake_orientation, comments ' +
-					'FROM transect t ' + 
-					'WHERE transect_id = ' + transectID);					
-
-var transectName = row.fieldByName('transect_name');
-var initialTransectName = transectName;
-var surveyor = row.fieldByName('surveyor');
-var initialSurveyor = surveyor;
-var plotDistance = row.fieldByName('plot_distance');
-var initialPlotDistance = plotDistance;
-var stakeOrientation = row.fieldByName('stake_orientation');
-var comments = row.fieldByName('comments');
-
-row.close();
-db.close();
-
-//Assign label text fields
-$.transectName.value = transectName;
-$.surveyor.value = surveyor;
-$.plotDistance.value = plotDistance;
-$.comments.value = comments;
-
-if (stakeOrientation === "Top Left / Bottom Right") {
-	$.pickStake.index = 0;
-} else if (stakeOrientation === "Top Right / Bottom Left") {
-	$.pickStake.index = 1;
-} else {
-	alert('invalid stakeOrientation value');
+// Query the database and store values associated with a transectID
+try {
+	var db = Ti.Database.open('ltemaDB');
+	
+	resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, plot_distance, stake_orientation, comments \
+							FROM transect t \
+							WHERE transect_id = ?', transectID);					
+	
+	var transectName = resultRow.fieldByName('transect_name');
+	var surveyor = resultRow.fieldByName('surveyor');
+	var plotDistance = resultRow.fieldByName('plot_distance');
+	var stakeOrientation = resultRow.fieldByName('stake_orientation');
+	var comments = resultRow.fieldByName('comments'); 
+	
+	var initialTransectName = transectName;
+	var initialSurveyor = surveyor;
+	var initialPlotDistance = plotDistance;
+	
+	//Assign editable TextField values
+	$.transectName.value = transectName;
+	$.surveyor.value = surveyor;
+	$.plotDistance.value = plotDistance;
+	$.comments.value = comments;
+	
+	//TODO: perhaps an ENUM or CONSTANT would be useful here
+	if (stakeOrientation === "Top Left / Bottom Right") {
+		$.pickStake.index = 0;
+	} else if (stakeOrientation === "Top Right / Bottom Left") {
+		$.pickStake.index = 1;
+	} else {
+		alert('invalid stakeOrientation value');
+	}
+} catch (e) {
+	alert ('DEV ALERT - transectsModal try/catch failed');
+} finally {
+	resultRow.close();
+	db.close();
 }
 
-//Listen for keyboard return key, attempt to dismiss keyboard (not working at present - Issue # 11)
+// Initially disable input fields
+$.transectName.editable = false;
+$.surveyor.editable = false;
+$.plotDistance.editable = false;
+$.comments.editable = false;
+
+// Listen for keyboard 'return' key and dismiss keyboard layout (//TODO: remove, PAGEVIEW modal style fixes)
 $.transectName.addEventListener('return', function(e) {$.transectName.blur();});
 $.surveyor.addEventListener('return', function() {$.surveyor.blur();});
 $.plotDistance.addEventListener('return', function() {$.plotDistance.blur();});
@@ -48,25 +60,14 @@ $.plotDistance.addEventListener('change', function(e) {
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 });
 
+// TESTING - an example of restricting the keyboard input
 //Listen and replace bad input on transectName
 //$.transectName.addEventListener('change', function (e) {
 //	e.source.value = e.source.value.replace(/[^0-9a-zA-Z ()_,.-]/,"");
 //});
 
-//initially disable fields
-$.transectName.editable = false;
-$.surveyor.editable = false;
-$.plotDistance.editable = false;
-$.comments.editable = false;
-
 
 /* Functions */
-
-//Navigate back
-function backBtnClick(){
-	Ti.App.fireEvent("app:refreshTransects");
-	$.modalNav.close();
-}
 
 //swaps editable property of fields
 function editBtnClick(e){
@@ -144,4 +145,10 @@ function saveEdit(){
 	initialTransectName = $.transectName.value;
 	initialSurveyor = $.surveyor.value;
 	initialPlotDistance = $.plotDistance.value;
+}
+
+//Navigate back
+function backBtnClick(){
+	Ti.App.fireEvent("app:refreshTransects");
+	$.modalNav.close();
 }
