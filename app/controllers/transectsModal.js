@@ -138,11 +138,6 @@ function editBtnClick(e){
 		$.stakeBar.labels[1].enabled = false;
 		$.comments.editable = false;
 		
-		//dismiss error labels - corresponding fields have been set to initial values
-		$.transectError.visible = false;
-		$.surveyorError.visible = false;
-		$.plotDistanceError.visible = false;
-		
 		saveEdit();
     }
 }
