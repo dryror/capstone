@@ -1,47 +1,5 @@
-//Query the database based for site surveys that have at least 1 transect with 1 plot and 1 observation
-try {
-	var db = Ti.Database.open('ltemaDB');
-	
-	var rows = db.execute('SELECT svy.site_id, prk.park_name, svy.year, pro.protocol_name \
-		FROM site_survey svy, park prk, protocol pro, transect tst, plot plt, plot_observation pob \
-		WHERE svy.park_id = prk.park_id AND \
-		svy.protocol_id = pro.protocol_id AND \
-		svy.site_id = tst.site_id AND \
-		tst.transect_id = plt.transect_id AND \
-		plt.plot_id = pob.plot_id \
-		GROUP BY svy.site_id');
-	
-	var data = [];
-	var index = 0;
-	while (rows.isValidRow()) {	
-		
-		var siteID = rows.fieldByName('site_id');
-		var year = rows.fieldByName('year');
-		var protocolName = rows.fieldByName('protocol_name');
-		var parkName = rows.fieldByName('park_name');
-		
-		//create a string from each entry
-		var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
-		
-		//create a new row
-		var newRow = Ti.UI.createPickerRow({
-			title : siteSurvey,
-			siteID : siteID
-		});
-		
-		data[index] = newRow;
-		index ++;
-		rows.next();
-	}
-	
-	//Add row to the table view
-	$.surveyPkr.add(data);
-} catch (e) {
-	
-} finally {
-	rows.close();
-	db.close();
-}
+// Files to be uploaded to server
+var filesToSend = [];
 
 function backBtnClick(){
 	$.modalNav.close();
@@ -63,13 +21,66 @@ function doneSelectBtn() {
 
 function exportBtn() {
 	var selectedSite = $.surveyPkr.getSelectedRow(0).siteID;
-	makeCSV(selectedSite);
+	if (makeCSV(selectedSite)) {
+		for (var i = 0; i < filesToSend.length; i++) {
+			exportFile(filesToSend[i], $.surveyPkr.getSelectedRow(0).title);
+		}
+	}
 }
 
-function makeCSV(siteID) {
+// Query the database based for site surveys that are eligable for export
+// A site survey must have at least 1 transect with 1 plot with 1 observation before it can be exported
+try {
+	var db = Ti.Database.open('ltemaDB');
 	
+	var rows = db.execute('SELECT svy.site_id, prk.park_name, svy.year, pro.protocol_name \
+		FROM site_survey svy, park prk, protocol pro, transect tst, plot plt, plot_observation pob \
+		WHERE svy.park_id = prk.park_id AND \
+		svy.protocol_id = pro.protocol_id AND \
+		svy.site_id = tst.site_id AND \
+		tst.transect_id = plt.transect_id AND \
+		plt.plot_id = pob.plot_id \
+		GROUP BY svy.site_id');
+	
+	// Create a picker row for each site survey that can be exported
+	var data = [];
+	var index = 0;
+	while (rows.isValidRow()) {	
+		
+		var siteID = rows.fieldByName('site_id');
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+		
+		// Build the picker row title
+		var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
+		
+		// Create a new picker row
+		var newRow = Ti.UI.createPickerRow({
+			title : siteSurvey,
+			siteID : siteID
+		});
+		
+		data[index] = newRow;
+		index ++;
+		rows.next();
+	}
+	
+	// Add the rows to the picker
+	$.surveyPkr.add(data);
+	
+} catch (e) {
+	//TODO remove after testing complete
+	alert("Database access error: " + e.message);
+} finally {
+	rows.close();
+	db.close();
+}
+
+// Create the CSV files for the Site Survey selected for export
+function makeCSV(siteID) {
 	try{
-		//Query the database based on the siteID selected
+		// Query the database based on the siteID selected
 		var db = Ti.Database.open('ltemaDB');
 		
 		var rows = db.execute('SELECT prk.park_name, tct.transect_name, plt.plot_name, \
@@ -86,16 +97,24 @@ function makeCSV(siteID) {
 		   plt.plot_id = pob.plot_id AND \
 		   svy.site_id = ?', siteID);
 		
-		//Get all the results and wrap them in double quotes
+		// Get the field names
 		var fields = [];
 		for(var i = 0; i < rows.fieldCount();i++) {
 		    fields.push(rows.fieldName(i));
 		};
 		
+		// Create an array of result objects
 		var results = [];
 		var index = 0;
 		while (rows.isValidRow()) {
 			results[index] = {};
+			
+			// Add photos to array of files
+			filesToSend.push(rows.fieldByName('plot_photo'));
+			filesToSend.push(rows.fieldByName('transect_photo'));
+			filesToSend.push(rows.fieldByName('observation_photo'));
+			
+			// Wrap results in "" to escape any commas entered
 			var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
 			results[index]['sampleStationName'] = ssName;
 		    for(var i=0; i < fields.length; i++) {
@@ -104,19 +123,24 @@ function makeCSV(siteID) {
 		    index++;
 		    rows.next();
 		};
-	} catch (e) {
 		
+	} catch (e) {
+		//TODO remove after testing complete
+		alert(e.message);
+		return false;
 	} finally {
 		rows.close();
 		db.close();
 	}
-	//Prepare the CSV files
+	
+	// Prepare the CSV files
 	var sampleStationTxt = "";
 	var generalSurveyTxt = "";
 	var nl = '\n';
 	var c = ',';
 	
 	for (var i=0; i < results.length; i++) {
+		// CSV for Sample Station output
 		sampleStationTxt += results[i].park_name + c + results[i].sampleStationName + c +
 			results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
 			c + results[i].plot_photo + nl;
@@ -125,42 +149,69 @@ function makeCSV(siteID) {
 		var plotDate = results[i].utc;
 		var plotTime = results[i].utc;
 		
+		// CSV for General Survey output
 		generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
 			plotDate + c + plotTime + c + c + results[i].surveyor + c + results[i].observation +
 			c + results[i].count + c + c + c + c + results[i].comments + c + results[i].ground_cover +
-			c + results[i].observation_photo + nl;
+			c + results[i].observation_photo + nl;		
 	}
  	
-    // creating output files in application data directory
+    // Create the CSV files
     try{
-	    var ssFileName = "Sample Station " + $.surveyPkr.getSelectedRow(0).title + ".csv";
+	    var ssFileName = "Sample Station.csv";
 	    var sampleStationFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, ssFileName);
-	    
-	    var gsFileName = "General Survey " + $.surveyPkr.getSelectedRow(0).title + ".csv";
-	    var generalSurveyFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, gsFileName);
-	    
-	    // writing data to output files
 	    sampleStationFile.write(sampleStationTxt); 
+	    filesToSend.push(ssFileName);
+	    
+	    var gsFileName = "General Survey.csv";
+	    var generalSurveyFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, gsFileName);
 	    generalSurveyFile.write(generalSurveyTxt);
-	 	
-	 	// email the files	
-	    if(sampleStationFile.exists && generalSurveyFile.exists){
-	        var emailDialog = Ti.UI.createEmailDialog();
-			emailDialog.subject = 'LTEMA Export: ' + $.surveyPkr.getSelectedRow(0).title;
-			emailDialog.toRecipients = ['rorydrysdale@gmail.com'];
-			
-			// For testing to see csv file data
-			var ssBlob = sampleStationFile.read();
-			var ssReadText = ssBlob.text;
-			var gsBlob = generalSurveyFile.read();
-			var gsReadText = gsBlob.text;
-			
-			emailDialog.messageBody = ssReadText + '\n' + gsReadText;
-			emailDialog.addAttachment(sampleStationFile);
-			emailDialog.addAttachment(generalSurveyFile);
-			emailDialog.open();
-	    }
+	    filesToSend.push(gsFileName);
 	} catch(e) {
-		
+		//TODO remove after testing complete
+		alert(e.message);
+		return false;
+	} finally {
+		return true;
 	}
 }
+
+// Upload a single file to the server
+function exportFile(fileName, folderName) {
+	// Open the file
+	try {
+		var fileToExport = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, fileName);
+		// Check if the file you are trying to upload exists
+		if (!fileToExport.exists()) {
+			return;
+		}
+	} catch(e) {
+		//TODO remove after testing complete
+		alert(e.message);
+	}
+	
+	// Send the file to the server
+	try {
+		var data_to_send = { 
+		    "file": fileToExport.read(),
+		    "path": folderName
+		};
+		xhr = Titanium.Network.createHTTPClient();
+		xhr.open("POST","http://ltema.breakerarts.com/uploadfile.php");
+		xhr.setRequestHeader("enctype", "multipart/form-data");
+		xhr.setRequestHeader('User-Agent','My User Agent');
+		xhr.send(data_to_send);
+		
+		// Check the response
+		xhr.onload = function() {
+		    alert(this.responseText);
+		    Ti.API.info(this.responseText); 
+		};
+	} catch(e) {
+		//TODO remove after testing complete
+		alert(e.message);
+	}
+}
+
+
+
