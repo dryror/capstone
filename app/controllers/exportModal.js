@@ -1,4 +1,5 @@
 // Files to be uploaded to server
+var serverAddress = "http://ltema.breakerarts.com/uploadfile.php";
 var filesToSend = [];
 
 function backBtnClick(){
@@ -21,6 +22,8 @@ function doneSelectBtn() {
 
 function exportBtn() {
 	var selectedSite = $.surveyPkr.getSelectedRow(0).siteID;
+	
+	// Create the CSV and export all files and photos
 	if (makeCSV(selectedSite)) {
 		for (var i = 0; i < filesToSend.length; i++) {
 			exportFile(filesToSend[i], $.surveyPkr.getSelectedRow(0).title);
@@ -158,12 +161,12 @@ function makeCSV(siteID) {
  	
     // Create the CSV files
     try{
-	    var ssFileName = "Sample Station.csv";
+	    var ssFileName = "SampleStation.csv";
 	    var sampleStationFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, ssFileName);
 	    sampleStationFile.write(sampleStationTxt); 
 	    filesToSend.push(ssFileName);
 	    
-	    var gsFileName = "General Survey.csv";
+	    var gsFileName = "GeneralSurvey.csv";
 	    var generalSurveyFile = Titanium.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory, gsFileName);
 	    generalSurveyFile.write(generalSurveyTxt);
 	    filesToSend.push(gsFileName);
@@ -197,7 +200,7 @@ function exportFile(fileName, folderName) {
 		    "path": folderName
 		};
 		xhr = Titanium.Network.createHTTPClient();
-		xhr.open("POST","http://ltema.breakerarts.com/uploadfile.php");
+		xhr.open("POST", serverAddress);
 		xhr.setRequestHeader("enctype", "multipart/form-data");
 		xhr.setRequestHeader('User-Agent','My User Agent');
 		xhr.send(data_to_send);
