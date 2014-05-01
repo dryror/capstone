@@ -32,8 +32,8 @@ function doneBtn(){
 		var db = Ti.Database.open('ltemaDB');
 	
 		//Insert Query - add row to transect table
-		db.execute(	'INSERT INTO transect (transect_name,surveyor,plot_distance,stake_orientation,comments,site_id) VALUES (?,?,?,?,?,?)', 
-					$.tsctName.value, $.srvyName.value, $.plotDist.value, stakeText, $.comments.value, siteID);
+		db.execute(	'INSERT INTO transect (transect_name,surveyor,other_surveyors,plot_distance,stake_orientation,comments,site_id) VALUES (?,?,?,?,?,?,?)', 
+					$.tsctName.value, $.srvyName.value, $.otherSrvyName.value, $.plotDist.value, stakeText, $.comments.value, siteID);
 		//Close the database
 		db.close();
 		//refresh and close
