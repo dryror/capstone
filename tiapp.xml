@@ -3,11 +3,11 @@
     <id>ca.bc.gov.env.ltema</id>
     <name>LTEMA</name>
     <version>1.0</version>
-    <publisher>rory</publisher>
-    <url>http://ltema.breakerarts.com</url>
-    <description>not specified</description>
-    <copyright>2014 by rory</copyright>
-    <icon>appicon.png</icon>
+    <publisher>BC Parks</publisher>
+    <url>http://www.gov.bc.ca/env/</url>
+    <description>BC Parks Long-Term Ecological Monitoring Application</description>
+    <copyright>2014 by BC Parks</copyright>
+    <icon>appIcon@2x.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
@@ -52,7 +52,7 @@
         <target device="android">false</target>
         <target device="blackberry">false</target>
         <target device="ipad">true</target>
-        <target device="iphone">false</target>
+        <target device="iphone">true</target>
         <target device="mobileweb">false</target>
         <target device="tizen">false</target>
     </deployment-targets>
