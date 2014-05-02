@@ -1,8 +1,8 @@
-#appname: LTEMA
-#publisher: Capstone
-#url: https://github.com/dryror/capstone
-#image: appicon.png
-#appid: com.ltema
-#desc: undefined
-#type: ipad
-#guid: 6036a265-66dd-46f9-b5e4-f8e8e6b27567
+#appname:LTEMA
+#publisher:rory
+#url:http://ltema.breakerarts.com
+#image:appicon.png
+#appid:ca.bc.gov.env.ltema
+#desc:not specified
+#type:ipad
+#guid:6036a265-66dd-46f9-b5e4-f8e8e6b27567

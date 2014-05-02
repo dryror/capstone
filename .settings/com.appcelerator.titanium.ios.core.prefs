@@ -1,11 +1,13 @@
 eclipse.preferences.version=1
 iosLaunchConfigurationAttributes/ATTR_MINIFY=true
 iosLaunchConfigurationAttributes/ATTR_PROJECT_NAME=capstone
-iosLaunchConfigurationAttributes/appid=com.breakerarts.ltema
-iosLaunchConfigurationAttributes/certificate=Nick Gulajec (NS92Y7P43G)
+iosLaunchConfigurationAttributes/appid=ca.bc.gov.env.ltema
+iosLaunchConfigurationAttributes/certificate=Sierra Systems Group Inc. (86FTN7K6EQ)
+iosLaunchConfigurationAttributes/distribute_path=/Users/rory/Desktop/adHoc
 iosLaunchConfigurationAttributes/keychain=
+iosLaunchConfigurationAttributes/output_format=ipa
 iosLaunchConfigurationAttributes/sdk_version=7.1
-iosLaunchConfigurationAttributes/uuid=E740C0E0-EFD9-4197-AE00-A28F931111B6
+iosLaunchConfigurationAttributes/uuid=AF30A6B1-8B85-4A01-8C10-151481C9FD94
 provisioning_profiles/development/0529377C-6295-4032-9B75-2620C9A16035/appid=ca.bc.gov.env.ltema
 provisioning_profiles/development/0529377C-6295-4032-9B75-2620C9A16035/name=iOS Team Provisioning Profile\: ca.bc.gov.env.ltema
 provisioning_profiles/development/0529377C-6295-4032-9B75-2620C9A16035/uuid=0529377C-6295-4032-9B75-2620C9A16035
