@@ -1,6 +1,7 @@
 //get calling params
 var args = arguments[0];
 var siteID = args.siteID;
+var transectCount = args.transectCount;
 
 //validate form before inserting to database
 function doneBtn(){
