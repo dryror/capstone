@@ -4,6 +4,13 @@
 var args = arguments[0];
 var transectID = args.transectID;
 
+// Create stake orientation labels (Fixes Issue #13)
+var stakeBarLabels = [
+	{title:"Top Left / Bottom Right", enabled:false},
+	{title:"Top Right / Bottom Left", enabled:false}
+];
+$.stakeBar.labels = stakeBarLabels;
+
 // Query the database and store values associated with a transectID
 try {
 	var db = Ti.Database.open('ltemaDB');
@@ -77,9 +84,11 @@ $.plotDistance.addEventListener('blur', function(e) {
 		$.plotDistanceError.visible = false;
 	}
 });
+
 $.stakeBar.addEventListener('blur', function(e) {
 	//TODO
 });
+
 $.comments.addEventListener('blur', function(e) {
 	//TODO
 });
@@ -109,8 +118,9 @@ function editBtnClick(e){
         $.transectName.editable = true;
 		$.surveyor.editable = true;
 		$.plotDistance.editable = true;
-		$.stakeBar.labels[0].enabled = true;
-		$.stakeBar.labels[1].enabled = true;
+		stakeBarLabels[0].enabled = true;
+		stakeBarLabels[1].enabled = true;
+		$.stakeBar.labels = stakeBarLabels;
 		$.comments.editable = true;
         
         //disable the button button during edit mode
@@ -134,8 +144,9 @@ function editBtnClick(e){
         $.transectName.editable = false;
 		$.surveyor.editable = false;
 		$.plotDistance.editable = false;
-		$.stakeBar.labels[0].enabled = false;
-		$.stakeBar.labels[1].enabled = false;
+		stakeBarLabels[0].enabled = false;
+		stakeBarLabels[1].enabled = false;
+		$.stakeBar.labels = stakeBarLabels;
 		$.comments.editable = false;
 		
 		saveEdit();

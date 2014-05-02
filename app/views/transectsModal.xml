@@ -23,12 +23,7 @@
 			<Label class="error" id="plotDistanceError" visible="false" />
 			
 			<Label id="stakeOriLbl" text="Stake Orientation:" />
-			<TabbedBar id="stakeBar">
-				<Labels>
-					<Label enabled="false" title="Top Left / Bottom Right" />
-                	<Label enabled="false" title="Top Right / Bottom Left" />
-				</Labels>
-			</TabbedBar>
+			<TabbedBar id="stakeBar" />
 			<Label class="error" id="stakeError" visible="false" />
 			
 			<Label id="commentsLbl" text="Comments:" />
