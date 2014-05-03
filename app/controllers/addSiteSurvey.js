@@ -4,7 +4,7 @@
 var pickBiomeLabels = [];
 var pickProtocolLabels = [];
 
-// Populate biome TabbedBar
+// Populate biome TabbedBar from database
 var db = Ti.Database.open('ltemaDB');
 var biomeResultRows = db.execute('SELECT biome_id, biome_name FROM biome ');
 while (biomeResultRows.isValidRow()) {
@@ -15,10 +15,9 @@ while (biomeResultRows.isValidRow()) {
 }
 biomeResultRows.close();
 db.close();
-
 $.pickBiome.labels = pickBiomeLabels;
 
-// Regenerate protocol picker based on biome selected
+// Regenerate protocol TabbedBar based on biome selected
 $.pickBiome.addEventListener('click', function(e) {
 	//remove old list
 	$.pickProtocol.index = -1;
@@ -43,6 +42,11 @@ $.pickBiome.addEventListener('click', function(e) {
 	
 	//refresh list
 	$.pickProtocol.labels = pickProtocolLabels;
+	
+	//auto-select protocol if there's no choice
+	if ($.pickProtocol.labels.length == 1) {
+		$.pickProtocol.index = 0;
+	}
 });
 
 //Test for form completeness before adding to database
@@ -62,6 +66,7 @@ function doneBtn(){
 	}
 }
 
+/* - leaving in case someone wants to use a picker 
 function biomeBtn(){
 	//Code to figure out how pickers are going to work
 	$.formView.opacity = .2;
@@ -87,8 +92,10 @@ function doneProtocolPkrBtn(){
 	$.formView.opacity = 1;
 	$.protocolPkrView.visible = false;
 }
+*/
 
 
+/* Everything that follows is search bar related */
 
 // SEARCH BAR ACTIONS
 
