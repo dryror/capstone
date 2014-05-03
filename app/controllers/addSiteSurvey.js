@@ -1,54 +1,48 @@
 /* Site survey creation screen with validation */
 
 // Tabbed Bar Labels
-var pickBiomeLabels = [
-	{title:"Grasslands", enabled:true},
-	{title:"Alpine", enabled:true},
-	{title:"Forest", enabled:true},
-	{title:"Wetlands", enabled:true},
-	{title:"Intertidal", enabled:true}
-	];
-var pickProtocolLabels = [
-	{title:"Grasslands", enabled:false},
-	{title:"Alpine", enabled:false},
-	{title:"Squirrels", enabled:false},
-	{title:"Berries", enabled:false},
-	{title:"Amphibians", enabled:false},	
-	];
+var pickBiomeLabels = [];
+var pickProtocolLabels = [];
+
+// Populate biome TabbedBar
+var db = Ti.Database.open('ltemaDB');
+var biomeResultRows = db.execute('SELECT biome_id, biome_name FROM biome ');
+while (biomeResultRows.isValidRow()) {
+	var biomeID = biomeResultRows.fieldByName('biome_id');
+	var biomeName = biomeResultRows.fieldByName('biome_name');
+	pickBiomeLabels.push({title:biomeName, enabled:true});
+	biomeResultRows.next();
+}
+biomeResultRows.close();
+db.close();
 
 $.pickBiome.labels = pickBiomeLabels;
-$.pickProtocol.labels = pickProtocolLabels;
 
-// remake protocol picker based on biome selected
+// Regenerate protocol picker based on biome selected
 $.pickBiome.addEventListener('click', function(e) {
+	//remove old list
 	$.pickProtocol.index = -1;
-	pickProtocolLabels[0].enabled = false;
-	pickProtocolLabels[1].enabled = false;
-	pickProtocolLabels[2].enabled = false;
-	pickProtocolLabels[3].enabled = false;
-	pickProtocolLabels[4].enabled = false;
+	while (pickProtocolLabels.length > 0) {
+		pickProtocolLabels.pop();
+	}
+	//populate new list based on new biome selected
+	var db = Ti.Database.open('ltemaDB');
+	var protocolResultRows = db.execute('SELECT protocol_id, protocol_name, b.biome_id \
+										FROM protocol p, biome b \
+										WHERE p.biome_id = b.biome_id \
+										AND  b.biome_name =?', pickBiomeLabels[e.index].title);
+	while (protocolResultRows.isValidRow()) {
+		var protocolID = protocolResultRows.fieldByName('protocol_id');
+		var protocolName = protocolResultRows.fieldByName('protocol_name');
+		var protocolBiomeID = protocolResultRows.fieldByName('biome_id');
+		pickProtocolLabels.push({title:protocolName, enabled:true});
+		protocolResultRows.next();
+	}
+	protocolResultRows.close();
+	db.close();
 	
-	if (e.index == 0) {
-		pickProtocolLabels[0].enabled = true;
-		$.pickProtocol.labels = pickProtocolLabels;
-	}
-	if (e.index == 1) {
-		pickProtocolLabels[1].enabled = true;
-		$.pickProtocol.labels = pickProtocolLabels;
-	}
-	if (e.index == 2) {
-		pickProtocolLabels[2].enabled = true; //squirrels
-		pickProtocolLabels[3].enabled = true; //berries
-		$.pickProtocol.labels = pickProtocolLabels;
-	}
-	if (e.index == 3) {
-		pickProtocolLabels[4].enabled = true;
-		$.pickProtocol.labels = pickProtocolLabels;
-	}
-	if (e.index == 4) {
-		pickProtocolLabels[4].enabled = true;
-		$.pickProtocol.labels = pickProtocolLabels;
-	}
+	//refresh list
+	$.pickProtocol.labels = pickProtocolLabels;
 });
 
 //Test for form completeness before adding to database
