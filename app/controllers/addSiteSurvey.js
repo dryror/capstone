@@ -20,6 +20,7 @@ $.pickBiome.labels = pickBiomeLabels;
 $.pickBiome.addEventListener('click', function(e) {
 	//remove old list
 	$.pickProtocol.index = -1;
+	$.pickBiomeError.visible = false;
 	$.pickProtocolError.visible = false;
 	while (pickProtocolLabels.length > 0) {
 		pickProtocolLabels.pop();
