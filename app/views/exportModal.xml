@@ -7,6 +7,8 @@
 	    		<Button id="backBtn" title="Back" onClick="backBtnClick" />
 	    	</LeftNavButton>
 	    	
+	    	<ProgressBar id="progressBar" />
+	    	
 	    	<View id="formView">
 				<Label id="surveyLbl" text="Survey:" />
 				<Label id="selectLbl" text="Select" onClick="surveyBtn"/>
