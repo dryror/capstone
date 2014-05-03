@@ -187,7 +187,8 @@ autocomplete_table.addEventListener('click', function(e) {
 	win.close();
 });
 
-//Closes the popup result window if user navigates away from this screen
-$.addSiteSurvey.addEventListener('close', function(e){
+// Closes the popup result window if user navigates away from this screen 
+// (improves performance related to issue #14)
+$.parkSrch.addEventListener('blur', function(e) {
 	win.close();
 });
