@@ -1,5 +1,55 @@
 /* Site survey creation screen with validation */
 
+// Tabbed Bar Labels
+var pickBiomeLabels = [
+	{title:"Grasslands", enabled:true},
+	{title:"Alpine", enabled:true},
+	{title:"Forest", enabled:true},
+	{title:"Wetlands", enabled:true},
+	{title:"Intertidal", enabled:true}
+	];
+var pickProtocolLabels = [
+	{title:"Grasslands", enabled:false},
+	{title:"Alpine", enabled:false},
+	{title:"Squirrels", enabled:false},
+	{title:"Berries", enabled:false},
+	{title:"Amphibians", enabled:false},	
+	];
+
+$.pickBiome.labels = pickBiomeLabels;
+$.pickProtocol.labels = pickProtocolLabels;
+
+// remake protocol picker based on biome selected
+$.pickBiome.addEventListener('click', function(e) {
+	$.pickProtocol.index = -1;
+	pickProtocolLabels[0].enabled = false;
+	pickProtocolLabels[1].enabled = false;
+	pickProtocolLabels[2].enabled = false;
+	pickProtocolLabels[3].enabled = false;
+	pickProtocolLabels[4].enabled = false;
+	
+	if (e.index == 0) {
+		pickProtocolLabels[0].enabled = true;
+		$.pickProtocol.labels = pickProtocolLabels;
+	}
+	if (e.index == 1) {
+		pickProtocolLabels[1].enabled = true;
+		$.pickProtocol.labels = pickProtocolLabels;
+	}
+	if (e.index == 2) {
+		pickProtocolLabels[2].enabled = true; //squirrels
+		pickProtocolLabels[3].enabled = true; //berries
+		$.pickProtocol.labels = pickProtocolLabels;
+	}
+	if (e.index == 3) {
+		pickProtocolLabels[4].enabled = true;
+		$.pickProtocol.labels = pickProtocolLabels;
+	}
+	if (e.index == 4) {
+		pickProtocolLabels[4].enabled = true;
+		$.pickProtocol.labels = pickProtocolLabels;
+	}
+});
 
 //Test for form completeness before adding to database
 function doneBtn(){	

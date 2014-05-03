@@ -9,29 +9,13 @@
 	        <SearchBar id="parkSrch" />
 	        
 	        <Label id="biomeLbl" text="Biome:" />
-	        <TabbedBar id="pickBiome">           
-            	<Labels>
-          			<Label text="Grasslands">Grasslands</Label>
-                	<Label text="Alpine">Alpine</Label>
-                	<Label text="Forest">Forest</Label>
-                	<Label text="Wetlands">Wetlands</Label>
-                	<Label text="Intertidal">Intertidal</Label>
-            	</Labels>         
-        	</TabbedBar>
+	        <TabbedBar id="pickBiome" />
 	        <!--
 	        <Label id="pickBiome" text="Select" onClick="biomeBtn"/>
 	        -->
 	         
 	        <Label id="protocolLbl" text="Protocol:" />
-	        <TabbedBar id="pickProtocol">           
-            	<Labels>
-          			<Label text="Grasslands">Grasslands</Label>
-                	<Label text="Alpine">Alpine</Label>
-                	<Label text="Squirrels">Squirrels</Label>
-                	<Label text="Berries">Berries</Label>
-                	<Label text="Amphibians">Amphibians</Label>
-            	</Labels>         
-        	</TabbedBar>
+	        <TabbedBar id="pickProtocol" />
         	
         	<Label id="info">Place holder for instructions to user. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
 	        <!--
