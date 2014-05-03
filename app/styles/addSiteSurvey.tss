@@ -6,7 +6,10 @@
 	font: {fontSize: 20}
 },
 
-
+".error": {
+	font: {fontSize: 14},
+	color: "Red"
+},
 
 "#parkLbl": {
 	left: 40,
@@ -17,8 +20,10 @@
 	right: 40,
 	top: 30
 },
-
-
+"#parkSrchError": {
+	left: 205,
+	top: 60
+},
 
 "#biomeLbl": {
 	left: 40,
@@ -29,8 +34,10 @@
 	right: 40,
 	top: 100
 },
-
-
+"#pickBiomeError": {
+	left: 205,
+	top: 130
+},
 
 "#protocolLbl": {
 	left: 40,
@@ -40,6 +47,10 @@
 	left: 200,
 	right: 40,
 	top: 160
+},
+"#pickProtocolError": {
+	left: 205,
+	top: 190
 },
 
 
