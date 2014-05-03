@@ -19,6 +19,8 @@ $.pickBiome.labels = pickBiomeLabels;
 
 // Regenerate protocol TabbedBar based on biome selected
 $.pickBiome.addEventListener('click', function(e) {
+	//clear old error
+	$.pickProtocolError.visible = false;
 	//remove old list
 	$.pickProtocol.index = -1;
 	while (pickProtocolLabels.length > 0) {
@@ -47,6 +49,20 @@ $.pickBiome.addEventListener('click', function(e) {
 	if ($.pickProtocol.labels.length == 1) {
 		$.pickProtocol.index = 0;
 	}
+});
+
+// Check for unsupported protocols
+$.pickProtocol.addEventListener('click', function(e) {
+	if ((pickProtocolLabels[e.index].title !== "Alpine") || (pickProtocolLabels[e.index].title !== "Grassland")) {
+		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
+		$.pickProtocolError.visible = true;
+	}
+});
+
+// Closes the popup result window if user navigates away from this screen 
+// (improves performance related to issue #14)
+$.parkSrch.addEventListener('blur', function(e) {
+	win.close();
 });
 
 //Test for form completeness before adding to database
@@ -191,11 +207,5 @@ $.parkSrch.addEventListener('change', function(e) {
 autocomplete_table.addEventListener('click', function(e) {
 	//add selected park name to the search bar value
 	$.parkSrch.value = e.source.title;
-	win.close();
-});
-
-// Closes the popup result window if user navigates away from this screen 
-// (improves performance related to issue #14)
-$.parkSrch.addEventListener('blur', function(e) {
 	win.close();
 });
