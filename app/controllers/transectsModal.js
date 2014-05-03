@@ -157,8 +157,8 @@ function editBtnClick(e){
 function saveEdit(){
 	try {
 		var db = Ti.Database.open('ltemaDB');
-		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, plot_distance= ?, comments= ? WHERE transect_id= ?',
-					$.transectName.value, $.surveyor.value, $.plotDistance.value, $.comments.value, transectID);		
+		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
+					$.transectName.value, $.surveyor.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);		
 	} catch (e){
 		alert ('DEV ALERT: transectsModal saveEdit() catch');
 	} finally {
