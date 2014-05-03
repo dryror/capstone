@@ -86,6 +86,7 @@ function makeCSV() {
 		   svy.site_id = tct.site_id AND \
 		   tct.media_id = med.media_id AND \
 		   tct.transect_id = plt.transect_id AND \
+		   plt.media_id = med.media_id AND \
 		   plt.plot_id = pob.plot_id AND \
 		   svy.site_id = ?', siteID);
 		
@@ -185,12 +186,7 @@ function makeCSV() {
 function exportBtn() {
 	// Create the CSV and export all files and photos
 	var files = makeCSV();
-	
-	/* TODO: for testing
-	var files = testPhotoUpload();
-	alert(files); */
-	
-	
+
 	// Setup the progress bar
 	$.progressBar.hide();
 	$.progressBar.message = "Uploading...";
@@ -207,7 +203,9 @@ function exportBtn() {
 function exportFiles(toExport) {
 	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
 	var dir = 'site' + siteID + '/';
-	var exported = 0;
+	var didNotSend = [];
+	var doesNotExist = [];
+	var sentSuccessfully = [];
 	for (var i=0; i < toExport.length; i++) {
 		var fileName = toExport[i];
 		
@@ -218,7 +216,8 @@ function exportFiles(toExport) {
 			
 			// Check if the file you are trying to upload exists
 			if (!fileToExport.exists()) {
-				//TODO note which file didn't exist and do something about it
+				doesNotExist.push(fileName);
+				Ti.API.error(fileName + " does not exist");
 				$.progressBar.value ++;
 				continue;
 			}
@@ -246,14 +245,21 @@ function exportFiles(toExport) {
 			    	
 			    	//Update the progress
 			    	$.progressBar.value ++;
+			    	sentSuccessfully.push(fileName);
 			    	
 			    	//If the last file uplaoded, we are done
 			    	if ($.progressBar.value === (toExport.length)) {
-			    		$.exportWin.fireEvent("doneSending");
+			    		$.exportWin.fireEvent("doneSending", {
+			    			sent: sentSuccessfully,
+			    			failed: didNotSend,
+			    			error: doesNotExist
+			    		});
 			    	}
 			    } else {
-			    	//TODO file didn't upload need to note which file didn't upload
-			    	alert(this.responseText);
+			    	//$.progressBar.value ++;
+			    	didNotSend.push(fileName);
+			    	Ti.API.info(fileName + " did not send");
+			    	Ti.API.info(this.respnoseText);
 			    }
 			};
 			
@@ -264,38 +270,25 @@ function exportFiles(toExport) {
 	
 }
 
+var retrys = 0;
 // All the HTTP requests have responded
-// TODO: if every file uploaded, mark the Site Survey as uploaded
-// TODO: if some files didn't upload, give the user options
-$.exportWin.addEventListener("doneSending", function() {
+$.exportWin.addEventListener("doneSending", function(e) {
+    // Try resending any failed files
+    if (e.failed.length > 0 && retrys < 3) {
+    	Ti.APP.info("resending " + e.failed.length + " files");
+    	exportFiles(e.failed);
+    	retrys++;
+    	return;
+    }
+    
+    //TODO: handle if retrys failed
+    
+    if (e.error.length > 0) {
+    	alert("There was a problem with some images\n Please re-take the following photos and try again:\n" + e.error);
+    	return;
+    }
+    
+    // TODO: if every file uploaded, mark the Site Survey as uploaded
     $.progressBar.message = "Done";
-    alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited");
+    alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited"); 
 });
-
-
-
-/* for testing
-function testPhotoUpload() {
-	var photos = [];
-
-	var db = Ti.Database.open('ltemaDB');
-		
-	var rows = db.execute('SELECT media_name \
-	   FROM site_survey svy, transect tct, media med \
-	   WHERE svy.site_id = tct.site_id AND \
-	   tct.media_id = med.media_id AND \
-	   svy.site_id = 1');
-
-	while (rows.isValidRow()) {
-		
-		photos.push(rows.fieldByName('media_name'));
-		rows.next();
-	}
-	
-	rows.close();
-	db.close();
-	
-	return photos;
-}
-*/
-
