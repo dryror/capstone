@@ -67,7 +67,6 @@ try {
 	*/
 	// Add the rows to the picker
 	$.surveyPkr.add(data);
-	Ti.App.fireEvent("app:dataBaseError");
 	
 } catch (e) {
 	Ti.App.fireEvent("app:dataBaseError");
