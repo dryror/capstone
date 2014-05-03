@@ -137,7 +137,9 @@ function auto_complete(search_term) {
 		
 		//check if any results are returned
 		if (rows.getRowCount() <= 0) {
-			win.close();
+			//TODO: determine if the user can create a new park name, and how to implement
+			//for now, the next line is commented out, close() allows the user to enter an invalid park name
+			//win.close();
 		} else {
 			win.open();
 
