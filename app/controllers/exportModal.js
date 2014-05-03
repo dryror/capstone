@@ -69,7 +69,7 @@ try {
 	$.surveyPkr.add(data);
 	
 } catch (e) {
-	Ti.App.fireEvent("app:dataBaseError");
+	Ti.App.fireEvent("app:dataBaseError", e);
 } finally {
 	rows.close();
 	db.close();
@@ -125,7 +125,7 @@ function makeCSV() {
 		};
 		
 	} catch (e) {
-		Ti.App.fireEvent("app:dataBaseError");
+		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
 		rows.close();
 		db.close();
@@ -174,7 +174,7 @@ function makeCSV() {
 	    generalSurveyFile.write(generalSurveyTxt);
 	    allFiles.push(gsFileName);
 	} catch(e) {
-		Ti.App.fireEvent("app:fileSystemError");
+		Ti.App.fireEvent("app:fileSystemError", e);
 	} finally {
 		return allFiles;
 	}
@@ -221,7 +221,7 @@ function exportFiles(toExport) {
 				continue;
 			}
 		} catch(e) {
-			Ti.App.fireEvent("app:fileSystemError");
+			Ti.App.fireEvent("app:fileSystemError", e);
 		}
 		
 		// Send the file to the server
@@ -256,7 +256,7 @@ function exportFiles(toExport) {
 			};
 			
 		} catch(e) {
-			Ti.App.fireEvent("app:fileSystemError");
+			Ti.App.fireEvent("app:fileSystemError", e);
 		}
 	}
 	

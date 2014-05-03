@@ -43,7 +43,7 @@ try {
 		rows.next();
 	}
 } catch(e){
-	Ti.App.fireEvent("app:dataBaseError");
+	Ti.App.fireEvent("app:dataBaseError", e);
 } finally {
 	rows.close();
 	db.close();
@@ -86,6 +86,7 @@ function showTotalRowNumber(){
 
 //Edit button toggle
 function editBtn(e){
+	
 	//enable or disable edit mode
     if (e.source.title == "Edit") {
     	$.tbl.editing = true;
@@ -131,7 +132,7 @@ $.tbl.addEventListener('delete', function(e) {
 		//delete current row from the database
 	    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError");
+		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
 		db.close();
 	}
@@ -160,12 +161,12 @@ $.tbl.addEventListener('click', function(e) {
 
 Ti.App.addEventListener("app:dataBaseError", function(e) {
 	//TODO: handle a database error for the app
-	alert("database error");
+	Titanium.API.error("Database error: " + e);
 });
 
 Ti.App.addEventListener("app:fileSystemError", function(e) {
 	//TODO: handle a file system error for the app
-	alert("file system error");
+	Titanium.API.error("File system error: " + e);
 });
 
 
