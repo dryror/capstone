@@ -56,15 +56,7 @@ try {
 		index ++;
 		rows.next();
 	}
-	
-	
-	/* TODO: For testing
-	var newRow = Ti.UI.createPickerRow({
-		title : "site1",
-		siteID : 1
-	});
-	data.push(newRow);
-	*/
+
 	// Add the rows to the picker
 	$.surveyPkr.add(data);
 	
@@ -118,7 +110,11 @@ function makeCSV() {
 			var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
 			results[index]['sampleStationName'] = ssName;
 		    for(var i=0; i < fields.length; i++) {
-		       results[index][fields[i]] = '"' + rows.fieldByName(fields[i]) + '"';
+		       	if(fields[i] === 'utc') {
+		       		results[index][fields[i]] = rows.fieldByName(fields[i]);
+		       		continue;
+		       	}
+		       	results[index][fields[i]] = '"' + rows.fieldByName(fields[i]) + '"';
 		    }
 		    index++;
 		    rows.next();
@@ -143,10 +139,16 @@ function makeCSV() {
 			results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
 			c + results[i].plot_photo + nl;
 		
-		//TODO convert utc to date and time
-		var plotDate = results[i].utc;
-		var plotTime = results[i].utc;
+		// Convert utc to date and time
+		var utc = parseInt(results[i].utc);
+		var d = new Date(utc);
 		
+		var date = d.toDateString().split(" ");
+		var plotDate = '"' + date[2] + date[1] + date[3] + '"';
+		
+		var time = d.toTimeString().split(":");
+		var plotTime = '"' + time[0] + ":" + time[1] + '"';
+				
 		// CSV for General Survey output
 		generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
 			plotDate + c + plotTime + c + c + results[i].surveyor + c + results[i].observation +
