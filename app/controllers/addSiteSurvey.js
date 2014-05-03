@@ -4,11 +4,10 @@
 var pickBiomeLabels = [];
 var pickProtocolLabels = [];
 
-// Populate biome TabbedBar from database
+// Populate the biome TabbedBar with database-derived labels
 var db = Ti.Database.open('ltemaDB');
-var biomeResultRows = db.execute('SELECT biome_id, biome_name FROM biome ');
+var biomeResultRows = db.execute('SELECT biome_name FROM biome ');
 while (biomeResultRows.isValidRow()) {
-	var biomeID = biomeResultRows.fieldByName('biome_id');
 	var biomeName = biomeResultRows.fieldByName('biome_name');
 	pickBiomeLabels.push({title:biomeName, enabled:true});
 	biomeResultRows.next();
@@ -19,33 +18,30 @@ $.pickBiome.labels = pickBiomeLabels;
 
 // Regenerate protocol TabbedBar based on biome selected
 $.pickBiome.addEventListener('click', function(e) {
-	//clear old error
-	$.pickProtocolError.visible = false;
 	//remove old list
 	$.pickProtocol.index = -1;
+	$.pickProtocolError.visible = false;
 	while (pickProtocolLabels.length > 0) {
 		pickProtocolLabels.pop();
 	}
 	//populate new list based on new biome selected
 	var db = Ti.Database.open('ltemaDB');
-	var protocolResultRows = db.execute('SELECT protocol_id, protocol_name, b.biome_id \
+	var protocolResultRows = db.execute('SELECT protocol_name \
 										FROM protocol p, biome b \
 										WHERE p.biome_id = b.biome_id \
 										AND  b.biome_name =?', pickBiomeLabels[e.index].title);
 	while (protocolResultRows.isValidRow()) {
-		var protocolID = protocolResultRows.fieldByName('protocol_id');
 		var protocolName = protocolResultRows.fieldByName('protocol_name');
-		var protocolBiomeID = protocolResultRows.fieldByName('biome_id');
 		pickProtocolLabels.push({title:protocolName, enabled:true});
 		protocolResultRows.next();
 	}
 	protocolResultRows.close();
 	db.close();
 	
-	//refresh list
+	//refresh TabbedBar
 	$.pickProtocol.labels = pickProtocolLabels;
 	
-	//auto-select protocol if there's no choice
+	//auto-select protocol if there's only one
 	if ($.pickProtocol.labels.length == 1) {
 		$.pickProtocol.index = 0;
 	}
@@ -67,18 +63,27 @@ $.parkSrch.addEventListener('blur', function(e) {
 
 //Test for form completeness before adding to database
 function doneBtn(){	
-	if ($.parkSrch.value == null) {
-		alert('No park name entered');
+	if (($.parkSrch.value == null) || ($.parkSrch.value == "")) {
+		$.parkSrchError.text = "Please select a park";
+		$.parkSrchError.visible = true;
 		return;
 	}else if ($.pickBiome.index == null) {
-		alert('No biome picked');
+		$.pickBiomeError.text = "Please select a biome";
+		$.pickBiomeError.visible = true;
 		return;
-	}else if ($.pickProtocol.index == null) {
-		alert('No protocol picked');
+	}else if (($.pickProtocol.index == null) || ($.pickProtocol.index == -1)) {
+		$.pickProtocolError.text = "Please select a protocol";
+		$.pickProtocolError.visible = true;
+		return;
+	} else if (($.pickProtocol.labels[$.pickProtocol.index].title !== "Alpine") && ($.pickProtocol.labels[$.pickProtocol.index].title !== "Grassland")) {
+		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
+		$.pickProtocolError.visible = true;
 		return;
 	} else {
-		alert('Biome index ' + $.pickBiome.index + ' picked, and \n' +
-			 'protocol index ' + $.pickProtocol.index +' picked.');
+		$.parkSrchError.visible = false;
+		$.pickBiomeError.visible = false;
+		$.pickProtocolError.visible = false;
+		alert('Ready to save to database');
 	}
 }
 
@@ -207,5 +212,6 @@ $.parkSrch.addEventListener('change', function(e) {
 autocomplete_table.addEventListener('click', function(e) {
 	//add selected park name to the search bar value
 	$.parkSrch.value = e.source.title;
+	$.parkSrchError.visible = false;
 	win.close();
 });
