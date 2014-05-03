@@ -12,23 +12,23 @@
 				
 			<Label id="transectLbl" text="Transect Name:" />
 			<TextField id="transectName" />
-			<Label class="error" id="transectError" visible="false" />
+			<Label id="transectError" class="error" visible="false" />
 			
 			<Label id="surveyorLbl" text="Surveyor:" />
 			<TextField id="surveyor" />
-			<Label class="error" id="surveyorError" visible="false" />
+			<Label id="surveyorError" class="error" visible="false" />
 			
 			<Label id="plotDistLbl" text="Plot Distance:" />
 			<TextField id="plotDistance" />
-			<Label class="error" id="plotDistanceError" visible="false" />
+			<Label id="plotDistanceError" class="error" visible="false" />
 			
 			<Label id="stakeOriLbl" text="Stake Orientation:" />
 			<TabbedBar id="stakeBar" />
-			<Label class="error" id="stakeError" visible="false" />
+			<Label id="stakeError" class="error" visible="false" />
 			
 			<Label id="commentsLbl" text="Comments:" />
 			<TextField id="comments" />
-			<Label class="error" id="commentsError" visible="false" />
+			<Label id="commentsError" class="error" visible="false" />
 			
 		</Window>
 	</NavigationWindow>
