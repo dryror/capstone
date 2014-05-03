@@ -22,7 +22,7 @@
 },
 "#parkSrchError": {
 	left: 205,
-	top: 60
+	top: 75
 },
 
 "#biomeLbl": {
