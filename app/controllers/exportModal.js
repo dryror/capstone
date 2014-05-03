@@ -69,8 +69,7 @@ try {
 	$.surveyPkr.add(data);
 	
 } catch (e) {
-	//TODO remove after testing complete
-	alert("Database access error: " + e.message);
+	Ti.App.fireEvent("app:dataBaseError");
 } finally {
 	rows.close();
 	db.close();
@@ -126,8 +125,7 @@ function makeCSV() {
 		};
 		
 	} catch (e) {
-		//TODO remove after testing complete
-		alert(e.message);
+		Ti.App.fireEvent("app:dataBaseError");
 	} finally {
 		rows.close();
 		db.close();
@@ -176,8 +174,7 @@ function makeCSV() {
 	    generalSurveyFile.write(generalSurveyTxt);
 	    allFiles.push(gsFileName);
 	} catch(e) {
-		//TODO remove after testing complete
-		alert(e.message);
+		Ti.App.fireEvent("app:fileSystemError");
 	} finally {
 		return allFiles;
 	}
@@ -224,8 +221,7 @@ function exportFiles(toExport) {
 				continue;
 			}
 		} catch(e) {
-			//TODO remove after testing complete
-			alert(e.message);
+			Ti.App.fireEvent("app:fileSystemError");
 		}
 		
 		// Send the file to the server
@@ -260,8 +256,7 @@ function exportFiles(toExport) {
 			};
 			
 		} catch(e) {
-			//TODO remove after testing complete
-			alert(e.message);
+			Ti.App.fireEvent("app:fileSystemError");
 		}
 	}
 	
@@ -274,6 +269,8 @@ $.exportWin.addEventListener("doneSending", function() {
     $.progressBar.message = "Done";
     alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited");
 });
+
+
 
 /* for testing
 function testPhotoUpload() {

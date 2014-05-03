@@ -43,7 +43,7 @@ try {
 		rows.next();
 	}
 } catch(e){
-	
+	Ti.App.fireEvent("app:dataBaseError");
 } finally {
 	rows.close();
 	db.close();
@@ -131,7 +131,7 @@ $.tbl.addEventListener('delete', function(e) {
 		//delete current row from the database
 	    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
 	} catch(e) {
-		
+		Ti.App.fireEvent("app:dataBaseError");
 	} finally {
 		db.close();
 	}
@@ -157,6 +157,18 @@ $.tbl.addEventListener('click', function(e) {
 	    $.navGroupWin.openWindow(transects);
 	}
 });
+
+Ti.App.addEventListener("app:dataBaseError", function(e) {
+	//TODO: handle a database error for the app
+	alert("database error");
+});
+
+Ti.App.addEventListener("app:fileSystemError", function(e) {
+	//TODO: handle a file system error for the app
+	alert("file system error");
+});
+
+
 
 //This should always happen last
 Alloy.Globals.navMenu = $.navGroupWin;
