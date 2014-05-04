@@ -9,34 +9,37 @@ var utmEasting;
 var utmNorthing;
 var utmZone;
 
+//set stake orientation text
+var stakeText;
+if ($.pickStake.index == 0) {
+	stakeText = "Top Left / Bottom Right";
+} else {
+	stakeText = "Top Right / Bottom Left";
+}		
+
 //validate form before inserting to database
-function doneBtn(){
-	if ($.tsctName.value == "") {
+function doneBtn(e){
+	//disable button for 1 second to prevent double entry
+	e.source.enabled = false;
+	setTimeout(function(){ e.source.enabled = true; },1000);
+	
+	if ($.tsctName.value.trim().length == 0) {
 		alert('No transect name entered');
 		return;
-	} else if ($.srvyName.value == "") {
+	} else if ($.srvyName.value.trim().length == 0) {
 		alert('No survey name entered');
 		return;
-	//otherSrvyName skipped, other surveyors is probably optional
 	} else if ($.pickStake.index == null) {
 		alert('Stake orientation not selected');
 		return;
-	} else if ($.plotDist.value == "") {
-		alert('Select a plot distance');
+	} else if ($.plotDist.value < 2 | $.plotDist.value > 30) {
+		alert('Select a plot distance from 2 - 30');
 		return;
-	//skipping comments,
-	//skipping photo for now
-	} else {
-		//set stake orientation text
-		var stakeText;
-		if ($.pickStake.index == 0) {
-			stakeText = "Top Left / Bottom Right";
-		} else {
-			stakeText = "Top Right / Bottom Left";
-		}
-
-		//** will need to clean up and add validation
-		//*** Put a if photo exists here****
+	} else if(photo == null){
+		alert("please take a photo");
+		return;
+	}
+		// Name and Save Photo
 		var photoName = savePhoto(photo, transectCount);
 		
 		try{
@@ -66,7 +69,6 @@ function doneBtn(){
 			$.addTransect.close();
 		}
 	}
-}
 
 function takePhoto() {		
 	
@@ -107,3 +109,17 @@ function savePhoto(photo, transectCount){
 	var path = filename + '.jpg';
 	return path;
 }
+
+/*
+// RESTRICT USER FORM INPUT
+
+// Replace bad input on Transect Name TextField
+$.tsctName.addEventListener('change', function(e) {
+	e.source.value = e.source.value.replace(/[^A-Za-z 0-9]+/,"");
+});
+
+// Replace bad input (non-numbers) on plotDistance TextField
+$.plotDist.addEventListener('change', function(e) {
+	e.source.value = e.source.value.replace(/[^0-9]+/,"");
+});
+*/

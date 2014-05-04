@@ -2,52 +2,63 @@
 var yourDb = Titanium.Database.open('ltemaDB');
 yourDb.remove();
 
-try {
-	//Install and open database
-	var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
-	
-	//Query - Retrieve existing sites from database
-	rows = db.execute('SELECT site_id, year, protocol_name, park_name \
-					FROM site_survey s, protocol p, park prk \
-					WHERE s.protocol_id = p.protocol_id \
-					AND s.park_id = prk.park_id ');
-	
-	//Get requested data from each row in table
-	while (rows.isValidRow()) {	
-		var siteID = rows.fieldByName('site_id');
-		var year = rows.fieldByName('year');
-		var protocolName = rows.fieldByName('protocol_name');
-		var parkName = rows.fieldByName('park_name');
+function populateTable() {
+	//Clear the table if there is anything in it
+	var rd = []; 
+	$.tbl.data = rd;
+	try {
+		//Install and open database
+		var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
 		
-		//create a string from each entry
-		var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
+		//Query - Retrieve existing sites from database
+		rows = db.execute('SELECT site_id, year, protocol_name, park_name \
+						FROM site_survey s, protocol p, park prk \
+						WHERE s.protocol_id = p.protocol_id \
+						AND s.park_id = prk.park_id ');
 		
-		//create a new row
-			var newRow = Ti.UI.createTableViewRow({
-				title : siteSurvey,
-				siteID : siteID
-			});
+		//Get requested data from each row in table
+		while (rows.isValidRow()) {	
+			var siteID = rows.fieldByName('site_id');
+			var year = rows.fieldByName('year');
+			var protocolName = rows.fieldByName('protocol_name');
+			var parkName = rows.fieldByName('park_name');
 			
-			//create and add info icon for the row
-			var infoButton = Ti.UI.createButton({
-				style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
-				right : 10,
-				height : 48, //this is deciding the size of the rows at the moment
-				width : 48, 
-			});
-			newRow.add(infoButton);
+			//create a string from each entry
+			var siteSurvey = year + ' - ' + protocolName + ' - ' + parkName; 
 			
-	   		//Add row to the table view
-	  		$.tbl.appendRow(newRow);
-	
-		rows.next();
+			//create a new row
+				var newRow = Ti.UI.createTableViewRow({
+					title : siteSurvey,
+					siteID : siteID
+				});
+				
+				//create and add info icon for the row
+				var infoButton = Ti.UI.createButton({
+					style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
+					right : 10,
+					height : 48, //this is deciding the size of the rows at the moment
+					width : 48, 
+				});
+				newRow.add(infoButton);
+				
+		   		//Add row to the table view
+		  		$.tbl.appendRow(newRow);
+		
+			rows.next();
+		}
+	} catch(e){
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally {
+		rows.close();
+		db.close();
 	}
-} catch(e){
-	Ti.App.fireEvent("app:dataBaseError", e);
-} finally {
-	rows.close();
-	db.close();
 }
+
+populateTable();
+
+Ti.App.addEventListener("app:refreshSiteSurveys", function(e) {
+	populateTable();
+});
 
 //Will check if Edit button should be enabled/disabled - if no rows exist
 toggleEditBtn();
