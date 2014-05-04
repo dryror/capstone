@@ -84,7 +84,23 @@ function doneBtn(){
 		$.parkSrchError.visible = false;
 		$.pickBiomeError.visible = false;
 		$.pickProtocolError.visible = false;
-		alert('Ready to save to database');
+		try {
+			var db = Ti.Database.open('ltemaDB');
+			var currentYear = "2014"; //TODO: Get the actual year!
+			var protocolResult = db.execute('SELECT protocol_id FROM protocol WHERE protocol_name =?', $.pickProtocol.labels[$.pickProtocol.index].title);
+			var protocolID = protocolResult.fieldByName('protocol_id');
+			var parkResult = db.execute('SELECT park_id FROM park WHERE park_name =?', $.parkSrch.value);
+			var parkID = parkResult.fieldByName('park_id');
+			db.execute( 'INSERT INTO site_survey (year, protocol_id, park_id) VALUES (?,?,?)', currentYear, protocolID, parkID);
+			Ti.App.fireEvent("app:refreshSiteSurveys");
+			$.addSiteSurvey.close();		
+		} catch (e){
+			alert ('DEV ALERT: addSiteSurvey.js test failed');
+		} finally {
+			protocolResult.close();
+			parkResult.close();
+			db.close();
+		}
 	}
 }
 
