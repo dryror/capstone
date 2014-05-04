@@ -10,6 +10,12 @@ describe('\n \nThe index screen', function() {
 	it('should create a table', function() {		
 		expect(index.getView("tbl")).notToBe(undefined);
 	});
+	describe('\nThe TableView \'tbl\' of the index screen', function() {
+		it('should have a header with a button called \'Add\'', function() {
+			expect(index.getView("headerView")).notToBe(undefined);
+			expect(index.addSite.title).toBe("Add");
+		});
+	});
 });
 
 describe('\n \nThe modal with siteID 1', function () {
@@ -53,7 +59,7 @@ describe('\n \nThe addSiteSurvey screen', function() {
 		it('should be unset when created', function() {
 			expect(addSiteSurvey.pickBiome.index).toBe(undefined);
 		});
-		it('should bet selectable', function() {
+		it('should be selectable', function() {
 			addSiteSurvey.pickBiome.index=1;
 			expect(addSiteSurvey.pickBiome.index == 1).toBe(true);
 		});
@@ -63,5 +69,49 @@ describe('\n \nThe export modal controller', function() {
 	it('should be created when Export is selected', function() {
 		exportModal = Alloy.createController('exportModal');
 		expect(exportModal).notToBe(undefined);
+	});
+});
+describe('\n\nThe addTransect screen of siteID 1', function() {
+	var $ = Alloy.createController('addTransect', {siteID:1});
+	it('should exist when created ', function() {
+		expect($).notToBe(undefined);
+	});
+	it('should have all empty input field', function() {
+		expect($.tsctName.value).toBe("");
+		expect($.srvyName.value).toBe("");
+		expect($.otherSrvyName.value).toBe("");
+		expect($.pickStake.index).toBe(undefined);
+		expect($.plotDist.value).toBe("");
+		expect($.comments.value).toBe("");
+	});
+	describe('\naddTransect form input', function() {
+		it('should set transect name to \'Strawberry\'', function() {
+			$.tsctName.setValue("Strawberry");
+			expect($.tsctName.value).toBe("Strawberry");
+		});
+		it('should set transect name to \'S\'', function() {
+			$.tsctName.setValue("S");
+			expect($.tsctName.value).toBe("S");
+		});
+		it('should set head surveyor to \'Cherry Tree\'', function() {
+			$.srvyName.setValue("Cherry Tree");
+			expect($.srvyName.value).toBe("Cherry Tree");
+		});
+		it('should set head surveyor to \'C\'', function() {
+			$.srvyName.setValue("C");
+			expect($.srvyName.value).toBe("C");
+		});
+		it('should set stake orientation', function() {
+			$.pickStake.setIndex(1);
+			expect($.pickStake.index == 1).toBe(true);
+		});
+		it('should set plot distance to 20', function() {
+			$.plotDist.setValue(20);
+			expect($.plotDist.value).toBe(20);
+		});
+		it('should set plot distance to 200', function() {
+			$.plotDist.setValue(200);
+			expect($.plotDist.value).toBe(200);
+		});
 	});
 });
