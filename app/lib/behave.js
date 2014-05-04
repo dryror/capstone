@@ -266,7 +266,7 @@ exports.run = function() {
 			});
 	    }
 	    else if (suites.length === 0 && !executing) {
-	    	log('');
+	    	log(' \n \n');
 		    log('*******************************************');
 		    log('* \\o/ T E S T  R U N  C O M P L E T E \\o/ *');
 		    log('*******************************************');
