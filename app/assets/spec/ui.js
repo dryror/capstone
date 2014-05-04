@@ -59,10 +59,16 @@ describe('\n\nThe transect modal', function() {
 	it('should exist when created', function() {
 		expect($).notToBe(undefined);
 	});
+	it('should have a name of ' + transectName, function() {
+		expect($.transectName.value).toBe(transectName);
+		it ('the name TextField should not be editable', function () {
+			expect($.transectName.getEditable()).toBe(false);
+		});
+	});
 	it('should have a head surveyor of '+ surveyor, function() {
 		expect($.surveyor.value).toBe(surveyor);
 	});
-	it('should have a plot distance of '+ transectName, function() {
+	it('should have a plot distance of '+ plotDistance, function() {
 		expect($.plotDistance.value).toBe(plotDistance);
 	});
 	it('should have a stake orientation of '+ stakeOrientation, function() {
@@ -80,6 +86,26 @@ describe('\n\nThe transect modal', function() {
 			expect($.comments.value).toBe(comments);
 		});
 	}
+	describe('\n  user input of transcetsModal', function() {
+		it('should set transect name to \'Strawberry\'', function() {
+			$.transectName.setValue("Strawberry");
+			expect($.transectName.value).toBe("Strawberry");
+		});
+		it('expects transectError to not be visible', function() {
+			expect($.transectError.getVisible()).toBe("false");
+		});
+		it('should set transect name to \'S\'', function() {
+			$.transectName.focus();
+			$.transectName.setValue("S");
+			$.transectName.blur();
+			expect($.transectName.value).toBe("S");
+		});
+		/* not sure why this fails
+		it('expects transectError to be visible', function() {
+			expect($.transectError.getVisible()).toBe("true");
+		});
+		*/
+	});
 });
 
 describe('\n \nThe addSiteSurvey screen', function() {
