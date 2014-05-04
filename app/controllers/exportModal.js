@@ -70,11 +70,14 @@ try {
 // Create the CSV files for the Site Survey selected for export
 function makeCSV() {
 	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
+	var siteName = $.surveyPkr.getSelectedRow(0).title;
 	var allFiles = [];
+	
 	try{
 		// Query the database based on the siteID selected
 		var db = Ti.Database.open('ltemaDB');
 		
+		/*
 		var rows = db.execute('SELECT prk.park_name, tct.transect_name, plt.plot_name, \
 		   plt.utm_zone, plt.utm_easting, plt.utm_northing, plt.stake_deviation, \
 		   plt.distance_deviation, plt.utc, tct.surveyor, pob.observation, pob."count", pob.comments, pob.ground_cover, \
@@ -89,44 +92,118 @@ function makeCSV() {
 		   plt.media_id = med.media_id AND \
 		   plt.plot_id = pob.plot_id AND \
 		   svy.site_id = ?', siteID);
-		
-		// Get the field names
-		var fields = [];
-		for(var i = 0; i < rows.fieldCount();i++) {
-		    fields.push(rows.fieldName(i));
-		};
-		
-		// Create an array of result objects
+		*/
 		var results = [];
-		var index = 0;
-		while (rows.isValidRow()) {
-			results[index] = {};
-			
-			// Add photos to array of files
-			allFiles.push(rows.fieldByName('plot_photo'));
-			allFiles.push(rows.fieldByName('transect_photo'));
-			allFiles.push(rows.fieldByName('observation_photo'));
-			
-			// Wrap results in "" to escape any commas entered
-			var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
-			results[index]['sampleStationName'] = ssName;
-		    for(var i=0; i < fields.length; i++) {
-		       	if(fields[i] === 'utc') {
-		       		results[index][fields[i]] = rows.fieldByName(fields[i]);
-		       		continue;
-		       	}
-		       	results[index][fields[i]] = '"' + rows.fieldByName(fields[i]) + '"';
-		    }
-		    index++;
-		    rows.next();
-		};
 		
-	} catch (e) {
+		// Get the transects for the site
+		var transects = db.execute('SELECT tct.transect_id, tct.transect_name, tct.surveyor, med.media_name AS transect_photo \
+			FROM transect tct, media med \
+			WHERE tct.media_id = med.media_id AND \
+			tct.site_id = ?', siteID);
+		
+		var fieldCount = transects.fieldCount();
+		var transectIDs = [];
+		while (transects.isValidRow()) {
+			// Get the pictures to upload
+			allFiles.push(transects.fieldByName('transect_photo'));
+			
+			// Get the transectIDs
+			transectIDs.push(transects.fieldByName('transect_id'));
+			
+			var row = {};
+			for (var j = 0; j < fieldCount; j++) {
+				row[transects.getFieldName(j)] = transects.field(j);
+			}
+			results.push(row);
+			
+			transects.next();
+		}
+
+		// Get the plots for the transects		
+		var tids = '(' + transectIDs + ')';
+		var plots = db.execute('SELECT plt.plot_id, plt.plot_name, plt.utm_zone, plt.utm_easting, plt.transect_id, \
+			plt.utm_northing, plt.stake_deviation, plt.distance_deviation, plt.utc, med.media_name AS plot_photo\
+			FROM plot plt, media med \
+			WHERE plt.media_id = med.media_id AND \
+			plt.transect_id IN ' + tids);
+		
+		fieldCount = plots.fieldCount();
+		var plotIDs = [];
+		while (plots.isValidRow()) {
+			// Get the pictures to upload
+			allFiles.push(plots.fieldByName('plot_photo'));
+			
+			// Get the plotIDs
+			plotIDs.push(plots.fieldByName('plot_id'));
+			
+			
+			var row = {};
+			for (var j = 0; j < fieldCount; j++) {
+				row[plots.getFieldName(j)] = plots.field(j);
+			}
+			
+			for (var i in results) {
+				
+				if (results[i].transect_id === row.transect_id) {
+					var plotName = plots.fieldByName('plot_name');
+					results[i][plotName] = row;
+				}
+			}
+			
+			plots.next();
+		}
+		
+		// Get the plot observations for the plots
+		var pids = '(' + plotIDs + ')';
+		var plotObservations = db.execute('SELECT pob.observation_id, pob."count", pob.comments, pob.plot_id, pob.ground_cover, med.media_name AS observation_photo \
+			FROM plot_observation pob, media med \
+			WHERE pob.media_id = med.media_id AND \
+			pob.plot_id IN '+ pids);
+		
+		fieldCount = plotObservations.fieldCount();	
+		while (plotObservations.isValidRow()) {
+			// Get the pictures to upload
+			allFiles.push(plotObservations.fieldByName('observation_photo'));
+			
+			var row = {};
+			for (var j = 0; j < fieldCount; j++) {
+				row[plotObservations.getFieldName(j)] = plotObservations.field(j);
+			}
+						
+			for (var i in results) {
+				for(var j in results[i]) {				
+					if(results[i][j].plot_id === row.plot_id) {
+						var pobid = plotObservations.fieldByName('observation_id');
+						results[i][j][pobid] = row;
+					}
+				}
+			}
+			plotObservations.next();
+		}		
+	} catch(e) {
+		//Ti.APP.error(e);
 		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
-		rows.close();
+		transects.close();
+		plots.close();
+		plotObservations.close();
 		db.close();
+		Ti.API.info("everything closed");
 	}
+	
+	//TODO: more to fix
+	return;
+	
+	/*
+	var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
+	results[index]['sampleStationName'] = ssName;
+	
+	if(fields[i] === 'utc') {
+   		results[index][fields[i]] = rows.fieldByName(fields[i]);
+   		continue;
+   	}
+	*/
+	
 	
 	// Prepare the CSV files
 	var sampleStationTxt = "";
@@ -191,12 +268,12 @@ function exportBtn() {
 	$.progressBar.hide();
 	$.progressBar.message = "Uploading...";
 	$.progressBar.min = 0;
-	$.progressBar.max = files.length;
+	//$.progressBar.max = files.length;
 	$.progressBar.value = 0;
 	$.progressBar.show();
 	
 	// Upload all the files for selected survey
-	exportFiles(files);	
+	//TODO:exportFiles(files);	
 }
 
 // Upload a single file to the server
