@@ -18,7 +18,7 @@ describe('\n \nThe index screen', function() {
 	});
 });
 
-describe('\n \nThe modal with siteID 1', function () {
+describe('\n \nThe site survey modal with siteID 1', function () {
 	var indexModal = Alloy.createController('siteSurveyModal', {siteID:1});
 	it('should exist when created', function() {
 		expect(indexModal).notToBe(undefined);
@@ -41,6 +41,30 @@ describe('\n \nThe modal with siteID 1', function () {
 	});
 	*/
 });
+describe('\n\nThe transect modal', function() {
+	//generate some test data using transect_id 1
+	var db = Ti.Database.open('ltemaDB');
+	resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, plot_distance, stake_orientation, comments \
+							FROM transect t \
+							WHERE transect_id = 1');					
+	var transectName = resultRow.fieldByName('transect_name');
+	var surveyor = resultRow.fieldByName('surveyor');
+	var plotDistance = resultRow.fieldByName('plot_distance');
+	var stakeOrientation = resultRow.fieldByName('stake_orientation');
+	var comments = resultRow.fieldByName('comments');
+	resultRow.close();
+	db.close();
+	
+	var $ = Alloy.createController('transectsModal', {transectID:1});
+	it('should exist when created', function() {
+		expect($).notToBe(undefined);
+	});
+	it('should have a transect name of '+ transectName, function() {
+		expect($.transectName.value).toBe(transectName);
+	});
+	
+});
+
 describe('\n \nThe addSiteSurvey screen', function() {
 	var addSiteSurvey = Alloy.createController('addSiteSurvey');
 	it('should exist when created ', function() {
