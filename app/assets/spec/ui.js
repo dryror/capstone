@@ -59,10 +59,27 @@ describe('\n\nThe transect modal', function() {
 	it('should exist when created', function() {
 		expect($).notToBe(undefined);
 	});
-	it('should have a transect name of '+ transectName, function() {
-		expect($.transectName.value).toBe(transectName);
+	it('should have a head surveyor of '+ surveyor, function() {
+		expect($.surveyor.value).toBe(surveyor);
 	});
-	
+	it('should have a plot distance of '+ transectName, function() {
+		expect($.plotDistance.value).toBe(plotDistance);
+	});
+	it('should have a stake orientation of '+ stakeOrientation, function() {
+		if (stakeOrientation === "Top Left / Bottom Right") {
+			stakeOrientation = 0;
+		} else if (stakeOrientation === "Top Right / Bottom Left") {
+			stakeOrientation = 1;
+		} else {
+			stakeOrientation = null;
+		}
+		expect($.stakeBar.getIndex()).toBe(stakeOrientation);
+	});
+	if ($.comments.value) { //empty comment fields fail the test
+		it('should have a comments of '+ comments, function() {
+			expect($.comments.value).toBe(comments);
+		});
+	}
 });
 
 describe('\n \nThe addSiteSurvey screen', function() {
