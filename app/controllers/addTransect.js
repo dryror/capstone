@@ -1,7 +1,6 @@
 //get calling params
 var args = arguments[0];
 var siteID = args.siteID;
-var transectCount = args.transectCount;
 
 // Initialize Variables
 var photo;
@@ -90,9 +89,13 @@ function takePhoto() {
 
 //Name and save photo to filesystem - do this when done btn is pressed
 function savePhoto(photo, transectCount){
+	
 	var dir = "site" + siteID;
 	var img = photo; 
-	var filename = "T"+ (transectCount + 1);
+	
+	//name the photo  (timestamp - utc in ms)
+	var timestamp = new Date().getTime();
+	var filename = "T" + timestamp;
 	
 	// Create image Directory for site
 	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
@@ -101,12 +104,12 @@ function savePhoto(photo, transectCount){
 	}
 	
 	// .resolve() provides the resolved native path for the directory.
-	var imageFile  = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.jpg');
+	var imageFile  = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
 	imageFile.write(img);
 	
 	//var path = dir + Ti.Filesystem.separator + filename + '.jpg';
 	
-	var path = filename + '.jpg';
+	var path = filename + '.png';
 	return path;
 }
 
