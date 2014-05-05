@@ -157,7 +157,7 @@ $.tbl.addEventListener('delete', function(e) {
 
 //Navigate to addTransect - transect creation screen
 function addBtn(){
-	var addTransect = Alloy.createController("addTransect", {siteID: $.tbl.siteID, transectCount: showTotalRowNumber()}).getView();
+	var addTransect = Alloy.createController("addTransect", {siteID: $.tbl.siteID}).getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addTransect);
 }
