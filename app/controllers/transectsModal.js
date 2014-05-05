@@ -15,12 +15,13 @@ $.stakeBar.labels = stakeBarLabels;
 try {
 	var db = Ti.Database.open('ltemaDB');
 	
-	resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, plot_distance, stake_orientation, comments \
+	resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, other_surveyors, plot_distance, stake_orientation, comments \
 							FROM transect t \
 							WHERE transect_id = ?', transectID);					
 	
 	var transectName = resultRow.fieldByName('transect_name');
 	var surveyor = resultRow.fieldByName('surveyor');
+	var otherSurveyors = resultRow.fieldByName('other_surveyors');
 	var plotDistance = resultRow.fieldByName('plot_distance');
 	var stakeOrientation = resultRow.fieldByName('stake_orientation');
 	var comments = resultRow.fieldByName('comments'); 
@@ -28,6 +29,7 @@ try {
 	//Assign editable TextField values
 	$.transectName.value = transectName;
 	$.surveyor.value = surveyor;
+	$.otherSurveyors.value = otherSurveyors;
 	$.plotDistance.value = plotDistance;
 	$.comments.value = comments;
 	
@@ -49,6 +51,7 @@ try {
 // Initially disable input fields
 $.transectName.editable = false;
 $.surveyor.editable = false;
+$.otherSurveyors.editable = false;
 $.plotDistance.editable = false;
 $.comments.editable = false;
 
@@ -117,6 +120,7 @@ function editBtnClick(e){
         //Enable editing
         $.transectName.editable = true;
 		$.surveyor.editable = true;
+		$.otherSurveyors.editable = true;
 		$.plotDistance.editable = true;
 		stakeBarLabels[0].enabled = true;
 		stakeBarLabels[1].enabled = true;
@@ -143,6 +147,7 @@ function editBtnClick(e){
         //disable editing
         $.transectName.editable = false;
 		$.surveyor.editable = false;
+		$.otherSurveyors.editable = false;
 		$.plotDistance.editable = false;
 		stakeBarLabels[0].enabled = false;
 		stakeBarLabels[1].enabled = false;
@@ -157,8 +162,8 @@ function editBtnClick(e){
 function saveEdit(){
 	try {
 		var db = Ti.Database.open('ltemaDB');
-		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
-					$.transectName.value, $.surveyor.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);		
+		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
+					$.transectName.value, $.surveyor.value, $.otherSurveyors.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);		
 	} catch (e){
 		alert ('DEV ALERT: transectsModal saveEdit() catch');
 	} finally {

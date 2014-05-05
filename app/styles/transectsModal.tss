@@ -49,49 +49,65 @@
 	top: 130
 },
 
+"#otherSurveyorsLbl": {
+	left: 40,
+	top: 160
+},
+"#otherSurveyors": {
+	left: 220,
+	right: 40,
+	top: 160,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	maxLength:128
+},
+"#otherSurveyorsError": {
+	left: 225,
+	top: 190
+},
+
 "#plotDistLbl": {
 	left: 40,
-	top: 160,
+	top: 220,
 },
 "#plotDistance": {
 	left: 220,
 	right: 40,
-	top: 160,
+	top: 220,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Ti.UI.KEYBOARD_NUMBER_PAD,
 	maxLength:128
 },
 "#plotDistanceError": {
 	left: 225,
-	top: 190
+	top: 250
 },
 
 "#stakeOriLbl": {
 	left: 40,
-	top: 220,
+	top: 280,
 },
 "#stakeBar": {
 	left: 220,
 	right: 40,
-	top: 220
+	top: 280
 },
 "#stakeError": {
 	left: 225,
-	top: 250
+	top: 310
 },
 
 "#commentsLbl": {
 	left: 40,
-	top: 280,
+	top: 340
 },
 "#comments": {
 	left: 220,
 	right:40,
-	top: 280,
+	top: 340,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
 },
 "#commentsError": {
 	left: 225,
-	top: 310
+	top: 370
 }

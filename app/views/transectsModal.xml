@@ -18,6 +18,10 @@
 			<TextField id="surveyor" />
 			<Label id="surveyorError" class="error" visible="false" />
 			
+			<Label id="otherSurveyorsLbl" text="Other Surveyors:" />
+			<TextField id="otherSurveyors" />
+			<Label id="otherSurveyorsError" class="error" visible="false" />
+			
 			<Label id="plotDistLbl" text="Plot Distance:" />
 			<TextField id="plotDistance" />
 			<Label id="plotDistanceError" class="error" visible="false" />
