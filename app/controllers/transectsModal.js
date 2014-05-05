@@ -59,8 +59,11 @@ $.comments.editable = false;
 /* Listeners */
 
 //TODO: Confirm all conditions with project specs, project sponsor
-// When an input field loses focus check for errors
-$.transectName.addEventListener('blur', function(e) {
+// When an input field changes, fire error handler
+$.transectName.addEventListener('change', function (e) {
+	Ti.App.fireEvent('transectChange');
+});
+Ti.App.addEventListener('transectChange', function() {
 	if ($.transectName.value.length < 2) {
 		$.transectError.visible = true;
 		$.transectError.text = "Transect name should be at least 2 characters";
@@ -68,7 +71,11 @@ $.transectName.addEventListener('blur', function(e) {
 		$.transectError.visible = false;
 	}
 });
-$.surveyor.addEventListener('blur', function(e) {
+
+$.surveyor.addEventListener('change', function(e) {
+	Ti.App.fireEvent('surveyorChange');
+});
+Ti.App.addEventListener('surveyorChange', function(e) {
 	if ($.surveyor.value.length < 2) {
 		$.surveyorError.visible = true;
 		$.surveyorError.text = "Surveyor should have at least 2 characters";
@@ -76,7 +83,13 @@ $.surveyor.addEventListener('blur', function(e) {
 		$.surveyorError.visible = false;
 	}
 });
-$.plotDistance.addEventListener('blur', function(e) {
+
+$.plotDistance.addEventListener('change', function(e) {
+	// Replace bad input (non-numbers) on plotDistance TextField
+	e.source.value = e.source.value.replace(/[^0-9]+/,"");
+	Ti.App.fireEvent('plotDistanceChange');
+});
+Ti.App.addEventListener('plotDistanceChange', function(e) {
 	if ($.plotDistance.value < 1) {
 		$.plotDistanceError.visible = true;
 		$.plotDistanceError.text = "Plot distance should be at least 1 meter";
@@ -88,17 +101,12 @@ $.plotDistance.addEventListener('blur', function(e) {
 	}
 });
 
-$.stakeBar.addEventListener('blur', function(e) {
+$.stakeBar.addEventListener('change', function(e) {
 	//TODO
 });
 
-$.comments.addEventListener('blur', function(e) {
+$.comments.addEventListener('change', function(e) {
 	//TODO
-});
-
-// Replace bad input (non-numbers) on plotDistance TextField
-$.plotDistance.addEventListener('change', function(e) {
-	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 });
 
 // TESTING - an example of restricting the keyboard input
