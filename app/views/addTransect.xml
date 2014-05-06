@@ -9,10 +9,10 @@
 	        <TextField id="tsctName" />
 	        
 	        <Label id="srvyNameLbl" text="Head Surveyor:" />
-	        <TextField id="srvyName" />
+	        <TextField id="srvyName" hintText="First and Last Name"/>
 	        
 	        <Label id="otherSrvyNameLbl" text="Other Surveyors:" />
-	        <TextField id="otherSrvyName" />	       
+	        <TextField id="otherSrvyName" hintText="First and Last Name (optional)"/>	       
               
 	        <Label id="stakeLbl" text="Stake Orientation:" />
 	        <TabbedBar id="pickStake">           
@@ -23,10 +23,10 @@
         	</TabbedBar>
 	        
 	        <Label id="plotLbl" text="Plot Distance:" />
-	        <TextField id="plotDist" />
+	        <TextField id="plotDist" hintText="Enter a whole number from 2 to 30"/>
 	        
 	        <Label id="commentLbl" text="Comments:" />
-	        <TextField id="comments" />
+	        <TextField id="comments" hintText="(optional)"/>
 	        
 	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
 	        <ImageView id="transectThumbnail" />
