@@ -77,24 +77,6 @@ function makeCSV() {
 		// Query the database based on the siteID selected
 		var db = Ti.Database.open('ltemaDB');
 		
-		/*
-		var rows = db.execute('SELECT prk.park_name, tct.transect_name, plt.plot_name, \
-		   plt.utm_zone, plt.utm_easting, plt.utm_northing, plt.stake_deviation, \
-		   plt.distance_deviation, plt.utc, tct.surveyor, pob.observation, pob."count", pob.comments, pob.ground_cover, \
-		   (SELECT media_name FROM media, transect WHERE transect.media_id = media.media_id) AS transect_photo, \
-		   (SELECT media_name FROM media, plot WHERE plot.media_id = media.media_id) AS plot_photo, \
-		   (SELECT media_name FROM media, plot_observation WHERE plot_observation.media_id = media.media_id) AS observation_photo \
-		   FROM park prk, transect tct, plot plt, plot_observation pob, site_survey svy, media med \
-		   WHERE svy.park_id = prk.park_id AND \
-		   svy.site_id = tct.site_id AND \
-		   tct.media_id = med.media_id AND \
-		   tct.transect_id = plt.transect_id AND \
-		   plt.media_id = med.media_id AND \
-		   plt.plot_id = pob.plot_id AND \
-		   svy.site_id = ?', siteID);
-		*/
-		var results = [];
-		
 		// Get the transects for the site
 		var transects = db.execute('SELECT prk.park_name, tct.transect_id, tct.transect_name, tct.surveyor, med.media_name AS transect_photo \
 			FROM transect tct, media med, park prk, site_survey svy \
@@ -103,6 +85,7 @@ function makeCSV() {
 			svy.site_id = tct.site_id AND \
 			tct.site_id = ?', siteID);
 		
+		var results = [];
 		var fieldCount = transects.fieldCount();
 		var transectIDs = [];
 		while (transects.isValidRow()) {
@@ -112,6 +95,7 @@ function makeCSV() {
 			// Get the transectIDs
 			transectIDs.push(transects.fieldByName('transect_id'));
 			
+			// Create transect objects
 			var row = {};
 			for (var j = 0; j < fieldCount; j++) {
 				row[transects.getFieldName(j)] = transects.field(j);
@@ -138,14 +122,14 @@ function makeCSV() {
 			// Get the plotIDs
 			plotIDs.push(plots.fieldByName('plot_id'));
 			
-			
+			// Create plot objects
 			var row = {};
 			for (var j = 0; j < fieldCount; j++) {
 				row[plots.getFieldName(j)] = plots.field(j);
 			}
 			
+			// Associate with the correct transect
 			for (var i in results) {
-				
 				if (results[i].transect_id === row.transect_id) {
 					var pid = plots.fieldByName('plot_id');
 					results[i][pid] = row;
@@ -157,7 +141,7 @@ function makeCSV() {
 		
 		// Get the plot observations for the plots
 		var pids = '(' + plotIDs + ')';
-		var plotObservations = db.execute('SELECT pob.observation_id, pob."count", pob.comments, pob.plot_id, pob.ground_cover, med.media_name AS observation_photo \
+		var plotObservations = db.execute('SELECT pob.observation_id, pob.observation, pob."count", pob.comments, pob.plot_id, pob.ground_cover, med.media_name AS observation_photo \
 			FROM plot_observation pob, media med \
 			WHERE pob.media_id = med.media_id AND \
 			pob.plot_id IN '+ pids);
@@ -167,11 +151,13 @@ function makeCSV() {
 			// Get the pictures to upload
 			allFiles.push(plotObservations.fieldByName('observation_photo'));
 			
+			// Create observation objects
 			var row = {};
 			for (var j = 0; j < fieldCount; j++) {
 				row[plotObservations.getFieldName(j)] = plotObservations.field(j);
 			}
-						
+			
+			// Associate with the correct plot			
 			for (var i in results) {
 				for(var j in results[i]) {				
 					if(results[i][j].plot_id === row.plot_id) {
@@ -193,16 +179,6 @@ function makeCSV() {
 	}
 	Ti.API.info(results);
 		
-	/*
-	var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
-	results[index]['sampleStationName'] = ssName;
-	
-	if(fields[i] === 'utc') {
-   		results[index][fields[i]] = rows.fieldByName(fields[i]);
-   		continue;
-   	}
-	*/
-		
 	// Prepare the CSV files
 	var sampleStationTxt = "";
 	var generalSurveyTxt = "";
@@ -212,7 +188,6 @@ function makeCSV() {
 	
 	for (var transect in results) {
 		for (var plot in results[transect]) {
-			//Ti.API.info(plot);
 			// CSV for Sample Station output
 			if (results[transect][plot].plot_id != null) {
 				sampleStationTxt += dq + results[transect].park_name + dq + c;
@@ -226,8 +201,6 @@ function makeCSV() {
 			
 			for (var observation in results[transect][plot]) {
 				if (typeof results[transect][plot][observation] === 'object' && results[transect][plot][observation] != null) {
-					//Ti.API.info(results[transect][plot][observation].observation_id);
-					
 					// Convert utc to date and time
 					var utc = parseInt(results[transect][plot].utc);
 					var d = new Date(utc);
@@ -249,57 +222,8 @@ function makeCSV() {
 					generalSurveyTxt += dq + results[transect][plot][observation].comments + dq + c;
 					generalSurveyTxt += dq + results[transect][plot][observation].ground_cover + dq + c;
 					generalSurveyTxt += dq + results[transect][plot][observation].observation_photo + dq + nl;
-				}
-					
-					//Ti.API.info(p);
-					
-					/*
-					if (results[transect][plot][p][pob].observation_id != null) {
-						// Convert utc to date and time
-						var utc = parseInt(results[transect][plot].utc);
-						var d = new Date(utc);
-						
-						var date = d.toDateString().split(" ");
-						var plotDate = dq + date[2] + date[1] + date[3] + dq;
-						
-						var time = d.toTimeString().split(":");
-						var plotTime = dq + time[0] + ":" + time[1] + dq;
-						
-						// CSV for General Survey output
-						generalSurveyTxt += dq + results[transect].park_name + dq + c;
-						generalSurveyTxt += dq + results[transect].transect_name + " ";
-						generalSurveyTxt += results[transect][plot].plot_name + dq + c;
-						generalSurveyTxt += plotDate + c + plotTime + c + c;
-						generalSurveyTxt += dq + results[transect].surveyor + dq + c;
-						generalSurveyTxt += dq + results[transect][plot][p][pob].observation + dq + c;
-						generalSurveyTxt += dq + results[transect][plot][p][pob].count + dq + c + c + c + c;
-						generalSurveyTxt += dq + results[transect][plot][p][pob].comments + dq + c;
-						generalSurveyTxt += dq + results[transect][plot][p][pob].ground_cover + dq + c;
-						generalSurveyTxt += dq + results[transect][plot][p][pob].observation_photo + dq + nl;
-					}
-					*/
-					
-				}
-						
-			
-				
-					
-				/*
-				
-				sampleStationTxt += results[i].park_name + c + results[i].sampleStationName + c +
-					results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
-					c + results[i].plot_photo + nl;
-				
-				
-						
-				
-				generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
-					plotDate + c + plotTime + c + c + results[i].surveyor + c + results[i].observation +
-					c + results[i].count + c + c + c + c + results[i].comments + c + results[i].ground_cover +
-					c + results[i].observation_photo + nl;
-				*/
-					
-			
+				}					
+			}
 		}
 	}
 	
@@ -316,11 +240,13 @@ function makeCSV() {
 	    	siteDir.createDirectory();
 		}
     	
+    	// Create Sample Station file
 	    var ssFileName = "SampleStation.csv";
 	    var sampleStationFile = Titanium.Filesystem.getFile(siteDir.resolve(), ssFileName);
 	    sampleStationFile.write(sampleStationTxt); 
 	    allFiles.push(ssFileName);
 	    
+	    // Create General Survey file
 	    var gsFileName = "GeneralSurvey.csv";
 	    var generalSurveyFile = Titanium.Filesystem.getFile(siteDir.resolve(), gsFileName);
 	    generalSurveyFile.write(generalSurveyTxt);
@@ -340,12 +266,12 @@ function exportBtn() {
 	$.progressBar.hide();
 	$.progressBar.message = "Uploading...";
 	$.progressBar.min = 0;
-	//$.progressBar.max = files.length;
+	$.progressBar.max = files.length;
 	$.progressBar.value = 0;
 	$.progressBar.show();
 	
 	// Upload all the files for selected survey
-	//TODO:exportFiles(files);	
+	exportFiles(files);	
 }
 
 // Upload a single file to the server
@@ -394,7 +320,7 @@ function exportFiles(toExport) {
 			    	
 			    	//Update the progress
 			    	$.progressBar.value ++;
-			    	sentSuccessfully.push(fileName);
+			    	sentSuccessfully.push(fileName); //TODO: This will not be the correct file name
 			    	
 			    	//If the last file uplaoded, we are done
 			    	if ($.progressBar.value === (toExport.length)) {
@@ -407,7 +333,7 @@ function exportFiles(toExport) {
 			    } else {
 			    	//$.progressBar.value ++;
 			    	didNotSend.push(fileName);
-			    	Ti.API.info(fileName + " did not send");
+			    	Ti.API.info(fileName + " did not send"); //TODO: This will not be the correct file name
 			    	Ti.API.info(this.respnoseText);
 			    }
 			};
