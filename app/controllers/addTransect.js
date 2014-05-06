@@ -104,12 +104,10 @@ function savePhoto(photo, transectCount){
 	}
 	
 	// .resolve() provides the resolved native path for the directory.
-	var imageFile  = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
+	var imageFile  = Ti.Filesystem.getFile(imageDir.resolve(), filename);
 	imageFile.write(img);
 	
-	//var path = dir + Ti.Filesystem.separator + filename + '.jpg';
-	
-	var path = filename + '.png';
+	var path = filename;
 	return path;
 }
 
