@@ -96,9 +96,11 @@ function makeCSV() {
 		var results = [];
 		
 		// Get the transects for the site
-		var transects = db.execute('SELECT tct.transect_id, tct.transect_name, tct.surveyor, med.media_name AS transect_photo \
-			FROM transect tct, media med \
+		var transects = db.execute('SELECT prk.park_name, tct.transect_id, tct.transect_name, tct.surveyor, med.media_name AS transect_photo \
+			FROM transect tct, media med, park prk, site_survey svy \
 			WHERE tct.media_id = med.media_id AND \
+			prk.park_id = svy.park_id AND \
+			svy.site_id = tct.site_id AND \
 			tct.site_id = ?', siteID);
 		
 		var fieldCount = transects.fieldCount();
@@ -145,8 +147,8 @@ function makeCSV() {
 			for (var i in results) {
 				
 				if (results[i].transect_id === row.transect_id) {
-					var plotName = plots.fieldByName('plot_name');
-					results[i][plotName] = row;
+					var pid = plots.fieldByName('plot_id');
+					results[i][pid] = row;
 				}
 			}
 			
@@ -181,7 +183,6 @@ function makeCSV() {
 			plotObservations.next();
 		}		
 	} catch(e) {
-		//Ti.APP.error(e);
 		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
 		transects.close();
@@ -190,10 +191,8 @@ function makeCSV() {
 		db.close();
 		Ti.API.info("everything closed");
 	}
-	
-	//TODO: more to fix
-	return;
-	
+	Ti.API.info(results);
+		
 	/*
 	var ssName = '"' + rows.fieldByName('transect_name') + ' ' + rows.fieldByName('plot_name') + '"' ;
 	results[index]['sampleStationName'] = ssName;
@@ -203,36 +202,109 @@ function makeCSV() {
    		continue;
    	}
 	*/
-	
-	
+		
 	// Prepare the CSV files
 	var sampleStationTxt = "";
 	var generalSurveyTxt = "";
 	var nl = '\n';
 	var c = ',';
+	var dq = '"';
 	
-	for (var i=0; i < results.length; i++) {
-		// CSV for Sample Station output
-		sampleStationTxt += results[i].park_name + c + results[i].sampleStationName + c +
-			results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
-			c + results[i].plot_photo + nl;
-		
-		// Convert utc to date and time
-		var utc = parseInt(results[i].utc);
-		var d = new Date(utc);
-		
-		var date = d.toDateString().split(" ");
-		var plotDate = '"' + date[2] + date[1] + date[3] + '"';
-		
-		var time = d.toTimeString().split(":");
-		var plotTime = '"' + time[0] + ":" + time[1] + '"';
+	for (var transect in results) {
+		for (var plot in results[transect]) {
+			//Ti.API.info(plot);
+			// CSV for Sample Station output
+			if (results[transect][plot].plot_id != null) {
+				sampleStationTxt += dq + results[transect].park_name + dq + c;
+				sampleStationTxt += dq + results[transect].transect_name + " ";
+				sampleStationTxt += results[transect][plot].plot_name + dq + c;
+				sampleStationTxt += dq + results[transect][plot].utm_zone + dq + c;
+				sampleStationTxt += dq + results[transect][plot].utm_easting + dq + c;
+				sampleStationTxt += dq + results[transect][plot].utm_northing + dq + c;
+				sampleStationTxt += dq + results[transect][plot].plot_photo + dq + nl;
+			}		
+			
+			for (var observation in results[transect][plot]) {
+				if (typeof results[transect][plot][observation] === 'object' && results[transect][plot][observation] != null) {
+					//Ti.API.info(results[transect][plot][observation].observation_id);
+					
+					// Convert utc to date and time
+					var utc = parseInt(results[transect][plot].utc);
+					var d = new Date(utc);
+					
+					var date = d.toDateString().split(" ");
+					var plotDate = dq + date[2] + date[1] + date[3] + dq;
+					
+					var time = d.toTimeString().split(":");
+					var plotTime = dq + time[0] + ":" + time[1] + dq;
+					
+					// CSV for General Survey output
+					generalSurveyTxt += dq + results[transect].park_name + dq + c;
+					generalSurveyTxt += dq + results[transect].transect_name + " ";
+					generalSurveyTxt += results[transect][plot].plot_name + dq + c;
+					generalSurveyTxt += plotDate + c + plotTime + c + c;
+					generalSurveyTxt += dq + results[transect].surveyor + dq + c;
+					generalSurveyTxt += dq + results[transect][plot][observation].observation + dq + c;
+					generalSurveyTxt += dq + results[transect][plot][observation].count + dq + c + c + c + c;
+					generalSurveyTxt += dq + results[transect][plot][observation].comments + dq + c;
+					generalSurveyTxt += dq + results[transect][plot][observation].ground_cover + dq + c;
+					generalSurveyTxt += dq + results[transect][plot][observation].observation_photo + dq + nl;
+				}
+					
+					//Ti.API.info(p);
+					
+					/*
+					if (results[transect][plot][p][pob].observation_id != null) {
+						// Convert utc to date and time
+						var utc = parseInt(results[transect][plot].utc);
+						var d = new Date(utc);
+						
+						var date = d.toDateString().split(" ");
+						var plotDate = dq + date[2] + date[1] + date[3] + dq;
+						
+						var time = d.toTimeString().split(":");
+						var plotTime = dq + time[0] + ":" + time[1] + dq;
+						
+						// CSV for General Survey output
+						generalSurveyTxt += dq + results[transect].park_name + dq + c;
+						generalSurveyTxt += dq + results[transect].transect_name + " ";
+						generalSurveyTxt += results[transect][plot].plot_name + dq + c;
+						generalSurveyTxt += plotDate + c + plotTime + c + c;
+						generalSurveyTxt += dq + results[transect].surveyor + dq + c;
+						generalSurveyTxt += dq + results[transect][plot][p][pob].observation + dq + c;
+						generalSurveyTxt += dq + results[transect][plot][p][pob].count + dq + c + c + c + c;
+						generalSurveyTxt += dq + results[transect][plot][p][pob].comments + dq + c;
+						generalSurveyTxt += dq + results[transect][plot][p][pob].ground_cover + dq + c;
+						generalSurveyTxt += dq + results[transect][plot][p][pob].observation_photo + dq + nl;
+					}
+					*/
+					
+				}
+						
+			
 				
-		// CSV for General Survey output
-		generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
-			plotDate + c + plotTime + c + c + results[i].surveyor + c + results[i].observation +
-			c + results[i].count + c + c + c + c + results[i].comments + c + results[i].ground_cover +
-			c + results[i].observation_photo + nl;		
+					
+				/*
+				
+				sampleStationTxt += results[i].park_name + c + results[i].sampleStationName + c +
+					results[i].utm_zone + c + results[i].utm_easting + c + results[i].utm_northing + 
+					c + results[i].plot_photo + nl;
+				
+				
+						
+				
+				generalSurveyTxt += results[i].park_name + c + results[i].sampleStationName + c +
+					plotDate + c + plotTime + c + c + results[i].surveyor + c + results[i].observation +
+					c + results[i].count + c + c + c + c + results[i].comments + c + results[i].ground_cover +
+					c + results[i].observation_photo + nl;
+				*/
+					
+			
+		}
 	}
+	
+	Ti.API.info(sampleStationTxt);
+	Ti.API.info(generalSurveyTxt);
  	
     // Create the CSV files
     try{
