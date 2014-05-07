@@ -14,7 +14,8 @@ if ($.pickStake.index == 0) {
 	stakeText = "Top Left / Bottom Right";
 } else {
 	stakeText = "Top Right / Bottom Left";
-}		
+}
+	
 
 //validate form before inserting to database
 function doneBtn(e){
@@ -22,7 +23,37 @@ function doneBtn(e){
 	e.source.enabled = false;
 	setTimeout(function(){ e.source.enabled = true; },1000);
 	
-	if ($.tsctName.value.trim().length == 0) {
+	//Ti.App.fireEvent('photoCheck');
+	if(photo == null && $.pickStake.index == null){
+		$.photoError.visible = true;
+		$.photoError.text = "* Please take a photo";
+		$.stakeError.visible = true;
+		$.stakeError.text = "* Must select at a stake orientation";
+		return;
+	}else if (photo == null){
+		$.photoError.visible = true;
+		$.photoError.text = "* Please take a photo";
+		return;
+	}else if($.pickStake.index == null){
+		$.stakeError.visible = true;
+		$.stakeError.text = "* Must select at a stake orientation";
+		return;
+	}else{
+		$.photoError.visible = false;
+		$.stakeError.visible = false;
+	}
+	/*
+	if(photo == null){
+		$.photoError.visible = true;
+		$.photoError.text = "* Please take a photo";
+	}else{
+		$.photoError.visible = false;
+	}
+	if ($.pickStake.index == null) {// stake orientation - error checking
+		$.stakeError.visible = true;
+		$.stakeError.text = "* Must select at a stake orientation";
+	}*/
+	/*if ($.tsctName.value.trim().length == 0) {
 		alert('No transect name entered');
 		return;
 	} else if ($.srvyName.value.trim().length == 0) {
@@ -34,12 +65,13 @@ function doneBtn(e){
 	} else if ($.plotDist.value < 2 | $.plotDist.value > 30) {
 		alert('Select a plot distance from 2 - 30');
 		return;
-	} else if(photo == null){
+	} else 
+	if(photo == null){
 		alert("please take a photo");
 		return;
-	}
+	}*/
 		// Name and Save Photo
-		var photoName = savePhoto(photo, transectCount);
+		var photoName = savePhoto(photo);
 		
 		try{
 			//Connect to database
@@ -70,6 +102,8 @@ function doneBtn(e){
 	}
 
 function takePhoto() {		
+	//remove photo error msg
+	$.photoError.visible = false;
 	
 	//call camera module and set thumbnail
 	var pic = require('camera');
@@ -88,7 +122,7 @@ function takePhoto() {
 }
 
 //Name and save photo to filesystem - do this when done btn is pressed
-function savePhoto(photo, transectCount){
+function savePhoto(photo){
 	
 	var dir = "site" + siteID;
 	var img = photo; 
@@ -124,3 +158,57 @@ $.plotDist.addEventListener('change', function(e) {
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 });
 */
+
+/* Listeners */
+
+//TODO: Confirm all conditions with project specs, project sponsor
+// When an input field changes, fire error handler
+$.tsctName.addEventListener('change', function (e) {
+	Ti.App.fireEvent('transectChange');
+});
+Ti.App.addEventListener('transectChange', function() {
+	if ($.tsctName.value.length < 2) {
+		$.transectError.visible = true;
+		$.transectError.text = "* Transect name should be at least 2 characters";
+	} else {
+		$.transectError.visible = false;
+	}
+});
+
+$.srvyName.addEventListener('change', function(e) {
+	Ti.App.fireEvent('surveyorChange');
+});
+Ti.App.addEventListener('surveyorChange', function(e) {
+	if ($.srvyName.value.length < 2) {
+		$.surveyorError.visible = true;
+		$.surveyorError.text = "* Surveyor should have at least 2 characters";
+	} else {
+		$.surveyorError.visible = false;
+	}
+});
+
+$.plotDist.addEventListener('change', function(e) {
+	// Replace bad input (non-numbers) on plotDistance TextField
+	e.source.value = e.source.value.replace(/[^0-9]+/,"");
+	Ti.App.fireEvent('plotDistanceChange');
+});
+Ti.App.addEventListener('plotDistanceChange', function(e) {
+	if ($.plotDist.value < 2) {
+		$.plotDistanceError.visible = true;
+		$.plotDistanceError.text = "* Plot distance should be at least 2 meters";
+	} else if ($.plotDist.value > 30) {
+		$.plotDistanceError.visible = true;
+		$.plotDistanceError.text = "* Plot distance should be at most 30 meters";
+	} else {
+		$.plotDistanceError.visible = false;
+	}
+});
+
+$.pickStake.addEventListener('click', function(e) {
+	// remove the error msg when a stake orientation is selected
+	$.stakeError.visible = false;
+});
+
+$.comments.addEventListener('change', function(e) {
+	//TODO
+});

@@ -22,6 +22,11 @@
 	top: 40,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
+"#transectError": {
+	left: 225,
+	top: 70,
+	color: 'red'
+},
 
 "#srvyNameLbl": {
 	left: 40,
@@ -33,6 +38,12 @@
 	top: 100,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
+"#surveyorError": {
+	left: 225,
+	top: 130,
+	color: 'red'
+},
+
 
 "#otherSrvyNameLbl": {
 	left: 40,
@@ -44,6 +55,11 @@
 	top: 160,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
+"#otherSurveyorsError": {
+	left: 225,
+	top: 190,
+	color: 'red'
+},
 
 "#stakeLbl": {
 	left: 40,
@@ -53,6 +69,11 @@
 	left: 220,
 	right: 40,
 	top: 220
+},
+"#stakeError": {
+	left: 225,
+	top: 250,
+	color: 'red'
 },
 
 "#plotLbl": {
@@ -66,6 +87,11 @@
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
 },
+"#plotDistanceError": {
+	left: 225,
+	top: 310,
+	color: 'red'
+},
 
 "#commentLbl": {
 	left: 40,
@@ -77,6 +103,11 @@
 	top: 340,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
+"#commentsError": {
+	left: 225,
+	top: 370,
+	color: 'red'
+}
 
 "#photoBtn": {
 	left: 40,
@@ -90,6 +121,11 @@
 	top: 400,
 	borderRadius: 10
 },
+"#photoError": {
+	left: 225,
+	top: 405,
+	color: 'red'
+}
 
 "#info": {
 	left: 40,
