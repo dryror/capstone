@@ -363,7 +363,23 @@ $.exportWin.addEventListener("doneSending", function(e) {
     	return;
     }
     
-    // TODO: if every file uploaded, mark the Site Survey as uploaded
+    // Export was successful
+    try{
+    	var db = Ti.Database.open('ltemaDB');
+    	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
+    	var d = new Date();
+		var utc = d.getTime();
+		Ti.API.info(utc);
+    	
+    	// Timestamp the export in the database
+    	db.execute('UPDATE OR FAIL site_survey SET exported = ? WHERE site_id = ?', utc, siteID);
+    } catch(e) {
+    	Ti.App.fireEvent("app:fileSystemError", e);
+    } finally {
+    	db.close();
+    }
+    
+    // Update the progress bar
     $.progressBar.message = "Done";
     alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited"); 
 });

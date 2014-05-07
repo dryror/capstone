@@ -26,6 +26,9 @@
 			<Label id="protocolLbl" text="Protocol:" />
 			<Label id="protocolName" />
 			
+			<Label id="exportLbl" text="Last Export:" />
+			<Label id="exportDate" text="Not Exported"/>
+			
 		</Window>
 	</NavigationWindow>
 </Alloy>

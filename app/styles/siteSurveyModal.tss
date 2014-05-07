@@ -47,6 +47,14 @@
 "#protocolName": {
 	left: 200,
 	top: 280
+},
+"#exportLbl": {
+	left: 40,
+	top: 340
+},
+"#exportDate": {
+	left: 200,
+	top: 340
 }
 
 
