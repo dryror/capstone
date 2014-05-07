@@ -58,12 +58,8 @@ $.comments.editable = false;
 
 /* Listeners */
 
-//TODO: Confirm all conditions with project specs, project sponsor
 // When an input field changes, fire error handler
 $.transectName.addEventListener('change', function (e) {
-	Ti.App.fireEvent('transectChange');
-});
-Ti.App.addEventListener('transectChange', function() {
 	if ($.transectName.value.length < 2) {
 		$.transectError.visible = true;
 		$.transectError.text = "Transect name should be at least 2 characters";
@@ -71,14 +67,12 @@ Ti.App.addEventListener('transectChange', function() {
 		$.transectError.visible = false;
 	}
 });
-
 $.surveyor.addEventListener('change', function(e) {
-	Ti.App.fireEvent('surveyorChange');
-});
-Ti.App.addEventListener('surveyorChange', function(e) {
-	if ($.surveyor.value.length < 2) {
+	var field = e.value;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	if (!field.match(match)) {
 		$.surveyorError.visible = true;
-		$.surveyorError.text = "Surveyor should have at least 2 characters";
+		$.surveyorError.text = "Head surveyor should have a first and last name";
 	} else {
 		$.surveyorError.visible = false;
 	}
@@ -87,26 +81,19 @@ Ti.App.addEventListener('surveyorChange', function(e) {
 $.plotDistance.addEventListener('change', function(e) {
 	// Replace bad input (non-numbers) on plotDistance TextField
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
-	Ti.App.fireEvent('plotDistanceChange');
-});
-Ti.App.addEventListener('plotDistanceChange', function(e) {
-	if ($.plotDistance.value < 1) {
+	if ($.plotDistance.value < 2) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "Plot distance should be at least 1 meter";
-	} else if ($.plotDistance.value > 50) {
+		$.plotDistanceError.text = "Plot distance should be at least 2 meters";
+	} else if ($.plotDistance.value > 30) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "Plot distance should be at most 50 meters";
+		$.plotDistanceError.text = "Plot distance should be at most 30 meters";
 	} else {
 		$.plotDistanceError.visible = false;
 	}
 });
 
-$.stakeBar.addEventListener('change', function(e) {
-	//TODO
-});
-
 $.comments.addEventListener('change', function(e) {
-	//TODO
+	//TODO 
 });
 
 // TESTING - an example of restricting the keyboard input
