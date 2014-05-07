@@ -16,19 +16,23 @@ if ($.pickStake.index == 0) {
 	stakeText = "Top Right / Bottom Left";
 }
 	
-
 //validate form before inserting to database
 function doneBtn(e){
 	//disable button for 1 second to prevent double entry
 	e.source.enabled = false;
 	setTimeout(function(){ e.source.enabled = true; },1000);
 	
-	//Ti.App.fireEvent('photoCheck');
+	// check that the following (required) fields are not empty
+	Ti.App.fireEvent('transectChange');
+	Ti.App.fireEvent('surveyorChange');
+	Ti.App.fireEvent('plotDistanceChange');
+	
+	//check photo exists and a stake orientation has been selected
 	if(photo == null && $.pickStake.index == null){
 		$.photoError.visible = true;
 		$.photoError.text = "* Please take a photo";
 		$.stakeError.visible = true;
-		$.stakeError.text = "* Must select at a stake orientation";
+		$.stakeError.text = "* Must select a stake orientation";
 		return;
 	}else if (photo == null){
 		$.photoError.visible = true;
@@ -36,40 +40,12 @@ function doneBtn(e){
 		return;
 	}else if($.pickStake.index == null){
 		$.stakeError.visible = true;
-		$.stakeError.text = "* Must select at a stake orientation";
+		$.stakeError.text = "* Must select a stake orientation";
 		return;
 	}else{
 		$.photoError.visible = false;
 		$.stakeError.visible = false;
 	}
-	/*
-	if(photo == null){
-		$.photoError.visible = true;
-		$.photoError.text = "* Please take a photo";
-	}else{
-		$.photoError.visible = false;
-	}
-	if ($.pickStake.index == null) {// stake orientation - error checking
-		$.stakeError.visible = true;
-		$.stakeError.text = "* Must select at a stake orientation";
-	}*/
-	/*if ($.tsctName.value.trim().length == 0) {
-		alert('No transect name entered');
-		return;
-	} else if ($.srvyName.value.trim().length == 0) {
-		alert('No survey name entered');
-		return;
-	} else if ($.pickStake.index == null) {
-		alert('Stake orientation not selected');
-		return;
-	} else if ($.plotDist.value < 2 | $.plotDist.value > 30) {
-		alert('Select a plot distance from 2 - 30');
-		return;
-	} else 
-	if(photo == null){
-		alert("please take a photo");
-		return;
-	}*/
 		// Name and Save Photo
 		var photoName = savePhoto(photo);
 		
@@ -145,24 +121,14 @@ function savePhoto(photo){
 	return path;
 }
 
-/*
-// RESTRICT USER FORM INPUT
-
-// Replace bad input on Transect Name TextField
-$.tsctName.addEventListener('change', function(e) {
-	e.source.value = e.source.value.replace(/[^A-Za-z 0-9]+/,"");
-});
-
-// Replace bad input (non-numbers) on plotDistance TextField
-$.plotDist.addEventListener('change', function(e) {
-	e.source.value = e.source.value.replace(/[^0-9]+/,"");
-});
-*/
-
 /* Listeners */
 
 //TODO: Confirm all conditions with project specs, project sponsor
 // When an input field changes, fire error handler
+
+// ERROR CHECKING
+
+//Transect Name
 $.tsctName.addEventListener('change', function (e) {
 	Ti.App.fireEvent('transectChange');
 });
@@ -170,23 +136,87 @@ Ti.App.addEventListener('transectChange', function() {
 	if ($.tsctName.value.length < 2) {
 		$.transectError.visible = true;
 		$.transectError.text = "* Transect name should be at least 2 characters";
+		$.tsctName.borderColor = 'red';
+		$.tsctName.borderRadius = 8;
 	} else {
 		$.transectError.visible = false;
+		$.tsctName.borderColor = 'transparent';
 	}
 });
 
+
+
+
+// Head Surveyor
 $.srvyName.addEventListener('change', function(e) {
 	Ti.App.fireEvent('surveyorChange');
 });
 Ti.App.addEventListener('surveyorChange', function(e) {
+	var field = $.srvyName.value;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	if (!field.match(match)) {
+		$.surveyorError.visible = true;
+		$.surveyorError.text = "Head surveyor should have a first and last name";
+		$.srvyName.borderColor = 'red';
+		$.srvyName.borderRadius = 8;
+	} else {
+		$.surveyorError.visible = false;
+		$.srvyName.borderColor = 'transparent';
+	}
+/*
 	if ($.srvyName.value.length < 2) {
 		$.surveyorError.visible = true;
 		$.surveyorError.text = "* Surveyor should have at least 2 characters";
+		$.srvyName.borderColor = 'red';
+		$.srvyName.borderRadius = 8;
+	} else if (!field.test(nameRegEx)) {
+		$.surveyorError.visible = true;
+		$.surveyorError.text = "* Surveyor's name is invalid";
+		$.srvyName.borderColor = 'red';
+		$.srvyName.borderRadius = 8;
 	} else {
 		$.surveyorError.visible = false;
+		$.srvyName.borderColor = 'transparent';
 	}
+	*/
 });
 
+//Other Surveyors - error checking
+$.otherSrvyName.addEventListener('change', function(e) {
+	Ti.App.fireEvent('otherSurveyorChange');
+});
+Ti.App.addEventListener('otherSurveyorChange', function(e) {
+	var field = $.otherSrvyName.value;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	if (!field.match(match)) {
+		$.otherSurveyorsError.visible = true;
+		$.otherSurveyorsError.text = "Head surveyor should have a first and last name";
+		$.otherSrvyName.borderColor = 'red';
+		$.otherSrvyName.borderRadius = 8;
+	} else {
+		$.otherSurveyorsError.visible = false;
+		$.otherSrvyName.borderColor = 'transparent';
+	}
+	/*
+	// first & last name regex
+	var nameRegEx = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	var field = $.otherSrvyName.value;
+	if ($.otherSrvyName.value.length < 2) {
+		$.otherSurveyorsError.visible = true;
+		$.otherSurveyorsError.text = "* Surveyor should have at least 2 characters";
+	} else if (!field.test(nameRegEx)) {
+		$.otherSurveyorsError.visible = true;
+		$.otherSurveyorsError.text = "* Surveyor's name is invalid";
+		$.otherSrvyName.borderColor = 'red';
+		$.otherSrvyName.borderRadius = 8;
+	} else {
+		$.otherSurveyorsError.visible = false;
+		$.otherSrvyName.borderColor = 'transparent';
+	}
+	*/
+});
+
+//Plot Distance
 $.plotDist.addEventListener('change', function(e) {
 	// Replace bad input (non-numbers) on plotDistance TextField
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
@@ -196,19 +226,26 @@ Ti.App.addEventListener('plotDistanceChange', function(e) {
 	if ($.plotDist.value < 2) {
 		$.plotDistanceError.visible = true;
 		$.plotDistanceError.text = "* Plot distance should be at least 2 meters";
+		$.plotDist.borderColor = 'red';
+		$.plotDist.borderRadius = 8;
 	} else if ($.plotDist.value > 30) {
 		$.plotDistanceError.visible = true;
 		$.plotDistanceError.text = "* Plot distance should be at most 30 meters";
+		$.plotDist.borderColor = 'red';
+		$.plotDist.borderRadius = 8;
 	} else {
 		$.plotDistanceError.visible = false;
+		$.plotDist.borderColor = 'transparent';
 	}
 });
 
+//Stake Orientation
 $.pickStake.addEventListener('click', function(e) {
 	// remove the error msg when a stake orientation is selected
 	$.stakeError.visible = false;
 });
 
+//Comments
 $.comments.addEventListener('change', function(e) {
 	//TODO
 });
