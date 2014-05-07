@@ -60,6 +60,7 @@ $.comments.editable = false;
 
 // When an input field changes, fire error handler
 $.transectName.addEventListener('change', function (e) {
+	e.source.value = e.source.value.replace(/['"]/,"");
 	if ($.transectName.value.length < 2) {
 		$.transectError.visible = true;
 		$.transectError.text = "Transect name should be at least 2 characters";
@@ -68,14 +69,18 @@ $.transectName.addEventListener('change', function (e) {
 	}
 });
 $.surveyor.addEventListener('change', function(e) {
+	e.source.value = e.source.value.replace(/['"]/,"");
 	var field = e.value;
-	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'"\s]*$/;  //allow quotations to mask them without error
 	if (!field.match(match)) {
 		$.surveyorError.visible = true;
 		$.surveyorError.text = "Head surveyor should have a first and last name";
 	} else {
 		$.surveyorError.visible = false;
 	}
+});
+$.otherSurveyors.addEventListener('change', function(e) {
+	e.source.value = e.source.value.replace(/['"]/,"");
 });
 
 $.plotDistance.addEventListener('change', function(e) {
@@ -93,7 +98,7 @@ $.plotDistance.addEventListener('change', function(e) {
 });
 
 $.comments.addEventListener('change', function(e) {
-	//TODO 
+	e.source.value = e.source.value.replace(/['"]/,""); 
 });
 
 // TESTING - an example of restricting the keyboard input
