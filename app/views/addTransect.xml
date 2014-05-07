@@ -10,7 +10,7 @@
 	        <Label id="transectError" class="error" visible="false" />
 	        
 	        <Label id="srvyNameLbl" text="Head Surveyor:" />
-	        <TextField id="srvyName" hintText="First and Last Name"/>
+	        <TextField id="srvyName" hintText="First and Last Name (Allowed . ' -)"/>
 	        <Label id="surveyorError" class="error" visible="false" />
 	        
 	        <Label id="otherSrvyNameLbl" text="Other Surveyors:" />
