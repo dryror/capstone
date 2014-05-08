@@ -19,7 +19,7 @@
 			<Label id="surveyorError" class="error" visible="false" />
 			
 			<Label id="otherSurveyorsLbl" text="Other Surveyors:" />
-			<TextField id="otherSurveyors" />
+			<TextField id="otherSurveyors" hintText="(optional)" />
 			<Label id="otherSurveyorsError" class="error" visible="false" />
 			
 			<Label id="plotDistLbl" text="Plot Distance:" />
@@ -31,7 +31,7 @@
 			<Label id="stakeError" class="error" visible="false" />
 			
 			<Label id="commentsLbl" text="Comments:" />
-			<TextField id="comments" />
+			<TextField id="comments" hintText="(optional)" />
 			<Label id="commentsError" class="error" visible="false" />
 			
 		</Window>
