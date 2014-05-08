@@ -16,6 +16,8 @@
     <ios>
         <plist>
             <dict>
+            	<key>UIFileSharingEnabled</key>
+            	<true/>
                 <key>UISupportedInterfaceOrientations~iphone</key>
                 <array>
                     <string>UIInterfaceOrientationPortrait</string>
