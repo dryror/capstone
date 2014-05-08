@@ -1,4 +1,4 @@
-// Files to be uploaded to server
+// Server address to send files to
 var serverAddress = "http://ltema.breakerarts.com/uploadfile.php";
 
 function backBtnClick(){
@@ -56,7 +56,7 @@ try {
 		index ++;
 		rows.next();
 	}
-
+	
 	// Add the rows to the picker
 	$.surveyPkr.add(data);
 	
@@ -175,9 +175,7 @@ function makeCSV() {
 		plots.close();
 		plotObservations.close();
 		db.close();
-		Ti.API.info("everything closed");
 	}
-	Ti.API.info(results);
 		
 	// Prepare the CSV files
 	var sampleStationTxt = "";
@@ -226,10 +224,7 @@ function makeCSV() {
 			}
 		}
 	}
-	
-	Ti.API.info(sampleStationTxt);
-	Ti.API.info(generalSurveyTxt);
- 	
+
     // Create the CSV files
     try{
     	var dir = "site" + siteID;
@@ -274,13 +269,15 @@ function exportBtn() {
 	exportFiles(files);	
 }
 
+
 // Upload a single file to the server
+Ti.include('HttpRequestsHandler.js');
 function exportFiles(toExport) {
 	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
 	var dir = 'site' + siteID + '/';
 	var didNotSend = [];
 	var doesNotExist = [];
-	var sentSuccessfully = [];
+	
 	for (var i=0; i < toExport.length; i++) {
 		var fileName = toExport[i];
 		
@@ -292,78 +289,52 @@ function exportFiles(toExport) {
 			// Check if the file you are trying to upload exists
 			if (!fileToExport.exists()) {
 				doesNotExist.push(fileName);
-				Ti.API.error(fileName + " does not exist");
 				$.progressBar.value ++;
 				continue;
 			}
-		} catch(e) {
-			Ti.App.fireEvent("app:fileSystemError", e);
-		}
 		
-		// Send the file to the server
-		try {
-			var data_to_send = { 
+			// Send the file to the server
+			var toSend = { 
 			    "file": fileToExport.read(),
 			    "path": folderName
 			};
-			xhr = Titanium.Network.createHTTPClient();
-			xhr.open("POST", serverAddress);
-			xhr.setRequestHeader("enctype", "multipart/form-data");
-			xhr.setRequestHeader('User-Agent','My User Agent');
-			xhr.send(data_to_send);
 			
-			// Check the response
-			xhr.onload = function() {
-			    
-			    // TODO: mark the file as being uploaded successfully
-			    if(this.responseText === "success") {
+			ui.fetch.loadData(serverAddress, toSend, function(response) {
+    			// Check if the files sent
+			    if(response === "success") {
 			    	
 			    	//Update the progress
 			    	$.progressBar.value ++;
-			    	sentSuccessfully.push(fileName); //TODO: This will not be the correct file name
 			    	
-			    	//If the last file uplaoded, we are done
-			    	if ($.progressBar.value === (toExport.length)) {
-			    		$.exportWin.fireEvent("doneSending", {
-			    			sent: sentSuccessfully,
-			    			failed: didNotSend,
-			    			error: doesNotExist
-			    		});
-			    	}
 			    } else {
-			    	//$.progressBar.value ++;
-			    	didNotSend.push(fileName);
-			    	Ti.API.info(fileName + " did not send"); //TODO: This will not be the correct file name
-			    	Ti.API.info(this.respnoseText);
+			    	// There was an error sending
+			    	$.progressBar.value ++;
+			    	didNotSend.push(response); 
 			    }
-			};
-			
+			    
+			    if($.progressBar.value === toExport.length) {
+			    	// Upload is finished
+					$.exportWin.fireEvent("doneSending", {
+						"doesNotExist": doesNotExist,
+						"didNotSend": didNotSend
+					});
+			    }
+  			});
+  			
 		} catch(e) {
 			Ti.App.fireEvent("app:fileSystemError", e);
 		}
 	}
-	
 }
 
-var retrys = 0;
-// All the HTTP requests have responded
-$.exportWin.addEventListener("doneSending", function(e) {
-    // Try resending any failed files
-    if (e.failed.length > 0 && retrys < 3) {
-    	Ti.APP.info("resending " + e.failed.length + " files");
-    	exportFiles(e.failed);
-    	retrys++;
-    	return;
-    }
+// All the HTTP requests have sent successfully
+$.exportWin.addEventListener("doneSending", function(e) { 
     
-    //TODO: handle if retrys failed
+    // If all files did not send, let user retry
+	if (e.doesNotExist.length > 0 || e.didNotSend.length > 0) {
+		//TODO: Prompt user to try again
+	}
     
-    if (e.error.length > 0) {
-    	alert("There was a problem with some images\n Please re-take the following photos and try again:\n" + e.error);
-    	return;
-    }
-    
-    // Export was successful
     try{
     	var db = Ti.Database.open('ltemaDB');
     	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
@@ -377,9 +348,7 @@ $.exportWin.addEventListener("doneSending", function(e) {
     	Ti.App.fireEvent("app:fileSystemError", e);
     } finally {
     	db.close();
-    }
-    
-    // Update the progress bar
-    $.progressBar.message = "Done";
-    alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited"); 
+    	$.progressBar.message = "Done";
+		alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited");
+    } 
 });
