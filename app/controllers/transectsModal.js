@@ -39,10 +39,10 @@ try {
 	} else if (stakeOrientation === "Top Right / Bottom Left") {
 		$.stakeBar.index = 1;
 	} else {
-		alert('invalid stakeOrientation value');
+		alert('please set the stake orientation');
 	}
 } catch (e) {
-	alert ('DEV ALERT - transectsModal try/catch failed');
+	Ti.App.fireEvent("app:dataBaseError", e);
 } finally {
 	resultRow.close();
 	db.close();
@@ -60,7 +60,7 @@ $.comments.editable = false;
 
 // When an input field changes, fire error handler
 $.transectName.addEventListener('change', function (e) {
-	e.source.value = e.source.value.replace(/['"]/,"");
+	//e.source.value = e.source.value.replace(/['"]/,"");
 	if ($.transectName.value.length < 2) {
 		$.transectError.visible = true;
 		$.transectError.text = "Transect name should be at least 2 characters";
@@ -69,7 +69,7 @@ $.transectName.addEventListener('change', function (e) {
 	}
 });
 $.surveyor.addEventListener('change', function(e) {
-	e.source.value = e.source.value.replace(/['"]/,"");
+	//e.source.value = e.source.value.replace(/['"]/,"");
 	var field = e.value;
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'"\s]*$/;  //allow quotations to mask them without error
 	if (!field.match(match)) {
@@ -80,7 +80,7 @@ $.surveyor.addEventListener('change', function(e) {
 	}
 });
 $.otherSurveyors.addEventListener('change', function(e) {
-	e.source.value = e.source.value.replace(/['"]/,"");
+	//e.source.value = e.source.value.replace(/['"]/,"");
 });
 
 $.plotDistance.addEventListener('change', function(e) {
@@ -88,17 +88,17 @@ $.plotDistance.addEventListener('change', function(e) {
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 	if ($.plotDistance.value < 2) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "Plot distance should be at least 2 meters";
+		$.plotDistanceError.text = "The distance between each plot should be at least 2 meters";
 	} else if ($.plotDistance.value > 30) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "Plot distance should be at most 30 meters";
+		$.plotDistanceError.text = "The distance between each plot should be at most 30 meters";
 	} else {
 		$.plotDistanceError.visible = false;
 	}
 });
 
 $.comments.addEventListener('change', function(e) {
-	e.source.value = e.source.value.replace(/['"]/,""); 
+	//e.source.value = e.source.value.replace(/['"]/,""); 
 });
 
 // TESTING - an example of restricting the keyboard input
