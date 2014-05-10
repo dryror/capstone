@@ -23,7 +23,7 @@
 "#headerView": {
 	height: Ti.UI.SIZE
 },
-"#addSite": {
+"#addObservation": {
 	top: 10,
 	left: 18
 }
