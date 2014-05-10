@@ -11,10 +11,9 @@ function addBtn(){
 	nav.openWindow(addPlot);
 }
 
-//Needed to add this to get to the next screen for testing
 //Will be replaced once controller implemented
-$.row1.addEventListener('click', function(event){
-    var observations = Alloy.createController("plotObservations").getView();
+$.row1.addEventListener('click', function(e){
+    var observations = Alloy.createController("plotObservations", {plotID:1}).getView(); //hardcoded for testing, replace with {plotID:e.rowData.plotID} when wired
     var nav = Alloy.Globals.navMenu;
     nav.openWindow(observations);
 }); 
