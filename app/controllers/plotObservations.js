@@ -108,6 +108,24 @@ Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
 	populateTable();
 });
 
+// Remove a row from the database (called when edit button is enabled and 'delete' is clicked)
+$.tbl.addEventListener('delete', function(e) { 
+
+	var observationID = e.rowData.observationID;
+    
+    try {
+   		var db = Ti.Database.open('ltemaDB');
+	    var row = db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
+	} catch(e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally { 
+		db.close();
+	}
+	
+	//check if Edit button should be enabled/disabled - if no rows exist
+	toggleEditBtn();
+});
+
 
 /* Functions */
 
