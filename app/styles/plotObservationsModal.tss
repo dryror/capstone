@@ -1,0 +1,33 @@
+".container": {
+	backgroundColor:"white"
+},
+
+"Label": {
+	font: {fontSize: 20}
+},
+"TextField": {
+	font: {fontSize: 20}
+},
+"Button": {
+	font: {fontSize: 20}
+},
+
+".error": {
+	font: {fontSize: 14},
+	color: "Red"
+},
+"#groundCoverLbl": {
+	left: 40,
+	top: 40,
+},
+"#groundCover": {
+	left: 220,
+	right: 40,
+	top: 40,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
+	maxLength:128
+},
+"#groundCoverError": {
+	left: 225,
+	top: 70
+}

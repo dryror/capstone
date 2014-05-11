@@ -1,0 +1,19 @@
+<Alloy>
+	<NavigationWindow id="modalNav">
+		<Window class="container" id="modalWin">
+			
+			<LeftNavButton>
+				<Button id="backBtn" title="Back" onClick="backBtnClick" />
+			</LeftNavButton>
+			
+			<RightNavButton>
+				<Button id="editBtn" title="Edit" onClick="editBtnClick" />
+			</RightNavButton>
+				
+			<Label id="groundCoverLbl" text="Ground Cover:" />
+			<TextField id="groundCover" />
+			<Label id="groundCoverError" class="error" visible="false" />
+			
+		</Window>
+	</NavigationWindow>
+</Alloy>

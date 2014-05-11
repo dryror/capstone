@@ -7,20 +7,20 @@
  * 
  */
 
-// plotID
 var args = arguments[0];
 $.tbl.plotID = args.plotID;
 
 function populateTable() {
+	
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
-	// Query the plot observation table for the values of a plotID and build the TableView
+	
+	// Query the plot observation table, build the TableView
 	try {
 		
 		var db = Ti.Database.open('ltemaDB');
 		
-		//TODO: Remove unused fields from query
 		//Query - Observations of a plot
 		rows = db.execute('SELECT observation_id, observation, ground_cover, count, comments, plot_id, media_id \
 						FROM plot_observation \
@@ -36,59 +36,80 @@ function populateTable() {
 			var mediaID = rows.fieldByName('media_id');
 		
 			//Create a new row
-				var newRow = Ti.UI.createTableViewRow({
-					title : observation,
-					observationID : observationID
-				});
-				
-				//add the ground cover label
-				var groundCoverLabel = Ti.UI.createLabel({
-					text: groundCover + '%',
-					right: 50
-				});
-				newRow.add(groundCoverLabel);
-				//create and attach an info icon to the row
-				var infoButton = Ti.UI.createButton({
-					style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
-					right : 10,
-					height : 48,
-					width : 48,
-				});
-				newRow.add(infoButton);
-				
-		   		//Add row to the table view
-		  		$.tbl.appendRow(newRow);
+			var newRow = Ti.UI.createTableViewRow({
+				title : observation,
+				observationID : observationID
+			});
+			
+			//add the ground cover label
+			var groundCoverLabel = Ti.UI.createLabel({
+				text: groundCover + '%',
+				right: 50
+			});
+			newRow.add(groundCoverLabel);
+			
+			//add an info icon to the row
+			var infoButton = Ti.UI.createButton({
+				style : Titanium.UI.iPhone.SystemButton.INFO_DARK,
+				right : 10,
+				height : 48,
+				width : 48,
+			});
+			newRow.add(infoButton);
+			
+	   		//Add row to the table view
+	  		$.tbl.appendRow(newRow);
 		
 			rows.next();
 		}
+		
 	} catch(e) {
+		
 		Ti.App.fireEvent("app:dataBaseError", e);
+		
 	} finally {
+		
 		rows.close();
 		db.close();
 	}
+	
 }
 
 populateTable();
 
+
+/* Event Listeners */
+
+//TODO: discuss row click behaviour, info icon relevance
 $.tbl.addEventListener('click', function(e){
 	
 	//info icon clicked, get modal
-	if(e.source.toString() == '[object TiUIButton]') {
+	if (e.source.toString() == '[object TiUIButton]') {
 		
 		//alert until modal built
 		alert ('call plot observation modal');
 	
-	//row clicked, get transect view
+	//row clicked, get modal?
 	} else {
-		//TODO: row click handler
-		alert('todo: row click handler');
-	} 
+		
+		Ti.API.info('e', JSON.stringify(e));
+		var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			navBarHidden : false
+		});
+		
+	}
 });
 
 Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
 	populateTable();
 });
+
+
+/* Functions */
 
 //Edit button toggle
 function editBtn(e){
@@ -123,7 +144,7 @@ function toggleEditBtn(){
 	}
 }
 
-//Function to get total number of rows (transects)
+//Function to get total number of rows
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
@@ -143,9 +164,8 @@ function doneBtn(){
 	alert('You Clicked the Done Button');
 }
 
-//Place holder for add button
+//Navigation to addPlotObservation
 function addBtn(){
-	//Navigation to addPlotObservatino
 	var addObservation = Alloy.createController("addPlotObservation").getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addObservation);
