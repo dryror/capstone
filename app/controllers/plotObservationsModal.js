@@ -1,5 +1,5 @@
 /*
- * View and edit details of a plot observation
+ * View and edit the ground cover percentage of a plot observation
  * 
  * Expected args: observationID, title
  */
@@ -8,7 +8,7 @@ var args = arguments[0];
 var observationID = args.observationID;
 var title = args.title;
 
-//Query the database for values associated with the siteID
+//Query the database, assign returned ground cover to TextField
 try {
 	var db = Ti.Database.open('ltemaDB');
 	
@@ -30,8 +30,10 @@ try {
 $.modalWin.title = title;
 $.groundCover.text = groundCover;
 
-// Initially disable editable fields
-$.groundCover.editable = false;
+
+// Initially disable Done button until a change is made
+$.doneBtn.enabled = false;
+
 
 
 /* Listeners */
@@ -39,32 +41,30 @@ $.groundCover.editable = false;
 //TODO: implement 'change' event listeners to validate input
 
 
+// Make keyboard appear when opening nav window (needs the event listener to work)
+$.modalNav.addEventListener("open", function(e) {
+    
+    $.groundCover.focus();
+    
+    //outside of 'open', change is fired, enabling 'Done' on load
+    $.groundCover.addEventListener ("change", function(e) {
+		$.doneBtn.enabled = true;
+	});
+	
+});
+
+// Keyboard 'return' key press
+$.groundCover.addEventListener ("return", function(e) {
+	doneBtnClick();
+});
+
+
 /* Functions */
 
-// Toggle button title (Edit/Done) when pressed.  'Done' validates, saves, and reverts to 'Edit' on click
-function editBtnClick(e){
+function doneBtnClick(){
 	
-	if (e.source.title == "Edit") {
-		
-    	$.modalWin.editing = true;
-        e.source.title = "Done";
-        $.groundCover.editable = true;
-        $.backBtn.enabled = false;
-        
-    } else { //title is "Done"
-    	
-    	//TODO: fire error-checking listeners and return if any fail
-    	
-        $.modalWin.editing = false;
-        e.source.title = "Edit";
-        $.backBtn.enabled = true;
-        $.groundCover.editable = false;
-		
-		saveEdit();
-    }
-}
-
-function saveEdit(){
+	//TODO: check for error labels before updating db
+	
 	try {
 		var db = Ti.Database.open('ltemaDB');
 		db.execute( 'UPDATE plot_observation \
@@ -74,10 +74,12 @@ function saveEdit(){
 		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
 		db.close();
+		Ti.App.fireEvent("app:refreshPlotObservations");
+		$.modalNav.close();
 	}
 }
 
-function backBtnClick(){
-	Ti.App.fireEvent("app:refreshPlotObservations");
+function cancelBtnClick(){
+	//Ti.App.fireEvent("app:refreshPlotObservations");
 	$.modalNav.close();
 }

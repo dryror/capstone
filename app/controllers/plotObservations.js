@@ -38,24 +38,18 @@ function populateTable() {
 			//Create a new row
 			var newRow = Ti.UI.createTableViewRow({
 				title : observation,
-				observationID : observationID
+				observationID : observationID,
+				height: 60,
+				font: {fontSize: 24}
 			});
 			
 			//add the ground cover label
 			var groundCoverLabel = Ti.UI.createLabel({
 				text: groundCover + '%',
-				right: 50
+				right: 50,
+				font: {fontSize: 24}
 			});
 			newRow.add(groundCoverLabel);
-			
-			//add an info icon to the row
-			var infoButton = Ti.UI.createButton({
-				style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-				right : 10,
-				height : 48,
-				width : 48,
-			});
-			newRow.add(infoButton);
 			
 	   		//Add row to the table view
 	  		$.tbl.appendRow(newRow);
@@ -80,32 +74,19 @@ populateTable();
 
 /* Event Listeners */
 
-//TODO: discuss row click behaviour, info icon relevance
-$.tbl.addEventListener('click', function(e){
-	
-	//info icon clicked, get modal
-	if (e.source.toString() == '[object TiUIButton]') {
-		
-		//alert until modal built
-		alert ('call plot observation modal');
-	
-	//row clicked, get modal?
-	} else {
-		
-		Ti.API.info('e', JSON.stringify(e));
-		var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
-		modal.open({
-			modal : true,
-			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
-			navBarHidden : false
-		});
-		
-	}
-});
-
 Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
 	populateTable();
+});
+
+// Row clicked, grab the modal
+$.tbl.addEventListener('click', function(e){
+	var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
+	modal.open({
+		modal : true,
+		modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+		navBarHidden : false
+	});
 });
 
 // Remove a row from the database (called when edit button is enabled and 'delete' is clicked)

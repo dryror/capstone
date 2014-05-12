@@ -1,10 +1,15 @@
-
 ".container" : {
 	backgroundColor:"white"
 },
+
 "Label": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
+"Button": {
+	font: {fontSize: 24}
+},
+
+
 "#done": {
 	right: 20,
 	top: 40
@@ -16,9 +21,6 @@
 "#percent": {
 	right: 20,
 	top: 20
-},
-"Button": {
-	font: {fontSize: 20}
 },
 "#headerView": {
 	height: Ti.UI.SIZE
