@@ -71,7 +71,7 @@ $.transectName.addEventListener('change', function (e) {
 $.surveyor.addEventListener('change', function(e) {
 	//e.source.value = e.source.value.replace(/['"]/,"");
 	var field = e.value;
-	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'"\s]*$/;  //allow quotations to mask them without error
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/; 
 	if (!field.match(match)) {
 		$.surveyorError.visible = true;
 		$.surveyorError.text = "Head surveyor should have a first and last name";
@@ -80,7 +80,14 @@ $.surveyor.addEventListener('change', function(e) {
 	}
 });
 $.otherSurveyors.addEventListener('change', function(e) {
-	//e.source.value = e.source.value.replace(/['"]/,"");
+	var field = $.otherSurveyors.value;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
+	if (!field.match(match)) {
+		$.otherSurveyorsError.visible = true;
+		$.otherSurveyorsError.text = "Other surveyors should have a first and last name";
+	} else {
+		$.otherSurveyorsError.visible = false;
+	}
 });
 
 $.plotDistance.addEventListener('change', function(e) {

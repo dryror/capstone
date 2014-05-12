@@ -153,7 +153,7 @@ $.srvyName.addEventListener('change', function(e) {
 });
 Ti.App.addEventListener('surveyorChange', function(e) {
 	var field = $.srvyName.value;
-	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
 	if (!field.match(match)) {
 		$.surveyorError.visible = true;
 		$.surveyorError.text = "Head surveyor should have a first and last name";
@@ -187,10 +187,10 @@ $.otherSrvyName.addEventListener('change', function(e) {
 });
 Ti.App.addEventListener('otherSurveyorChange', function(e) {
 	var field = $.otherSrvyName.value;
-	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
+	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
 	if (!field.match(match)) {
 		$.otherSurveyorsError.visible = true;
-		$.otherSurveyorsError.text = "Head surveyor should have a first and last name";
+		$.otherSurveyorsError.text = "Other surveyors should have a first and last name";
 		$.otherSrvyName.borderColor = 'red';
 		$.otherSrvyName.borderRadius = 8;
 	} else {
