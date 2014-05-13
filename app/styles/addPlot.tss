@@ -39,39 +39,50 @@
 
 "#plotLbl": {
 	left: 40,
-	top: 220
+	top: 160
 },
 "#pickDistance": {
 	left: 220,
 	right: 40,
-	top: 220
+	top: 160
 },
 "#plotDeviation": {
 	left: 220,
 	right: 40,
-	top: 280,
+	top: 220,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
 },
 
 "#commentLbl": {
 	left: 40,
-	top: 340
+	top: 220
 },
 "#comments": {
 	left: 220,
 	right: 40,
-	top:340,
+	top:220,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
 
 "#photoBtn": {
 	left: 40,
-	top: 400
+	top: 280
 },
-
+"#plotThumbnail": {
+	width: 64,
+	height: 64,
+	left: 220,
+	top: 280,
+	borderRadius: 10
+},
+"#photoError": {
+	left: 225,
+	top: 285,
+	color: 'red'
+},
 "#info": {
 	left: 40,
 	right: 40,
-	top: 460
+	top: 340
 }
