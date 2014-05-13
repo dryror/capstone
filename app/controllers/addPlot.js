@@ -114,6 +114,7 @@ function savePhoto(photo){
 }
 
 $.pickStake.addEventListener('click', function(e) {
+	// Show and hide the deviation text field depending on what is selected
 	if (stakeOther === false && e.source.labels[e.index].title === "Other") {
 		$.plotLbl.top += 60;
 		$.pickDistance.top += 60;
@@ -146,6 +147,7 @@ $.pickStake.addEventListener('click', function(e) {
 });
 
 $.pickDistance.addEventListener('click', function(e) {
+	// Show and hide the deviation text field depending on what is selected
 	if (distanceOther === false && e.source.labels[e.index].title === "Other") {
 		$.commentLbl.top += 60;
 		$.comments.top += 60;

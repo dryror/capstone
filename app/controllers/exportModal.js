@@ -1,5 +1,5 @@
 // Server address to send files to
-var serverAddress = "http://ltema.breakerarts.com/uploadfile.php";
+// var serverAddress = "";
 
 function backBtnClick(){
 	$.modalNav.close();
@@ -90,7 +90,7 @@ function makeCSV() {
 		var transectIDs = [];
 		while (transects.isValidRow()) {
 			// Get the pictures to upload
-			allFiles.push(transects.fieldByName('transect_photo'));
+			// allFiles.push(transects.fieldByName('transect_photo'));
 			
 			// Get the transectIDs
 			transectIDs.push(transects.fieldByName('transect_id'));
@@ -117,7 +117,7 @@ function makeCSV() {
 		var plotIDs = [];
 		while (plots.isValidRow()) {
 			// Get the pictures to upload
-			allFiles.push(plots.fieldByName('plot_photo'));
+			// allFiles.push(plots.fieldByName('plot_photo'));
 			
 			// Get the plotIDs
 			plotIDs.push(plots.fieldByName('plot_id'));
@@ -149,7 +149,7 @@ function makeCSV() {
 		fieldCount = plotObservations.fieldCount();	
 		while (plotObservations.isValidRow()) {
 			// Get the pictures to upload
-			allFiles.push(plotObservations.fieldByName('observation_photo'));
+			// allFiles.push(plotObservations.fieldByName('observation_photo'));
 			
 			// Create observation objects
 			var row = {};
@@ -239,13 +239,13 @@ function makeCSV() {
 	    var ssFileName = "SampleStation.csv";
 	    var sampleStationFile = Titanium.Filesystem.getFile(siteDir.resolve(), ssFileName);
 	    sampleStationFile.write(sampleStationTxt); 
-	    allFiles.push(ssFileName);
+	    // allFiles.push(ssFileName);
 	    
 	    // Create General Survey file
 	    var gsFileName = "GeneralSurvey.csv";
 	    var generalSurveyFile = Titanium.Filesystem.getFile(siteDir.resolve(), gsFileName);
 	    generalSurveyFile.write(generalSurveyTxt);
-	    allFiles.push(gsFileName);
+	    // allFiles.push(gsFileName);
 	} catch(e) {
 		Ti.App.fireEvent("app:fileSystemError", e);
 	} finally {
@@ -256,20 +256,20 @@ function makeCSV() {
 function exportBtn() {
 	// Create the CSV and export all files and photos
 	var files = makeCSV();
-
+	$.exportWin.fireEvent("doneSending");
 	// Setup the progress bar
-	$.progressBar.hide();
-	$.progressBar.message = "Uploading...";
-	$.progressBar.min = 0;
-	$.progressBar.max = files.length;
-	$.progressBar.value = 0;
-	$.progressBar.show();
+	// $.progressBar.hide();
+	// $.progressBar.message = "Uploading...";
+	// $.progressBar.min = 0;
+	// $.progressBar.max = files.length;
+	// $.progressBar.value = 0;
+	// $.progressBar.show();
 	
 	// Upload all the files for selected survey
-	exportFiles(files);	
+	// exportFiles(files);	
 }
 
-
+/*
 // Upload a single file to the server
 Ti.include('HttpRequestsHandler.js');
 function exportFiles(toExport) {
@@ -326,21 +326,20 @@ function exportFiles(toExport) {
 		}
 	}
 }
-
+*/
 // All the HTTP requests have sent successfully
-$.exportWin.addEventListener("doneSending", function(e) { 
+$.exportWin.addEventListener("doneSending", function() { 
     
     // If all files did not send, let user retry
-	if (e.doesNotExist.length > 0 || e.didNotSend.length > 0) {
-		//TODO: Prompt user to try again
-	}
+	//if (e.doesNotExist.length > 0 || e.didNotSend.length > 0) {
+	//	//TODO: Prompt user to try again
+	//}
     
     try{
     	var db = Ti.Database.open('ltemaDB');
     	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
     	var d = new Date();
 		var utc = d.getTime();
-		Ti.API.info(utc);
     	
     	// Timestamp the export in the database
     	db.execute('UPDATE OR FAIL site_survey SET exported = ? WHERE site_id = ?', utc, siteID);
@@ -348,7 +347,7 @@ $.exportWin.addEventListener("doneSending", function(e) {
     	Ti.App.fireEvent("app:fileSystemError", e);
     } finally {
     	db.close();
-    	$.progressBar.message = "Done";
-		alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " has been submited");
+    	// $.progressBar.message = "Done";
+		alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " is ready for export");
     } 
 });
