@@ -14,7 +14,7 @@
 			<FooterView id="tblFooter">
 				<View id="footerView">
 					<Label id="percentLbl" text="Total Percent Coverage: "/>
-					<Label id="percent" text="2%"/>
+					<Label id="percent" text="squirrel!"/>
 					<Button id="done" title="Done" onClick="doneBtn" />
 				</View>
 			</FooterView>

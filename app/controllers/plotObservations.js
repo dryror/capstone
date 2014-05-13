@@ -10,11 +10,14 @@
 var args = arguments[0];
 $.tbl.plotID = args.plotID;
 
+var totalPlotPercentage = 0;
+
 function populateTable() {
 	
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
+	totalPlotPercentage = 0;
 	
 	// Query the plot observation table, build the TableView
 	try {
@@ -50,6 +53,8 @@ function populateTable() {
 				font: {fontSize: 24}
 			});
 			newRow.add(groundCoverLabel);
+
+			totalPlotPercentage += groundCover;
 			
 	   		//Add row to the table view
 	  		$.tbl.appendRow(newRow);
@@ -65,13 +70,16 @@ function populateTable() {
 		
 		rows.close();
 		db.close();
+		$.percent.text = totalPlotPercentage;
 	}
 	
 }
 
 populateTable();
 
+// Assign labels
 
+$.percent.text = 
 /* Event Listeners */
 
 Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
@@ -158,9 +166,13 @@ function showTotalRowNumber(){
 	return totalRows;
 }
 
-//Place holder for done button
+// TODO: handle done
 function doneBtn(){
-	alert('You Clicked the Done Button');
+	if ( totalPlotPercentage >= 100 ) {
+		alert('You Clicked the Done Button w/ % >= 100');
+	} else {
+		alert('You Clicked the Done Button w/ % < 100');
+	}	
 }
 
 //Navigation to addPlotObservation

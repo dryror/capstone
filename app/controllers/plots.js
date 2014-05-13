@@ -18,7 +18,7 @@ function addBtn(){
 function populateTable() {
 	//Will be replaced once controller implemented
 	$.row1.addEventListener('click', function(e){
-	    var observations = Alloy.createController("plotObservations", {plotID:1}).getView(); //hardcoded for testing, replace with {plotID:e.rowData.plotID} when wired
+	    var observations = Alloy.createController("plotObservations", {plotID:9}).getView(); //hardcoded for testing, replace with {plotID:e.rowData.plotID} when wired
 	    var nav = Alloy.Globals.navMenu;
 	    nav.openWindow(observations);
 	}); 
