@@ -118,7 +118,7 @@ function savePhoto(photo){
 			var parkName = rows.fieldByName('park_name');
 		}
 			//Name the directory
-			var dir = year + '-' + protocolName + '-' + parkName; 
+			var dir = year + ' - ' + protocolName + ' - ' + parkName; 
 			//get the photo
 			var img = photo;
 			

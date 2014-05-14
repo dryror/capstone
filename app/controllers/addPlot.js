@@ -57,6 +57,22 @@ function doneBtn(e){
 		Ti.API.info("No plot distance");
 	}
 	
+	if ($.pickStake.index == 1) {
+		if ($.stakeDeviation.value === "") {
+			$.stakeOtherError.visible = true;
+			errorOnPage = true;
+		}
+		stakeOrientation = $.stakeDeviation.text;
+	}
+	
+	if ($.pickDistance.index == 1) {
+		if ($.distanceDeviation.value === "") {
+			$.distanceOtherError.visible = true;
+			errorOnPage = true;
+		}
+		plotDistance = $.distanceDeviation.text;
+	}
+	
 	if (errorOnPage) {
 		return;
 	}
@@ -116,7 +132,23 @@ function takePhoto() {
 //Name and save photo to filesystem - do this when done btn is pressed
 function savePhoto(photo){
 	
-	var dir = "site" + siteID;
+	//Connect to database
+	var db = Ti.Database.open('ltemaDB');
+		
+	//Query - Retrieve site survery, year, park
+	var rows = db.execute('SELECT year, protocol_name, park_name \
+						FROM site_survey s, protocol p, park prk \
+						WHERE s.protocol_id = p.protocol_id \
+						AND s.park_id = prk.park_id \
+						AND site_id = ?', siteID);
+						
+	//Name the directory	
+	var year = rows.fieldByName('year');
+	var protocolName = rows.fieldByName('protocol_name');
+	var parkName = rows.fieldByName('park_name');
+	var dir = year + ' - ' + protocolName + ' - ' + parkName;
+	 
+	//get the photo
 	var img = photo; 
 	
 	//name the photo  (timestamp - utc in ms)
@@ -142,6 +174,7 @@ function savePhoto(photo){
 // Show and hide the deviation text field depending on what is selected
 $.pickStake.addEventListener('click', function(e) {
 	$.stakeError.visible = false;
+	$.stakeOtherError.visible = false;
 	if (stakeOther === false && e.source.labels[e.index].title === "Other") {
 		$.distanceLbl.top += 60;
 		$.pickDistance.top += 60;
@@ -179,6 +212,7 @@ $.pickStake.addEventListener('click', function(e) {
 // Show and hide the deviation text field depending on what is selected
 $.pickDistance.addEventListener('click', function(e) {
 	$.distanceError.visible = false;
+	$.distanceOtherError.visible = false;
 	if (distanceOther === false && e.source.labels[e.index].title === "Other") {
 		$.commentLbl.top += 60;
 		$.comments.top += 60;
@@ -200,5 +234,21 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.distanceDeviation.visible = false;
 		$.distanceDeviation.blur();
 		distanceOther = false;
+	}
+});
+
+$.stakeDeviation.addEventListener('change', function(e) {
+	if (e.value === "") {
+		$.stakeOtherError.visible = true;
+	} else {
+		$.stakeOtherError.visible = false;
+	}
+});
+
+$.distanceDeviation.addEventListener('change', function(e) {
+	if (e.value === "") {
+		$.distanceOtherError.visible = true;
+	} else {
+		$.distanceOtherError.visible = false;
 	}
 });
