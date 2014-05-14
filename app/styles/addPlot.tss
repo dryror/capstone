@@ -1,6 +1,9 @@
 ".container": {
 	backgroundColor:"white"
 },
+".error": {
+	color: "red"
+},
 "Label": {
 	font: {fontSize: 20}
 },
@@ -30,11 +33,19 @@
 	right: 40,
 	top: 100
 },
+"#stakeError": {
+	left: 225,
+	top: 130
+},
 "#stakeDeviation": {
 	left: 220,
 	right: 40,
 	top: 160,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+"#stakeOtherError": {
+	left: 225,
+	top: 190
 },
 
 "#plotLbl": {
@@ -46,12 +57,20 @@
 	right: 40,
 	top: 160
 },
+"#plotError": {
+	left: 225,
+	top: 190
+},
 "#plotDeviation": {
 	left: 220,
 	right: 40,
 	top: 220,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
+},
+"#plotOtherError": {
+	left: 225,
+	top: 250
 },
 
 "#commentLbl": {
@@ -78,11 +97,10 @@
 },
 "#photoError": {
 	left: 225,
-	top: 285,
-	color: 'red'
+	top: 285
 },
 "#info": {
 	left: 40,
 	right: 40,
-	top: 340
+	top: 380
 }

@@ -118,7 +118,9 @@ $.pickStake.addEventListener('click', function(e) {
 	if (stakeOther === false && e.source.labels[e.index].title === "Other") {
 		$.plotLbl.top += 60;
 		$.pickDistance.top += 60;
+		$.plotError.top += 60;
 		$.plotDeviation.top += 60;
+		$.plotOtherError.top +=60;
 		$.commentLbl.top += 60;
 		$.comments.top += 60;
 		$.photoBtn.top += 60;
@@ -132,7 +134,9 @@ $.pickStake.addEventListener('click', function(e) {
 	if (stakeOther === true && e.source.labels[e.index].title !== "Other") {
 		$.plotLbl.top -= 60;
 		$.pickDistance.top -= 60;
+		$.plotError.top -= 60;
 		$.plotDeviation.top -= 60;
+		$.plotOtherError.top -=60;
 		$.commentLbl.top -= 60;
 		$.comments.top -= 60;
 		$.photoBtn.top -= 60;

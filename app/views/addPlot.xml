@@ -9,19 +9,23 @@
 	        <Label id="numberLbl" text="1" />
 	        
 	        <Label id="stakeLbl" text="Stake Orientation:" />
-	        <TabbedBar id="pickStake" />         
-        	<TextField id="stakeDeviation" visible="false"/>
+	        <TabbedBar id="pickStake" />
+	        <Label id="stakeError" class="error" visible="false" text="* Please confirm the stake orientation"/>       
+        	<TextField id="stakeDeviation" visible="false" />
+        	<Label id="stakeOtherError" class="error" visible="false" text="* Stake orientation must be specified"/>
 	        
 	        <Label id="plotLbl" text="Plot Distance:" />
-	        <TabbedBar id="pickDistance" />           
-        	<TextField id="plotDeviation" visible="false"/>>
+	        <TabbedBar id="pickDistance" />
+	        <Label id="plotError" class="error" visible="false" text="* Please confirm the plot distance"/>           
+        	<TextField id="plotDeviation" visible="false"/>
+        	<Label id="plotOtherError" class="error" visible="false" text="* Plot distance must be specified"/>  
 	      	        
 	        <Label id="commentLbl" text="Comments:" />
 	        <TextField id="comments" />
 	        
 	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
 	        <ImageView id="plotThumbnail" />
-	        <Label id="photoError" class="error" visible="false" />
+	        <Label id="photoError" class="error" visible="false" text="* Please take a photo"/>
 	        
 	        <Label id="info">Place holder for instructions to user. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
         </View>
