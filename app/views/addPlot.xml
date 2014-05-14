@@ -14,11 +14,11 @@
         	<TextField id="stakeDeviation" visible="false" />
         	<Label id="stakeOtherError" class="error" visible="false" text="* Stake orientation must be specified"/>
 	        
-	        <Label id="plotLbl" text="Plot Distance:" />
+	        <Label id="distanceLbl" text="Plot Distance:" />
 	        <TabbedBar id="pickDistance" />
-	        <Label id="plotError" class="error" visible="false" text="* Please confirm the plot distance"/>           
-        	<TextField id="plotDeviation" visible="false"/>
-        	<Label id="plotOtherError" class="error" visible="false" text="* Plot distance must be specified"/>  
+	        <Label id="distanceError" class="error" visible="false" text="* Please confirm the plot distance"/>           
+        	<TextField id="distanceDeviation" visible="false"/>
+        	<Label id="distanceOtherError" class="error" visible="false" text="* Plot distance must be specified"/>  
 	      	        
 	        <Label id="commentLbl" text="Comments:" />
 	        <TextField id="comments" />

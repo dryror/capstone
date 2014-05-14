@@ -48,7 +48,7 @@
 	top: 190
 },
 
-"#plotLbl": {
+"#distanceLbl": {
 	left: 40,
 	top: 160
 },
@@ -57,18 +57,18 @@
 	right: 40,
 	top: 160
 },
-"#plotError": {
+"#distanceError": {
 	left: 225,
 	top: 190
 },
-"#plotDeviation": {
+"#distanceDeviation": {
 	left: 220,
 	right: 40,
 	top: 220,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
 },
-"#plotOtherError": {
+"#distanceOtherError": {
 	left: 225,
 	top: 250
 },

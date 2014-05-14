@@ -37,6 +37,30 @@ function doneBtn(e){
 	e.source.enabled = false;
 	setTimeout(function(){ e.source.enabled = true; },1000);
 	
+	var errorOnPage = false;
+	
+	if (photo == null) {
+		$.photoError.visible = true;
+		errorOnPage = true;
+		Ti.API.info("No photo");
+	}
+	
+	if ($.pickStake.index == null) {
+		$.stakeError.visible = true;
+		errorOnPage = true;
+		Ti.API.info("No stake orientation");
+	}
+	
+	if ($.pickDistance.index == null) {
+		$.distanceError.visible = true;
+		errorOnPage = true;
+		Ti.API.info("No plot distance");
+	}
+	
+	if (errorOnPage) {
+		return;
+	}
+	
 	// Name and Save Photo
 	var photoName = savePhoto(photo);
 	var utc = new Date().getTime();
@@ -113,14 +137,17 @@ function savePhoto(photo){
 	return path;
 }
 
+// Event Listeners
+
+// Show and hide the deviation text field depending on what is selected
 $.pickStake.addEventListener('click', function(e) {
-	// Show and hide the deviation text field depending on what is selected
+	$.stakeError.visible = false;
 	if (stakeOther === false && e.source.labels[e.index].title === "Other") {
-		$.plotLbl.top += 60;
+		$.distanceLbl.top += 60;
 		$.pickDistance.top += 60;
-		$.plotError.top += 60;
-		$.plotDeviation.top += 60;
-		$.plotOtherError.top +=60;
+		$.distanceError.top += 60;
+		$.distanceDeviation.top += 60;
+		$.distanceOtherError.top +=60;
 		$.commentLbl.top += 60;
 		$.comments.top += 60;
 		$.photoBtn.top += 60;
@@ -132,11 +159,11 @@ $.pickStake.addEventListener('click', function(e) {
 		stakeOther = true;
 	}
 	if (stakeOther === true && e.source.labels[e.index].title !== "Other") {
-		$.plotLbl.top -= 60;
+		$.distanceLbl.top -= 60;
 		$.pickDistance.top -= 60;
-		$.plotError.top -= 60;
-		$.plotDeviation.top -= 60;
-		$.plotOtherError.top -=60;
+		$.distanceError.top -= 60;
+		$.distanceDeviation.top -= 60;
+		$.distanceOtherError.top -=60;
 		$.commentLbl.top -= 60;
 		$.comments.top -= 60;
 		$.photoBtn.top -= 60;
@@ -146,12 +173,12 @@ $.pickStake.addEventListener('click', function(e) {
 		$.stakeDeviation.visible = false;
 		$.stakeDeviation.blur();
 		stakeOther = false;
-	}
-	
+	}	
 });
 
+// Show and hide the deviation text field depending on what is selected
 $.pickDistance.addEventListener('click', function(e) {
-	// Show and hide the deviation text field depending on what is selected
+	$.distanceError.visible = false;
 	if (distanceOther === false && e.source.labels[e.index].title === "Other") {
 		$.commentLbl.top += 60;
 		$.comments.top += 60;
@@ -159,8 +186,8 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.plotThumbnail.top += 60;
 		$.photoError.top += 60;
 		$.info.top += 60;
-		$.plotDeviation.visible = true;
-		$.plotDeviation.focus();
+		$.distanceDeviation.visible = true;
+		$.distanceDeviation.focus();
 		distanceOther = true;
 	}
 	if (distanceOther === true && e.source.labels[e.index].title !== "Other") {
@@ -170,9 +197,8 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.plotThumbnail.top -= 60;
 		$.photoError.top -= 60;
 		$.info.top -= 60;
-		$.plotDeviation.visible = false;
-		$.plotDeviation.blur();
+		$.distanceDeviation.visible = false;
+		$.distanceDeviation.blur();
 		distanceOther = false;
 	}
-	
 });
