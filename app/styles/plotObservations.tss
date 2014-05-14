@@ -9,23 +9,29 @@
 	font: {fontSize: 24}
 },
 
-
-"#done": {
-	right: 20,
-	top: 40
-},
-"#percentLbl": {
-	right: 80,
-	top: 20
-},
-"#percent": {
-	right: 20,
-	top: 20
-},
+//HeaderView
 "#headerView": {
 	height: Ti.UI.SIZE
 },
 "#addObservation": {
 	top: 10,
 	left: 18
+},
+
+// FooterView
+"#percentLbl": {
+	right: 80,
+	top: 20
+},
+"#percent": {
+	right: 32,
+	top: 20
+},
+"#percentSymbol": {
+	right: 10,
+	top: 20
+},
+"#done": {
+	right: 20,
+	top: 55
 }

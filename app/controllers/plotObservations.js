@@ -25,7 +25,7 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Observations of a plot
-		rows = db.execute('SELECT observation_id, observation, ground_cover, count, comments, plot_id, media_id \
+		rows = db.execute('SELECT observation_id, observation, ground_cover \
 						FROM plot_observation \
 						WHERE plot_id = ?', $.tbl.plotID); 
 		
@@ -33,23 +33,20 @@ function populateTable() {
 			var observationID = rows.fieldByName('observation_id');	
 			var observation = rows.fieldByName('observation');
 			var groundCover = rows.fieldByName('ground_cover');
-			var count = rows.fieldByName('count');
-			var comments = rows.fieldByName('comments');
-			var plotID = rows.fieldByName('plot_id');
-			var mediaID = rows.fieldByName('media_id');
 		
 			//Create a new row
 			var newRow = Ti.UI.createTableViewRow({
 				title : observation,
 				observationID : observationID,
 				height: 60,
+				right: 32,
 				font: {fontSize: 24}
 			});
 			
 			//add the ground cover label
 			var groundCoverLabel = Ti.UI.createLabel({
 				text: groundCover + '%',
-				right: 50,
+				right: 10,
 				font: {fontSize: 24}
 			});
 			newRow.add(groundCoverLabel);
@@ -71,15 +68,14 @@ function populateTable() {
 		rows.close();
 		db.close();
 		$.percent.text = totalPlotPercentage;
+	
 	}
 	
 }
 
 populateTable();
 
-// Assign labels
 
-$.percent.text = 
 /* Event Listeners */
 
 Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
