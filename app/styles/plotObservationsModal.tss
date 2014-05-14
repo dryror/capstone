@@ -37,7 +37,7 @@
 	right: 130,
 	top: 150,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-	maxLength:6,
+	maxLength:5,
 	textAlign: 1,  	//http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.UI-property-TEXT_ALIGNMENT_CENTER
 	keyboardType:Ti.UI.KEYBOARD_NUMBER_PAD
 },
