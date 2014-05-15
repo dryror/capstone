@@ -91,15 +91,63 @@ function doneBtn(){
 			var protocolID = protocolResult.fieldByName('protocol_id');
 			var parkResult = db.execute('SELECT park_id FROM park WHERE park_name =?', $.parkSrch.value);
 			var parkID = parkResult.fieldByName('park_id');
+			
+			// Check if this site has been previously surveyed
+			var previousSurveys = db.execute('SELECT site_id FROM site_survey \
+											WHERE protocol_id = ? \
+											AND park_id = ?', protocolID, parkID);
+			
+			// Get the most recently entered survey
+			var id;								
+			while (previousSurveys.isValidRow()) {
+				id = previousSurveys.fieldByName('site_id');
+				previousSurveys.next();
+			}
+			
+			
+			// Insert the new survey
 			db.execute( 'INSERT INTO site_survey (year, protocol_id, park_id) VALUES (?,?,?)', currentYear, protocolID, parkID);
-			Ti.App.fireEvent("app:refreshSiteSurveys");
-			$.addSiteSurvey.close();		
+			
+			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
+			var results = db.execute('SELECT last_insert_rowid() as siteID');
+			var siteID = results.fieldByName('siteID');
+			
+			// Get the transects associated with the survey
+			if (id != null) {
+				var transects = db.execute('SELECT * FROM transect WHERE site_id = ?', id);
+			
+				// Copy and associate any exiting transects
+				while (transects.isValidRow()) {
+					var transectName = transects.fieldByName('transect_name');
+					var surveyor = transects.fieldByName('surveyor');
+					var otherSurveyors = transects.fieldByName('other_surveyors');
+					var plotDistance = transects.fieldByName('plot_distance');
+					var stakeOrientation = transects.fieldByName('stake_orientation');
+					var utmZone = transects.fieldByName('utm_zone');
+					var utmEasting = transects.fieldByName('utm_easting');
+					var utmNorthing = transects.fieldByName('utm_northing');
+					var tComments = transects.fieldByName('comments');
+					var mediaID = transects.fieldByName('media_id');
+					
+					db.execute('INSERT INTO transect (transect_name, surveyor, other_surveyors, plot_distance, stake_orientation, \
+						utm_zone, utm_easting, utm_northing, comments, site_id, media_id) \
+						VALUES (?,?,?,?,?,?,?,?,?,?,?)', transectName, surveyor, otherSurveyors, plotDistance, stakeOrientation, utmZone, 
+						utmEasting, utmNorthing, tComments, siteID, mediaID);
+					transects.next();
+				}
+				transects.close();
+			}
+				
+			Ti.App.fireEvent("app:refreshSiteSurveys");		
 		} catch (e){
-			alert ('DEV ALERT: addSiteSurvey.js test failed');
+			Ti.API.error(e.toString());
 		} finally {
 			protocolResult.close();
 			parkResult.close();
+			previousSurveys.close();
+			results.close();
 			db.close();
+			$.addSiteSurvey.close();
 		}
 	}
 }
