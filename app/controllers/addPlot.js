@@ -240,17 +240,31 @@ $.pickDistance.addEventListener('click', function(e) {
 	}
 });
 
+// Stake Orientation
 $.stakeDeviation.addEventListener('change', function(e) {
-	if (e.value === "") {
+	if (e.value.length < 4) {
 		$.stakeOtherError.visible = true;
+		$.stakeOtherError.text = "* Stake orientation must be a minimum of 4 characters";
 	} else {
 		$.stakeOtherError.visible = false;
 	}
 });
 
+//Plot Distance
 $.distanceDeviation.addEventListener('change', function(e) {
+	// Replace bad input (non-numbers) on plotDistance TextField
+	e.source.value = e.source.value.replace(/[^0-9]+/,"");
+	Ti.App.fireEvent('distanceDeviationChange');
+});
+Ti.App.addEventListener('distanceDeviationChange', function(e) {
 	if (e.value === "") {
 		$.distanceOtherError.visible = true;
+	} else if ($.distanceDeviation.value < 2) {
+		$.distanceOtherError.visible = true;
+		$.distanceOtherError.text = "* Plot distance should be at least 2 meters";
+	} else if ($.distanceDeviation.value > 30) {
+		$.distanceOtherError.visible = true;
+		$.distanceOtherError.text = "* Plot distance should be at most 30 meters";
 	} else {
 		$.distanceOtherError.visible = false;
 	}
