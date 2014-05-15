@@ -86,7 +86,7 @@ function doneBtn(){
 		$.pickProtocolError.visible = false;
 		try {
 			var db = Ti.Database.open('ltemaDB');
-			var currentYear = "2014"; //TODO: Get the actual year!
+			var currentYear = new Date().getFullYear().toString();
 			var protocolResult = db.execute('SELECT protocol_id FROM protocol WHERE protocol_name =?', $.pickProtocol.labels[$.pickProtocol.index].title);
 			var protocolID = protocolResult.fieldByName('protocol_id');
 			var parkResult = db.execute('SELECT park_id FROM park WHERE park_name =?', $.parkSrch.value);
@@ -103,35 +103,6 @@ function doneBtn(){
 		}
 	}
 }
-
-/* - leaving in case someone wants to use a picker 
-function biomeBtn(){
-	//Code to figure out how pickers are going to work
-	$.formView.opacity = .2;
-	$.biomePkrView.visible = true;
-	$.protocolPkrView.visible = false;
-}
-
-function protocolBtn(){
-	//Code to figure out how pickers are going to work
-	$.formView.opacity = 0.2;
-	$.protocolPkrView.visible = true;
-	$.biomePkrView.visible = false;
-}
-
-function doneBiomePkrBtn(){
-	$.pickBiome.text = $.biomePkr.getSelectedRow(0).title;
-	$.formView.opacity = 1.0;
-	$.biomePkrView.visible = false;
-}
-
-function doneProtocolPkrBtn(){
-	$.pickProtocol.text = $.protocolPkr.getSelectedRow(0).title;
-	$.formView.opacity = 1;
-	$.protocolPkrView.visible = false;
-}
-*/
-
 
 /* Everything that follows is search bar related */
 
