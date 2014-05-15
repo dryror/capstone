@@ -105,38 +105,38 @@ function savePhoto(photo){
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Retrieve site survery, year, park
-		var rows = db.execute('SELECT year, protocol_name, park_name \
+		var rows = db.execute('SELECT s.year, p.protocol_name, prk.park_name \
 						FROM site_survey s, protocol p, park prk \
 						WHERE s.protocol_id = p.protocol_id \
 						AND s.park_id = prk.park_id \
 						AND site_id = ?', siteID);
 		
 		//Get requested data from each row in table
-		while (rows.isValidRow()) {	
-			var year = rows.fieldByName('year');
-			var protocolName = rows.fieldByName('protocol_name');
-			var parkName = rows.fieldByName('park_name');
+		
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+	
+		//Name the directory
+		var dir = year + ' - ' + protocolName + ' - ' + parkName; 
+		//get the photo
+		var img = photo;
+		
+		//name the photo  (timestamp - utc in ms)
+		var timestamp = new Date().getTime();
+		var filename = "T" + timestamp;
+		
+		// Create image Directory for site
+		var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
+		if (! imageDir.exists()) {
+			imageDir.createDirectory();
 		}
-			//Name the directory
-			var dir = year + ' - ' + protocolName + ' - ' + parkName; 
-			//get the photo
-			var img = photo;
-			
-			//name the photo  (timestamp - utc in ms)
-			var timestamp = new Date().getTime();
-			var filename = "T" + timestamp;
-			
-			// Create image Directory for site
-			var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
-			if (! imageDir.exists()) {
-				imageDir.createDirectory();
-			}
-			
-			// .resolve() provides the resolved native path for the directory.
-			var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
-			imageFile.write(img);
-			
-			var path = filename + '.png'; 
+		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
+		imageFile.write(img);
+		
+		var path = filename + '.png'; 
 
 	} catch(e) {
 		//Ti.App.fireEvent("app:dataBaseError", e);

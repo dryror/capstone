@@ -166,6 +166,9 @@ function savePhoto(photo){
 	imageFile.write(img);
 	
 	var path = filename + '.png';
+	
+	rows.close();
+	db.close();
 	return path;
 }
 

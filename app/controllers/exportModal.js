@@ -228,7 +228,7 @@ function makeCSV() {
     // Create the CSV files
     try{
     	//Name the directory
-		var dir = siteSurvey;
+		var dir = $.surveyPkr.getSelectedRow(0).title;
 				
 		// Create Directory for site
 		var siteDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
