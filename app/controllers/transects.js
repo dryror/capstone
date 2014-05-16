@@ -107,11 +107,49 @@ $.tbl.addEventListener('delete', function(e) {
 	    //open database
 		var db = Ti.Database.open('ltemaDB');
 		
+		// find any associated transect pictures and delete them
+		var transectFiles = db.execute('SELECT med.media_name FROM media med, transect tct \
+								WHERE med.media_id = tct.media_id \
+								AND tct.transect_id = ?', currentTransectID);
+		
+		var folder = e.rowData.title;
+		while (transectFiles.isValidRow()) {
+			var fileName = transectFiles.fieldByName('media_name');
+			deleteImage(fileName, folder);
+			transectFiles.next();
+		}
+		
+		var plotFiles = db.execute('SELECT plt.plot_id, med.media_name FROM media med, plot plt \
+									WHERE med.media_id = plt.media_id \
+									AND plt.transect_id = ?', currentTransectID);
+		
+		var plotIDs = [];
+		while (plotFiles.isValidRow()) {
+			plotIDs.push(plotFiles.fieldByName('plot_id'));
+			var fileName = plotFiles.fieldByName('media_name');
+			deleteImage(fileName, folder);
+			plotFiles.next();
+		}
+		
+		var pids = '(' + plotIDs + ')';
+		var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
+										WHERE med.media_id = pob.media_id \
+										AND pob.plot_id IN' + pids);
+		
+		while (observationFiles.isValidRow()) {
+			var fileName = observationFiles.fieldByName('media_name');
+			deleteImage(fileName, folder);
+			observationFiles.next();
+		}
+		
 		//delete current row from the database
 	    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
 	} catch(e) {
 		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally { 
+		transectFiles.close();
+		plotFiles.close();
+		observationFiles.close();
 		db.close();
 	}
 	
@@ -182,4 +220,17 @@ function addBtn(){
 	var addTransect = Alloy.createController("addTransect", {siteID: $.tbl.siteID}).getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addTransect);
+}
+
+// Delete a file from the application data directory
+function deleteImage(fileName, folderName) {
+	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
+	
+	if (imageDir.exists()) {		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), fileName);
+		if (imageFile.exists()) {
+			imageFile.deleteFile();
+		}
+	}
 }

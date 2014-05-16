@@ -227,6 +227,7 @@ function exportBtn(){
 	});
 }
 
+// Delete a file from the application data directory
 function deleteImage(fileName, folderName) {
 	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
 	
