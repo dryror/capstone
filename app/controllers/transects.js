@@ -1,6 +1,9 @@
 //get siteID from calling window
 var args = arguments[0];
 $.tbl.siteID = args.siteID;
+var parkName = args.parkName;
+
+populateTable();
 
 function populateTable() {
 	
@@ -61,7 +64,21 @@ function populateTable() {
 	}
 }
 
-populateTable();
+// create the title label
+var titleLabel = Titanium.UI.createLabel({
+    height:34,
+    //width:350,  //long park names may need this set
+    top:10,
+    text:parkName,
+    textAlign:'center',
+    font:{fontSize:20,fontWeight:'bold'},
+});
+
+// associate label to title
+$.transectsWin.setTitleControl(titleLabel);
+
+
+/* Event Listeners */
 
 $.tbl.addEventListener('click', function(e){
 	//info icon clicked, get modal
@@ -81,25 +98,49 @@ $.tbl.addEventListener('click', function(e){
 	} 
 });
 
+//Delete event listener
+$.tbl.addEventListener('delete', function(e) { 
+	//get the site_id of the current row being deleted
+	var currentTransectID = e.rowData.transectID;
+    
+    try {
+	    //open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//delete current row from the database
+	    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
+	} catch(e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally { 
+		db.close();
+	}
+	
+	//check if Edit button should be enabled/disabled - if no rows exist
+	toggleEditBtn();
+});
+
 Ti.App.addEventListener("app:refreshTransects", function(e) {
 	populateTable();
 });
 
-//Edit button toggle
+
+/* Functions */
+
+// Toggle edit mode label title, screen functionality
 function editBtn(e){
-		//enable or disable edit mode
+	
     if (e.source.title == "Edit") {
+    	
     	$.tbl.editing = true;
         e.source.title = "Done";
-        //disable the add and export buttons during edit mode
-        $.addTransect.enabled = false;
+        $.addTransect.enabled = false;   
         
-        
-    } else { 
+    } else {  //text is 'Done', switch to 'Edit'
+    	
         $.tbl.editing = false;
         e.source.title = "Edit";
-        //enable the add and export button
         $.addTransect.enabled = true;
+        
     }
 }
 
@@ -134,26 +175,7 @@ function showTotalRowNumber(){
 	return totalRows;
 }
 
-//Delete event listener
-$.tbl.addEventListener('delete', function(e) { 
-	//get the site_id of the current row being deleted
-	var currentTransectID = e.rowData.transectID;
-    
-    try {
-	    //open database
-		var db = Ti.Database.open('ltemaDB');
-		
-		//delete current row from the database
-	    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
-	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
-	} finally { 
-		db.close();
-	}
-	
-	//check if Edit button should be enabled/disabled - if no rows exist
-	toggleEditBtn();
-});
+
 
 //Navigate to addTransect - transect creation screen
 function addBtn(){
@@ -161,5 +183,3 @@ function addBtn(){
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addTransect);
 }
-
-

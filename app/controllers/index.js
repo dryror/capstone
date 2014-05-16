@@ -2,6 +2,8 @@
 var yourDb = Titanium.Database.open('ltemaDB');
 yourDb.remove();
 
+populateTable();
+
 function populateTable() {
 	//Clear the table if there is anything in it
 	var rd = []; 
@@ -29,7 +31,8 @@ function populateTable() {
 			//create a new row
 				var newRow = Ti.UI.createTableViewRow({
 					title : siteSurvey,
-					siteID : siteID
+					siteID : siteID,
+					parkName: parkName //not visible, but passed to transects screen
 				});
 				
 				//create and add info icon for the row
@@ -54,17 +57,68 @@ function populateTable() {
 	}
 }
 
-populateTable();
+//Will check if Edit button should be enabled/disabled - if no rows exist
+toggleEditBtn();
+
+
+/* Event Listeners */
+
+//Delete event listener
+$.tbl.addEventListener('delete', function(e) { 
+	//get the site_id of the current row being deleted
+	var currentSiteID = e.rowData.siteID;
+    try{
+	    //open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//delete current row from the database
+	    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
+	} catch(e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally {
+		db.close();
+	}
+	
+	//check if Edit button should be enabled/disabled - if no rows exist
+	toggleEditBtn();
+});
+
+//Main TableView event listener
+$.tbl.addEventListener('click', function(e) {
+	//info button clicked, display modal
+	if(e.source.toString() == '[object TiUIButton]') {
+		var modal = Alloy.createController("siteSurveyModal", {siteID:e.rowData.siteID}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+		});
+	//row clicked, get transect view
+	} else {
+		var transects = Alloy.createController("transects", {siteID:e.rowData.siteID, parkName:e.rowData.parkName}).getView();
+	    $.navGroupWin.openWindow(transects);
+	}
+});
+
+Ti.App.addEventListener("app:dataBaseError", function(e) {
+	//TODO: handle a database error for the app
+	Titanium.API.error("Database error: " + e);
+});
+
+Ti.App.addEventListener("app:fileSystemError", function(e) {
+	//TODO: handle a file system error for the app
+	Titanium.API.error("File system error: " + e);
+});
 
 Ti.App.addEventListener("app:refreshSiteSurveys", function(e) {
 	populateTable();
 });
 
-//Will check if Edit button should be enabled/disabled - if no rows exist
-toggleEditBtn();
 
+/* Functions */
 
-//Enable or Disable the Edit button
+//Enable or Disable the Edit button based on row count
 function toggleEditBtn(){
 	//get the number of total rows
 	var numRows = showTotalRowNumber();
@@ -131,55 +185,6 @@ function exportBtn(){
 		navBarHidden : false
 	});
 }
-
-//Delete event listener
-$.tbl.addEventListener('delete', function(e) { 
-	//get the site_id of the current row being deleted
-	var currentSiteID = e.rowData.siteID;
-    try{
-	    //open database
-		var db = Ti.Database.open('ltemaDB');
-		
-		//delete current row from the database
-	    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
-	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
-	} finally {
-		db.close();
-	}
-	
-	//check if Edit button should be enabled/disabled - if no rows exist
-	toggleEditBtn();
-});
-
-//Main TableView event listener
-$.tbl.addEventListener('click', function(e) {
-	//info button clicked, display modal
-	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("siteSurveyModal", {siteID:e.rowData.siteID}).getView();
-		modal.open({
-			modal : true,
-			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
-			navBarHidden : false
-		});
-	//row clicked, get transect view
-	} else {
-		var transects = Alloy.createController("transects", {siteID:e.rowData.siteID}).getView();
-	    $.navGroupWin.openWindow(transects);
-	}
-});
-
-Ti.App.addEventListener("app:dataBaseError", function(e) {
-	//TODO: handle a database error for the app
-	Titanium.API.error("Database error: " + e);
-});
-
-Ti.App.addEventListener("app:fileSystemError", function(e) {
-	//TODO: handle a file system error for the app
-	Titanium.API.error("File system error: " + e);
-});
-
 
 
 //This should always happen last
