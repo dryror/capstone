@@ -61,6 +61,7 @@ function populateTable() {
 	} finally {
 		rows.close();
 		db.close();
+		toggleEditBtn();
 	}
 }
 
@@ -192,6 +193,7 @@ function toggleEditBtn(){
 		$.editTransects.enabled = false;
 		$.editTransects.title = "Edit";
         $.addTransect.enabled = true;
+        $.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editTransects.enabled = true;

@@ -12,6 +12,9 @@ $.tbl.plotID = args.plotID;
 
 var totalPlotPercentage = 0;
 
+
+populateTable();
+
 function populateTable() {
 	
 	//Clear the table if there is anything in it
@@ -68,12 +71,11 @@ function populateTable() {
 		rows.close();
 		db.close();
 		$.percent.text = totalPlotPercentage;
+		toggleEditBtn();
 	
 	}
 	
 }
-
-populateTable();
 
 
 /* Event Listeners */
@@ -154,6 +156,7 @@ function toggleEditBtn(){
 		$.editObservation.enabled = false;
 		$.editObservation.title = "Edit";
         $.addObservation.enabled = true;
+        $.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editObservation.enabled = true;

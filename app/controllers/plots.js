@@ -71,13 +71,12 @@ function populateTable() {
 	} finally {
 		rows.close();
 		db.close();
+		toggleEditBtn();
 	}
 }
 
 populateTable();
 
-//Will check if Edit button should be enabled/disabled - if no rows exist
-toggleEditBtn();
 
 // get the total ground cover of the last plot entry
 function getTotalGroundCover(){
@@ -119,6 +118,7 @@ function toggleEditBtn(){
 		$.editSite.enabled = false;
 		$.editSite.title = "Edit";
         $.addSite.enabled = true;
+        $.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editSite.enabled = true;

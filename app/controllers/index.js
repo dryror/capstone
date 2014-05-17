@@ -54,11 +54,9 @@ function populateTable() {
 	} finally {
 		rows.close();
 		db.close();
+		toggleEditBtn();
 	}
 }
-
-//Will check if Edit button should be enabled/disabled - if no rows exist
-toggleEditBtn();
 
 
 /* Event Listeners */
@@ -169,6 +167,7 @@ function toggleEditBtn(){
 		$.editSite.enabled = false;
 		$.editSite.title = "Edit";
         $.addSite.enabled = true;
+        $.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editSite.enabled = true;
