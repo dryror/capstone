@@ -56,8 +56,8 @@ function populateTable() {
 
 			totalPlotPercentage += groundCover;
 			
-	   		//Add row to the table view
-	  		$.tbl.appendRow(newRow);
+			//Add row to the table view
+			$.tbl.appendRow(newRow);
 		
 			rows.next();
 		}
@@ -100,13 +100,13 @@ $.tbl.addEventListener('delete', function(e) {
 
 	var observationID = e.rowData.observationID;  //the ID to delete
 	
-    try {
-   		//delete from database
-   		var db = Ti.Database.open('ltemaDB');
-	    var row = db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
-	    
-	    //delete associated media files
-	    var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
+	try {
+		//delete from database
+		var db = Ti.Database.open('ltemaDB');
+		var row = db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
+		
+		//delete associated media files
+		var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
 										WHERE med.media_id = pob.media_id \
 										AND pob.observation_id = ?', observationID);
 		
@@ -132,19 +132,19 @@ $.tbl.addEventListener('delete', function(e) {
 //Edit button toggle
 function editBtn(e){
 		//enable or disable edit mode
-    if (e.source.title == "Edit") {
-    	$.tbl.editing = true;
-        e.source.title = "Done";
-        //disable the Add and Done buttons during edit mode
-        $.addObservation.enabled = false;
-        $.done.enabled = false;
-        
-    } else { 
-        $.tbl.editing = false;
-        e.source.title = "Edit";
-        $.addObservation.enabled = true;
-        $.done.enabled = true;
-    }
+	if (e.source.title == "Edit") {
+		$.tbl.editing = true;
+		e.source.title = "Done";
+		//disable the Add and Done buttons during edit mode
+		$.addObservation.enabled = false;
+		$.done.enabled = false;
+
+	} else { 
+		$.tbl.editing = false;
+		e.source.title = "Edit";
+		$.addObservation.enabled = true;
+		$.done.enabled = true;
+	}
 }
 
 //Enable or Disable the Edit button
@@ -157,9 +157,9 @@ function toggleEditBtn(){
 		$.editObservation.enabled = false;
 		//reset screen behaviour for zero rows
 		$.editObservation.title = "Edit";
-        $.addObservation.enabled = true;
-        $.tbl.editing = false;
-        $.done.enabled = false;
+		$.addObservation.enabled = true;
+		$.tbl.editing = false;
+		$.done.enabled = false;
 	}else{
 		//enable Edit Button
 		$.editObservation.enabled = true;
@@ -170,10 +170,10 @@ function toggleEditBtn(){
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
- 
+
 	var sectionNumber = 0;
 	var totalRows = 0;
- 
+
 	for(sectionNumber = 0; sectionNumber < allSection.length; sectionNumber++){
 		// Get rows for each section
 		totalRows += allSection[sectionNumber].rowCount;
