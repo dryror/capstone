@@ -44,8 +44,8 @@ function populateTable() {
 				});
 				newRow.add(infoButton);
 				
-		   		//Add row to the table view
-		  		$.tbl.appendRow(newRow);
+				//Add row to the table view
+				$.tbl.appendRow(newRow);
 		
 			rows.next();
 		}
@@ -66,8 +66,8 @@ function populateTable() {
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
 	var currentSiteID = e.rowData.siteID;
-    try{
-	    //open database
+	try{
+		//open database
 		var db = Ti.Database.open('ltemaDB');
 		
 		// Delete any saved files associated with this site survey
@@ -78,8 +78,8 @@ $.tbl.addEventListener('delete', function(e) {
 		}
 		
 		//delete current row from the database
-	    db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
-	    
+		db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
+		
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
@@ -107,7 +107,7 @@ $.tbl.addEventListener('click', function(e) {
 	//row clicked, get transect view
 	} else {
 		var transects = Alloy.createController("transects", {siteID:e.rowData.siteID, parkName:e.rowData.parkName}).getView();
-	    $.navGroupWin.openWindow(transects);
+		$.navGroupWin.openWindow(transects);
 	}
 });
 
@@ -137,8 +137,8 @@ function toggleEditBtn(){
 		//disable Edit Button
 		$.editSite.enabled = false;
 		$.editSite.title = "Edit";
-        $.addSite.enabled = true;
-        $.tbl.editing = false;
+		$.addSite.enabled = true;
+		$.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editSite.enabled = true;
@@ -149,10 +149,10 @@ function toggleEditBtn(){
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
- 
+	
 	var sectionNumber = 0;
 	var totalRows = 0;
- 
+	
 	for(sectionNumber = 0; sectionNumber < allSection.length; sectionNumber++){
 		// Get rows for each section
 		totalRows += allSection[sectionNumber].rowCount;
@@ -164,20 +164,20 @@ function showTotalRowNumber(){
 function editBtn(e){
 	
 	//enable or disable edit mode
-    if (e.source.title == "Edit") {
-    	$.tbl.editing = true;
-        e.source.title = "Done";
-        //disable the add and export buttons during edit mode
-        $.addSite.enabled = false;
-        $.exportData.enabled = false;
-        
-    } else { 
-        $.tbl.editing = false;
-        e.source.title = "Edit";
-        //enable the add and export button
-        $.addSite.enabled = true;
-        $.exportData.enabled = true;
-    }
+	if (e.source.title == "Edit") {
+		$.tbl.editing = true;
+		e.source.title = "Done";
+		//disable the add and export buttons during edit mode
+		$.addSite.enabled = false;
+		$.exportData.enabled = false;
+		
+	} else { 
+		$.tbl.editing = false;
+		e.source.title = "Edit";
+		//enable the add and export button
+		$.addSite.enabled = true;
+		$.exportData.enabled = true;
+	}
 }
 
 //Navigate to site survey creation screen

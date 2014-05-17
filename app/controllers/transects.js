@@ -51,8 +51,8 @@ function populateTable() {
 				});
 				newRow.add(infoButton);
 				
-		   		//Add row to the table view
-		  		$.tbl.appendRow(newRow);
+				//Add row to the table view
+				$.tbl.appendRow(newRow);
 		
 			rows.next();
 		}
@@ -68,12 +68,12 @@ function populateTable() {
 
 // create the title label
 var titleLabel = Titanium.UI.createLabel({
-    height:34,
-    //width:350,  //long park names may need this set
-    top:10,
-    text:parkName,
-    textAlign:'center',
-    font:{fontSize:20,fontWeight:'bold'},
+	height:34,
+	//width:350,  //long park names may need this set
+	top:10,
+	text:parkName,
+	textAlign:'center',
+	font:{fontSize:20,fontWeight:'bold'},
 });
 
 // associate label to title
@@ -95,18 +95,18 @@ $.tbl.addEventListener('click', function(e){
 	//row clicked, get transect view
 	} else {
 		var plots = Alloy.createController("plots", {transectID:e.rowData.transectID}).getView();
-    	var nav = Alloy.Globals.navMenu;
-    	nav.openWindow(plots);
-	} 
+		var nav = Alloy.Globals.navMenu;
+		nav.openWindow(plots);
+	}
 });
 
 //Delete event listener
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
 	var currentTransectID = e.rowData.transectID;
-    
-    try {
-	    //open database
+	
+	try {
+		//open database
 		var db = Ti.Database.open('ltemaDB');
 		
 		// find any associated transect pictures and delete them
@@ -170,19 +170,19 @@ Ti.App.addEventListener("app:refreshTransects", function(e) {
 // Toggle edit mode label title, screen functionality
 function editBtn(e){
 	
-    if (e.source.title == "Edit") {
-    	
-    	$.tbl.editing = true;
-        e.source.title = "Done";
-        $.addTransect.enabled = false;   
-        
-    } else {  //text is 'Done', switch to 'Edit'
-    	
-        $.tbl.editing = false;
-        e.source.title = "Edit";
-        $.addTransect.enabled = true;
-        
-    }
+	if (e.source.title == "Edit") {
+		
+		$.tbl.editing = true;
+		e.source.title = "Done";
+		$.addTransect.enabled = false;   
+		
+	} else {  //text is 'Done', switch to 'Edit'
+		
+		$.tbl.editing = false;
+		e.source.title = "Edit";
+		$.addTransect.enabled = true;
+		
+	}
 }
 
 //Enable or Disable the Edit button
@@ -194,8 +194,8 @@ function toggleEditBtn(){
 		//disable Edit Button
 		$.editTransects.enabled = false;
 		$.editTransects.title = "Edit";
-        $.addTransect.enabled = true;
-        $.tbl.editing = false;
+		$.addTransect.enabled = true;
+		$.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editTransects.enabled = true;
@@ -206,10 +206,10 @@ function toggleEditBtn(){
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
- 
+	
 	var sectionNumber = 0;
 	var totalRows = 0;
- 
+	
 	for(sectionNumber = 0; sectionNumber < allSection.length; sectionNumber++){
 		// Get rows for each section
 		totalRows += allSection[sectionNumber].rowCount;

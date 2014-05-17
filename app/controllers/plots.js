@@ -13,11 +13,11 @@ function addBtn(){
 	if(showTotalRowNumber() > 0){
 		
 		//get the total ground cover of the last plot entry and name
-	 	var totalGroundCover = getTotalGroundCover().totalGroundCover;
-	 	var lastPlotEntryName = getTotalGroundCover().lastPlotEntryName;
-	 	
-	 		//check the total ground cover of last plot entry
-	 		if(totalGroundCover < 100){
+		var totalGroundCover = getTotalGroundCover().totalGroundCover;
+		var lastPlotEntryName = getTotalGroundCover().lastPlotEntryName;
+		
+			//check the total ground cover of last plot entry
+			if(totalGroundCover < 100){
 				alert("Total Ground Cover is less than 100% \n" + lastPlotEntryName);
 				return;
 			}
@@ -45,7 +45,7 @@ function populateTable() {
 		while (rows.isValidRow()) {	
 			var plotID = rows.fieldByName('plot_id');
 			var plotName = rows.fieldByName('plot_name');
-
+			
 			//create a new row
 				var newRow = Ti.UI.createTableViewRow({
 					title : plotName,
@@ -61,8 +61,8 @@ function populateTable() {
 				});
 				newRow.add(infoButton);
 				
-		   		//Add row to the table view
-		  		$.tbl.appendRow(newRow);
+				//Add row to the table view
+				$.tbl.appendRow(newRow);
 		
 			rows.next();
 		}
@@ -81,8 +81,8 @@ populateTable();
 
 // get the total ground cover of the last plot entry
 function getTotalGroundCover(){
-	 try{
-	    //open database
+	try{
+		//open database
 		var db = Ti.Database.open('ltemaDB');
 		
 		// get the name & plot_id of the last plot entry added
@@ -94,7 +94,7 @@ function getTotalGroundCover(){
 		var lastEntryPlotName = lastRowAdded.fieldByName('plot_name');
 		
 		//delete current row from the database
-	    var rows = db.execute('SELECT sum(ground_cover) \
+		var rows = db.execute('SELECT sum(ground_cover) \
 							FROM plot_observation \
 							WHERE plot_id = ?',  lastEntryPlotID);
 							
@@ -119,8 +119,8 @@ function toggleEditBtn(){
 		//disable Edit Button
 		$.editSite.enabled = false;
 		$.editSite.title = "Edit";
-        $.addSite.enabled = true;
-        $.tbl.editing = false;
+		$.addSite.enabled = true;
+		$.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editSite.enabled = true;
@@ -131,10 +131,10 @@ function toggleEditBtn(){
 function showTotalRowNumber(){
 	// Variable to get all section
 	var allSection = $.tbl.data;
- 
+	
 	var sectionNumber = 0;
 	var totalRows = 0;
- 
+	
 	for(sectionNumber = 0; sectionNumber < allSection.length; sectionNumber++){
 		// Get rows for each section
 		totalRows += allSection[sectionNumber].rowCount;
@@ -146,20 +146,19 @@ function showTotalRowNumber(){
 function editBtn(e){
 	
 	//enable or disable edit mode
-    if (e.source.title == "Edit") {
-    	$.tbl.editing = true;
-        e.source.title = "Done";
-        //disable the add and export buttons during edit mode
-        $.addSite.enabled = false;
-        
-    } else { 
-        $.tbl.editing = false;
-        e.source.title = "Edit";
-        //enable the add and export button
-        $.addSite.enabled = true;
-    }
+	if (e.source.title == "Edit") {
+		$.tbl.editing = true;
+		e.source.title = "Done";
+		//disable the add and export buttons during edit mode
+		$.addSite.enabled = false;
+		
+	} else { 
+		$.tbl.editing = false;
+		e.source.title = "Edit";
+		//enable the add and export button
+		$.addSite.enabled = true;
+	}
 }
-
 
 Ti.App.addEventListener("app:refreshPlots", function(e) {
 	populateTable();
@@ -173,8 +172,8 @@ $.tbl.addEventListener('click', function(e){
 	}else{  
 		//open plot observations
 		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
-	 	var nav = Alloy.Globals.navMenu;
-	 	nav.openWindow(observations);   
+		var nav = Alloy.Globals.navMenu;
+		nav.openWindow(observations);   
 	}
 });
 
@@ -182,12 +181,12 @@ $.tbl.addEventListener('click', function(e){
 $.tbl.addEventListener('delete', function(e) { 
 	//get the plot_id of the current row to be deleted
 	var currentPlotID = e.rowData.plotID;
-    try{
-	    //open database
+	try{
+		//open database
 		var db = Ti.Database.open('ltemaDB');
 		
 		//delete current row from the database
-	    db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
+		db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});

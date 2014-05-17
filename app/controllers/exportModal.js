@@ -4,16 +4,16 @@ function backBtnClick(){
 
 function surveyBtn() {
 	$.formView.opacity = .2;
-    $.surveyPkrView.visible = true;
+	$.surveyPkrView.visible = true;
 }
 
 function doneSelectBtn() {
-    $.selectLbl.text = $.surveyPkr.getSelectedRow(0).title;
-    $.formView.opacity = 1;
-    $.surveyPkrView.visible = false;
-    if ($.selectLbl.text != "Select") {
-    	$.exportBtn.enabled = true;
-    }
+	$.selectLbl.text = $.surveyPkr.getSelectedRow(0).title;
+	$.formView.opacity = 1;
+	$.surveyPkrView.visible = false;
+	if ($.selectLbl.text != "Select") {
+		$.exportBtn.enabled = true;
+	}
 }
 
 // Query the database based for site surveys that are eligable for export
@@ -214,26 +214,26 @@ function makeCSV() {
 		}
 	}
 
-    // Create the CSV files
-    try{
-    	//Name the directory
+	// Create the CSV files
+	try{
+		//Name the directory
 		var dir = $.surveyPkr.getSelectedRow(0).title;
 				
 		// Create Directory for site
 		var siteDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
 		if (! siteDir.exists()) {
-	    	siteDir.createDirectory();
+			siteDir.createDirectory();
 		}
-    	
-    	// Create Sample Station file
-	    var ssFileName = "SampleStation.csv";
-	    var sampleStationFile = Titanium.Filesystem.getFile(siteDir.resolve(), ssFileName);
-	    sampleStationFile.write(sampleStationTxt); 
-	    
-	    // Create General Survey file
-	    var gsFileName = "GeneralSurvey.csv";
-	    var generalSurveyFile = Titanium.Filesystem.getFile(siteDir.resolve(), gsFileName);
-	    generalSurveyFile.write(generalSurveyTxt);
+		
+		// Create Sample Station file
+		var ssFileName = "SampleStation.csv";
+		var sampleStationFile = Titanium.Filesystem.getFile(siteDir.resolve(), ssFileName);
+		sampleStationFile.write(sampleStationTxt); 
+		
+		// Create General Survey file
+		var gsFileName = "GeneralSurvey.csv";
+		var generalSurveyFile = Titanium.Filesystem.getFile(siteDir.resolve(), gsFileName);
+		generalSurveyFile.write(generalSurveyTxt);
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
@@ -253,19 +253,19 @@ function exportBtn() {
 
 // All the HTTP requests have sent successfully
 $.exportWin.addEventListener("doneSending", function() { 
-    try{
-    	var db = Ti.Database.open('ltemaDB');
-    	var siteID = $.surveyPkr.getSelectedRow(0).siteID;
-    	var d = new Date();
+	try{
+		var db = Ti.Database.open('ltemaDB');
+		var siteID = $.surveyPkr.getSelectedRow(0).siteID;
+		var d = new Date();
 		var utc = d.getTime();
-    	
-    	// Timestamp the export in the database
-    	db.execute('UPDATE OR FAIL site_survey SET exported = ? WHERE site_id = ?', utc, siteID);
-    } catch(e) {
-    	var errorMessage = e.message;
-    	Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
-    } finally {
-    	db.close();
+		
+		// Timestamp the export in the database
+		db.execute('UPDATE OR FAIL site_survey SET exported = ? WHERE site_id = ?', utc, siteID);
+	} catch(e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
+	} finally {
+		db.close();
 		alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " is ready for export");
-    } 
+	} 
 });

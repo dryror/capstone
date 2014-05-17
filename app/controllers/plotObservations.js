@@ -115,7 +115,7 @@ $.tbl.addEventListener('delete', function(e) {
 			var fileName = observationFiles.fieldByName('media_name');
 			deleteImage(fileName, folder);
 			observationFiles.next();
-		}	    
+		}
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});

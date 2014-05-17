@@ -17,14 +17,14 @@ try {
 	
 	resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, other_surveyors, plot_distance, stake_orientation, comments \
 							FROM transect t \
-							WHERE transect_id = ?', transectID);					
+							WHERE transect_id = ?', transectID);
 	
 	var transectName = resultRow.fieldByName('transect_name');
 	var surveyor = resultRow.fieldByName('surveyor');
 	var otherSurveyors = resultRow.fieldByName('other_surveyors');
 	var plotDistance = resultRow.fieldByName('plot_distance');
 	var stakeOrientation = resultRow.fieldByName('stake_orientation');
-	var comments = resultRow.fieldByName('comments'); 
+	var comments = resultRow.fieldByName('comments');
 	
 	//Assign editable TextField values
 	$.transectName.value = transectName;
@@ -121,12 +121,12 @@ $.comments.addEventListener('change', function(e) {
 //swaps editable property of fields
 function editBtnClick(e){
 	//enable or disable edit mode
-    if (e.source.title == "Edit") {
-    	$.modalWin.editing = true;
-        e.source.title = "Done";
-        
-        //Enable editing
-        $.transectName.editable = true;
+	if (e.source.title == "Edit") {
+		$.modalWin.editing = true;
+		e.source.title = "Done";
+		
+		//Enable editing
+		$.transectName.editable = true;
 		$.surveyor.editable = true;
 		$.otherSurveyors.editable = true;
 		$.plotDistance.editable = true;
@@ -134,26 +134,26 @@ function editBtnClick(e){
 		stakeBarLabels[1].enabled = true;
 		$.stakeBar.labels = stakeBarLabels;
 		$.comments.editable = true;
-        
-        //disable the button button during edit mode
-        $.backBtn.enabled = false;
-        
-    } else { //title is "Done"
-    	//fire error-checking listeners
-    	$.transectName.blur();
-    	$.surveyor.blur();
-    	$.plotDistance.blur();
-   		if (($.transectError.visible == true)||($.surveyorError.visible == true)||($.plotDistanceError.visible == true)) {
-   			return;
-   		}
-    	
-        $.modalWin.editing = false;
-        e.source.title = "Edit";
-        //enable the back button
-        $.backBtn.enabled = true;
-        
-        //disable editing
-        $.transectName.editable = false;
+		
+		//disable the button button during edit mode
+		$.backBtn.enabled = false;
+		
+	} else { //title is "Done"
+		//fire error-checking listeners
+		$.transectName.blur();
+		$.surveyor.blur();
+		$.plotDistance.blur();
+		if (($.transectError.visible == true)||($.surveyorError.visible == true)||($.plotDistanceError.visible == true)) {
+			return;
+		}
+		
+		$.modalWin.editing = false;
+		e.source.title = "Edit";
+		//enable the back button
+		$.backBtn.enabled = true;
+		
+		//disable editing
+		$.transectName.editable = false;
 		$.surveyor.editable = false;
 		$.otherSurveyors.editable = false;
 		$.plotDistance.editable = false;
@@ -163,7 +163,7 @@ function editBtnClick(e){
 		$.comments.editable = false;
 		
 		saveEdit();
-    }
+	}
 }
 
 //Save changes to transect

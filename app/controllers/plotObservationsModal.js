@@ -44,11 +44,11 @@ $.doneBtn.enabled = false;
 
 // Make keyboard appear when opening nav window (needs the event listener to work)
 $.modalNav.addEventListener("open", function(e) {
-    
-    $.groundCover.focus();
-    
-    //outside of 'open', change is fired, enabling 'Done' on load
-    $.groundCover.addEventListener ("change", function(e) {
+	
+	$.groundCover.focus();
+	
+	//outside of 'open', change is fired, enabling 'Done' on load
+	$.groundCover.addEventListener ("change", function(e) {
 		$.doneBtn.enabled = true;
 	});
 	
