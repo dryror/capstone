@@ -172,11 +172,10 @@ function saveEdit(){
 		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
 					$.transectName.value, $.surveyor.value, $.otherSurveyors.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);		
 	} catch (e){
-		alert ('DEV ALERT: transectsModal saveEdit() catch');
+		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
 		db.close();
-	}
-	
+	}	
 }
 
 //Navigate back
