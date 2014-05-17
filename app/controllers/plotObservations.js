@@ -135,14 +135,15 @@ function editBtn(e){
     if (e.source.title == "Edit") {
     	$.tbl.editing = true;
         e.source.title = "Done";
-        //disable the add button during edit mode
+        //disable the Add and Done buttons during edit mode
         $.addObservation.enabled = false;
+        $.done.enabled = false;
         
     } else { 
         $.tbl.editing = false;
         e.source.title = "Edit";
-        //enable the add button
         $.addObservation.enabled = true;
+        $.done.enabled = true;
     }
 }
 
@@ -154,9 +155,11 @@ function toggleEditBtn(){
 	if(numRows <= 0){
 		//disable Edit Button
 		$.editObservation.enabled = false;
+		//reset screen behaviour for zero rows
 		$.editObservation.title = "Edit";
         $.addObservation.enabled = true;
         $.tbl.editing = false;
+        $.done.enabled = false;
 	}else{
 		//enable Edit Button
 		$.editObservation.enabled = true;
