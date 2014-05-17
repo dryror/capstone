@@ -5,15 +5,20 @@ var pickBiomeLabels = [];
 var pickProtocolLabels = [];
 
 // Populate the biome TabbedBar with database-derived labels
-var db = Ti.Database.open('ltemaDB');
-var biomeResultRows = db.execute('SELECT biome_name FROM biome ');
-while (biomeResultRows.isValidRow()) {
-	var biomeName = biomeResultRows.fieldByName('biome_name');
-	pickBiomeLabels.push({title:biomeName, enabled:true});
-	biomeResultRows.next();
+try {
+	var db = Ti.Database.open('ltemaDB');
+	var biomeResultRows = db.execute('SELECT biome_name FROM biome ');
+	while (biomeResultRows.isValidRow()) {
+		var biomeName = biomeResultRows.fieldByName('biome_name');
+		pickBiomeLabels.push({title:biomeName, enabled:true});
+		biomeResultRows.next();
+	}
+} catch(e) {
+	Ti.App.fireEvent("app:dataBaseError", e);
+} finally {
+	biomeResultRows.close();
+	db.close();
 }
-biomeResultRows.close();
-db.close();
 $.pickBiome.labels = pickBiomeLabels;
 
 // Regenerate protocol TabbedBar based on biome selected
@@ -26,18 +31,23 @@ $.pickBiome.addEventListener('click', function(e) {
 		pickProtocolLabels.pop();
 	}
 	//populate new list based on new biome selected
-	var db = Ti.Database.open('ltemaDB');
-	var protocolResultRows = db.execute('SELECT protocol_name \
-										FROM protocol p, biome b \
-										WHERE p.biome_id = b.biome_id \
-										AND  b.biome_name =?', pickBiomeLabels[e.index].title);
-	while (protocolResultRows.isValidRow()) {
-		var protocolName = protocolResultRows.fieldByName('protocol_name');
-		pickProtocolLabels.push({title:protocolName, enabled:true});
-		protocolResultRows.next();
+	try {
+		var db = Ti.Database.open('ltemaDB');
+		var protocolResultRows = db.execute('SELECT protocol_name \
+											FROM protocol p, biome b \
+											WHERE p.biome_id = b.biome_id \
+											AND  b.biome_name =?', pickBiomeLabels[e.index].title);
+		while (protocolResultRows.isValidRow()) {
+			var protocolName = protocolResultRows.fieldByName('protocol_name');
+			pickProtocolLabels.push({title:protocolName, enabled:true});
+			protocolResultRows.next();
+		}
+	} catch (e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally {
+		protocolResultRows.close();
+		db.close();
 	}
-	protocolResultRows.close();
-	db.close();
 	
 	//refresh TabbedBar
 	$.pickProtocol.labels = pickProtocolLabels;
@@ -140,7 +150,7 @@ function doneBtn(){
 				
 			Ti.App.fireEvent("app:refreshSiteSurveys");		
 		} catch (e){
-			Ti.API.error(e.toString());
+			Ti.App.fireEvent("app:dataBaseError", e);
 		} finally {
 			protocolResult.close();
 			parkResult.close();
@@ -192,33 +202,38 @@ function auto_complete(search_term) {
 		autocomplete_table.setData(table_data);
 
 		//open database
-		var db = Ti.Database.open('ltemaDB');
-		
-		//Query - Retrieve matching park names from database
-		rows = db.execute('SELECT park_name ' + 'FROM park ' + 'WHERE park_name LIKE ?', search_term + '%');
-		
-		Ti.API.info(rows.getRowCount());
-		
-		//check if any results are returned
-		if (rows.getRowCount() <= 0) {
-			//TODO: determine if the user can create a new park name, and how to implement
-			//for now, the next line is commented out, close() allows the user to enter an invalid park name
-			//win.close();
-		} else {
-			win.open();
-
-			while (rows.isValidRow()) {
-				var parkName = rows.fieldByName('park_name');
-
-				//create a new row
-				var newRow = Ti.UI.createTableViewRow({
-					title : parkName
-				});
-
-				//Add row to the table view
-				autocomplete_table.appendRow(newRow);
-				rows.next();
+		try {
+			var db = Ti.Database.open('ltemaDB');
+			
+			//Query - Retrieve matching park names from database
+			rows = db.execute('SELECT park_name ' + 'FROM park ' + 'WHERE park_name LIKE ?', search_term + '%');
+			
+			Ti.API.info(rows.getRowCount());
+			
+			//check if any results are returned
+			if (rows.getRowCount() <= 0) {
+				//TODO: determine if the user can create a new park name, and how to implement
+				//for now, the next line is commented out, close() allows the user to enter an invalid park name
+				//win.close();
+			} else {
+				win.open();
+	
+				while (rows.isValidRow()) {
+					var parkName = rows.fieldByName('park_name');
+	
+					//create a new row
+					var newRow = Ti.UI.createTableViewRow({
+						title : parkName
+					});
+	
+					//Add row to the table view
+					autocomplete_table.appendRow(newRow);
+					rows.next();
+				}
 			}
+		} catch (e) {
+			Ti.App.fireEvent("app:dataBaseError", e);
+		} finally {
 			rows.close();
 			db.close();
 		}
