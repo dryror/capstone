@@ -77,10 +77,7 @@ function doneBtn(e){
 	if (errorOnPage) {
 		return;
 	}
-	
-	Ti.API.info(plotDistance);
-	Ti.API.info(stakeOrientation);
-	
+		
 	// Name and Save Photo
 	var photoName = savePhoto(photo);
 	var utc = new Date().getTime();
