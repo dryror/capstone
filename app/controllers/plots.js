@@ -7,13 +7,23 @@ function editBtn(){
 	alert('You Clicked the Edit Button');
 }
 
-//Place holder for add button
-function addBtn(){
-	//Navigation to addPlot
-	var addPlot = Alloy.createController("addPlot", {transectID: $.tbl.transectID}).getView();
-	var nav = Alloy.Globals.navMenu;
-	nav.openWindow(addPlot);
-}
+//ADD BUTTON - add a new plot
+function addBtn(){	
+	//get the total ground cover of the last plot entry and name
+	 	var totalGroundCover = getTotalGroundCover().totalGroundCover;
+	 	var lastPlotEntryName = getTotalGroundCover().lastPlotEntryName;
+	 	
+	 	//check the total ground cover of last plot entry
+	 		if(totalGroundCover < 100){
+				alert("Total Ground Cover is less than 100% \n" + lastPlotEntryName);
+				return;
+			}
+			
+			//Navigation to addPlot
+			var addPlot = Alloy.createController("addPlot", {transectID: $.tbl.transectID}).getView();
+			var nav = Alloy.Globals.navMenu;
+			nav.openWindow(addPlot);
+}		
 
 function populateTable() {
 	//Clear the table if there is anything in it
@@ -66,6 +76,48 @@ populateTable();
 //Will check if Edit button should be enabled/disabled - if no rows exist
 toggleEditBtn();
 
+// get the total ground cover of the last plot entry
+function getTotalGroundCover(){
+	 try{
+	    //open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		// get the name & plot_id of the last plot entry added
+		var lastRowAdded = db.execute('SELECT MAX(utc), plot_id, plot_name \
+									FROM plot \
+									WHERE transect_id = ?', $.tbl.transectID);
+									
+		var lastEntryPlotID = lastRowAdded.fieldByName('plot_id');
+		var lastEntryPlotName = lastRowAdded.fieldByName('plot_name');
+		
+		//Ti.API.info(lastEntryPlotName);
+		
+		//delete current row from the database
+	    var rows = db.execute('SELECT sum(ground_cover) \
+							FROM plot_observation \
+							WHERE plot_id = ?',  lastEntryPlotID);
+							
+		var totalGroundCover = rows.fieldByName('sum(ground_cover)');
+		
+		/*
+		// get the name of the last plot entry
+		var lastPlotEntry = db.execute('SELECT plot_name \
+							FROM plot \
+							WHERE plot_id = ?',  lastEntryPlotID);
+							
+		var lastPlotEntryName = lastPlotEntry.fieldByName('plot_name');
+		
+		//Ti.API.info("The other plot name: "+ lastPlotEntryName);
+		*/
+		
+	} catch(e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally {
+		db.close();
+		var lastPlotEntryName = lastEntryPlotName;
+		return {totalGroundCover:totalGroundCover, lastPlotEntryName:lastPlotEntryName};
+	}
+}
 
 //Enable or Disable the Edit button
 function toggleEditBtn(){
@@ -123,9 +175,15 @@ Ti.App.addEventListener("app:refreshPlots", function(e) {
 
 //Plot TableView - event listener
 $.tbl.addEventListener('click', function(e){
-	 var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
-	 var nav = Alloy.Globals.navMenu;
-	 nav.openWindow(observations);   
+	//info button clicked, display modal
+	if(e.source.toString() == '[object TiUIButton]') {
+		alert("you clicked the info button");
+	}else{  
+		//open plot observations
+		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
+	 	var nav = Alloy.Globals.navMenu;
+	 	nav.openWindow(observations);   
+	}
 });
 
 //Delete - event listener
