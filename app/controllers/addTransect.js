@@ -65,7 +65,7 @@ function doneBtn(e){
 						$.tsctName.value, $.srvyName.value, $.otherSrvyName.value, $.plotDist.value, stakeText, utmZone, utmEasting, utmNorthing, $.comments.value, siteID, mediaID);
 						
 		}catch(e){
-			
+			Ti.App.fireEvent("app:dataBaseError", e);
 		}finally{	
 			//close the result set
 			results.close();	
@@ -116,16 +116,23 @@ function savePhoto(photo){
 		var year = rows.fieldByName('year');
 		var protocolName = rows.fieldByName('protocol_name');
 		var parkName = rows.fieldByName('park_name');
+	} catch(e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally {
+		rows.close();
+		db.close();
+	}
 	
-		//Name the directory
-		var dir = year + ' - ' + protocolName + ' - ' + parkName; 
-		//get the photo
-		var img = photo;
-		
-		//name the photo  (timestamp - utc in ms)
-		var timestamp = new Date().getTime();
-		var filename = "T" + timestamp;
-		
+	//Name the directory
+	var dir = year + ' - ' + protocolName + ' - ' + parkName; 
+	//get the photo
+	var img = photo;
+	
+	//name the photo  (timestamp - utc in ms)
+	var timestamp = new Date().getTime();
+	var filename = "T" + timestamp;
+	
+	try {
 		// Create image Directory for site
 		var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
 		if (! imageDir.exists()) {
@@ -139,10 +146,10 @@ function savePhoto(photo){
 		var path = filename + '.png'; 
 
 	} catch(e) {
-		//Ti.App.fireEvent("app:dataBaseError", e);
+		Ti.App.fireEvent("app:fileSystemError", e);
 	} finally {
-		rows.close();
-		db.close();
+		imageDir = null;
+		imageFile = null;
 		return path;
 	}
   }
