@@ -82,7 +82,7 @@ Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
 	populateTable();
 });
 
-// Row clicked, grab the modal
+// Row click event listener
 $.tbl.addEventListener('click', function(e){
 	var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
 	modal.open({
@@ -93,20 +93,32 @@ $.tbl.addEventListener('click', function(e){
 	});
 });
 
-// Remove a row from the database (called when edit button is enabled and 'delete' is clicked)
+// Delete event listener
 $.tbl.addEventListener('delete', function(e) { 
 
-	var observationID = e.rowData.observationID;
-    
+	var observationID = e.rowData.observationID;  //the ID to delete
+	
     try {
+   		//delete from database
    		var db = Ti.Database.open('ltemaDB');
 	    var row = db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
+	    
+	    //delete associated media files
+	    var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
+										WHERE med.media_id = pob.media_id \
+										AND pob.observation_id = ?', observationID);
+		
+		while (observationFiles.isValidRow()) {
+			var fileName = observationFiles.fieldByName('media_name');
+			deleteImage(fileName, folder);
+			observationFiles.next();
+		}	    
 	} catch(e) {
 		Ti.App.fireEvent("app:dataBaseError", e);
-	} finally { 
+	} finally {
+		observationFiles.close();
 		db.close();
 	}
-	
 	//check if Edit button should be enabled/disabled - if no rows exist
 	toggleEditBtn();
 });
@@ -143,7 +155,7 @@ function toggleEditBtn(){
         $.addObservation.enabled = true;
 	}else{
 		//enable Edit Button
-		$.editTransects.enabled = true;
+		$.editObservation.enabled = true;
 	}
 }
 
