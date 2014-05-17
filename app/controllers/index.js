@@ -69,52 +69,21 @@ $.tbl.addEventListener('delete', function(e) {
 	    //open database
 		var db = Ti.Database.open('ltemaDB');
 		
-		// find any associated transect pictures and delete them
-		var transectFiles = db.execute('SELECT tct.transect_id, med.media_name FROM media med, transect tct \
-								WHERE med.media_id = tct.media_id \
-								AND tct.site_id = ?', currentSiteID);
-		
-		var folder = e.rowData.title;
-		var transectIDs = [];
-		while (transectFiles.isValidRow()) {
-			transectIDs.push(transectFiles.fieldByName('transect_id'));
-			var fileName = transectFiles.fieldByName('media_name');
-			deleteImage(fileName, folder);
-			transectFiles.next();
-		}
-		
-		var tids = '(' + transectIDs + ')';
-		var plotFiles = db.execute('SELECT plt.plot_id, med.media_name FROM media med, plot plt \
-									WHERE med.media_id = plt.media_id \
-									AND plt.transect_id IN' + tids);
-		
-		var plotIDs = [];
-		while (plotFiles.isValidRow()) {
-			plotIDs.push(plotFiles.fieldByName('plot_id'));
-			var fileName = plotFiles.fieldByName('media_name');
-			deleteImage(fileName, folder);
-			plotFiles.next();
-		}
-		
-		var pids = '(' + plotIDs + ')';
-		var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
-										WHERE med.media_id = pob.media_id \
-										AND pob.plot_id IN' + pids);
-		
-		while (observationFiles.isValidRow()) {
-			var fileName = observationFiles.fieldByName('media_name');
-			deleteImage(fileName, folder);
-			observationFiles.next();
+		// Delete any saved files associated with this site survey
+		var folder = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, e.rowData.title);
+		if (folder.exists()) {		
+			// delete the folder and it's contents
+			folder.deleteDirectory(true);		
 		}
 		
 		//delete current row from the database
-	    var row = db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
+	    db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
+	    
 	} catch(e) {
 		Ti.App.fireEvent("app:dataBaseError", e);
 	} finally {
-		transectFiles.close();
-		plotFiles.close();
-		observationFiles.close();
+		// Dispose of file handles and db connections
+		folder = null;
 		db.close();
 	}
 	
@@ -225,20 +194,6 @@ function exportBtn(){
 		navBarHidden : false
 	});
 }
-
-// Delete a file from the application data directory
-function deleteImage(fileName, folderName) {
-	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
-	
-	if (imageDir.exists()) {		
-		// .resolve() provides the resolved native path for the directory.
-		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), fileName);
-		if (imageFile.exists()) {
-			imageFile.deleteFile();
-		}
-	}
-}
-
 
 //This should always happen last
 Alloy.Globals.navMenu = $.navGroupWin;

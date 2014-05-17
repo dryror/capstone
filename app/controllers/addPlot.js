@@ -14,7 +14,7 @@ try {
 	var stakeOrientation = results.fieldByName('stake_orientation');
 	var plotDistance = results.fieldByName('plot_distance');
 } catch(e) {
-	Ti.API.error(e.toString());
+	Ti.App.fireEvent("app:dataBaseError", e);
 } finally {
 	results.close();
 	db.close();
@@ -125,30 +125,34 @@ function takePhoto() {
 		utmEasting = UTMEasting;
 		utmNorthing = UTMNorthing;
 		utmZone = n_UTMZone;
-		
-		//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
 	});
 }
 
 //Name and save photo to filesystem - do this when done btn is pressed
 function savePhoto(photo){
+	try {
+		//Connect to database
+		var db = Ti.Database.open('ltemaDB');
+			
+		//Query - Retrieve site survery, year, park
+		var rows = db.execute('SELECT year, protocol_name, park_name \
+							FROM site_survey s, protocol p, park prk \
+							WHERE s.protocol_id = p.protocol_id \
+							AND s.park_id = prk.park_id \
+							AND site_id = ?', siteID);
+							
+		//Name the directory	
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+		var dir = year + ' - ' + protocolName + ' - ' + parkName;
+	} catch(e) {
+		Ti.App.fireEvent("app:dataBaseError", e);
+	} finally {
+		rows.close();
+		db.close();
+	}
 	
-	//Connect to database
-	var db = Ti.Database.open('ltemaDB');
-		
-	//Query - Retrieve site survery, year, park
-	var rows = db.execute('SELECT year, protocol_name, park_name \
-						FROM site_survey s, protocol p, park prk \
-						WHERE s.protocol_id = p.protocol_id \
-						AND s.park_id = prk.park_id \
-						AND site_id = ?', siteID);
-						
-	//Name the directory	
-	var year = rows.fieldByName('year');
-	var protocolName = rows.fieldByName('protocol_name');
-	var parkName = rows.fieldByName('park_name');
-	var dir = year + ' - ' + protocolName + ' - ' + parkName;
-	 
 	//get the photo
 	var img = photo; 
 	
@@ -156,21 +160,25 @@ function savePhoto(photo){
 	var timestamp = new Date().getTime();
 	var filename = "P" + timestamp;
 	
-	// Create image Directory for site
-	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
-	if (! imageDir.exists()) {
-    	imageDir.createDirectory();
-	}
-	
-	// .resolve() provides the resolved native path for the directory.
-	var imageFile  = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
-	imageFile.write(img);
-	
-	var path = filename + '.png';
-	
-	rows.close();
-	db.close();
-	return path;
+	try {
+		// Create image Directory for site
+		var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
+		if (! imageDir.exists()) {
+	    	imageDir.createDirectory();
+		}
+		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile  = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
+		imageFile.write(img);
+		
+		var path = filename + '.png';
+	} catch(e) {
+		Ti.App.fireEvent("app:fileSystemError", e);
+	} finally {
+		imageDir = null;
+		imageFile = null;
+		return path;
+	}	
 }
 
 /* Event Listeners */
