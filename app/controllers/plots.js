@@ -9,16 +9,19 @@ function editBtn(){
 
 //ADD BUTTON - add a new plot
 function addBtn(){	
-	//get the total ground cover of the last plot entry and name
+	//check if any rows exists
+	if(showTotalRowNumber() > 0){
+		
+		//get the total ground cover of the last plot entry and name
 	 	var totalGroundCover = getTotalGroundCover().totalGroundCover;
 	 	var lastPlotEntryName = getTotalGroundCover().lastPlotEntryName;
 	 	
-	 	//check the total ground cover of last plot entry
+	 		//check the total ground cover of last plot entry
 	 		if(totalGroundCover < 100){
 				alert("Total Ground Cover is less than 100% \n" + lastPlotEntryName);
 				return;
 			}
-			
+		}
 			//Navigation to addPlot
 			var addPlot = Alloy.createController("addPlot", {transectID: $.tbl.transectID}).getView();
 			var nav = Alloy.Globals.navMenu;
@@ -90,25 +93,12 @@ function getTotalGroundCover(){
 		var lastEntryPlotID = lastRowAdded.fieldByName('plot_id');
 		var lastEntryPlotName = lastRowAdded.fieldByName('plot_name');
 		
-		//Ti.API.info(lastEntryPlotName);
-		
 		//delete current row from the database
 	    var rows = db.execute('SELECT sum(ground_cover) \
 							FROM plot_observation \
 							WHERE plot_id = ?',  lastEntryPlotID);
 							
 		var totalGroundCover = rows.fieldByName('sum(ground_cover)');
-		
-		/*
-		// get the name of the last plot entry
-		var lastPlotEntry = db.execute('SELECT plot_name \
-							FROM plot \
-							WHERE plot_id = ?',  lastEntryPlotID);
-							
-		var lastPlotEntryName = lastPlotEntry.fieldByName('plot_name');
-		
-		//Ti.API.info("The other plot name: "+ lastPlotEntryName);
-		*/
 		
 	} catch(e) {
 		Ti.App.fireEvent("app:dataBaseError", e);
