@@ -118,6 +118,7 @@ $.tbl.addEventListener('delete', function(e) {
 	} finally {
 		observationFiles.close();
 		db.close();
+		populateTable();
 	}
 	//check if Edit button should be enabled/disabled - if no rows exist
 	toggleEditBtn();
