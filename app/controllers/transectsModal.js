@@ -42,7 +42,8 @@ try {
 		alert('please set the stake orientation');
 	}
 } catch (e) {
-	Ti.App.fireEvent("app:dataBaseError", e);
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
 	resultRow.close();
 	db.close();
@@ -172,7 +173,8 @@ function saveEdit(){
 		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
 					$.transectName.value, $.surveyor.value, $.otherSurveyors.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);		
 	} catch (e){
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		db.close();
 	}	

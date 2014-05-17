@@ -21,7 +21,8 @@ try {
 	var parkName = row.fieldByName('park_name');
 	var exported = row.fieldByName('exported');
 } catch(e) {
-	Ti.App.fireEvent("app:dataBaseError", e);
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
 	row.close();
 	db.close();

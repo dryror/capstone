@@ -65,7 +65,8 @@ function doneBtn(e){
 						$.tsctName.value, $.srvyName.value, $.otherSrvyName.value, $.plotDist.value, stakeText, utmZone, utmEasting, utmNorthing, $.comments.value, siteID, mediaID);
 						
 		}catch(e){
-			Ti.App.fireEvent("app:dataBaseError", e);
+			var errorMessage = e.message;
+			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 		}finally{	
 			//close the result set
 			results.close();	
@@ -117,7 +118,8 @@ function savePhoto(photo){
 		var protocolName = rows.fieldByName('protocol_name');
 		var parkName = rows.fieldByName('park_name');
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		rows.close();
 		db.close();
@@ -146,7 +148,8 @@ function savePhoto(photo){
 		var path = filename + '.png'; 
 
 	} catch(e) {
-		Ti.App.fireEvent("app:fileSystemError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
 	} finally {
 		imageDir = null;
 		imageFile = null;

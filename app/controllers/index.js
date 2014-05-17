@@ -50,7 +50,8 @@ function populateTable() {
 			rows.next();
 		}
 	} catch(e){
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		rows.close();
 		db.close();
@@ -80,7 +81,8 @@ $.tbl.addEventListener('delete', function(e) {
 	    db.execute('DELETE FROM site_survey WHERE site_id = ?', currentSiteID);
 	    
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		// Dispose of file handles and db connections
 		folder = null;
@@ -111,12 +113,12 @@ $.tbl.addEventListener('click', function(e) {
 
 Ti.App.addEventListener("app:dataBaseError", function(e) {
 	//TODO: handle a database error for the app
-	Titanium.API.error("Database error: " + e);
+	Titanium.API.error("Database error: " + e.error);
 });
 
 Ti.App.addEventListener("app:fileSystemError", function(e) {
 	//TODO: handle a file system error for the app
-	Titanium.API.error("File system error: " + e);
+	Titanium.API.error("File system error: " + e.error);
 });
 
 Ti.App.addEventListener("app:refreshSiteSurveys", function(e) {

@@ -14,7 +14,8 @@ try {
 		biomeResultRows.next();
 	}
 } catch(e) {
-	Ti.App.fireEvent("app:dataBaseError", e);
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
 	biomeResultRows.close();
 	db.close();
@@ -43,7 +44,8 @@ $.pickBiome.addEventListener('click', function(e) {
 			protocolResultRows.next();
 		}
 	} catch (e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		protocolResultRows.close();
 		db.close();
@@ -150,7 +152,8 @@ function doneBtn(){
 				
 			Ti.App.fireEvent("app:refreshSiteSurveys");		
 		} catch (e){
-			Ti.App.fireEvent("app:dataBaseError", e);
+			var errorMessage = e.message;
+			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 		} finally {
 			protocolResult.close();
 			parkResult.close();
@@ -232,7 +235,8 @@ function auto_complete(search_term) {
 				}
 			}
 		} catch (e) {
-			Ti.App.fireEvent("app:dataBaseError", e);
+			var errorMessage = e.message;
+			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 		} finally {
 			rows.close();
 			db.close();

@@ -64,7 +64,8 @@ function populateTable() {
 		
 	} catch(e) {
 		
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 		
 	} finally {
 		
@@ -116,7 +117,8 @@ $.tbl.addEventListener('delete', function(e) {
 			observationFiles.next();
 		}	    
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		observationFiles.close();
 		db.close();

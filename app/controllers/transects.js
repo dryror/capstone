@@ -57,7 +57,8 @@ function populateTable() {
 			rows.next();
 		}
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		rows.close();
 		db.close();
@@ -146,7 +147,8 @@ $.tbl.addEventListener('delete', function(e) {
 		//delete current row from the database
 	    var row = db.execute('DELETE FROM transect WHERE transect_id = ?', currentTransectID);
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally { 
 		transectFiles.close();
 		plotFiles.close();

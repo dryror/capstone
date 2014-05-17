@@ -67,7 +67,8 @@ function populateTable() {
 			rows.next();
 		}
 	} catch(e){
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		rows.close();
 		db.close();
@@ -100,7 +101,8 @@ function getTotalGroundCover(){
 		var totalGroundCover = rows.fieldByName('sum(ground_cover)');
 		
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		db.close();
 		var lastPlotEntryName = lastEntryPlotName;
@@ -187,7 +189,8 @@ $.tbl.addEventListener('delete', function(e) {
 		//delete current row from the database
 	    db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		db.close();
 	}

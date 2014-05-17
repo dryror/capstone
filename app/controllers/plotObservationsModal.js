@@ -19,7 +19,8 @@ try {
 	var groundCover = resultRow.fieldByName('ground_cover');
 	$.groundCover.value = groundCover;
 } catch (e) {
-	Ti.App.fireEvent("app:dataBaseError", e);
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
 	resultRow.close();
 	db.close();
@@ -71,7 +72,8 @@ function doneBtnClick(){
 					SET ground_cover = ? \
 					WHERE observation_id = ?', $.groundCover.value,observationID);		
 	} catch (e){
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		db.close();
 		Ti.App.fireEvent("app:refreshPlotObservations");

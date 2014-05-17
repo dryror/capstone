@@ -58,7 +58,8 @@ try {
 	$.surveyPkr.add(data);
 	
 } catch (e) {
-	Ti.App.fireEvent("app:dataBaseError", e);
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
 	rows.close();
 	db.close();
@@ -156,7 +157,8 @@ function makeCSV() {
 			plotObservations.next();
 		}		
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		transects.close();
 		plots.close();
@@ -233,7 +235,8 @@ function makeCSV() {
 	    var generalSurveyFile = Titanium.Filesystem.getFile(siteDir.resolve(), gsFileName);
 	    generalSurveyFile.write(generalSurveyTxt);
 	} catch(e) {
-		Ti.App.fireEvent("app:fileSystemError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
 	} finally {
 		// Dispose of file handles
 		siteDir = null;
@@ -259,7 +262,8 @@ $.exportWin.addEventListener("doneSending", function() {
     	// Timestamp the export in the database
     	db.execute('UPDATE OR FAIL site_survey SET exported = ? WHERE site_id = ?', utc, siteID);
     } catch(e) {
-    	Ti.App.fireEvent("app:fileSystemError", e);
+    	var errorMessage = e.message;
+    	Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
     } finally {
     	db.close();
 		alert("Data for " + $.surveyPkr.getSelectedRow(0).title + " is ready for export");

@@ -14,7 +14,8 @@ try {
 	var stakeOrientation = results.fieldByName('stake_orientation');
 	var plotDistance = results.fieldByName('plot_distance');
 } catch(e) {
-	Ti.App.fireEvent("app:dataBaseError", e);
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
 	results.close();
 	db.close();
@@ -147,7 +148,8 @@ function savePhoto(photo){
 		var parkName = rows.fieldByName('park_name');
 		var dir = year + ' - ' + protocolName + ' - ' + parkName;
 	} catch(e) {
-		Ti.App.fireEvent("app:dataBaseError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		rows.close();
 		db.close();
@@ -173,7 +175,8 @@ function savePhoto(photo){
 		
 		var path = filename + '.png';
 	} catch(e) {
-		Ti.App.fireEvent("app:fileSystemError", e);
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
 	} finally {
 		imageDir = null;
 		imageFile = null;
