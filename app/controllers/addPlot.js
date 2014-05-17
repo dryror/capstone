@@ -63,7 +63,7 @@ function doneBtn(e){
 			$.stakeOtherError.visible = true;
 			errorOnPage = true;
 		}
-		stakeOrientation = $.stakeDeviation.text;
+		stakeOrientation = $.stakeDeviation.value;
 	}
 	
 	if ($.pickDistance.index == 1) {
@@ -71,12 +71,15 @@ function doneBtn(e){
 			$.distanceOtherError.visible = true;
 			errorOnPage = true;
 		}
-		plotDistance = $.distanceDeviation.text;
-	}
+		plotDistance = $.distanceDeviation.value;
+	} 
 	
 	if (errorOnPage) {
 		return;
 	}
+	
+	Ti.API.info(plotDistance);
+	Ti.API.info(stakeOrientation);
 	
 	// Name and Save Photo
 	var photoName = savePhoto(photo);
