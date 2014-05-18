@@ -60,27 +60,3 @@
 	top: 220
 }
 
-/* Not using picker, keep for reference
-"#biomePkr": {
-	height: 150,
-	bottom: 0,
-	selectionIndicator: true,
-	visable: false
-},
-
-"#protocolPkr": {
-	height: 150,
-	bottom: 0,
-	selectionIndicator: true,
-	visable: false
-},
-
-"#doneBiomePkr": {
-	font: {fontSize: 20},
-	bottom: 220
-},
-"#doneProtocolPkr": {
-	font: {fontSize: 20},
-	bottom: 220
-}
-*/
