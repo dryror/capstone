@@ -78,7 +78,7 @@ function populateTable() {
 }
 
 
-/* Nav Bar Labels */
+/* Nav Bar Label */
 
 // Build title label
 var parkName = "";

@@ -1,17 +1,31 @@
 ".container": {
 	backgroundColor:"white"
 },
-"Button": {
-	font: {fontSize: 20}
+
+"Label": {
+	font: {fontSize: 24}
 },
+"Button": {
+	font: {fontSize: 24}
+},
+
+//HeaderView
 "#headerView": {
-	height: Ti.UI.SIZE
+	height: 80
 },
 "#addSite": {
-	top: 10,
-	left: 18
+	bottom: 0,
+	left: 20,
+	height: 60,		//height and width box makes button easier to click
+	width: 80,
+	verticalAlign: 2	//centered, as per http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.UI-property-TEXT_VERTICAL_ALIGNMENT_CENTER
 },
+
+//FooterView
 "#exportData": {
 	top: 10,
-	left: 18
+	left: 20,
+	height: 60,
+	width: 110,
+	verticalAlign: 2
 }

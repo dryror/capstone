@@ -1,6 +1,6 @@
 <Alloy>
 	<NavigationWindow id="navGroupWin">
-		<Window class="container" title="Site Surveys">
+		<Window class="container" title="Site Surveys" id="siteSurveysWin">
 			<RightNavButton>
 				<Button id="editSite" title="Edit" onClick="editBtn"/>
 			</RightNavButton>

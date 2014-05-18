@@ -32,15 +32,15 @@ function populateTable() {
 				var newRow = Ti.UI.createTableViewRow({
 					title : siteSurvey,
 					siteID : siteID,
-					parkName: parkName //not visible, but passed to transects screen
+					parkName: parkName, //not visible, but passed to transects screen
+					height: 60,
+					font: {fontSize: 24}
 				});
 				
 				//create and add info icon for the row
 				var infoButton = Ti.UI.createButton({
 					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
 					right : 10,
-					height : 48, //this is deciding the size of the rows at the moment
-					width : 48, 
 				});
 				newRow.add(infoButton);
 				
@@ -58,6 +58,22 @@ function populateTable() {
 		toggleEditBtn();
 	}
 }
+
+/* Nav Bar Label */
+
+// Build title label
+
+var labelText = 'Site Surveys';
+
+var titleLabel = Titanium.UI.createLabel({
+	top:10,
+	text: labelText,
+	textAlign:'center',
+	font:{fontSize:20,fontWeight:'bold'},
+});
+
+// Associate label to title
+$.siteSurveysWin.setTitleControl(titleLabel);
 
 
 /* Event Listeners */
