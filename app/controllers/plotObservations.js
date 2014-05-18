@@ -43,7 +43,6 @@ function populateTable() {
 				title : observation,
 				observationID : observationID,
 				height: 60,
-				right: 32,
 				font: {fontSize: 24}
 			});
 			
