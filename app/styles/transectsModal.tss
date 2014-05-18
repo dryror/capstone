@@ -3,27 +3,27 @@
 },
 
 "Label": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 "TextField": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 "Button": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 
 ".error": {
-	font: {fontSize: 14},
+	font: {fontSize: 20},
 	color: "Red"
 },
 
 "#transectLbl": {
-	left: 40,
+	left: 20,
 	top: 40,
 },
 "#transectName": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 40,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
@@ -34,12 +34,12 @@
 },
 
 "#surveyorLbl": {
-	left: 40,
+	left: 20,
 	top: 100
 },
 "#surveyor": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 100,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
@@ -50,12 +50,12 @@
 },
 
 "#otherSurveyorsLbl": {
-	left: 40,
+	left: 20,
 	top: 160
 },
 "#otherSurveyors": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 160,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128
@@ -66,16 +66,16 @@
 },
 
 "#plotDistLbl": {
-	left: 40,
+	left: 20,
 	top: 220,
 },
 "#plotDistance": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 220,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Ti.UI.KEYBOARD_NUMBER_PAD,
-	maxLength:128
+	maxLength:3
 },
 "#plotDistanceError": {
 	left: 225,
@@ -83,12 +83,12 @@
 },
 
 "#stakeOriLbl": {
-	left: 40,
+	left: 20,
 	top: 280,
 },
 "#stakeBar": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 280
 },
 "#stakeError": {
@@ -97,12 +97,12 @@
 },
 
 "#commentsLbl": {
-	left: 40,
+	left: 20,
 	top: 340
 },
 "#comments": {
 	left: 220,
-	right:40,
+	right:20,
 	top: 340,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:128

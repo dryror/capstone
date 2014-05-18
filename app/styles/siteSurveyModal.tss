@@ -7,53 +7,53 @@
 },
 
 "#parkLbl": {
-	left: 40,
+	left: 20,
 	top: 40
 },
 "#parkName": {
-	left: 200,
+	left: 220,
 	top: 40
 },
 
 "#siteLbl": {
-	left: 40,
+	left: 20,
 	top: 100,
 },
 "#siteID": {
-	left: 200,
+	left: 220,
 	top: 100
 },
 "#yearLbl": {
-	left: 40,
+	left: 20,
 	top: 160
 },
 "#siteYear": {
-	left: 200,
+	left: 220,
 	top: 160
 },
 "#biomeLbl": {
-	left: 40,
+	left: 20,
 	top: 220,
 },
 "#biome": {
-	left: 200,
+	left: 220,
 	top: 220
 },
 
 "#protocolLbl": {
-	left: 40,
+	left: 20,
 	top: 280,
 },
 "#protocolName": {
-	left: 200,
+	left: 220,
 	top: 280
 },
 "#exportLbl": {
-	left: 40,
+	left: 20,
 	top: 340
 },
 "#exportDate": {
-	left: 200,
+	left: 220,
 	top: 340
 }
 
