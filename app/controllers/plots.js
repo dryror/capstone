@@ -101,7 +101,14 @@ Ti.App.addEventListener("app:refreshPlots", function(e) {
 $.tbl.addEventListener('click', function(e){
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		alert("you clicked the info button");
+		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+		});
+	//row clicked, get transect view
 	}else{  
 		//open plot observations
 		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
@@ -240,4 +247,3 @@ function editBtn(e){
 		$.addSite.enabled = true;
 	}
 }
-
