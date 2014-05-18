@@ -5,13 +5,13 @@
 	color: "red"
 },
 "Label": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 "TextField": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 "Button": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 
 

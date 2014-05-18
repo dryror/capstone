@@ -3,21 +3,21 @@
 	backgroundColor:"white"
 },
 "Label": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 
 ".error": {
-	font: {fontSize: 14},
+	font: {fontSize: 20},
 	color: "Red"
 },
 
 "#parkLbl": {
-	left: 40,
+	left: 20,
 	top: 40,
 },
 "#parkSrch": {
 	left: 200,
-	right: 40,
+	right: 20,
 	top: 30
 },
 "#parkSrchError": {
@@ -26,12 +26,12 @@
 },
 
 "#biomeLbl": {
-	left: 40,
+	left: 20,
 	top: 100
 },
 "#pickBiome": {
 	left: 200,
-	right: 40,
+	right: 20,
 	top: 100
 },
 "#pickBiomeError": {
@@ -40,12 +40,12 @@
 },
 
 "#protocolLbl": {
-	left: 40,
+	left: 20,
 	top: 160
 },
 "#pickProtocol": {
 	left: 200,
-	right: 40,
+	right: 20,
 	top: 160
 },
 "#pickProtocolError": {
@@ -55,32 +55,8 @@
 
 
 "#info": {
-	left: 40,
-	right: 40,
+	left: 20,
+	right: 20,
 	top: 220
 }
 
-/* Not using picker, keep for reference
-"#biomePkr": {
-	height: 150,
-	bottom: 0,
-	selectionIndicator: true,
-	visable: false
-},
-
-"#protocolPkr": {
-	height: 150,
-	bottom: 0,
-	selectionIndicator: true,
-	visable: false
-},
-
-"#doneBiomePkr": {
-	font: {fontSize: 20},
-	bottom: 220
-},
-"#doneProtocolPkr": {
-	font: {fontSize: 20},
-	bottom: 220
-}
-*/
