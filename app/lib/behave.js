@@ -36,16 +36,16 @@ Suite.prototype.evaluate = function(cb) {
 		
 	var timer = setInterval(function() {
 		if (that.specs.length > 0 && !executing) {
-    		executing = true;
-	    	var s = that.specs.shift();
+			executing = true;
+			var s = that.specs.shift();
 			s.evaluate(function() {
 				executing = false;
 			});
-	    }
-	    else if (that.specs.length === 0 && !executing) {
+		}
+		else if (that.specs.length === 0 && !executing) {
 			clearInterval(timer);
 			cb();
-	    }
+		}
 	},50);
 };
 
@@ -74,15 +74,15 @@ Spec.prototype.evaluate = function(cb) {
 		
 		var timer = setInterval(function() {
 			if (that.expectations.length > 0 && that.done) {
-	    		var ex = that.expectations.shift();
+				var ex = that.expectations.shift();
 				ex.evaluate();
-		    }
-		    else if ((that.expectations.length === 0 && that.done) || (time > that.timeout||10000)) {
+			}
+			else if ((that.expectations.length === 0 && that.done) || (time > that.timeout||10000)) {
 				clearInterval(timer);
 				cb();
-		    }
-		    
-		    time=time+50;
+			}
+			
+			time=time+50;
 		},50);
 	}
 	else {
@@ -253,23 +253,23 @@ exports.run = function() {
 	successes = 0;
 	output = [];
 	
-    log('');
-    log('Oh, behave! Testing in progress...');
-    
-    var executing = false;
-    var timer = setInterval(function() {
-    	if (suites.length > 0 && !executing) {
-    		executing = true;
-	    	var s = suites.shift();
+	log('');
+	log('Oh, behave! Testing in progress...');
+	
+	var executing = false;
+	var timer = setInterval(function() {
+		if (suites.length > 0 && !executing) {
+			executing = true;
+			var s = suites.shift();
 			s.evaluate(function() {
 				executing = false;
 			});
-	    }
-	    else if (suites.length === 0 && !executing) {
-	    	log(' \n \n');
-		    log('*******************************************');
-		    log('* \\o/ T E S T  R U N  C O M P L E T E \\o/ *');
-		    log('*******************************************');
+		}
+		else if (suites.length === 0 && !executing) {
+			log(' \n \n');
+			log('*******************************************');
+			log('* \\o/ T E S T  R U N  C O M P L E T E \\o/ *');
+			log('*******************************************');
 			log('You ran '+specCount+' specs with '+failures+' failures and '+successes+' successes.');
 					
 			// Write jUnit XML file
@@ -280,6 +280,6 @@ exports.run = function() {
 			//Flush output
 			Ti.API.info(output.join('\n'));
 			clearInterval(timer);
-	    }
-    },50);
+		}
+	},50);
 };
