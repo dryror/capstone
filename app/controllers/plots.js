@@ -1,6 +1,138 @@
 //get transectID from calling window
 var args = arguments[0];
-$.tbl.transectID = args.transectID; //Not sure this needs to be $.tbl.transectId. Copied from transects.js.
+var transectID = args.transectID;
+$.tbl.transectID = transectID;
+
+
+populateTable();
+
+function populateTable() {
+	//Clear the table if there is anything in it
+	var rd = []; 
+	$.tbl.data = rd;
+	try {
+		//open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//Query - Retrieve existing plots from database
+		var rows = db.execute('SELECT plot_id, plot_name \
+							FROM plot \
+							WHERE transect_id = ?', $.tbl.transectID);
+		
+		//Get requested data from each row in table
+		while (rows.isValidRow()) {	
+			var plotID = rows.fieldByName('plot_id');
+			var plotName = rows.fieldByName('plot_name');
+			
+			//create a new row
+				var newRow = Ti.UI.createTableViewRow({
+					title : plotName,
+					plotID : plotID,
+					height: 60,
+					font: {fontSize: 24}
+				});
+				
+				//create and add info icon for the row
+				var infoButton = Ti.UI.createButton({
+					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
+					right : 10
+				});
+				newRow.add(infoButton);
+				
+				//Add row to the table view
+				$.tbl.appendRow(newRow);
+		
+			rows.next();
+		}
+	} catch(e){
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+	} finally {
+		rows.close();
+		db.close();
+		toggleEditBtn();
+	}
+}
+
+/* Nav Bar Label */
+
+// Build title label
+var parkName = "";
+var transectName ="";
+
+try {
+	var db = Ti.Database.open('ltemaDB');
+	
+	resultRow = db.execute (	'SELECT p.park_name, t.transect_name \
+								FROM park p, transect t, site_survey s \
+								WHERE s.site_id = t.site_id \
+								AND p.park_id = s.park_id \
+								AND t.transect_id = ?' , transectID);
+	parkName = resultRow.fieldByName('park_name');
+	transectName = resultRow.fieldByName('transect_name');
+} catch (e) {
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+} finally {
+	resultRow.close();
+	db.close();
+}
+
+var labelText = parkName + ' - ' + transectName;
+
+var titleLabel = Titanium.UI.createLabel({
+	top:10,
+	text: labelText,
+	textAlign:'center',
+	font:{fontSize:20,fontWeight:'bold'},
+});
+
+// Associate label to title
+$.plotsWin.setTitleControl(titleLabel);
+
+
+/* Event Listeners */
+
+Ti.App.addEventListener("app:refreshPlots", function(e) {
+	populateTable();
+});
+
+//Plot TableView - event listener
+$.tbl.addEventListener('click', function(e){
+	//info button clicked, display modal
+	if(e.source.toString() == '[object TiUIButton]') {
+		alert("you clicked the info button");
+	}else{  
+		//open plot observations
+		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
+		var nav = Alloy.Globals.navMenu;
+		nav.openWindow(observations);   
+	}
+});
+
+//Delete - event listener
+$.tbl.addEventListener('delete', function(e) { 
+	//get the plot_id of the current row to be deleted
+	var currentPlotID = e.rowData.plotID;
+	try{
+		//open database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//delete current row from the database
+		db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
+	} catch(e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+	} finally {
+		db.close();
+	}
+	
+	//check if Edit button should be enabled/disabled - if no rows exist
+	toggleEditBtn();
+});
+
+
+/* Functions */
 
 //Place holder for edit button
 function editBtn(){
@@ -27,57 +159,6 @@ function addBtn(){
 			var nav = Alloy.Globals.navMenu;
 			nav.openWindow(addPlot);
 }		
-
-function populateTable() {
-	//Clear the table if there is anything in it
-	var rd = []; 
-	$.tbl.data = rd;
-	try {
-		//open database
-		var db = Ti.Database.open('ltemaDB');
-		
-		//Query - Retrieve existing plots from database
-		var rows = db.execute('SELECT plot_id, plot_name \
-							FROM plot \
-							WHERE transect_id = ?', $.tbl.transectID);
-		
-		//Get requested data from each row in table
-		while (rows.isValidRow()) {	
-			var plotID = rows.fieldByName('plot_id');
-			var plotName = rows.fieldByName('plot_name');
-			
-			//create a new row
-				var newRow = Ti.UI.createTableViewRow({
-					title : plotName,
-					plotID : plotID
-				});
-				
-				//create and add info icon for the row
-				var infoButton = Ti.UI.createButton({
-					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-					right : 10,
-					height : 48, //this is deciding the size of the rows at the moment
-					width : 48, 
-				});
-				newRow.add(infoButton);
-				
-				//Add row to the table view
-				$.tbl.appendRow(newRow);
-		
-			rows.next();
-		}
-	} catch(e){
-		var errorMessage = e.message;
-		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
-	} finally {
-		rows.close();
-		db.close();
-		toggleEditBtn();
-	}
-}
-
-populateTable();
-
 
 // get the total ground cover of the last plot entry
 function getTotalGroundCover(){
@@ -160,40 +241,3 @@ function editBtn(e){
 	}
 }
 
-Ti.App.addEventListener("app:refreshPlots", function(e) {
-	populateTable();
-});
-
-//Plot TableView - event listener
-$.tbl.addEventListener('click', function(e){
-	//info button clicked, display modal
-	if(e.source.toString() == '[object TiUIButton]') {
-		alert("you clicked the info button");
-	}else{  
-		//open plot observations
-		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
-		var nav = Alloy.Globals.navMenu;
-		nav.openWindow(observations);   
-	}
-});
-
-//Delete - event listener
-$.tbl.addEventListener('delete', function(e) { 
-	//get the plot_id of the current row to be deleted
-	var currentPlotID = e.rowData.plotID;
-	try{
-		//open database
-		var db = Ti.Database.open('ltemaDB');
-		
-		//delete current row from the database
-		db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
-	} catch(e) {
-		var errorMessage = e.message;
-		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
-	} finally {
-		db.close();
-	}
-	
-	//check if Edit button should be enabled/disabled - if no rows exist
-	toggleEditBtn();
-});

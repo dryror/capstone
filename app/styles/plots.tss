@@ -1,14 +1,20 @@
-
 ".container" : {
 	backgroundColor:"white"
 },
-"Button": {
-	font: {fontSize: 20}
+"Label": {
+	font: {fontSize: 24}
 },
+"Button": {
+	font: {fontSize: 24}
+},
+
+//HeaderView
 "#headerView": {
-	height: Ti.UI.SIZE
+	height: 80
 },
 "#addSite": {
-	top: 10,
-	left: 18
+	bottom: 0,
+	left: 20,
+	height: 60,
+	width: 80
 }

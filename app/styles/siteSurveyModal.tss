@@ -3,7 +3,7 @@
 },
 
 "Label": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 
 "#parkLbl": {

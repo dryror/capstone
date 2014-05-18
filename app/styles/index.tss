@@ -16,9 +16,8 @@
 "#addSite": {
 	bottom: 0,
 	left: 20,
-	height: 60,		//height and width box makes button easier to click
-	width: 80,
-	verticalAlign: 2	//centered, as per http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.UI-property-TEXT_VERTICAL_ALIGNMENT_CENTER
+	height: 60,
+	width: 80
 },
 
 //FooterView
@@ -27,5 +26,4 @@
 	left: 20,
 	height: 60,
 	width: 110,
-	verticalAlign: 2
 }

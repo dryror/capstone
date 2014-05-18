@@ -40,7 +40,7 @@ function populateTable() {
 				//create and add info icon for the row
 				var infoButton = Ti.UI.createButton({
 					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-					right : 10,
+					right : 10
 				});
 				newRow.add(infoButton);
 				

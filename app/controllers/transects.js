@@ -38,16 +38,15 @@ function populateTable() {
 			//Create a new row
 				var newRow = Ti.UI.createTableViewRow({
 					title : transectDesc,
-					transectID : transectID
+					transectID : transectID,
+					height: 60,
+					font: {fontSize: 24}
 				});
 				
 				//create and add info icon for the row
 				var infoButton = Ti.UI.createButton({
 					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-					right : 10,
-					height : 48, //this is deciding the size of the rows at the moment
-					width : 48, 
-					id : id_counter
+					right : 10
 				});
 				newRow.add(infoButton);
 				

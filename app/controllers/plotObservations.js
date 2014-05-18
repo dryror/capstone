@@ -89,8 +89,11 @@ try {
 	var db = Ti.Database.open('ltemaDB');
 	
 	resultRow = db.execute (	'SELECT pa.park_name, ta.transect_name, pl.plot_name \
-								FROM park pa, transect ta, plot pl \
-								WHERE pl.plot_id = ?', plotID);
+								FROM park pa, transect ta, site_survey ss, plot pl \
+								WHERE ss.site_id = ta.site_id \
+								AND pa.park_id = ss.park_id \
+								AND pl.transect_id = ta.transect_id \
+								AND pl.plot_id = ?', plotID);
 	parkName = resultRow.fieldByName('park_name');
 	transectName = resultRow.fieldByName('transect_name');
 	plotName = resultRow.fieldByName('plot_name');
