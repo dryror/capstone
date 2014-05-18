@@ -53,10 +53,19 @@
 	top: 190
 },
 
+"#line": {
+	height: 1,
+	top: 240,
+	left: 5,
+	right: 5,
+	borderWidth: 1,
+	borderColor:'#aaa',
+},
 
 "#info": {
-	left: 20,
-	right: 20,
-	top: 220
+	left: 40,
+	right: 40,
+	top: 270,
+	font: {fontSize: 20, fontFamily: 'Helvetica Neue'}
 }
 
