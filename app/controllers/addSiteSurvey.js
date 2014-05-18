@@ -74,6 +74,8 @@ $.pickProtocol.addEventListener('click', function(e) {
 	if ((pickProtocolLabels[e.index].title !== "Alpine") && (pickProtocolLabels[e.index].title !== "Grassland")) {
 		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
 		$.pickProtocolError.visible = true;
+	} else {
+		$.pickProtocolError.visible = false;
 	}
 });
 
