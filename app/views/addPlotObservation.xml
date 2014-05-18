@@ -2,29 +2,29 @@
 	<Window class="container" title="Add Plot Observation">
 		<RightNavButton>
 			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
-        </RightNavButton>
-        
-        <View id="formView">
-        	<Label id="observationLbl" text="Observation Type:" />
-	        <TabbedBar id="pickType">         
-            	<Labels>
-          			<Label text="plant">Plant</Label>
-                	<Label text="other">Other</Label>
-            	</Labels>         
-        	</TabbedBar>
-        	
-        	<Label id="speciesLbl" text="Species:" />
-	        <TextField id="species" />
-        	
-        	<Label id="percentLbl" text="Percent Coverage:" />
-	        <TextField id="percent" />
-	        
-	       	<Label id="commentLbl" text="Comments:" />
-	        <TextField id="comments" />
-	        
-	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
-	        
-	        <Label id="info">Place holder for instructions to user. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
-        </View>
+		</RightNavButton>
+		
+		<View id="formView">
+			<Label id="observationLbl" text="Observation Type:" />
+			<TabbedBar id="pickType">         
+				<Labels>
+					<Label text="plant">Plant</Label>
+					<Label text="other">Other</Label>
+				</Labels>         
+			</TabbedBar>
+			
+			<Label id="speciesLbl" text="Species:" />
+			<TextField id="species" />
+			
+			<Label id="percentLbl" text="Percent Coverage:" />
+			<TextField id="percent" />
+			
+			<Label id="commentLbl" text="Comments:" />
+			<TextField id="comments" />
+			
+			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
+			
+			<Label id="info">Place holder for instructions to user. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
+		</View>
 	</Window>
 </Alloy>

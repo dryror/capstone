@@ -1,15 +1,15 @@
 <Alloy>
 	<Window class="container" title="Plot Observations">
 		<RightNavButton>
-        	<Button id="editObservation" title="Edit" onClick="editBtn"/>
-    	</RightNavButton>
+			<Button id="editObservation" title="Edit" onClick="editBtn"/>
+		</RightNavButton>
 		
-        <TableView class="table" id="tbl">
-   			<HeaderView id="mainHeader">
-   				<View id="headerView">
-   					<Button id="addObservation" title="Add" onClick="addBtn"/>
-   				</View>
-   			</HeaderView>
+		<TableView class="table" id="tbl">
+			<HeaderView id="mainHeader">
+				<View id="headerView">
+					<Button id="addObservation" title="Add" onClick="addBtn"/>
+				</View>
+			</HeaderView>
 			
 			<FooterView id="tblFooter">
 				<View id="footerView">
@@ -19,6 +19,6 @@
 					<Button id="done" title="Done" onClick="doneBtn" />
 				</View>
 			</FooterView>
-   		</TableView>
+		</TableView>
 	</Window>
 </Alloy>

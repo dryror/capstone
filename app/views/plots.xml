@@ -1,17 +1,17 @@
 <Alloy>
 	<Window class="container" title="Plots">
 		<RightNavButton>
-        	<Button id="editSite" title="Edit" onClick="editBtn"/>
-    	</RightNavButton>
+			<Button id="editSite" title="Edit" onClick="editBtn"/>
+		</RightNavButton>
 		
-        <TableView class="table" id="tbl">
-   			<HeaderView id="mainHeader">
-   				<View id="headerView">
-   					<Button id="addSite" title="Add" onClick="addBtn"/>
-   				</View>
-   			</HeaderView>
+		<TableView class="table" id="tbl">
+			<HeaderView id="mainHeader">
+				<View id="headerView">
+					<Button id="addSite" title="Add" onClick="addBtn"/>
+				</View>
+			</HeaderView>
 			<!--Placeholder row for testing screens-->
 			<TableViewRow title="Row 1" id="row1"></TableViewRow>
-   		</TableView>
+		</TableView>
 	</Window>
 </Alloy>

@@ -2,43 +2,43 @@
 	<Window class="container" title="Add Transect">
 		<RightNavButton>
 			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
-        </RightNavButton>
-        
-        <View id="formView">
-	        <Label id="tsctNameLbl" text="Transect Name:" />
-	        <TextField id="tsctName" />
-	        <Label id="transectError" class="error" visible="false" />
-	        
-	        <Label id="srvyNameLbl" text="Head Surveyor:" />
-	        <TextField id="srvyName" hintText="First and Last Name"/>
-	        <Label id="surveyorError" class="error" visible="false" />
-	        
-	        <Label id="otherSrvyNameLbl" text="Other Surveyors:" />
-	        <TextField id="otherSrvyName" hintText="First and Last Name (optional)"/>	       
-            <Label id="otherSurveyorsError" class="error" visible="false" />  
-              
-	        <Label id="stakeLbl" text="Stake Orientation:" />
-	        <TabbedBar id="pickStake">           
-            	<Labels>
-          			<Label text="tlbr">Top Left / Bottom Right</Label>
-                	<Label text="trbl">Top Right / Bottom Left</Label>
-            	</Labels>         
-        	</TabbedBar>
-	        <Label id="stakeError" class="error" visible="false" />
-	        
-	        <Label id="plotLbl" text="Plot Distance:" />
-	        <TextField id="plotDist" hintText="Enter a whole number from 2 to 30"/>
-	        <Label id="plotDistanceError" class="error" visible="false" />
-	        
-	        <Label id="commentLbl" text="Comments:" />
-	        <TextField id="comments" hintText="(optional)"/>
-	        <Label id="commentsError" class="error" visible="false" />
-	        
-	        <Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
-	        <ImageView id="transectThumbnail" />
-	        <Label id="photoError" class="error" visible="false" />
-	        
-	        <Label id="info">Place holder for instructions to user. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
-        </View>
+		</RightNavButton>
+		
+		<View id="formView">
+			<Label id="tsctNameLbl" text="Transect Name:" />
+			<TextField id="tsctName" />
+			<Label id="transectError" class="error" visible="false" />
+			
+			<Label id="srvyNameLbl" text="Head Surveyor:" />
+			<TextField id="srvyName" hintText="First and Last Name"/>
+			<Label id="surveyorError" class="error" visible="false" />
+			
+			<Label id="otherSrvyNameLbl" text="Other Surveyors:" />
+			<TextField id="otherSrvyName" hintText="First and Last Name (optional)"/>	       
+			<Label id="otherSurveyorsError" class="error" visible="false" />  
+			
+			<Label id="stakeLbl" text="Stake Orientation:" />
+			<TabbedBar id="pickStake">           
+				<Labels>
+					<Label text="tlbr">Top Left / Bottom Right</Label>
+					<Label text="trbl">Top Right / Bottom Left</Label>
+				</Labels>         
+			</TabbedBar>
+			<Label id="stakeError" class="error" visible="false" />
+			
+			<Label id="plotLbl" text="Plot Distance:" />
+			<TextField id="plotDist" hintText="Enter a whole number from 2 to 30"/>
+			<Label id="plotDistanceError" class="error" visible="false" />
+			
+			<Label id="commentLbl" text="Comments:" />
+			<TextField id="comments" hintText="(optional)"/>
+			<Label id="commentsError" class="error" visible="false" />
+			
+			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
+			<ImageView id="transectThumbnail" />
+			<Label id="photoError" class="error" visible="false" />
+			
+			<Label id="info">Place holder for instructions to user. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Label>
+		</View>
 	</Window>
 </Alloy>

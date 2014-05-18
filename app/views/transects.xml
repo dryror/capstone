@@ -1,15 +1,15 @@
 <Alloy>
 	<Window class="container" title="Transects" id="transectsWin">	
 		<RightNavButton>
-        	<Button id="editTransects" title="Edit" onClick="editBtn"/>
-    	</RightNavButton>
-   
-   		<TableView class="table" id="tbl">
+			<Button id="editTransects" title="Edit" onClick="editBtn"/>
+		</RightNavButton>
+		
+		<TableView class="table" id="tbl">
 			<HeaderView id="mainHeader">
-   				<View id="headerView">
-   					<Button id="addTransect" title="Add" onClick="addBtn"/>
-   				</View>
-   			</HeaderView>
-   		</TableView>
+				<View id="headerView">
+					<Button id="addTransect" title="Add" onClick="addBtn"/>
+				</View>
+			</HeaderView>
+		</TableView>
 	</Window>
 </Alloy>

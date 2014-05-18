@@ -3,23 +3,21 @@
 		
 		<Window class="container" title="Export" id="exportWin">
 			
-	    	<LeftNavButton>
-	    		<Button id="backBtn" title="Back" onClick="backBtnClick" />
-	    	</LeftNavButton>
-	    	
-	    	<ProgressBar id="progressBar" />
-	    	
-	    	<View id="formView">
+			<LeftNavButton>
+				<Button id="backBtn" title="Back" onClick="backBtnClick" />
+			</LeftNavButton>
+			
+			<ProgressBar id="progressBar" />
+			
+			<View id="formView">
 				<Label id="surveyLbl" text="Survey:" />
 				<Label id="selectLbl" text="Select" onClick="surveyBtn"/>
 				<Button id="exportBtn" title="Export" onClick="exportBtn">
 			</View>	
 			<View id="surveyPkrView" visible="false">
 				<Button id="doneSurveyPkr" title="Done" onClick="doneSelectBtn"/>
-	        	<Picker id="surveyPkr">
-	            	
-	        	</Picker>
-	    	</View>
+				<Picker id="surveyPkr" />	
+			</View>
 			
 		</Window>
 	</NavigationWindow>

@@ -2,21 +2,21 @@
 	<NavigationWindow id="navGroupWin">
 		<Window class="container" title="Site Surveys">
 			<RightNavButton>
-            	<Button id="editSite" title="Edit" onClick="editBtn"/>
-        	</RightNavButton>
+				<Button id="editSite" title="Edit" onClick="editBtn"/>
+			</RightNavButton>
 			
-            <TableView class="table" id="tbl">
-       			<HeaderView id="mainHeader">
-       				<View id="headerView">
-       					<Button id="addSite" title="Add" onClick="addBtn"/>
-       				</View>
-       			</HeaderView>
+			<TableView class="table" id="tbl">
+				<HeaderView id="mainHeader">
+					<View id="headerView">
+						<Button id="addSite" title="Add" onClick="addBtn"/>
+					</View>
+				</HeaderView>
 				<FooterView id="mainFooter">
 					<View id="footerView">
 						<Button id="exportData" title="Export" onClick="exportBtn" />
 					</View>
 				</FooterView>
-	   		</TableView>
-    	</Window>
-    </NavigationWindow>
+			</TableView>
+		</Window>
+	</NavigationWindow>
 </Alloy>
