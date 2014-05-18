@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" title="Plot Observations">
+	<Window class="container" title="Plot Observations" id="plotObservationsWin">
 		<RightNavButton>
 			<Button id="editObservation" title="Edit" onClick="editBtn"/>
 		</RightNavButton>

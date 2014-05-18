@@ -8,7 +8,8 @@
  */
 
 var args = arguments[0];
-$.tbl.plotID = args.plotID;
+var plotID = args.plotID;
+$.tbl.plotID = plotID;
 
 var totalPlotPercentage = 0;
 
@@ -75,8 +76,44 @@ function populateTable() {
 		toggleEditBtn();
 	
 	}
-	
 }
+
+
+/* Nav Bar Labels */
+
+// Build title label
+var parkName = "";
+var transectName ="";
+var plotName ="";
+
+try {
+	var db = Ti.Database.open('ltemaDB');
+	
+	resultRow = db.execute (	'SELECT pa.park_name, ta.transect_name, pl.plot_name \
+								FROM park pa, transect ta, plot pl \
+								WHERE pl.plot_id = ?', plotID);
+	parkName = resultRow.fieldByName('park_name');
+	transectName = resultRow.fieldByName('transect_name');
+	plotName = resultRow.fieldByName('plot_name');
+} catch (e) {
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+} finally {
+	resultRow.close();
+	db.close();
+}
+
+var labelText = parkName + ' - ' + transectName + ' - ' + plotName;
+
+var titleLabel = Titanium.UI.createLabel({
+	top:10,
+	text: labelText,
+	textAlign:'center',
+	font:{fontSize:20,fontWeight:'bold'},
+});
+
+// Associate label to title
+$.plotObservationsWin.setTitleControl(titleLabel);
 
 
 /* Event Listeners */

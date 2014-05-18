@@ -11,27 +11,37 @@
 
 //HeaderView
 "#headerView": {
-	height: Ti.UI.SIZE
+	height: 80
 },
 "#addObservation": {
-	top: 10,
-	left: 18
+	bottom: 0,
+	left: 20,
+	height: 60,		//height and width box makes button easier to click
+	width: 80,
+	verticalAlign: 2	//centered, as per http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.UI-property-TEXT_VERTICAL_ALIGNMENT_CENTER
 },
 
 // FooterView
 "#percentLbl": {
-	right: 80,
-	top: 20
+	right: 110,
+	top: 10,
+	height: 60,
+	verticalAlign: 2
 },
 "#percent": {
-	right: 32,
-	top: 20
+	right: 60,
+	top: 10,
+	height: 60,
+	verticalAlign: 2
 },
 "#percentSymbol": {
-	right: 10,
-	top: 20
+	right: 30,
+	top: 10,
+	height: 60,
+	verticalAlign: 2
 },
 "#done": {
-	right: 20,
-	top: 55
+	right: 40,
+	top: 80,
+	verticalAlign: 2
 }
