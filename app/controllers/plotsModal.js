@@ -45,6 +45,10 @@ try{
 	db.close();
 }
 
+//ORIGINAL stakeOrientation & plotDistance Values****
+var orginal_stakeOrientation = stakeOrientation;
+var original_plotDistance = plotDistance;
+
 //Set Plot Name
 $.nameLbl.text = plotName;
 
@@ -83,8 +87,10 @@ function backBtn(){
 
 // EDIT BUTTON
 function editBtn(e){
+	
 	//enable or disable edit mode
 	if (e.source.title == "Edit") {
+		errorOnPage = false;
 		$.modalWin.editing = true;
 		e.source.title = "Done";
 		
@@ -101,24 +107,60 @@ function editBtn(e){
 		
 		//disable the button button during edit mode
 		$.backBtn.enabled = false;
-	} else { //title is "Done"
-		$.modalWin.editing = false;
-		e.source.title = "Edit";
-		$.backBtn.enabled = true;
+	} else { //if the title says "Done"
+		var errorOnPage = false;
+		if(stakeOther == true){
+			if($.stakeError.visible == true || $.stakeOtherError.visible == true){
+				errorOnPage = true;
+			}
+		}
+	
+		if(distanceOther == true){
+			if($.distanceError.visible == true || $.distanceOtherError.visible == true){
+				errorOnPage = true;
+			}
+		}
+
+		if ($.pickStake.index == 1) {
+			if ($.stakeDeviation.value === "") {
+				$.stakeOtherError.visible = true;
+				errorOnPage = true;
+			}
+			stakeOrientation = $.stakeDeviation.value;
+		}else{
+			stakeOrientation = orginal_stakeOrientation;
+		}	
 		
-		//Disable editing
-		stakeOrientationTabbedBar[0].enabled = false;
-		stakeOrientationTabbedBar[1].enabled = false;
-		plotDistanceTabbedBar[0].enabled = false;
-		plotDistanceTabbedBar[1].enabled = false;
-		$.pickStake.labels = stakeOrientationTabbedBar;
-		$.pickDistance.labels = plotDistanceTabbedBar;
-		$.comments.editable = false;
-		$.stakeDeviation.editable = false;
-		$.distanceDeviation.editable = false;
+		if ($.pickDistance.index == 1) {
+			if ($.distanceDeviation.value === "") {
+				$.distanceOtherError.visible = true;
+				errorOnPage = true;
+			}
+			plotDistance = $.distanceDeviation.value;
+		}else{
+			plotDistance = original_plotDistance;
+		}
+	
+		if(errorOnPage){
+			return;
+		}else{
+			$.modalWin.editing = false;
+			e.source.title = "Edit";
+			$.backBtn.enabled = true;
 		
-		saveEdit(e);
+			//Disable editing
+			stakeOrientationTabbedBar[0].enabled = false;
+			stakeOrientationTabbedBar[1].enabled = false;
+			plotDistanceTabbedBar[0].enabled = false;
+			plotDistanceTabbedBar[1].enabled = false;
+			$.pickStake.labels = stakeOrientationTabbedBar;
+			$.pickDistance.labels = plotDistanceTabbedBar;
+			$.comments.editable = false;
+			$.stakeDeviation.editable = false;
+			$.distanceDeviation.editable = false;
 		
+			saveEdit(e);
+		}
 	}
 }
 
@@ -128,40 +170,7 @@ function saveEdit(e){
 	e.source.enabled = false;
 	setTimeout(function(){ e.source.enabled = true; },1000);
 	
-	var errorOnPage = false;
-	
-	if ($.pickStake.index == null) {
-		$.stakeError.visible = true;
-		errorOnPage = true;
-		Ti.API.info("No stake orientation");
-	}
-	
-	if ($.pickDistance.index == null) {
-		$.distanceError.visible = true;
-		errorOnPage = true;
-		Ti.API.info("No plot distance");
-	}
-	
-	if ($.pickStake.index == 1) {
-		if ($.stakeDeviation.value === "") {
-			$.stakeOtherError.visible = true;
-			errorOnPage = true;
-		}
-		stakeOrientation = $.stakeDeviation.value;
-	}
-	
-	if ($.pickDistance.index == 1) {
-		if ($.distanceDeviation.value === "") {
-			$.distanceOtherError.visible = true;
-			errorOnPage = true;
-		}
-		plotDistance = $.distanceDeviation.value;
-	} 
-	
-	if (errorOnPage) {
-		return;
-	}
-
+	//Get the value of the comments field
 	comments = $.comments.value;
 		
 	try{
@@ -171,27 +180,22 @@ function saveEdit(e){
 		//Insert Query - update row in plot table
 		db.execute(	'UPDATE OR FAIL plot SET stake_deviation = ?, distance_deviation = ?, comments = ? WHERE plot_id = ?', 
 					stakeOrientation, plotDistance, comments, plotID);
-		
-		/*
-		//Insert Query - add row to plot table
-		db.execute(	'INSERT INTO plot (plot_name,utm_zone,utm_easting,utm_northing,utc,stake_deviation,distance_deviation,comments,transect_id,media_id) VALUES (?,?,?,?,?,?,?,?,?,?)', 
-					$.numberLbl.text, utmZone, utmEasting, utmNorthing, utc, stakeOrientation, plotDistance, comments, transectID, mediaID);
-		*/		
+			
 	}catch(e){
-		Ti.API.error(e.toString());
-	}finally{	
-		//close the result set
-		//results.close();	
+		Ti.API.error(e.toString());	
 		//Close the database
 		db.close();
 	}
 }
 
-
 /* Event Listeners */
 
 // Show and hide the deviation text field depending on what is selected
 $.pickStake.addEventListener('click', function(e) {
+	//remove any text from this field
+	$.stakeDeviation.value = "";
+	//$.stakeDeviation.value = null;
+	
 	$.stakeError.visible = false;
 	$.stakeOtherError.visible = false;
 	if (stakeOther === false && e.source.labels[e.index].title === "Other") {
@@ -228,6 +232,10 @@ $.pickStake.addEventListener('click', function(e) {
 
 // Show and hide the deviation text field depending on what is selected
 $.pickDistance.addEventListener('click', function(e) {
+	//remove any text from this field
+	$.distanceDeviation.value = "";
+	//$.distanceDeviation.value = null;
+	
 	$.distanceError.visible = false;
 	$.distanceOtherError.visible = false;
 	if (distanceOther === false && e.source.labels[e.index].title === "Other") {
