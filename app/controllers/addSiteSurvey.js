@@ -22,6 +22,22 @@ try {
 	$.pickBiome.labels = pickBiomeLabels;
 }
 
+/* Nav Bar Label */
+
+// Build title label
+
+var labelText = 'New Site Survey';
+
+var titleLabel = Titanium.UI.createLabel({
+	top:10,
+	text: labelText,
+	textAlign:'center',
+	font:{fontSize:20,fontWeight:'bold'},
+});
+
+// Associate label to title
+$.addSiteSurveyWin.setTitleControl(titleLabel);
+
 // Instruciton text
 var instructions = "Start typing in the search bar to find a park.\n\n" +
 					"Picking a Biome will show its Protocols to choose from.\n\n" +
@@ -174,7 +190,7 @@ function doneBtn(){
 			previousSurveys.close();
 			results.close();
 			db.close();
-			$.addSiteSurvey.close();
+			$.addSiteSurveyWin.close();
 		}
 	}
 }
@@ -225,7 +241,7 @@ function auto_complete(search_term) {
 			//Query - Retrieve matching park names from database
 			rows = db.execute('SELECT park_name ' + 'FROM park ' + 'WHERE park_name LIKE ?', search_term + '%');
 			
-			Ti.API.info(rows.getRowCount());
+			//Ti.API.info(rows.getRowCount());
 			
 			//check if any results are returned
 			if (rows.getRowCount() <= 0) {
