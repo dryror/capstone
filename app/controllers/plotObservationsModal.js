@@ -26,9 +26,14 @@ try {
 	db.close();
 }
 
+//Custom font modal title
+var titleLabel = Titanium.UI.createLabel({
+	text:title,
+	font:{fontSize:20,fontWeight:'bold'}
+});
 
 //Assign view labels
-$.modalWin.title = title;
+$.modalWin.setTitleControl(titleLabel);
 $.groundCover.text = groundCover;
 
 

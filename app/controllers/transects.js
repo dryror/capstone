@@ -84,7 +84,7 @@ $.transectsWin.setTitleControl(titleLabel);
 $.tbl.addEventListener('click', function(e){
 	//info icon clicked, get modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID}).getView();
+		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID, title:e.rowData.title}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,

@@ -3,6 +3,7 @@
 // Get transectID from calling window
 var args = arguments[0];
 var transectID = args.transectID;
+var title = args.title;
 
 // Create stake orientation labels (Fixes Issue #13)
 var stakeBarLabels = [
@@ -48,6 +49,14 @@ try {
 	resultRow.close();
 	db.close();
 }
+//Custom font modal title
+var titleLabel = Titanium.UI.createLabel({
+	text:title,
+	font:{fontSize:20,fontWeight:'bold'}
+});
+
+//Assign view labels
+$.modalWin.setTitleControl(titleLabel);
 
 // Initially disable input fields
 $.transectName.editable = false;

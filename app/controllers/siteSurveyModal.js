@@ -28,8 +28,16 @@ try {
 	db.close();
 }
 
+//Custom font modal title
+var title = siteYear + " - " + protocolName + " - " + parkName;
+
+var titleLabel = Titanium.UI.createLabel({
+	text:title,
+	font:{fontSize:20,fontWeight:'bold'}
+});
+
 //Assign view labels
-$.modalWin.title = siteYear + " - " + protocolName + " - " + parkName;
+$.modalWin.setTitleControl(titleLabel);
 $.parkName.text = parkName;
 $.siteID.text = siteID;
 $.siteYear.text = siteYear;
