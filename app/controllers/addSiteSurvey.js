@@ -176,10 +176,9 @@ var timers = 0;
 var win = Ti.UI.createWindow({
 	borderColor : "#C0C0C0",
 	scrollable : true,
-	//height: Ti.UI.SIZE,
-	height: 250,
+	height: 330,
 	left : 200,
-	right : 40,
+	right : 20,
 	top : 135,
 	borderRadius : 0,
 	borderWidth: 3,

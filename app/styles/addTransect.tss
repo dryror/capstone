@@ -2,23 +2,23 @@
 	backgroundColor:"white"
 },
 "Label": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 "TextField": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 "Button": {
-	font: {fontSize: 20}
+	font: {fontSize: 24}
 },
 
 
 "#tsctNameLbl": {
-	left: 40,
+	left: 20,
 	top: 40
 },
 "#tsctName": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 40,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
@@ -29,12 +29,12 @@
 },
 
 "#srvyNameLbl": {
-	left: 40,
+	left: 20,
 	top: 100
 },
 "#srvyName": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 100,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
@@ -46,12 +46,12 @@
 
 
 "#otherSrvyNameLbl": {
-	left: 40,
+	left: 20,
 	top: 160
 },
 "#otherSrvyName": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 160,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
@@ -62,12 +62,12 @@
 },
 
 "#stakeLbl": {
-	left: 40,
+	left: 20,
 	top: 220
 },
 "#pickStake": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 220
 },
 "#stakeError": {
@@ -77,12 +77,12 @@
 },
 
 "#plotLbl": {
-	left: 40,
+	left: 20,
 	top: 280
 },
 "#plotDist": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 280,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
@@ -94,12 +94,12 @@
 },
 
 "#commentLbl": {
-	left: 40,
+	left: 20,
 	top: 340
 },
 "#comments": {
 	left: 220,
-	right: 40,
+	right: 20,
 	top: 340,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
 },
@@ -110,7 +110,7 @@
 }
 
 "#photoBtn": {
-	left: 40,
+	left: 20,
 	top: 400
 },
 
@@ -128,7 +128,7 @@
 }
 
 "#info": {
-	left: 40,
-	right: 40,
+	left: 20,
+	right: 20,
 	top: 500
 }
