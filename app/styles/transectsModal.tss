@@ -6,7 +6,8 @@
 	font: {fontSize: 24}
 },
 "TextField": {
-	font: {fontSize: 24}
+	font: {fontSize: 24},
+	height: 36
 },
 "Button": {
 	font: {fontSize: 24}
@@ -89,7 +90,8 @@
 "#stakeBar": {
 	left: 220,
 	right: 20,
-	top: 280
+	top: 280,
+	height: 36
 },
 "#stakeError": {
 	left: 225,
