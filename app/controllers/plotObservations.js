@@ -26,6 +26,8 @@ function populateTable() {
 	// Query the plot observation table, build the TableView
 	try {
 		
+		insertPreviousPlotRows();
+		
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Observations of a plot
@@ -61,19 +63,14 @@ function populateTable() {
 		
 			rows.next();
 		}
-		
 	} catch(e) {
-		
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
-		
 	} finally {
-		
 		rows.close();
 		db.close();
 		$.percent.text = totalPlotPercentage;
 		toggleEditBtn();
-	
 	}
 }
 
@@ -126,6 +123,7 @@ Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
 
 // Row click event listener
 $.tbl.addEventListener('click', function(e){
+	Ti.API.info('$.tbl e: ', JSON.stringify(e));
 	var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
 	modal.open({
 		modal : true,
@@ -236,5 +234,68 @@ function addBtn(){
 	var addObservation = Alloy.createController("addPlotObservation").getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addObservation);
+}
+
+// Sceen should display the zero'd out observations of pervious plots
+function insertPreviousPlotRows() {
+	try {
+		
+		var db = Ti.Database.open('ltemaDB');
+		
+		//which transect is this plot from?
+		var transectID;
+		
+		transectResult = db.execute(	'SELECT transect_id \
+										FROM plot \
+										WHERE plot_id = ?', args.plotID);
+		transectID = transectResult.fieldByName('transect_id');
+		
+		//get all the plot_id's of that transect
+		var plotIDs = [];
+		
+		plotsResult = db.execute(	'SELECT plot_id \
+									FROM plot \
+									WHERE transect_id = ?', transectID);
+		while (plotsResult.isValidRow()) {
+			plotIDs.push(plotsResult.fieldByName('plot_id'));
+			plotsResult.next();
+		}
+		
+		//get the observation_id's of all plots occuring before the current plotID
+		var validPlotObservations = [];
+		
+		for (var i=0; i < plotIDs.length; i++) {
+			if (plotIDs[i] < plotID) {
+				obsResult = db.execute(	'SELECT observation_id \
+									FROM plot_observation \
+									WHERE plot_id = ?', plotIDs[i]);
+				while (obsResult.isValidRow()){
+					var obsToPush = obsResult.fieldByName('observation_id');
+					validPlotObservations.push(obsToPush);
+					obsResult.next();
+				}
+			obsResult.close();
+			}
+		}
+		
+		//generate a new row in this plot for each validPlotObservation
+		for (var j=0; j < validPlotObservations.length; j++) {
+			titleResult = db.execute (	'SELECT observation \
+										FROM plot_observation \
+										WHERE observation_id = ?', validPlotObservations[j]);
+			var theTitle = titleResult.fieldByName('observation');
+			//create new observation_id in this plot
+			db.execute( 'INSERT INTO plot_observation (observation, ground_cover, count, plot_id) VALUES (?,?,?,?)',
+						theTitle, 0, 0, plotID);
+			titleResult.close();
+		}
+	} catch (e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+	} finally {
+		transectResult.close();
+		plotsResult.close();
+		db.close();
+	}
 }
 
