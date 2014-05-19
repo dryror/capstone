@@ -256,7 +256,7 @@ function insertPreviousPlotRows() {
 		//build a list of unique titles/names/"observation"s to avoid duplicates
 		var uniquePlotObservationTitles = [];
 		
-		//add current plot's title to the unique list if indeed unique
+		//add current plot's titles to the unique list if indeed unique
 		uniquesResult = db.execute ('SELECT observation FROM plot_observation WHERE plot_id = ?', plotID);
 		while (uniquesResult.isValidRow()) {
 			var newObs = uniquesResult.fieldByName('observation');
