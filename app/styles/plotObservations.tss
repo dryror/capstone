@@ -3,10 +3,10 @@
 },
 
 "Label": {
-	font: {fontSize: 24}
+	font: {fontSize: 20}
 },
 "Button": {
-	font: {fontSize: 24}
+	font: {fontSize: 20}
 },
 
 //HeaderView
