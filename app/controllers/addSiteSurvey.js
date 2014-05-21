@@ -178,7 +178,8 @@ function doneBtn(){
 						utm_zone, utm_easting, utm_northing, comments, site_id, media_id) \
 						VALUES (?,?,?,?,?,?,?,?,?,?,?)', transectName, surveyor, otherSurveyors, plotDistance, stakeOrientation, utmZone, 
 						utmEasting, utmNorthing, tComments, siteID, mediaID);
-						
+					
+					// Get the transect_id for the last row inserted	
 					results = db.execute('SELECT last_insert_rowid() as transectID');
 					var newTransectID = results.fieldByName('transectID');
 					
@@ -201,11 +202,32 @@ function doneBtn(){
 						db.execute('INSERT INTO plot (plot_name, utm_zone, utm_easting, utm_northing, utc, stake_deviation, distance_deviation, \
 							transect_id, media_id, comments) VALUES (?,?,?,?,?,?,?,?,?,?)', plotName, plotUtmZone, plotUtmEasting, plotUtmNorthing,
 							utc, stakeDeviation, distanceDeviation, newTransectID, plotMediaID, comments);
+						
+						// Get the plot_id for the last row inserted
+						results = db.execute('SELECT last_insert_rowid() as plotID');
+						var newPlotID = results.fieldByName('plotID');
+						
+						// Get any plot observations associated with the plot
+						var observations = db.execute('SELECT * FROM plot_observation WHERE plot_id = ?', plotID);
+						
+						// Copy and associate any existing plot observations
+						while (observations.isValidRow()){
+							var observation = observations.fieldByName('observation');
+							var groundCover = 0;
+							var count = observations.fieldByName('count');
+							var observationComments = observations.fieldByName('comments');
+							var observationMediaID = observations.fieldByName('media_id');
+						
+							db.execute('INSERT INTO plot_observation (observation, ground_cover, count, comments, plot_id, media_id) \
+								VALUES (?,?,?,?,?,?)', observation, groundCover, count, observationComments, newPlotID, observationMediaID);
 							
+							observations.next();
+						}	
 						plots.next();
 					}
 					transects.next();
 				}
+				observations.close();
 				plots.close();
 				transects.close();
 			}
