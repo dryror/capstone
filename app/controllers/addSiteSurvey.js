@@ -170,13 +170,41 @@ function doneBtn(){
 					var utmNorthing = transects.fieldByName('utm_northing');
 					var tComments = transects.fieldByName('comments');
 					var mediaID = transects.fieldByName('media_id');
+					var transectID = transects.fieldByName('transect_id');
 					
 					db.execute('INSERT INTO transect (transect_name, surveyor, other_surveyors, plot_distance, stake_orientation, \
 						utm_zone, utm_easting, utm_northing, comments, site_id, media_id) \
 						VALUES (?,?,?,?,?,?,?,?,?,?,?)', transectName, surveyor, otherSurveyors, plotDistance, stakeOrientation, utmZone, 
 						utmEasting, utmNorthing, tComments, siteID, mediaID);
+						
+					results = db.execute('SELECT last_insert_rowid() as transectID');
+					var newTransectID = results.fieldByName('transectID');
+					
+					// Get any plots associated with the transect
+					var plots = db.execute('SELECT * FROM plot WHERE transect_id = ?', transectID);
+					
+					// Copy and associate any existing plots
+					while (plots.isValidRow()) {
+						var plotName = plots.fieldByName('plot_name');
+						var plotUtmZone = plots.fieldByName('utm_zone');
+						var plotUtmEasting = plots.fieldByName('utm_easting');
+						var plotUtmNorthing = plots.fieldByName('utm_northing');
+						var utc = plots.fieldByName('utc');
+						var stakeDeviation = plots.fieldByName('stake_deviation');
+						var distanceDeviation = plots.fieldByName('distance_deviation');
+						var plotMediaID = plots.fieldByName('media_id');
+						var comments = plots.fieldByName('comments');
+						var plotID = plots.fieldByName('plot_id');
+						
+						db.execute('INSERT INTO plot (plot_name, utm_zone, utm_easting, utm_northing, utc, stake_deviation, distance_deviation, \
+							transect_id, media_id, comments) VALUES (?,?,?,?,?,?,?,?,?,?)', plotName, plotUtmZone, plotUtmEasting, plotUtmNorthing,
+							utc, stakeDeviation, distanceDeviation, newTransectID, plotMediaID, comments);
+							
+						plots.next();
+					}
 					transects.next();
 				}
+				plots.close();
 				transects.close();
 			}
 				
