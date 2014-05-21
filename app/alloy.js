@@ -16,6 +16,7 @@ if( Ti.App.deployType !== 'production' )
 
 	//require your created specs
 	require('spec/ui');
+	require('spec/addPlotTest');
 
 	//run:tests
 	behave.run();	
