@@ -6,7 +6,7 @@
 		
 		<View id="formView">
 			<Label id="plotNumberLbl" text="Plot Number:" />
-			<Label id="numberLbl" text="1" />
+			<Label id="numberLbl" />
 			
 			<Label id="stakeLbl" text="Stake Orientation:" />
 			<TabbedBar id="pickStake" />

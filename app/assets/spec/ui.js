@@ -182,3 +182,35 @@ describe('\n\nThe addTransect screen of siteID 1', function() {
 		});
 	});
 });
+describe('\n\nThe addPlot screen of transectID 1', function() {
+	var $ = Alloy.createController('addPlot', {transectID:1});
+	it('should exist when created ', function() {
+		expect($).notToBe(undefined);
+	});
+	it('should have all empty input field', function() {
+		expect($.pickStake.index).toBe(undefined);
+		expect($.stakeDeviation.value).toBe("");
+		expect($.pickDistance.index).toBe(undefined);
+		expect($.distanceDeviation.value).toBe("");
+		expect($.comments.value).toBe("");
+	});
+	describe('\naddPlot form input', function() {
+		it('should set stake orientation', function() {
+			$.pickStake.setIndex(1);
+			expect($.pickStake.index == 1).toBe(true);
+		});
+		it('should set stake orientation to Top and Bottome', function() {
+			$.stakeDeviation.setValue("Top and Bottom");
+			expect($.stakeDeviation.value).toBe("Top and Bottom");
+		});
+		it('should set plot distance', function() {
+			$.pickDistance.setIndex(0);
+			expect($.pickDistance.index == 0).toBe(true);
+		});
+		it('should set plot distance to 15', function() {
+			$.distanceDeviation.setValue(15);
+			expect($.distanceDeviation.value).toBe(15);
+		});
+	});
+});
+
