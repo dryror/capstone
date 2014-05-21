@@ -53,7 +53,7 @@
 	top: 190
 },
 
-"#line": {
+"#footerLine": {
 	height: 1,
 	top: 220,
 	left: 5,

@@ -17,7 +17,7 @@
 			<TabbedBar id="pickProtocol" />
 			<Label id="pickProtocolError" class="error" visible="false" />
 			
-			<View id="line" />
+			<View id="footerLine" />
 			
 			<Label id="info"></Label>
 		</View>

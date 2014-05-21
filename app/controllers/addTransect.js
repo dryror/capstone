@@ -1,4 +1,9 @@
-//get calling params
+/*
+ * Transect Creation Screen - including validation
+ * 
+ * expected args: siteID
+ */
+
 var args = arguments[0];
 var siteID = args.siteID;
 
@@ -15,6 +20,17 @@ if ($.pickStake.index == 0) {
 } else {
 	stakeText = "Top Right / Bottom Left";
 }
+
+// Instruciton text
+var instructions = "Some example Transect Name schemes are sequential (\"T1\", \"T2\"..), directional (\"South\", \"North\"..), or descriptive (\"Creekside\", \"Hillside\"..)\n\n" +
+					"Stake Orientation only affects the default value of each plot, and can be altered on a per plot basis to any custom value.\n\n" +
+					"When taking the plot's photo, hold the device directly overhead and have the borders of the plot marker touch two sides of the photo.\n\n" +
+					"\n" +
+					"When recording observations, remain on one side of the transect at all times (downslope if applicable).";
+$.info.text = instructions;
+
+
+/* Functions */
 	
 //validate form before inserting to database
 function doneBtn(e){
@@ -183,7 +199,7 @@ Ti.App.addEventListener('transectChange', function() {
 
 
 
-
+//TODO: review name field regexes to avoid user frustration in some manner
 // Head Surveyor
 $.srvyName.addEventListener('change', function(e) {
 	Ti.App.fireEvent('surveyorChange');
