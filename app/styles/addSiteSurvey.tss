@@ -3,21 +3,21 @@
 	backgroundColor:"white"
 },
 "Label": {
-	font: {fontSize: 24}
+	font: {fontSize: 20}
 },
 
 ".error": {
-	font: {fontSize: 20},
+	font: {fontSize: 14},
 	color: "Red"
 },
 
 "#parkLbl": {
-	left: 20,
+	left: 40,
 	top: 40,
 },
 "#parkSrch": {
 	left: 200,
-	right: 20,
+	right: 40,
 	top: 30
 },
 "#parkSrchError": {
@@ -26,12 +26,12 @@
 },
 
 "#biomeLbl": {
-	left: 20,
+	left: 40,
 	top: 100
 },
 "#pickBiome": {
 	left: 200,
-	right: 20,
+	right: 40,
 	top: 100
 },
 "#pickBiomeError": {
@@ -40,12 +40,12 @@
 },
 
 "#protocolLbl": {
-	left: 20,
+	left: 40,
 	top: 160
 },
 "#pickProtocol": {
 	left: 200,
-	right: 20,
+	right: 40,
 	top: 160
 },
 "#pickProtocolError": {
@@ -55,17 +55,15 @@
 
 "#line": {
 	height: 1,
-	top: 240,
+	top: 220,
 	left: 5,
 	right: 5,
 	borderWidth: 1,
 	borderColor:'#aaa',
 },
-
 "#info": {
-	left: 40,
-	right: 40,
-	top: 270,
-	font: {fontSize: 20, fontFamily: 'Helvetica Neue'}
+	left: 20,
+	right: 20,
+	top: 250,
+	font: {fontSize: 20, fontStyle: 'Italic'}
 }
-
