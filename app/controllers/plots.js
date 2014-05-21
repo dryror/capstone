@@ -29,13 +29,15 @@ function populateTable() {
 					title : plotName,
 					plotID : plotID,
 					height: 60,
-					font: {fontSize: 24}
+					font: {fontSize: 20}
 				});
 				
 				//create and add info icon for the row
 				var infoButton = Ti.UI.createButton({
 					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-					right : 10
+					right : 15,
+					height: 60,
+					width: 60
 				});
 				newRow.add(infoButton);
 				

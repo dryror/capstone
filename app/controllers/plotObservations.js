@@ -45,14 +45,14 @@ function populateTable() {
 				title : observation,
 				observationID : observationID,
 				height: 60,
-				font: {fontSize: 24}
+				font: {fontSize: 20}
 			});
 			
 			//add the ground cover label
 			var groundCoverLabel = Ti.UI.createLabel({
 				text: groundCover + '%',
-				right: 10,
-				font: {fontSize: 24}
+				right: 15,
+				font: {fontSize: 20}
 			});
 			newRow.add(groundCoverLabel);
 

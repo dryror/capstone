@@ -209,7 +209,7 @@ var win = Ti.UI.createWindow({
 	scrollable : true,
 	height: 330,
 	left : 200,
-	right : 20,
+	right : 40,
 	top : 135,
 	borderRadius : 0,
 	borderWidth: 3,
