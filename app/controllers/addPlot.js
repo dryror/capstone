@@ -221,6 +221,7 @@ $.pickStake.addEventListener('click', function(e) {
 		$.stakeDeviation.visible = false;
 		$.stakeDeviation.blur();
 		stakeOther = false;
+		$.stakeDeviation.value = "";
 	}	
 });
 
@@ -249,6 +250,7 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.distanceDeviation.visible = false;
 		$.distanceDeviation.blur();
 		distanceOther = false;
+		$.distanceDeviation.value = "";
 	}
 });
 
