@@ -8,26 +8,12 @@
 
 
 "Label": {
-	font: {fontSize: 24}
+	font: {fontSize: 20}
 },
 "TextField": {
-	font: {fontSize: 24}
+	font: {fontSize: 20}
 },
 
-// Resize nav button text? none of the below work.. neither does setting the font in .container - nav bar font might be static
-/*
-"Button": {
-	font: {fontSize: 36}
-},
-"LeftNavButton": {
-	font: {fontSize: 36}
-},
-"#doneBtn": {
-	font: {fontSize: 36}
-},
-*/
-
-//TODO: hard-coding positions seems wrong, a proportionate alignment would be ideal
 "#groundCoverLbl": {
 	left: 80,
 	top: 150
