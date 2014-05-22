@@ -165,6 +165,9 @@ $.tbl.addEventListener('delete', function(e) {
 	toggleEditBtn();
 });
 
+$.plotObservationsWin.addEventListener('close', function(e) {
+	Ti.App.fireEvent("app:refreshPlots");
+});
 
 /* Functions */
 
@@ -229,9 +232,10 @@ function toggleDoneBtn(){
 		$.done.enabled = true;
 	}
 }
-// TODO: handle done
+
+// Navigate back to plots
 function doneBtn(){
-	$.plotObservationsWin.close();	
+	$.plotObservationsWin.close();
 }
 
 //Navigation to addPlotObservation
