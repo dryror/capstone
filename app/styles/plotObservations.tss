@@ -27,6 +27,9 @@
 },
 
 // FooterView
+"#footerView": {
+	height:80
+},
 "#percentLbl": {
 	right: 110,
 	top: 10,

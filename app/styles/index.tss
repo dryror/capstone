@@ -21,6 +21,9 @@
 },
 
 //FooterView
+"#footerView": {
+	height:80
+}
 "#exportData": {
 	top: 10,
 	left: 20,
