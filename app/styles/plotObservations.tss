@@ -28,7 +28,7 @@
 
 // FooterView
 "#footerView": {
-	height:80
+	height:200
 },
 "#percentLbl": {
 	right: 110,
