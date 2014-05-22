@@ -6,7 +6,8 @@
 	font: {fontSize: 20}
 },
 "Button": {
-	font: {fontSize: 20}
+	font: {fontSize: 20},
+	//borderWidth:1
 },
 
 //HeaderView
@@ -40,7 +41,9 @@
 	verticalAlign: 2
 },
 "#done": {
-	right: 40,
-	top: 80,
+	right: 20,
+	top:80,
+	height: 60,
+	width: 80,
 	verticalAlign: 2
 }

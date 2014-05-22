@@ -71,6 +71,7 @@ function populateTable() {
 		db.close();
 		$.percent.text = totalPlotPercentage;
 		toggleEditBtn();
+		toggleDoneBtn();
 	}
 }
 
@@ -219,13 +220,18 @@ function showTotalRowNumber(){
 	return totalRows;
 }
 
+function toggleDoneBtn(){
+	if (totalPlotPercentage < 100) {
+		$.done.enabled = false;
+	} else if (totalPlotPercentage > 400) {
+		$.done.enabled = false;
+	} else {
+		$.done.enabled = true;
+	}
+}
 // TODO: handle done
 function doneBtn(){
-	if ( totalPlotPercentage >= 100 ) {
-		alert('You Clicked the Done Button w/ % >= 100');
-	} else {
-		alert('You Clicked the Done Button w/ % < 100');
-	}	
+	$.plotObservationsWin.close();	
 }
 
 //Navigation to addPlotObservation
