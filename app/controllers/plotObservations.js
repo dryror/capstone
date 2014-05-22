@@ -245,7 +245,7 @@ function doneBtn(){
 
 //Navigation to addPlotObservation
 function addBtn(){
-	var addObservation = Alloy.createController("addPlotObservation").getView();
+	var addObservation = Alloy.createController("addPlotObservation", {plotID: plotID}).getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addObservation);
 }
