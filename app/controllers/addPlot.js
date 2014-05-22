@@ -42,7 +42,7 @@ function doneBtn(e){
 	
 	if (photo == null) {
 		$.photoError.visible = true;
-		errorOnPage = true;
+		//errorOnPage = true;
 		Ti.API.info("No photo");
 	}
 	
@@ -73,6 +73,10 @@ function doneBtn(e){
 		}
 		plotDistance = $.distanceDeviation.value;
 	} 
+	
+	if ($.distanceOtherError.visible || $.stakeOtherError.visible) {
+		errorOnPage = true;
+	}
 	
 	if (errorOnPage) {
 		return;
