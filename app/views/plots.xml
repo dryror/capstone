@@ -1,13 +1,14 @@
 <Alloy>
 	<Window class="container" title="Plots" id="plotsWin">
 		<RightNavButton>
-			<Button id="editSite" title="Edit" onClick="editBtn"/>
+			<Button id="editPlot" title="Edit" onClick="editBtn"/>
 		</RightNavButton>
 		
 		<TableView class="table" id="tbl">
 			<HeaderView id="mainHeader">
 				<View id="headerView">
-					<Button id="addSite" title="Add" onClick="addBtn"/>
+					<Button id="addPlot" title="Add" onClick="addBtn"/>
+					<Label id="addPlotError" class="error" visible="false" text=""/>
 				</View>
 			</HeaderView>
 			<!--Placeholder row for testing screens-->
