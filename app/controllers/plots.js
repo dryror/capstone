@@ -4,6 +4,7 @@
 var args = arguments[0];
 var transectID = args.transectID;
 $.tbl.transectID = transectID;
+var siteID = args.siteID;
 
 populateTable();
 toggleAddBtn();
@@ -79,13 +80,51 @@ $.tbl.addEventListener('delete', function(e) {
 	try{
 		//open database
 		var db = Ti.Database.open('ltemaDB');
+
+		//GET FOLDER NAME - Retrieve site survery, year, park
+		var rows = db.execute('SELECT year, protocol_name, park_name \
+							FROM site_survey s, protocol p, park prk \
+							WHERE s.protocol_id = p.protocol_id \
+							AND s.park_id = prk.park_id \
+							AND site_id = ?', siteID);
+							
+		//Name the directory	
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+		
+		var folder = year + ' - ' + protocolName + ' - ' + parkName;
+		
+		//delete associated media files
+		var plotFiles = db.execute('SELECT media_name \
+												FROM media m, plot p \
+												WHERE m.media_id = p.media_id \
+												AND p.plot_id = ? ', currentPlotID);
+		
+		var fileName = plotFiles.fieldByName('media_name');
+		deleteImage(fileName, folder);
+		
+		var plotObservationFiles = db.execute('SELECT media_name \
+												FROM media m, plot_observation po \
+												WHERE m.media_id = po.media_id \
+												AND po.plot_id = ? ', currentPlotID);
+		
+		while (plotObservationFiles.isValidRow()) {
+			var fileName = plotObservationFiles.fieldByName('media_name');
+			deleteImage(fileName, folder);
+			plotObservationFiles.next();
+		}
 		
 		//delete current row from the database
 		db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
+		
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
+		//rows.close();
+		//plotFiles.close();
+		//plotObservationFiles.close();
 		db.close();
 		toggleEditBtn();
 	}
@@ -263,3 +302,17 @@ function showTotalRowNumber(){
 	return totalRows;
 }
 
+// Delete a file from the application data directory
+function deleteImage(fileName, folderName) {
+	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
+	
+	if (imageDir.exists()) {		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), fileName);
+		if (imageFile.exists()) {
+			imageFile.deleteFile();
+		}else{
+			alert("NO IMAGE FOUND");
+		}
+	}
+}
