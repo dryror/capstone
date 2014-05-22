@@ -105,17 +105,30 @@ $.tbl.addEventListener('click', function(e){
 $.tbl.addEventListener('delete', function(e) { 
 	//get the site_id of the current row being deleted
 	var currentTransectID = e.rowData.transectID;
-	
+	var siteID = $.tbl.siteID;
 	try {
 		//open database
 		var db = Ti.Database.open('ltemaDB');
+		
+		//GET FOLDER NAME - Retrieve site survery, year, park
+		var rows = db.execute('SELECT year, protocol_name, park_name \
+							FROM site_survey s, protocol p, park prk \
+							WHERE s.protocol_id = p.protocol_id \
+							AND s.park_id = prk.park_id \
+							AND site_id = ?', siteID);
+							
+		//Name the directory	
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+		
+		var folder = year + ' - ' + protocolName + ' - ' + parkName;
 		
 		// find any associated transect pictures and delete them
 		var transectFiles = db.execute('SELECT med.media_name FROM media med, transect tct \
 								WHERE med.media_id = tct.media_id \
 								AND tct.transect_id = ?', currentTransectID);
 		
-		var folder = e.rowData.title;
 		while (transectFiles.isValidRow()) {
 			var fileName = transectFiles.fieldByName('media_name');
 			deleteImage(fileName, folder);
