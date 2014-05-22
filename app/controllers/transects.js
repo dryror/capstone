@@ -95,7 +95,7 @@ $.tbl.addEventListener('click', function(e){
 		});
 	//row clicked, get transect view
 	} else {
-		var plots = Alloy.createController("plots", {transectID:e.rowData.transectID}).getView();
+		var plots = Alloy.createController("plots", {transectID:e.rowData.transectID, siteID:$.tbl.siteID}).getView();
 		var nav = Alloy.Globals.navMenu;
 		nav.openWindow(plots);
 	}
