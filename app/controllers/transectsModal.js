@@ -40,7 +40,7 @@ try {
 	} else if (stakeOrientation === "Top Right / Bottom Left") {
 		$.stakeBar.index = 1;
 	} else {
-		alert('please set the stake orientation');
+		//alert('please set the stake orientation');
 	}
 } catch (e) {
 	var errorMessage = e.message;
