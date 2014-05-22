@@ -226,10 +226,15 @@ function showTotalRowNumber(){
 function toggleDoneBtn(){
 	if (totalPlotPercentage < 100) {
 		$.done.enabled = false;
+		$.doneError.text = "Ground cover must be at least 100%"
+		$.doneError.visible = true;
 	} else if (totalPlotPercentage > 400) {
 		$.done.enabled = false;
+		$.doneError.text = "Ground cover must be no greater than 400%"
+		$.doneError.visible = true;
 	} else {
 		$.done.enabled = true;
+		$.doneError.visible = false;
 	}
 }
 

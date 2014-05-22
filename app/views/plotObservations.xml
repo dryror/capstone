@@ -17,6 +17,7 @@
 					<Label id="percent" text="squirrel!"/>
 					<Label id="percentSymbol" text="%" />
 					<Button id="done" title="Done" onClick="doneBtn" />
+					<Label id="doneError" class="error" />
 				</View>
 			</FooterView>
 		</TableView>

@@ -2,6 +2,11 @@
 	backgroundColor:"white"
 },
 
+".error": {
+	font: {fontSize: 16},
+	color: "Gray"
+},
+
 "Label": {
 	font: {fontSize: 20}
 },
@@ -46,4 +51,8 @@
 	height: 60,
 	width: 80,
 	verticalAlign: 2
+},
+"#doneError": {
+	right: 20,
+	top: 160,
 }
