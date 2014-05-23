@@ -107,24 +107,31 @@ $.parkSrch.addEventListener('blur', function(e) {
 /* Functions */
 
 //Test for form completeness before adding to database
-function doneBtn(){	
+function doneBtn(){
+	var errorFlag = false;
 	if (($.parkSrch.value == null) || ($.parkSrch.value == "")) {
 		$.parkSrchError.text = "Please select a park";
 		$.parkSrchError.visible = true;
-		return;
-	}else if ($.pickBiome.index == null) {
+		errorFlag = true;
+	}
+	if ($.pickBiome.index == null) {
 		$.pickBiomeError.text = "Please select a biome";
 		$.pickBiomeError.visible = true;
-		return;
-	}else if (($.pickProtocol.index == null) || ($.pickProtocol.index == -1)) {
+		errorFlag - true;
+	}
+	if (($.pickProtocol.index == null) || ($.pickProtocol.index == -1)) {
 		$.pickProtocolError.text = "Please select a protocol";
 		$.pickProtocolError.visible = true;
-		return;
+		errorFlag = true;
 	} else if (($.pickProtocol.labels[$.pickProtocol.index].title !== "Alpine") && ($.pickProtocol.labels[$.pickProtocol.index].title !== "Grassland")) {
 		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
 		$.pickProtocolError.visible = true;
+		errorFlag = true;
+	}
+	
+	if (errorFlag === true) {
 		return;
-	} else {
+	} else if (errorFlag === false) {
 		$.parkSrchError.visible = false;
 		$.pickBiomeError.visible = false;
 		$.pickProtocolError.visible = false;
@@ -244,6 +251,8 @@ function doneBtn(){
 			db.close();
 			$.addSiteSurveyWin.close();
 		}
+	} else {
+		alert ('this error should never happen, ever.');
 	}
 }
 
