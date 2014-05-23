@@ -1,6 +1,9 @@
 ".container": {
 	backgroundColor:"white"
 },
+".error": {
+	color: "red"
+},
 "Label": {
 	font: {fontSize: 20}
 },

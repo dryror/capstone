@@ -31,7 +31,22 @@ function doneBtn(e){
 	// Check for errors on page
 	var errorOnPage = false;
 	
-	//TODO: Check for errors
+	// Check for errors
+	if ($.pickType.index == null) {
+		$.pickTypeError.visible = true;
+		errorOnPage = true;
+	}
+	
+	if ($.observation.value == "") {
+		$.observationError.visible = true;
+		errorOnPage = true;
+	}
+	
+	if ($.percent.value == "") {
+		// TODO: make sure entry conforms to business rules
+		$.percentError.visible = true;
+		errorOnPage = true;
+	}
 	
 	if (errorOnPage) {
 		return;
@@ -49,7 +64,7 @@ function doneBtn(e){
 		count = 1;
 		comments = $.comments.value;
 		//TODO: Check if observation is a scientific name or common name
-		// if it is, set the species_code field TODO get the species_code field added to db
+		// If it is, set the species_code field to be the species code
 		speciesCode = $.observation.value;
 		
 	} else {
@@ -178,3 +193,27 @@ function savePhoto(photo){
 		return path;
 	}	
 }
+
+// Event listeners
+
+$.pickType.addEventListener('click', function(e) {
+	$.pickTypeError.visible = false;
+});
+
+$.observation.addEventListener('change', function(e) {
+	if ($.observation.value == "") {
+		$.observationError.visible = true;
+	} else {
+		$.observationError.visible = false;
+	}
+});
+
+$.percent.addEventListener('change', function(e) {
+	//TODO: only allow input as per business rules
+	
+	if ($.percent.value == "") {
+		$.percentError.visible = true;	
+	} else {
+		$.percentError.visible = false;
+	}
+});

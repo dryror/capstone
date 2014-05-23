@@ -12,15 +12,15 @@
 					<Label text="other">Other</Label>
 				</Labels>         
 			</TabbedBar>
-			<Label id="pickTypeError" visible="false" text="* Please select observation type" />
+			<Label id="pickTypeError" class="error" visible="false" text="* Please select observation type" />
 			
 			<Label id="observationLbl" text="Observation:" />
 			<TextField id="observation" />
-			<Label id="observationError" visible="false" text="* Please enter observation" />
+			<Label id="observationError" class="error" visible="false" text="* Please enter observation" />
 			
 			<Label id="percentLbl" text="Percent Coverage:" />
 			<TextField id="percent" />
-			<Label id="percentError" visible="false" text="* Please enter percent coverage" />
+			<Label id="percentError" class="error" visible="false" text="* Please enter percent coverage" />
 			
 			<Label id="commentLbl" text="Comments:" />
 			<TextField id="comments" />
