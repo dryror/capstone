@@ -148,8 +148,6 @@ $.tbl.addEventListener('delete', function(e) {
 		
 		var siteID = result.fieldByName('site_id');
 		
-		Ti.API.info(siteID);
-		
 		// Get the directory name
 		var rows = db.execute('SELECT year, protocol_name, park_name \
 							FROM site_survey s, protocol p, park prk \
@@ -164,23 +162,19 @@ $.tbl.addEventListener('delete', function(e) {
 		
 		var folder = year + ' - ' + protocolName + ' - ' + parkName;
 		
-		Ti.API.info(folder);
-		
-		db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
-		
 		//delete associated media files
 		var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
 										WHERE med.media_id = pob.media_id \
 										AND pob.observation_id = ?', observationID);
-		Ti.API.info(observationID);
 		
-		while (observationFiles.isValidRow()) {
-			Ti.API.info("hit");
+		while(observationFiles.isValidRow()) {
 			var fileName = observationFiles.fieldByName('media_name');
-			Ti.API.info(fileName);
 			deleteImage(fileName, folder);
 			observationFiles.next();
 		}
+		
+		db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
+		
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});

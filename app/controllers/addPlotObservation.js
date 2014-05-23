@@ -75,8 +75,6 @@ function doneBtn(e){
 			//add photo name to media table
 			db.execute( 'INSERT INTO media (media_name) VALUES (?)', photoName);
 			
-			Ti.API.info(photoName);
-			
 			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
 			var results = db.execute('SELECT last_insert_rowid() as mediaID');
 			mediaID = results.fieldByName('mediaID');			
@@ -95,8 +93,6 @@ function doneBtn(e){
 	try{
 		//Connect to database
 		var db = Ti.Database.open('ltemaDB');
-		
-		Ti.API.info(mediaID);
 		
 		db.execute('INSERT INTO plot_observation (observation, ground_cover, count, comments, plot_id, media_id, species_code) \
 				VALUES (?,?,?,?,?,?,?)', observation, percentCoverage, count, comments, plotID, mediaID, speciesCode);
@@ -160,8 +156,6 @@ function savePhoto(photo){
 	//name the photo  (timestamp - utc in ms)
 	var timestamp = new Date().getTime();
 	var filename = "O" + timestamp;
-	
-	Ti.API.info(filename);
 	
 	try {
 		// Create image Directory for site
