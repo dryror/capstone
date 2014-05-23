@@ -103,7 +103,8 @@ function doneBtn(e){
 					$.numberLbl.text, utmZone, utmEasting, utmNorthing, utc, stakeOrientation, plotDistance, comments, transectID, mediaID);
 					
 	}catch(e){
-		Ti.API.error(e.toString());
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	}finally{	
 		//close the result set
 		results.close();	
