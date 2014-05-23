@@ -39,7 +39,7 @@ function getPhoto(callback) {
 			}
 			a.show();
 		},
-		saveToPhotoGallery : true,
+		saveToPhotoGallery : false,
 		allowEditing : false,
 		mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO]
 	});
