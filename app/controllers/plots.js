@@ -151,6 +151,12 @@ function populateTable() {
 			var plotID = rows.fieldByName('plot_id');
 			var plotName = rows.fieldByName('plot_name');
 			
+			var groundCoverRows = db.execute('SELECT sum(ground_cover) \
+											FROM plot_observation \
+											WHERE plot_id = ?', plotID);
+							
+			var totalGroundCover = groundCoverRows.fieldByName('sum(ground_cover)');
+			
 			//create a new row
 				var newRow = Ti.UI.createTableViewRow({
 					title : plotName,
@@ -158,6 +164,14 @@ function populateTable() {
 					height: 60,
 					font: {fontSize: 20}
 				});
+				
+			//add the total ground cover label
+				var groundCoverLabel = Ti.UI.createLabel({
+					text: totalGroundCover + '%',
+					right: 55,
+					font: {fontSize: 20}
+				});
+				newRow.add(groundCoverLabel);
 				
 				//create and add info icon for the row
 				var infoButton = Ti.UI.createButton({
