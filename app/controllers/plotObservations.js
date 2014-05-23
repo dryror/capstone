@@ -12,7 +12,7 @@ var plotID = args.plotID;
 $.tbl.plotID = plotID;
 
 var totalPlotPercentage = 0;
-
+var transectID;
 
 populateTable();
 
@@ -141,15 +141,43 @@ $.tbl.addEventListener('delete', function(e) {
 	try {
 		//delete from database
 		var db = Ti.Database.open('ltemaDB');
-		var row = db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
+		
+		// Get the site id
+		var result = db.execute('SELECT site_id FROM transect \
+								WHERE transect_id = ?', transectID);
+		
+		var siteID = result.fieldByName('site_id');
+		
+		Ti.API.info(siteID);
+		
+		// Get the directory name
+		var rows = db.execute('SELECT year, protocol_name, park_name \
+							FROM site_survey s, protocol p, park prk \
+							WHERE s.protocol_id = p.protocol_id \
+							AND s.park_id = prk.park_id \
+							AND site_id = ?', siteID);
+							
+		//Name the directory	
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+		
+		var folder = year + ' - ' + protocolName + ' - ' + parkName;
+		
+		Ti.API.info(folder);
+		
+		db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
 		
 		//delete associated media files
 		var observationFiles = db.execute('SELECT med.media_name FROM media med, plot_observation pob \
 										WHERE med.media_id = pob.media_id \
 										AND pob.observation_id = ?', observationID);
+		Ti.API.info(observationID);
 		
 		while (observationFiles.isValidRow()) {
+			Ti.API.info("hit");
 			var fileName = observationFiles.fieldByName('media_name');
+			Ti.API.info(fileName);
 			deleteImage(fileName, folder);
 			observationFiles.next();
 		}
@@ -157,6 +185,8 @@ $.tbl.addEventListener('delete', function(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
+		result.close();
+		rows.close();
 		observationFiles.close();
 		db.close();
 		populateTable();
@@ -256,7 +286,7 @@ function insertPreviousPlotRows() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//what transect does this screen's plot belong to?
-		var transectID;
+		
 		transectResult = db.execute('SELECT transect_id FROM plot WHERE plot_id = ?', args.plotID);
 		transectID = transectResult.fieldByName('transect_id');
 		
@@ -333,3 +363,15 @@ function insertPreviousPlotRows() {
 	}
 }
 
+// Delete a file from the application data directory
+function deleteImage(fileName, folderName) {
+	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
+	
+	if (imageDir.exists()) {		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), fileName);
+		if (imageFile.exists()) {
+			imageFile.deleteFile();
+		}
+	}
+}

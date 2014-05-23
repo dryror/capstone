@@ -12,7 +12,7 @@
 },
 
 
-"#observationLbl": {
+"#observationTypeLbl": {
 	left: 40,
 	top: 40
 },
@@ -71,9 +71,16 @@
 	left: 40,
 	top: 280,
 },
+"#plotThumbnail": {
+	width: 64,
+	height: 64,
+	left: 220,
+	top: 280,
+	borderRadius: 10
+},
 
 "#info": {
 	left: 40,
 	right: 40,
-	top: 340
+	top: 380
 }

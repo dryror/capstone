@@ -5,7 +5,7 @@
 		</RightNavButton>
 		
 		<View id="formView">
-			<Label id="observationLbl" text="Observation Type:" />
+			<Label id="observationTypeLbl" text="Observation Type:" />
 			<TabbedBar id="pickType">         
 				<Labels>
 					<Label text="plant">Plant</Label>

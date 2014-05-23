@@ -2,8 +2,26 @@
 var args = arguments[0];
 var plotID = args.plotID;
 
+// Get the siteID
+var siteID;
+try{
+	var db = Ti.Database.open('ltemaDB');
+	
+	var rows = db.execute('SELECT tct.site_id FROM transect tct, plot plt \
+							WHERE tct.transect_id = plt.transect_id \
+							AND plt.plot_id = ?', plotID);
+	
+	siteID = rows.fieldByName('site_id');
+} catch(e) {
+	var errorMessage = e.message;
+	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+} finally {
+	rows.close();
+	db.close();
+}
+
 // Initialize Variables
-var photo;
+var photo = null;
 
 function doneBtn(e){
 	//disable button for 1 second to prevent double entry
@@ -57,6 +75,8 @@ function doneBtn(e){
 			//add photo name to media table
 			db.execute( 'INSERT INTO media (media_name) VALUES (?)', photoName);
 			
+			Ti.API.info(photoName);
+			
 			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
 			var results = db.execute('SELECT last_insert_rowid() as mediaID');
 			mediaID = results.fieldByName('mediaID');			
@@ -76,8 +96,10 @@ function doneBtn(e){
 		//Connect to database
 		var db = Ti.Database.open('ltemaDB');
 		
-		db.execute('INSERT INTO plot_observation (observation, ground_cover, count, comments, plot_id, media_id) \
-				VALUES (?,?,?,?,?,?)', observation, percentCoverage, count, comments, plotID, mediaID);
+		Ti.API.info(mediaID);
+		
+		db.execute('INSERT INTO plot_observation (observation, ground_cover, count, comments, plot_id, media_id, species_code) \
+				VALUES (?,?,?,?,?,?,?)', observation, percentCoverage, count, comments, plotID, mediaID, speciesCode);
 					
 	}catch(e){
 		var errorMessage = e.message;
@@ -138,6 +160,8 @@ function savePhoto(photo){
 	//name the photo  (timestamp - utc in ms)
 	var timestamp = new Date().getTime();
 	var filename = "O" + timestamp;
+	
+	Ti.API.info(filename);
 	
 	try {
 		// Create image Directory for site
