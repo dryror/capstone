@@ -21,16 +21,24 @@
 	right: 40,
 	top: 40
 },
+"#pickTypeError": {
+	left: 225,
+	top: 70
+},
 
-"#speciesLbl": {
+"#observationLbl": {
 	left: 40,
 	top: 100
 },
-"#species": {
+"#observation": {
 	left: 220,
 	right: 40,
-	top:100,
+	top: 100,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+"#observationError": {
+	left: 225,
+	top: 130
 },
 
 "#percentLbl": {
@@ -43,6 +51,10 @@
 	top: 160,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	keyboardType:Titanium.UI.KEYBOARD_NUMBER_PAD
+},
+"#percentError": {
+	left: 225,
+	top: 190
 },
 
 "#commentLbl": {
