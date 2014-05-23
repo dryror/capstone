@@ -148,8 +148,10 @@ function LatLngToUTMRef(latitude, longitude, callback) {
   var UTMEasting = Math.round(UTMEasting);
   var UTMNorthing = Math.round(UTMNorthing);
   
-  var n_UTMZone = longitudeZone + UTMZone; 
-  callback(UTMEasting, UTMNorthing, n_UTMZone);
+  //add utm zone letter
+  	//var n_UTMZone = longitudeZone + UTMZone; 
+  
+  callback(UTMEasting, UTMNorthing, longitudeZone);
   //return "UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + UTMZone + "\nlongitudeZone: " + longitudeZone;
 }
 
