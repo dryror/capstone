@@ -149,7 +149,6 @@ function populateTable() {
 		
 		//Get requested data from each row in table
 		while (rows.isValidRow()) {	
-			//totalGroundCover = 0;
 			var plotID = rows.fieldByName('plot_id');
 			var plotName = rows.fieldByName('plot_name');
 			
@@ -188,6 +187,11 @@ function populateTable() {
 					width: 60
 				});
 				newRow.add(infoButton);
+				
+				//change label colour if total ground cover is less than 100%
+				if (totalGroundCover < 100) {
+					 newRow.color = "red";
+				}
 				
 				//Add row to the table view
 				$.tbl.appendRow(newRow);
@@ -243,7 +247,7 @@ function toggleAddBtn(){
 	        if($.tbl.data[0].rows[i].totalGroundCover < 100){
 	        	//disable add plot button
 	        	incompletePlotCount += 1;	
-				$.tbl.data[0].rows[i].color = "red";
+				//$.tbl.data[0].rows[i].color = "red";
 	        }
 	    }
 	 }  
