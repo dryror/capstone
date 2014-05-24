@@ -178,8 +178,14 @@ function makeCSV() {
 		for (var plot in results[transect]) {
 			// CSV for Sample Station output
 			if (results[transect][plot].plot_id != null) {
+				
 				sampleStationTxt += dq + results[transect].park_name + dq + c;
-				sampleStationTxt += dq + results[transect].transect_name + " ";
+				var ssTransectName = results[transect].transect_name;
+				if (ssTransectName != null) {
+					ssTransectName = ssTransectName.replace(/\"/g, "");
+				}
+				sampleStationTxt += dq + ssTransectName + " ";
+				
 				sampleStationTxt += results[transect][plot].plot_name + dq + c;
 				sampleStationTxt += dq + results[transect][plot].utm_zone + dq + c;
 				sampleStationTxt += dq + results[transect][plot].utm_easting + dq + c;
@@ -201,13 +207,36 @@ function makeCSV() {
 					
 					// CSV for General Survey output
 					generalSurveyTxt += dq + results[transect].park_name + dq + c;
-					generalSurveyTxt += dq + results[transect].transect_name + " ";
+					
+					var gsTransectName = results[transect].transect_name;
+					if (gsTransectName != null) {
+						gsTransectName = gsTransectName.replace(/\"/g, "");
+					}
+					generalSurveyTxt += dq + gsTransectName + " ";
+					
 					generalSurveyTxt += results[transect][plot].plot_name + dq + c;
 					generalSurveyTxt += plotDate + c + plotTime + c + c;
-					generalSurveyTxt += dq + results[transect].surveyor + dq + c;
-					generalSurveyTxt += dq + results[transect][plot][observation].species_code + dq + c;
+					
+					var surveyor = results[transect].surveyor;
+					if (surveyor != null) {
+						surveyor = surveyor.replace(/\"/g, "");
+					}
+					generalSurveyTxt += dq + surveyor + dq + c;
+					
+					var speciesCode = results[transect][plot][observation].species_code;
+					if (speciesCode != null) {
+						speciesCode = speciesCode.replace(/\"/g, "");
+					}
+					generalSurveyTxt += dq + speciesCode + dq + c;
+					
 					generalSurveyTxt += dq + results[transect][plot][observation].count + dq + c + c + c + c;
-					generalSurveyTxt += dq + results[transect][plot][observation].comments + dq + c;
+					
+					var comments = results[transect][plot][observation].comments;
+					if (comments != null) {
+						comments = comments.replace(/\"/g, "");
+					}
+					generalSurveyTxt += dq + comments + dq + c;
+					
 					generalSurveyTxt += dq + results[transect][plot][observation].ground_cover + dq + c;
 					generalSurveyTxt += dq + results[transect][plot][observation].observation_photo + dq + nl;
 				}					
