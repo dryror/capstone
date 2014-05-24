@@ -325,8 +325,6 @@ function deleteImage(fileName, folderName) {
 		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), fileName);
 		if (imageFile.exists()) {
 			imageFile.deleteFile();
-		}else{
-			alert("NO IMAGE FOUND");
 		}
 	}
 }
