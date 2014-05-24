@@ -132,9 +132,10 @@ function makeCSV() {
 		
 		// Get the plot observations for the plots
 		var pids = '(' + plotIDs + ')';
-		var plotObservations = db.execute('SELECT pob.observation_id, pob.observation, pob."count", pob.comments, pob.plot_id, pob.ground_cover, med.media_name AS observation_photo \
-			FROM plot_observation pob, media med \
-			WHERE pob.media_id = med.media_id AND \
+		var plotObservations = db.execute('SELECT pob.observation_id, pob.species_code, pob."count", pob.comments, pob.plot_id, pob.ground_cover, med.media_name AS observation_photo \
+			FROM plot_observation pob \
+			LEFT JOIN media med \
+			ON pob.media_id = med.media_id AND \
 			pob.plot_id IN '+ pids);
 		
 		fieldCount = plotObservations.fieldCount();	
@@ -204,7 +205,7 @@ function makeCSV() {
 					generalSurveyTxt += results[transect][plot].plot_name + dq + c;
 					generalSurveyTxt += plotDate + c + plotTime + c + c;
 					generalSurveyTxt += dq + results[transect].surveyor + dq + c;
-					generalSurveyTxt += dq + results[transect][plot][observation].observation + dq + c;
+					generalSurveyTxt += dq + results[transect][plot][observation].species_code + dq + c;
 					generalSurveyTxt += dq + results[transect][plot][observation].count + dq + c + c + c + c;
 					generalSurveyTxt += dq + results[transect][plot][observation].comments + dq + c;
 					generalSurveyTxt += dq + results[transect][plot][observation].ground_cover + dq + c;
