@@ -66,10 +66,45 @@ function doneBtn(e){
 		// Plant is selected
 		count = 1;
 		comments = $.comments.value;
-		//TODO: Check if observation is a scientific name or common name
-		// If it is, set the species_code field to be the species code
-		speciesCode = $.observation.value;
-		
+		// Check if observation is a scientific name or english
+		try {
+			var db = Ti.Database.install('/taxonomy.sqlite', 'taxonomy');
+			var rsScientific = db.execute('SELECT s.species_code, g.genus_name || " " || s.species_name AS scientific_name \
+								FROM species s, genus g \
+								WHERE s.genus_id = g.genus_id \
+								AND UPPER(scientific_name) = UPPER(?) \
+								LIMIT 1', observation);
+			
+			var rsEnglish = db.execute('SELECT species_code, english_name \
+										FROM species \
+										WHERE UPPER(english_name) = UPPER(?) \
+										LIMIT 1', observation);
+						
+			if (rsScientific.isValidRow()) {
+				scientificName = rsScientific.fieldByName('scientific_name');
+				Ti.API.info(scientificName);
+				if (scientificName != null) {
+					speciesCode = rsScientific.fieldByName('species_code');
+					Ti.API.info(speciesCode);
+				}
+				rsScientific.close();
+			} else if (rsEnglish.isValidRow()) {
+				englishName = rsEnglish.fieldByName('english_name');
+				if (englishName != null) {
+					speciesCode = rsEnglish.fieldByName('species_code');
+					Ti.API.info(speciesCode);
+				}
+				rsEnglish.close();
+			} else {
+				speciesCode = $.observation.value;
+			}
+			
+		} catch(e) {
+			var errorMessage = e.message;
+			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+		} finally {
+			db.close();
+		}
 	} else {
 		// Other is selected
 		count = 0;
