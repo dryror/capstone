@@ -43,8 +43,11 @@ function doneBtn(e){
 	}
 	
 	if ($.percent.value == "") {
-		// TODO: make sure entry conforms to business rules
 		$.percentError.visible = true;
+		errorOnPage = true;
+	}
+	
+	if ($.percentError.visible) {
 		errorOnPage = true;
 	}
 	
@@ -209,10 +212,16 @@ $.observation.addEventListener('change', function(e) {
 });
 
 $.percent.addEventListener('change', function(e) {
-	//TODO: only allow input as per business rules
+	var theField = $.percent.value;
+	var match = /^((0{0,2}\.[1,2,5]0?)|(0?\d{1,2})|(0?100))$/;
 	
 	if ($.percent.value == "") {
-		$.percentError.visible = true;	
+		$.percentError.visible = true;
+		$.percentError.text = "* Please enter percent coverage";
+		return;
+	} else if (!theField.match(match)) {
+		$.percentError.text = "* Not a valid ground cover percentage";
+		$.percentError.visible = true;
 	} else {
 		$.percentError.visible = false;
 	}
