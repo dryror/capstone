@@ -122,6 +122,14 @@ Ti.App.addEventListener("app:refreshPlotObservations", function(e) {
 	populateTable();
 });
 
+// Replaces 'onClick' for the add button, addresses issue #35 
+$.addObservation.addEventListener('singletap', function (e) { 
+	addBtn();
+});
+$.addObservation.addEventListener('longclick', function (e) {
+	addBtn();
+});
+
 // Row click event listener
 $.tbl.addEventListener('click', function(e){
 	var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();

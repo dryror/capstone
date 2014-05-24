@@ -14,25 +14,40 @@
 	font: {fontSize: 20}
 },
 
+//giving the next 3 ID's identical height and verticalAlign attributes lines the row up nicely
 "#groundCoverLbl": {
-	left: 80,
-	top: 150
+	left: 120,
+	top: 150,
+	height: 30,
+	verticalAlign: 1
 },
 "#groundCover": {
-	left: 260,
-	right: 130,
+	left: 275,
+	right: 155,
 	top: 150,
 	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 	maxLength:5,
 	textAlign: 1,  	//http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.UI-property-TEXT_ALIGNMENT_CENTER
-	keyboardType:Ti.UI.KEYBOARD_NUMBER_PAD
+	keyboardType:Ti.UI.KEYBOARD_NUMBER_PAD,
+	height: 30,
+	verticalAlign: 1
 },
 "#percentSymbolLabel": {
 	text: "%",
-	right: 100,
-	top: 150
-}
+	right: 120,
+	top: 150,
+	height: 30,
+	verticalAlign: 1
+},
+
 "#groundCoverError": {
-	left: 225,
-	top: 150
+	left: 150,
+	top: 185
+},
+
+"#userInstructions": {
+	left: 150,
+	top: 270,
+	color: 'Gray',
+	font: {fontSize: 16}
 }

@@ -11,11 +11,9 @@ var title = args.title;
 //Query the database, assign returned ground cover to TextField
 try {
 	var db = Ti.Database.open('ltemaDB');
-	
 	resultRow = db.execute(	'SELECT ground_cover \
 						FROM plot_observation \
 						WHERE observation_id = ?', observationID);
-						
 	var groundCover = resultRow.fieldByName('ground_cover');
 	$.groundCover.value = groundCover;
 } catch (e) {
@@ -26,7 +24,7 @@ try {
 	db.close();
 }
 
-//Custom font modal title
+//Custom screen title
 var titleLabel = Titanium.UI.createLabel({
 	text:title,
 	font:{fontSize:20,fontWeight:'bold'}
@@ -35,31 +33,36 @@ var titleLabel = Titanium.UI.createLabel({
 //Assign view labels
 $.modalWin.setTitleControl(titleLabel);
 $.groundCover.text = groundCover;
-
-
-// Initially disable Done button until a change is made
-$.doneBtn.enabled = false;
-
+$.userInstructions.text = 
+	"Allowed percentages:\n" +
+	"0.1%, 0.2%, 0.5%,\n" +
+	"or any integer between 0 and 100";
 
 
 /* Listeners */
 
-//TODO: implement 'change' event listeners to validate input
-
+// User feedback/validation on each key press
+$.groundCover.addEventListener('change', function (e) {
+	var theField = $.groundCover.value;
+	var match = /^((0{0,2}\.[1,2,5]0?)|(0?\d{1,2})|(0?100))$/;
+	
+	if (!theField.match(match)) {
+		$.groundCoverError.text = "Not a valid ground cover percentage";
+		$.groundCoverError.visible = true;
+		$.doneBtn.enabled = false;
+	} else {
+		$.groundCoverError.visible = false;
+		$.doneBtn.enabled = true;
+	}
+});
 
 // Make keyboard appear when opening nav window (needs the event listener to work)
 $.modalNav.addEventListener("open", function(e) {
-	
 	$.groundCover.focus();
-	
-	//outside of 'open', change is fired, enabling 'Done' on load
-	$.groundCover.addEventListener ("change", function(e) {
-		$.doneBtn.enabled = true;
-	});
-	
+	$.doneBtn.enabled = false;  //initially disable Done button until a change is made
 });
 
-// Keyboard 'return' key press
+// The keyboard's return key acts like the Done button
 $.groundCover.addEventListener ("return", function(e) {
 	doneBtnClick();
 });
@@ -67,10 +70,12 @@ $.groundCover.addEventListener ("return", function(e) {
 
 /* Functions */
 
+// Valid inputs get saved to the database and this screen closes.
 function doneBtnClick(){
-	
-	//TODO: check for error labels before updating db
-	
+	if ($.groundCoverError.visible === true) {
+		$.groundCover.focus();  //keep the field's input focus
+		return;
+	}
 	try {
 		var db = Ti.Database.open('ltemaDB');
 		db.execute( 'UPDATE plot_observation \
@@ -81,12 +86,13 @@ function doneBtnClick(){
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
 		db.close();
-		Ti.App.fireEvent("app:refreshPlotObservations");
 		$.modalNav.close();
+		Ti.App.fireEvent("app:refreshPlotObservations");
 	}
 }
 
+// Exit this screen without saving
 function cancelBtnClick(){
-	//Ti.App.fireEvent("app:refreshPlotObservations");
 	$.modalNav.close();
 }
+
