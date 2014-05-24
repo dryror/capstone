@@ -157,9 +157,11 @@ function toggleEditBtn(){
 		$.editSite.title = "Edit";
 		$.addSite.enabled = true;
 		$.tbl.editing = false;
+		$.exportData.enabled = false;
 	}else{
 		//enable Edit Button
 		$.editSite.enabled = true;
+		$.exportData.enabled = true;
 	}
 }
 
