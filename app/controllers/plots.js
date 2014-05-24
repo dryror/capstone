@@ -134,6 +134,7 @@ $.tbl.addEventListener('delete', function(e) {
 /* Functions */
 
 function populateTable() {
+	
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
@@ -148,6 +149,7 @@ function populateTable() {
 		
 		//Get requested data from each row in table
 		while (rows.isValidRow()) {	
+			//totalGroundCover = 0;
 			var plotID = rows.fieldByName('plot_id');
 			var plotName = rows.fieldByName('plot_name');
 			
@@ -166,7 +168,8 @@ function populateTable() {
 					title : plotName,
 					plotID : plotID,
 					height: 60,
-					font: {fontSize: 20}
+					font: {fontSize: 20},
+					totalGroundCover: totalGroundCover
 				});
 				
 			//add the total ground cover label
@@ -188,7 +191,7 @@ function populateTable() {
 				
 				//Add row to the table view
 				$.tbl.appendRow(newRow);
-		
+			
 			rows.next();
 		}
 	} catch(e){
@@ -230,65 +233,31 @@ function addBtn(){
 	nav.openWindow(addPlot);
 }		
 
+//ADD BUTTON TOGGLE
 function toggleAddBtn(){
+	var incompletePlotCount = 0;
 	//check if any rows exists
 	if(showTotalRowNumber() > 0){
-		
-		//get the total ground cover of the last plot entry and name
-		var totalGroundCover = getTotalGroundCover().totalGroundCover;
-		var lastPlotEntryName = getTotalGroundCover().lastPlotEntryName;
-		
-			//check the total ground cover of last plot entry
-			if(totalGroundCover < 100){
-				//show error message
-				var addErrorMessage = "* " + lastPlotEntryName + "'s " + "Total Ground Coverage is less than 100%";
-				$.addPlotError.text = addErrorMessage;
-				$.addPlotError.visible = true;
-				
-				//disable add plot button
-				$.addPlot.enabled = false;
-				
-				//set the last plot entry to red text
-				var lastRow = showTotalRowNumber() - 1;
-				$.tbl.data[0].rows[lastRow].color = "red";
-			
-			}else{
-				//if the total ground cover is 100% or greater
-				$.addPlot.enabled = true;
-				$.addPlotError.visible = false;
-			}
-	}
-}
-
-// get the total ground cover of the last plot entry
-function getTotalGroundCover(){
-	try{
-		//open database
-		var db = Ti.Database.open('ltemaDB');
-		
-		// get the name & plot_id of the last plot entry added
-		var lastRowAdded = db.execute('SELECT MAX(utc), plot_id, plot_name \
-									FROM plot \
-									WHERE transect_id = ?', $.tbl.transectID);
-									
-		var lastEntryPlotID = lastRowAdded.fieldByName('plot_id');
-		var lastEntryPlotName = lastRowAdded.fieldByName('plot_name');
-		
-		//delete current row from the database
-		var rows = db.execute('SELECT sum(ground_cover) \
-							FROM plot_observation \
-							WHERE plot_id = ?',  lastEntryPlotID);
-							
-		var totalGroundCover = rows.fieldByName('sum(ground_cover)');
-		
-	} catch(e) {
-		var errorMessage = e.message;
-		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
-	} finally {
-		db.close();
-		var lastPlotEntryName = lastEntryPlotName;
-		return {totalGroundCover:totalGroundCover, lastPlotEntryName:lastPlotEntryName};
-	}
+		//loop via plot list and check total ground cover
+		for(var i=0; i < $.tbl.data[0].rows.length; i++) {
+	        if($.tbl.data[0].rows[i].totalGroundCover < 100){
+	        	//disable add plot button
+	        	incompletePlotCount += 1;	
+				$.tbl.data[0].rows[i].color = "red";
+	        }
+	    }
+	 }  
+	 //Check the number of incomplete Plot Count 
+	    if(incompletePlotCount > 0){
+	    	//disable add plot button
+	    	$.addPlot.enabled = false;
+			$.addPlotError.visible = true;
+	    }else{
+	    	//enable add plot button
+	        $.addPlot.enabled = true;
+			$.addPlotError.visible = false;
+	    }
+	
 }
 
 //Enable or Disable the Edit button
