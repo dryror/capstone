@@ -26,8 +26,6 @@ function populateTable() {
 	// Query the plot observation table, build the TableView
 	try {
 		
-		insertPreviousPlotRows();
-		
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Observations of a plot
@@ -284,92 +282,6 @@ function addBtn(){
 	var addObservation = Alloy.createController("addPlotObservation", {plotID: plotID}).getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addObservation);
-}
-
-// Sceen should display the zero'd out observations of pervious plots
-function insertPreviousPlotRows() {
-	try {
-		var db = Ti.Database.open('ltemaDB');
-		
-		//what transect does this screen's plot belong to?
-		
-		transectResult = db.execute('SELECT transect_id FROM plot WHERE plot_id = ?', args.plotID);
-		transectID = transectResult.fieldByName('transect_id');
-		
-		//get all the plot_id's of that transect
-		var plotIDs = [];
-		plotsResult = db.execute('SELECT plot_id FROM plot WHERE transect_id = ?', transectID);
-		while (plotsResult.isValidRow()) {
-			plotIDs.push(plotsResult.fieldByName('plot_id'));
-			plotsResult.next();
-		}
-		
-		//build a list of unique titles/names/"observation"s to avoid duplicates
-		var uniquePlotObservationTitles = [];
-		
-		//add current plot's titles to the unique list if indeed unique
-		uniquesResult = db.execute ('SELECT observation FROM plot_observation WHERE plot_id = ?', plotID);
-		while (uniquesResult.isValidRow()) {
-			var newObs = uniquesResult.fieldByName('observation');
-			//seach for matches
-			var found = false;
-			for (k=0; k < uniquePlotObservationTitles.length; k++) {
-				if (newObs === uniquePlotObservationTitles[k]) {
-					found = true;
-				}
-			}
-			if (!found) {
-				uniquePlotObservationTitles.push(newObs);
-			}
-			uniquesResult.next();
-		}
-		
-		//get the observation_id's of all plots occuring before the current plotID
-		var validPlotObservationIDs = [];
-		for (var i=0; i < plotIDs.length; i++) {
-			if (plotIDs[i] < plotID) {  //assuming all plotIDs are squential
-				obsResult = db.execute('SELECT observation_id, observation FROM plot_observation WHERE plot_id = ?', plotIDs[i]);
-				while (obsResult.isValidRow()){
-					var obsID = obsResult.fieldByName('observation_id');
-					var obsTitle = obsResult.fieldByName('observation');
-					//record IDs of unique titles
-					var found = false;
-					for (k=0; k < uniquePlotObservationTitles.length; k++) {
-						if (obsTitle === uniquePlotObservationTitles[k]) {
-							found = true;
-						}
-					}
-					if (!found) {
-						uniquePlotObservationTitles.push(obsTitle);
-						validPlotObservationIDs.push(obsID);
-					}
-					obsResult.next();
-				}
-				obsResult.close();
-			}
-		}
-		
-		//generate a new row in this plot for each validPlotObservationIDs
-		for (var j=0; j < validPlotObservationIDs.length; j++) {
-			titleResult = db.execute ('SELECT observation, comments, count, species_code FROM plot_observation WHERE observation_id = ?', validPlotObservationIDs[j]);
-			var theTitle = titleResult.fieldByName('observation');
-			var count = titleResult.fieldByName('count');
-			var comments = titleResult.fieldByName('comments');
-			var speciesCode = titleResult.fieldByName('species_code');
-			//create new observation_id in this plot
-			db.execute( 'INSERT INTO plot_observation (observation, ground_cover, count, comments, species_code, plot_id) VALUES (?,?,?,?,?,?)',
-						theTitle, 0, count, comments, speciesCode, plotID);
-			titleResult.close();
-		}
-	} catch (e) {
-		var errorMessage = e.message;
-		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
-	} finally {
-		transectResult.close();
-		plotsResult.close();
-		uniquesResult.close();
-		db.close();
-	}
 }
 
 // Delete a file from the application data directory
