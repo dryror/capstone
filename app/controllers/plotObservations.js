@@ -351,11 +351,14 @@ function insertPreviousPlotRows() {
 		
 		//generate a new row in this plot for each validPlotObservationIDs
 		for (var j=0; j < validPlotObservationIDs.length; j++) {
-			titleResult = db.execute ('SELECT observation FROM plot_observation WHERE observation_id = ?', validPlotObservationIDs[j]);
+			titleResult = db.execute ('SELECT observation, comments, count, species_code FROM plot_observation WHERE observation_id = ?', validPlotObservationIDs[j]);
 			var theTitle = titleResult.fieldByName('observation');
+			var count = titleResult.fieldByName('count');
+			var comments = titleResult.fieldByName('comments');
+			var speciesCode = titleResult.fieldByName('species_code');
 			//create new observation_id in this plot
-			db.execute( 'INSERT INTO plot_observation (observation, ground_cover, count, plot_id) VALUES (?,?,?,?)',
-						theTitle, 0, 0, plotID);
+			db.execute( 'INSERT INTO plot_observation (observation, ground_cover, count, comments, species_code, plot_id) VALUES (?,?,?,?,?,?)',
+						theTitle, 0, count, comments, speciesCode, plotID);
 			titleResult.close();
 		}
 	} catch (e) {
