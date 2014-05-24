@@ -157,6 +157,10 @@ function populateTable() {
 							
 			var totalGroundCover = groundCoverRows.fieldByName('sum(ground_cover)');
 			
+			if (totalGroundCover == null) {
+				totalGroundCover = 0;
+			}
+			
 			//create a new row
 				var newRow = Ti.UI.createTableViewRow({
 					title : plotName,
