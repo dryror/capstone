@@ -235,6 +235,10 @@ function showTotalRowNumber(){
 
 //Navigate to addTransect - transect creation screen
 function addBtn(){
+	//disable button for 1 second to prevent double entry
+	$.addTransect.enabled = false;
+	setTimeout(function(){ $.addTransect.enabled = true; },1000);
+	
 	var addTransect = Alloy.createController("addTransect", {siteID: $.tbl.siteID}).getView();
 	var nav = Alloy.Globals.navMenu;
 	nav.openWindow(addTransect);

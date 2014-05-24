@@ -107,7 +107,11 @@ $.parkSrch.addEventListener('blur', function(e) {
 /* Functions */
 
 //Test for form completeness before adding to database
-function doneBtn(){
+function doneBtn(e){
+	//disable button for 1 second to prevent double entry
+	e.source.enabled = false;
+	setTimeout(function(){ e.source.enabled = true; },1000);
+	
 	var errorFlag = false;
 	if (($.parkSrch.value == null) || ($.parkSrch.value == "")) {
 		$.parkSrchError.text = "Please select a park";

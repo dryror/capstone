@@ -219,7 +219,11 @@ function editBtn(e){
 }
 
 //ADD BUTTON - add a new plot
-function addBtn(){	
+function addBtn(){
+	//disable button for 1 second to prevent double entry
+	$.addPlot.enabled = false;
+	setTimeout(function(){ $.addPlot.enabled = true; },1000);
+		
 	//Navigation to addPlot
 	var addPlot = Alloy.createController("addPlot", {transectID: $.tbl.transectID}).getView();
 	var nav = Alloy.Globals.navMenu;
