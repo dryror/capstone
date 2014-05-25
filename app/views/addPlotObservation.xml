@@ -15,7 +15,8 @@
 			<Label id="pickTypeError" class="error" visible="false" text="* Please select observation type" />
 			
 			<Label id="observationLbl" text="Observation:" />
-			<TextField id="observation" />
+			<TextField id="observation" visible="false" />
+			<SearchBar id="observationSearch" />
 			<Label id="observationError" class="error" visible="false" text="* Please enter observation" />
 			
 			<Label id="percentLbl" text="Percent Coverage:" />

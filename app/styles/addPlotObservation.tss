@@ -33,6 +33,11 @@
 	left: 40,
 	top: 100
 },
+"#observationSearch": {
+	left: 220,
+	right: 40,
+	top: 93
+},
 "#observation": {
 	left: 220,
 	right: 40,
@@ -41,7 +46,7 @@
 },
 "#observationError": {
 	left: 225,
-	top: 130
+	top: 138
 },
 
 "#percentLbl": {

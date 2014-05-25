@@ -28,6 +28,9 @@ function doneBtn(e){
 	e.source.enabled = false;
 	setTimeout(function(){ e.source.enabled = true; },1000);
 	
+	// Close the search window
+	win.close();
+	
 	// Check for errors on page
 	var errorOnPage = false;
 	
@@ -37,9 +40,16 @@ function doneBtn(e){
 		errorOnPage = true;
 	}
 	
-	if ($.observation.value == "") {
-		$.observationError.visible = true;
-		errorOnPage = true;
+	if ($.pickType.index == 0) {
+		if ($.observationSearch.value == "") {
+			$.observationError.visible = true;
+			errorOnPage = true;
+		}
+	} else {
+		if ($.observation.value == "") {
+			$.observationError.visible = true;
+			errorOnPage = true;
+		}
 	}
 	
 	if ($.percent.value == "") {
@@ -57,7 +67,7 @@ function doneBtn(e){
 	
 	// Check observation type and set count and observation
 	var count;
-	var observation = $.observation.value;
+	var observation;
 	var percentCoverage = $.percent.value;
 	var comments;
 	var speciesCode;
@@ -66,9 +76,10 @@ function doneBtn(e){
 		// Plant is selected
 		count = 1;
 		comments = $.comments.value;
+		observation = $.observationSearch.value;
 		// Check if observation is a scientific name or english
 		try {
-			var db = Ti.Database.install('/taxonomy.sqlite', 'taxonomy');
+			var db = Ti.Database.open('taxonomy');
 			var rsScientific = db.execute('SELECT s.species_code, g.genus_name || " " || s.species_name AS scientific_name \
 								FROM species s, genus g \
 								WHERE s.genus_id = g.genus_id \
@@ -82,21 +93,19 @@ function doneBtn(e){
 						
 			if (rsScientific.isValidRow()) {
 				scientificName = rsScientific.fieldByName('scientific_name');
-				Ti.API.info(scientificName);
+				
 				if (scientificName != null) {
 					speciesCode = rsScientific.fieldByName('species_code');
-					Ti.API.info(speciesCode);
 				}
 				rsScientific.close();
 			} else if (rsEnglish.isValidRow()) {
 				englishName = rsEnglish.fieldByName('english_name');
 				if (englishName != null) {
 					speciesCode = rsEnglish.fieldByName('species_code');
-					Ti.API.info(speciesCode);
 				}
 				rsEnglish.close();
 			} else {
-				speciesCode = $.observation.value;
+				speciesCode = $.observationSearch.value;
 			}
 			
 		} catch(e) {
@@ -107,6 +116,7 @@ function doneBtn(e){
 		}
 	} else {
 		// Other is selected
+		observation = $.observation.value;
 		count = 0;
 		speciesCode = null;
 		comments = $.observation.value;
@@ -236,6 +246,21 @@ function savePhoto(photo){
 
 $.pickType.addEventListener('click', function(e) {
 	$.pickTypeError.visible = false;
+	if ($.pickType.index == 0) {
+		$.observation.visible = false;
+		$.observationSearch.visible = true;
+	} else {
+		$.observation.visible = true;
+		$.observationSearch.visible = false;
+	}
+});
+
+$.observationSearch.addEventListener('change', function(e) {
+	if ($.observationSearch.value == "") {
+		$.observationError.visible = true;
+	} else {
+		$.observationError.visible = false;
+	}
 });
 
 $.observation.addEventListener('change', function(e) {
@@ -260,4 +285,150 @@ $.percent.addEventListener('change', function(e) {
 	} else {
 		$.percentError.visible = false;
 	}
+});
+
+// Closes the popup result window if user navigates away from this screen 
+$.observationSearch.addEventListener('blur', function(e) {
+	win.close();
+});
+
+// SEARCH BAR ACTIONS
+
+//var last_search = null;
+var timers = 0;
+
+//create the popup window to show search results
+var win = Ti.UI.createWindow({
+	borderColor : "#C0C0C0",
+	scrollable : true,
+	height: 330,
+	left : 220,
+	right : 40,
+	top : 198,
+	borderRadius : 0,
+	borderWidth: 3,
+	title : 'park names',
+	orientationModes : [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
+});
+
+
+//AUTOCOMPLETE TABLE - list of results from search
+var table_data = [];
+var autocomplete_table = Titanium.UI.createTableView({
+	search : $.observationSearch.value,
+	top : 0,
+	height: Ti.UI.FILL
+});
+win.add(autocomplete_table);
+
+//Auto-complete search
+function auto_complete(search_term) {
+	if (search_term.length >= 1) {
+		//clear the table view results
+		autocomplete_table.setData([]);
+		autocomplete_table.setData(table_data);
+
+		//open database
+		try {
+			var db = Ti.Database.open('taxonomy');
+			
+			//Query - Retrieve matching english names from database
+			var rsEnglish = db.execute('SELECT english_name ' + 'FROM species ' + 'WHERE UPPER(english_name) LIKE UPPER(?)', search_term + '%');
+			
+			var totalRowCount = rsEnglish.getRowCount();
+			
+			var rsScientific = db.execute('SELECT s.species_code, g.genus_name || " " || s.species_name AS scientific_name \
+								FROM species s, genus g \
+								WHERE s.genus_id = g.genus_id \
+								AND UPPER(scientific_name) LIKE UPPER(?)', search_term + '%');
+			
+			totalRowCount += rsScientific.getRowCount();
+			
+			//check if any results are returned
+			if (totalRowCount <= 0) {
+				win.close();
+			} else {
+				win.open();
+				
+				// Add english name to results
+				if (rsEnglish.getRowCount() > 0) {
+					var enSection = Ti.UI.createTableViewSection({
+						headerTitle: "English Name"
+					});
+					
+					autocomplete_table.appendSection(enSection);
+					
+					while (rsEnglish.isValidRow()) {
+						var englishName = rsEnglish.fieldByName('english_name');
+		
+						//create a new row
+						var enRow = Ti.UI.createTableViewRow({
+							title : englishName
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(enRow);
+						rsEnglish.next();
+					}
+					rsEnglish.close();
+				}
+				
+				// Add scientific name to results
+				if (rsScientific.getRowCount() > 0) {
+					var snSection = Ti.UI.createTableViewSection({
+						headerTitle: "Scientific Name"
+					});
+					
+					autocomplete_table.appendSection(snSection);
+					
+					while (rsScientific.isValidRow()) {
+						var scientificName = rsScientific.fieldByName('scientific_name');
+		
+						//create a new row
+						var snRow = Ti.UI.createTableViewRow({
+							title : scientificName
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(snRow);
+						rsScientific.next();
+					}
+					rsScientific.close();
+				}
+			}
+		} catch (e) {
+			var errorMessage = e.message;
+			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+		} finally {	
+			db.close();
+		}
+	}
+}
+
+//Event Listener - when user types in the search bar
+$.observationSearch.addEventListener('change', function(e) {
+	if (e.source.value.length >= 1 ) { //&& e.source.value != last_search
+		win.open();
+		clearTimeout(timers['autocomplete']);
+		timers['autocomplete'] = setTimeout(function() {
+			//last_search = e.source.value;
+			auto_complete(e.source.value);
+		}, 300);
+	} else {
+		//if user deletes input
+		//clear the table view results
+		autocomplete_table.setData([]);
+		autocomplete_table.setData(table_data);
+		win.close();
+	}
+	return false;
+});
+
+//Event Listener - search results selected by user
+autocomplete_table.addEventListener('click', function(e) {
+	//add selected park name to the search bar value
+	$.observationSearch.value = e.source.title;
+	$.observationError.visible = false;
+	win.close();
+	$.observationSearch.blur();
 });

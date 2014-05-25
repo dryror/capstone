@@ -2,6 +2,9 @@
 var yourDb = Titanium.Database.open('ltemaDB');
 yourDb.remove();
 
+var db = Ti.Database.install('/taxonomy.sqlite', 'taxonomy');
+db.close();
+
 populateTable();
 
 function populateTable() {
