@@ -113,6 +113,9 @@ $.tbl.addEventListener('delete', function(e) {
 
 //Main TableView event listener
 $.tbl.addEventListener('click', function(e) {
+	if ($.tbl.editing == true) {
+		return;
+	}
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
 		var modal = Alloy.createController("siteSurveyModal", {siteID:e.rowData.siteID}).getView();
