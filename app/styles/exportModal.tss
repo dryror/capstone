@@ -20,7 +20,9 @@
 "#surveyPkr": {
 	bottom: 0,
 	selectionIndicator: true,
-	visable: false
+	visable: false,
+	left: 50,
+	right: 50
 },
 "#doneSurveyPkr": {
 	font: {fontSize: 20},
