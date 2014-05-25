@@ -35,7 +35,7 @@
 			<Label id="commentsError" class="error" visible="false" />
 			
 			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
-			<ImageView id="transectThumbnail" />
+			<ImageView id="transectThumbnail" onClick="previewPhoto" visible="false"/>
 			<Label id="photoError" class="error" visible="false" />
 			
 			<View id="footerLine" />

@@ -102,7 +102,11 @@ function takePhoto() {
 	var pic = require('camera');
 	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
 		//Set thumbnail
+		$.transectThumbnail.visible = true;
 		$.transectThumbnail.image = myPhoto;
+		
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+		temp.write(myPhoto);
 		
 		//set variables with values
 		photo = myPhoto;
@@ -172,7 +176,20 @@ function savePhoto(photo){
 		return path;
 	}
   }
- 
+
+//THUMBNAIL BUTTON - preview photo
+function previewPhoto(){
+	//var temp=Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+	//temp.write(photo);
+	//alert("You just clicked the photo thumbnail!");
+	var modal = Alloy.createController("photoPreviewModal", {}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+	});
+}
   
 /* Listeners */
 
