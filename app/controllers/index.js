@@ -149,22 +149,24 @@ Ti.App.addEventListener("app:refreshSiteSurveys", function(e) {
 
 /* Functions */
 
-//Enable or Disable the Edit button based on row count
+//Enable or Disable the Edit and Add buttons based on row count
 function toggleEditBtn(){
 	//get the number of total rows
 	var numRows = showTotalRowNumber();
 	//if no rows exist
 	if(numRows <= 0){
-		//disable Edit Button
+		//disable Edit  and Add buttons
 		$.editSite.enabled = false;
 		$.editSite.title = "Edit";
 		$.addSite.enabled = true;
 		$.tbl.editing = false;
 		$.exportData.enabled = false;
 	}else{
-		//enable Edit Button
+		//enable Edit and Add buttons
 		$.editSite.enabled = true;
-		$.exportData.enabled = true;
+		if ($.tbl.editing == false) {
+			$.exportData.enabled = true;
+		}
 	}
 }
 
