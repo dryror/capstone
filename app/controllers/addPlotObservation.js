@@ -45,7 +45,9 @@ function doneBtn(e){
 			$.observationError.visible = true;
 			errorOnPage = true;
 		}
-	} else {
+	}
+	
+	if ($.pickType.index == 1) {
 		if ($.observation.value == "") {
 			$.observationError.visible = true;
 			errorOnPage = true;
@@ -248,10 +250,12 @@ $.pickType.addEventListener('click', function(e) {
 	$.pickTypeError.visible = false;
 	if ($.pickType.index == 0) {
 		$.observation.visible = false;
+		$.observation.value = "";
 		$.observationSearch.visible = true;
 	} else {
-		$.observation.visible = true;
 		$.observationSearch.visible = false;
+		$.observationSearch.value = "";
+		$.observation.visible = true;
 	}
 });
 
@@ -288,14 +292,16 @@ $.percent.addEventListener('change', function(e) {
 });
 
 // Closes the popup result window if user navigates away from this screen 
-$.observationSearch.addEventListener('blur', function(e) {
-	win.close();
+$.formView.addEventListener('click', function(e) {
+	if (e.source != win) {
+		win.close();
+	}			
 });
 
 // SEARCH BAR ACTIONS
 
 //var last_search = null;
-var timers = 0;
+var timers = [];
 
 //create the popup window to show search results
 var win = Ti.UI.createWindow({
@@ -330,19 +336,24 @@ function auto_complete(search_term) {
 
 		//open database
 		try {
+			var totalRowCount = 0;
 			var db = Ti.Database.open('taxonomy');
 			
 			//Query - Retrieve matching english names from database
 			var rsEnglish = db.execute('SELECT english_name ' + 'FROM species ' + 'WHERE UPPER(english_name) LIKE UPPER(?)', search_term + '%');
-			
-			var totalRowCount = rsEnglish.getRowCount();
+			totalRowCount += rsEnglish.getRowCount();
 			
 			var rsScientific = db.execute('SELECT s.species_code, g.genus_name || " " || s.species_name AS scientific_name \
 								FROM species s, genus g \
 								WHERE s.genus_id = g.genus_id \
 								AND UPPER(scientific_name) LIKE UPPER(?)', search_term + '%');
-			
 			totalRowCount += rsScientific.getRowCount();
+			
+			var rsFamily = db.execute('SELECT family_name FROM family WHERE UPPER(family_name) LIKE UPPER(?)', search_term + '%');
+			totalRowCount += rsFamily.getRowCount();
+			
+			var rsOrder = db.execute('SELECT order_name FROM "order" WHERE UPPER(order_name) LIKE UPPER(?)', search_term + '%');
+			totalRowCount += rsOrder.getRowCount();
 			
 			//check if any results are returned
 			if (totalRowCount <= 0) {
@@ -395,6 +406,52 @@ function auto_complete(search_term) {
 					}
 					rsScientific.close();
 				}
+				
+				// Add family name to results
+				if (rsFamily.getRowCount() > 0) {
+					var fnSection = Ti.UI.createTableViewSection({
+						headerTitle: "Family Name"
+					});
+					
+					autocomplete_table.appendSection(fnSection);
+					
+					while (rsFamily.isValidRow()) {
+						var familyName = rsFamily.fieldByName('family_name');
+		
+						//create a new row
+						var fnRow = Ti.UI.createTableViewRow({
+							title : familyName
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(fnRow);
+						rsFamily.next();
+					}
+					rsFamily.close();
+				}
+				
+				// Add order name to results
+				if (rsOrder.getRowCount() > 0) {
+					var onSection = Ti.UI.createTableViewSection({
+						headerTitle: "Order Name"
+					});
+					
+					autocomplete_table.appendSection(onSection);
+					
+					while (rsOrder.isValidRow()) {
+						var orderName = rsOrder.fieldByName('order_name');
+		
+						//create a new row
+						var onRow = Ti.UI.createTableViewRow({
+							title : orderName
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(onRow);
+						rsOrder.next();
+					}
+					rsOrder.close();
+				}
 			}
 		} catch (e) {
 			var errorMessage = e.message;
@@ -407,13 +464,11 @@ function auto_complete(search_term) {
 
 //Event Listener - when user types in the search bar
 $.observationSearch.addEventListener('change', function(e) {
-	if (e.source.value.length >= 1 ) { //&& e.source.value != last_search
-		win.open();
+	if (e.source.value != "") {
 		clearTimeout(timers['autocomplete']);
 		timers['autocomplete'] = setTimeout(function() {
-			//last_search = e.source.value;
 			auto_complete(e.source.value);
-		}, 300);
+		}, 500);
 	} else {
 		//if user deletes input
 		//clear the table view results
@@ -421,7 +476,6 @@ $.observationSearch.addEventListener('change', function(e) {
 		autocomplete_table.setData(table_data);
 		win.close();
 	}
-	return false;
 });
 
 //Event Listener - search results selected by user

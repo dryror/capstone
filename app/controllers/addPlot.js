@@ -17,7 +17,7 @@ try {
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
-	results.close();
+	//results.close();
 	db.close();
 }
 
