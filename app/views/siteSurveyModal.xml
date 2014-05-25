@@ -11,12 +11,6 @@
 				<Button id="backBtn" title="Back" onClick="backBtnClick" />
 			</LeftNavButton>
 			
-			<Label id="parkLbl" text="Park Name:" />
-			<Label id="parkName" />
-			
-			<Label id="siteLbl" text="Site ID:" />
-			<Label id="siteID" />
-			
 			<Label id="yearLbl" text="Year:" />
 			<Label id="siteYear" />
 			
