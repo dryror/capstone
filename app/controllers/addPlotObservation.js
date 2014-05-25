@@ -291,11 +291,15 @@ $.percent.addEventListener('change', function(e) {
 	}
 });
 
-// Closes the popup result window if user navigates away from this screen 
+// Closes the popup result window if user click outside of the table
 $.formView.addEventListener('click', function(e) {
 	if (e.source != win) {
 		win.close();
 	}			
+});
+// Closes the popup result window if user navigates away from this screen 
+$.observationSearch.addEventListener('blur', function(e) {
+	win.close();
 });
 
 // SEARCH BAR ACTIONS
@@ -339,7 +343,16 @@ function auto_complete(search_term) {
 			var totalRowCount = 0;
 			var db = Ti.Database.open('taxonomy');
 			
-			//Query - Retrieve matching english names from database
+			//Retrieve matching taxonomy information from database the database
+			var rsPhylum = db.execute('SELECT phylum_name FROM phylum WHERE UPPER(phylum_name) LIKE UPPER(?)', search_term + '%');
+			totalRowCount += rsPhylum.getRowCount();
+			
+			var rsOrder = db.execute('SELECT order_name FROM "order" WHERE UPPER(order_name) LIKE UPPER(?)', search_term + '%');
+			totalRowCount += rsOrder.getRowCount();
+			
+			var rsFamily = db.execute('SELECT family_name FROM family WHERE UPPER(family_name) LIKE UPPER(?)', search_term + '%');
+			totalRowCount += rsFamily.getRowCount();
+			
 			var rsEnglish = db.execute('SELECT english_name ' + 'FROM species ' + 'WHERE UPPER(english_name) LIKE UPPER(?)', search_term + '%');
 			totalRowCount += rsEnglish.getRowCount();
 			
@@ -349,17 +362,83 @@ function auto_complete(search_term) {
 								AND UPPER(scientific_name) LIKE UPPER(?)', search_term + '%');
 			totalRowCount += rsScientific.getRowCount();
 			
-			var rsFamily = db.execute('SELECT family_name FROM family WHERE UPPER(family_name) LIKE UPPER(?)', search_term + '%');
-			totalRowCount += rsFamily.getRowCount();
-			
-			var rsOrder = db.execute('SELECT order_name FROM "order" WHERE UPPER(order_name) LIKE UPPER(?)', search_term + '%');
-			totalRowCount += rsOrder.getRowCount();
-			
 			//check if any results are returned
 			if (totalRowCount <= 0) {
 				win.close();
 			} else {
 				win.open();
+				
+				// Add phylum name to results
+				if (rsPhylum.getRowCount() > 0) {
+					var pnSection = Ti.UI.createTableViewSection({
+						headerTitle: "Phylum Name"
+					});
+					
+					autocomplete_table.appendSection(pnSection);
+					
+					while (rsPhylum.isValidRow()) {
+						var phylumName = rsPhylum.fieldByName('phylum_name');
+		
+						//create a new row
+						var pnRow = Ti.UI.createTableViewRow({
+							title : phylumName,
+							indentionLevel: 1
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(pnRow);
+						rsPhylum.next();
+					}
+					rsPhylum.close();
+				}
+				
+				// Add order name to results
+				if (rsOrder.getRowCount() > 0) {
+					var onSection = Ti.UI.createTableViewSection({
+						headerTitle: "Order Name"
+					});
+					
+					autocomplete_table.appendSection(onSection);
+					
+					while (rsOrder.isValidRow()) {
+						var orderName = rsOrder.fieldByName('order_name');
+		
+						//create a new row
+						var onRow = Ti.UI.createTableViewRow({
+							title : orderName, 
+							indentionLevel: 1
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(onRow);
+						rsOrder.next();
+					}
+					rsOrder.close();
+				}
+				
+				// Add family name to results
+				if (rsFamily.getRowCount() > 0) {
+					var fnSection = Ti.UI.createTableViewSection({
+						headerTitle: "Family Name"
+					});
+					
+					autocomplete_table.appendSection(fnSection);
+					
+					while (rsFamily.isValidRow()) {
+						var familyName = rsFamily.fieldByName('family_name');
+		
+						//create a new row
+						var fnRow = Ti.UI.createTableViewRow({
+							title : familyName,
+							indentionLevel: 1
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(fnRow);
+						rsFamily.next();
+					}
+					rsFamily.close();
+				}
 				
 				// Add english name to results
 				if (rsEnglish.getRowCount() > 0) {
@@ -374,7 +453,8 @@ function auto_complete(search_term) {
 		
 						//create a new row
 						var enRow = Ti.UI.createTableViewRow({
-							title : englishName
+							title : englishName,
+							indentionLevel: 1
 						});
 		
 						//Add row to the table view
@@ -397,7 +477,8 @@ function auto_complete(search_term) {
 		
 						//create a new row
 						var snRow = Ti.UI.createTableViewRow({
-							title : scientificName
+							title : scientificName,
+							indentionLevel: 1
 						});
 		
 						//Add row to the table view
@@ -405,52 +486,6 @@ function auto_complete(search_term) {
 						rsScientific.next();
 					}
 					rsScientific.close();
-				}
-				
-				// Add family name to results
-				if (rsFamily.getRowCount() > 0) {
-					var fnSection = Ti.UI.createTableViewSection({
-						headerTitle: "Family Name"
-					});
-					
-					autocomplete_table.appendSection(fnSection);
-					
-					while (rsFamily.isValidRow()) {
-						var familyName = rsFamily.fieldByName('family_name');
-		
-						//create a new row
-						var fnRow = Ti.UI.createTableViewRow({
-							title : familyName
-						});
-		
-						//Add row to the table view
-						autocomplete_table.appendRow(fnRow);
-						rsFamily.next();
-					}
-					rsFamily.close();
-				}
-				
-				// Add order name to results
-				if (rsOrder.getRowCount() > 0) {
-					var onSection = Ti.UI.createTableViewSection({
-						headerTitle: "Order Name"
-					});
-					
-					autocomplete_table.appendSection(onSection);
-					
-					while (rsOrder.isValidRow()) {
-						var orderName = rsOrder.fieldByName('order_name');
-		
-						//create a new row
-						var onRow = Ti.UI.createTableViewRow({
-							title : orderName
-						});
-		
-						//Add row to the table view
-						autocomplete_table.appendRow(onRow);
-						rsOrder.next();
-					}
-					rsOrder.close();
 				}
 			}
 		} catch (e) {
@@ -464,7 +499,7 @@ function auto_complete(search_term) {
 
 //Event Listener - when user types in the search bar
 $.observationSearch.addEventListener('change', function(e) {
-	if (e.source.value != "") {
+	if (e.source.value.length >= 2) {
 		clearTimeout(timers['autocomplete']);
 		timers['autocomplete'] = setTimeout(function() {
 			auto_complete(e.source.value);
