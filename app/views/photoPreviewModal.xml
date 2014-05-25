@@ -1,0 +1,11 @@
+<Alloy>
+	<NavigationWindow id="modalNav">
+		<Window class="container" title="Photo Preview" id="modalWin">
+			
+			<LeftNavButton>
+				<Button id="backBtn" title="Back" onClick="backBtn" />
+			</LeftNavButton>
+	
+		</Window>
+	</NavigationWindow>
+</Alloy>
