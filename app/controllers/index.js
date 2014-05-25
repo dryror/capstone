@@ -122,7 +122,7 @@ $.tbl.addEventListener('click', function(e) {
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
 			navBarHidden : false
 		});
 	//row clicked, get transect view
