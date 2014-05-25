@@ -108,11 +108,12 @@ function doneBtn(e){
 	}finally{	
 		//close the result set
 		results.close();	
+		
+		//populate new plotID with zeroed-out observations
+		insertPreviousPlotRows(db);
+		
 		//Close the database
 		db.close();
-		
-		//populate new plotID with zeroed-out unique observations of pervious plots in its transect
-		insertPreviousPlotRows();
 		
 		//refresh and close
 		Ti.App.fireEvent("app:refreshPlots");
@@ -193,15 +194,13 @@ function savePhoto(photo){
 	}	
 }
 
-// Sceen should display the zero'd out observations of pervious plots
-function insertPreviousPlotRows() {
+// A new plot gets zeroed-out unique observations added from previous plots in its transect
+function insertPreviousPlotRows(db) {  //expected parameter: an open database connection
 	try {
-		var db = Ti.Database.open('ltemaDB');
 		
 		//get the plotID of the row just inserted
 		var plotIDResult = db.execute('SELECT last_insert_rowid() as plotID');
 		var plotID = plotIDResult.fieldByName('plotID');
-		Ti.API.info("plotID", plotID);
 		
 		//get all the plot_id's of this screen's transect
 		var plotIDs = [];
@@ -272,10 +271,10 @@ function insertPreviousPlotRows() {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
+		//db connection is closed outside this function
 		plotIDResult.close();
 		plotsResult.close();
 		uniquesResult.close();
-		db.close();
 	}
 }
 
