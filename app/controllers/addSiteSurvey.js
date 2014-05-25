@@ -103,7 +103,9 @@ $.parkSrch.addEventListener('blur', function(e) {
 	win.close();
 });
 
-
+$.addSiteSurveyWin.addEventListener('close', function(e) {
+	Ti.App.fireEvent("app:refreshSiteSurveys");
+});
 /* Functions */
 
 //Test for form completeness before adding to database
@@ -243,7 +245,7 @@ function doneBtn(e){
 				transects.close();
 			}
 				
-			Ti.App.fireEvent("app:refreshSiteSurveys");		
+			//Ti.App.fireEvent("app:refreshSiteSurveys");		
 		} catch (e){
 			var errorMessage = e.message;
 			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});

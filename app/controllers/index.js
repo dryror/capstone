@@ -8,6 +8,7 @@ db.close();
 populateTable();
 
 function populateTable() {
+	$.addSite.enabled = true;
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
@@ -212,7 +213,7 @@ function editBtn(e){
 function addBtn(){
 	//disable button for 1 second to prevent double entry
 	$.addSite.enabled = false;
-	setTimeout(function(){ $.addSite.enabled = true; },1000);
+	//setTimeout(function(){ $.addSite.enabled = true; },1000);
 	
 	var addSite = Alloy.createController("addSiteSurvey").getView();
 	$.navGroupWin.openWindow(addSite);
