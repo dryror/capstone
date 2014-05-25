@@ -118,6 +118,14 @@ $.tbl.addEventListener('delete', function(e) {
 		//delete current row from the database
 		db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
 		
+		// Make the last row editable
+		var lastRow = $.tbl.data[0].rowCount - 1;
+		$.tbl.data[0].rows[lastRow].editable = true;
+		
+		// Cycle toggle on the table to show the next row can be deleted
+		$.tbl.editing = false;
+		$.tbl.editing = true;
+		
 	} catch(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
@@ -168,7 +176,8 @@ function populateTable() {
 					plotID : plotID,
 					height: 60,
 					font: {fontSize: 20},
-					totalGroundCover: totalGroundCover
+					totalGroundCover: totalGroundCover,
+					editable: false
 				});
 				
 			//add the total ground cover label
@@ -198,6 +207,11 @@ function populateTable() {
 			
 			rows.next();
 		}
+		
+		// Make the last row editable
+		var lastRow = $.tbl.data[0].rowCount - 1;
+		$.tbl.data[0].rows[lastRow].editable = true;
+		
 	} catch(e){
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
