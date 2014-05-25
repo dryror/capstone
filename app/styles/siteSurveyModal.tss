@@ -6,55 +6,38 @@
 	font: {fontSize: 20}
 },
 
-"#parkLbl": {
-	left: 40,
-	top: 40
-},
-"#parkName": {
-	left: 200,
-	top: 40
-},
-
-"#siteLbl": {
-	left: 40,
-	top: 100,
-},
-"#siteID": {
-	left: 200,
-	top: 100
-},
 "#yearLbl": {
 	left: 40,
-	top: 160
+	top: 40
 },
 "#siteYear": {
 	left: 200,
-	top: 160
+	top: 40
 },
 "#biomeLbl": {
 	left: 40,
-	top: 220,
+	top: 100,
 },
 "#biome": {
 	left: 200,
-	top: 220
+	top: 100
 },
 
 "#protocolLbl": {
 	left: 40,
-	top: 280,
+	top: 160,
 },
 "#protocolName": {
 	left: 200,
-	top: 280
+	top: 160
 },
 "#exportLbl": {
 	left: 40,
-	top: 340
+	top: 220
 },
 "#exportDate": {
 	left: 200,
-	top: 340
+	top: 220
 }
 
 
