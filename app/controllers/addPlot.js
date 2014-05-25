@@ -42,7 +42,7 @@ function doneBtn(e){
 	
 	if (photo == null) {
 		$.photoError.visible = true;
-		//errorOnPage = true;
+		errorOnPage = true;
 		Ti.API.info("No photo");
 	}
 	
