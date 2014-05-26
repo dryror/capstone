@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" title="Add Transect">
+	<Window id="addTransectWin" class="container">
 		<RightNavButton>
 			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
 		</RightNavButton>

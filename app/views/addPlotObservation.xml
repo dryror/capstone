@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" title="Add Plot Observation">
+	<Window id="addPlotObservationWin" class="container" title="Add Plot Observation">
 		<RightNavButton>
 			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
 		</RightNavButton>

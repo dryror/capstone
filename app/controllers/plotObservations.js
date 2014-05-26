@@ -18,6 +18,8 @@ populateTable();
 
 function populateTable() {
 	
+	$.addObservation.enabled = true;
+	
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
@@ -303,9 +305,8 @@ function doneBtn(){
 
 //Navigation to addPlotObservation
 function addBtn(){
-	//disable button for 1 second to prevent double entry
+	//disable add button until screen is returned to focus.  Issue #28
 	$.addObservation.enabled = false;
-	setTimeout(function(){ $.addObservation.enabled = true; },1000);
 	
 	var addObservation = Alloy.createController("addPlotObservation", {plotID: plotID}).getView();
 	var nav = Alloy.Globals.navMenu;

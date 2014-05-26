@@ -29,6 +29,10 @@ var instructions = "Some example Transect Name schemes are sequential (\"T1\", \
 					"When recording observations, remain on one side of the transect at all times (downslope if applicable).";
 $.info.text = instructions;
 
+// Related to issue #28
+$.addTransectWin.addEventListener('close', function(e) {
+	Ti.App.fireEvent("app:refreshTransects");
+});
 
 /* Functions */
 	

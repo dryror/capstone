@@ -212,9 +212,8 @@ function editBtn(e){
 
 //Navigate to site survey creation screen
 function addBtn(){
-	//disable button for 1 second to prevent double entry
+	//disable add button until screen is returned to focus.  Issue #28
 	$.addSite.enabled = false;
-	//setTimeout(function(){ $.addSite.enabled = true; },1000);
 	
 	var addSite = Alloy.createController("addSiteSurvey").getView();
 	$.navGroupWin.openWindow(addSite);

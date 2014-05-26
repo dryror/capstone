@@ -1,5 +1,5 @@
 <Alloy>
-	<Window id="addSiteSurveyWin" class="container" title="Add Survey">
+	<Window id="addSiteSurveyWin" class="container">
 		<RightNavButton>
 			<Button id="doneAddSite" title="Done" onClick="doneBtn"/>
 		</RightNavButton>

@@ -33,6 +33,9 @@ var utmEasting;
 var utmNorthing;
 var utmZone;
 
+
+/* Functions */
+
 function doneBtn(e){
 	//disable button for 1 second to prevent double entry
 	e.source.enabled = false;
@@ -376,4 +379,9 @@ Ti.App.addEventListener('distanceDeviationChange', function(e) {
 	} else {
 		$.distanceOtherError.visible = false;
 	}
+});
+
+// related to issue #28
+$.addPlotWin.addEventListener('close', function(e) {
+	Ti.App.fireEvent("app:refreshPlots");
 });

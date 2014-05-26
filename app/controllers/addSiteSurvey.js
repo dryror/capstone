@@ -103,9 +103,12 @@ $.parkSrch.addEventListener('blur', function(e) {
 	win.close();
 });
 
+// related to issue #28
 $.addSiteSurveyWin.addEventListener('close', function(e) {
 	Ti.App.fireEvent("app:refreshSiteSurveys");
 });
+
+
 /* Functions */
 
 //Test for form completeness before adding to database

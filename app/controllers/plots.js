@@ -147,6 +147,8 @@ $.tbl.addEventListener('delete', function(e) {
 
 function populateTable() {
 	
+	$.addPlot.enabled = true;
+	
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
@@ -245,9 +247,8 @@ function editBtn(e){
 
 //ADD BUTTON - add a new plot
 function addBtn(){
-	//disable button for 1 second to prevent double entry
+	//disable add button until screen is returned to focus.  Issue #28
 	$.addPlot.enabled = false;
-	setTimeout(function(){ $.addPlot.enabled = true; },1000);
 		
 	//Navigation to addPlot
 	var addPlot = Alloy.createController("addPlot", {transectID: $.tbl.transectID}).getView();

@@ -7,6 +7,8 @@ populateTable();
 
 function populateTable() {
 	
+	$.addTransect.enabled = true;
+	
 	//Clear the table if there is anything in it
 	var rd = []; 
 	$.tbl.data = rd;
@@ -240,9 +242,9 @@ function showTotalRowNumber(){
 
 //Navigate to addTransect - transect creation screen
 function addBtn(){
-	//disable button for 1 second to prevent double entry
+	//disable add button until screen is returned to focus.  Issue #28
 	$.addTransect.enabled = false;
-	setTimeout(function(){ $.addTransect.enabled = true; },1000);
+	
 	
 	var addTransect = Alloy.createController("addTransect", {siteID: $.tbl.siteID}).getView();
 	var nav = Alloy.Globals.navMenu;

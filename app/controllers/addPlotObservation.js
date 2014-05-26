@@ -291,6 +291,11 @@ $.percent.addEventListener('change', function(e) {
 	}
 });
 
+// related to issue #28
+$.addPlotObservationWin.addEventListener('close', function(e) {
+	Ti.App.fireEvent("app:refreshPlotObservations");
+});
+
 // Closes the popup result window if user click outside of the table
 $.formView.addEventListener('click', function(e) {
 	if (e.source != win) {
