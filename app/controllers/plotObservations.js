@@ -29,7 +29,7 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Observations of a plot
-		rows = db.execute('SELECT observation_id, observation, ground_cover \
+		rows = db.execute('SELECT observation_id, observation, ground_cover, comments, media_id \
 						FROM plot_observation \
 						WHERE plot_id = ?', $.tbl.plotID); 
 		
@@ -37,11 +37,14 @@ function populateTable() {
 			var observationID = rows.fieldByName('observation_id');	
 			var observation = rows.fieldByName('observation');
 			var groundCover = rows.fieldByName('ground_cover');
-		
+			var comments = rows.fieldByName('comments');  //comments and mediaID are retrieved to pass to modal
+			var mediaID = rows.fieldByName('media_id');
 			//Create a new row
 			var newRow = Ti.UI.createTableViewRow({
 				title : observation,
 				observationID : observationID,
+				comments: comments,
+				mediaID: mediaID,
 				height: 60,
 				font: {fontSize: 20}
 			});
@@ -49,11 +52,21 @@ function populateTable() {
 			//add the ground cover label
 			var groundCoverLabel = Ti.UI.createLabel({
 				text: groundCover + '%',
-				right: 15,
+				right: 70,
 				font: {fontSize: 20}
 			});
 			newRow.add(groundCoverLabel);
-
+			
+			//add an info icon to the row
+			var infoButton = Ti.UI.createButton({
+				style: Ti.UI.iPhone.SystemButton.DISCLOSURE,
+				right: 10,
+				height: 60,
+				width: 60
+			});
+			newRow.add(infoButton);
+			
+			//update total
 			totalPlotPercentage += groundCover;
 			
 			//Add row to the table view
@@ -130,13 +143,23 @@ $.addObservation.addEventListener('longclick', function (e) {
 
 // Row click event listener
 $.tbl.addEventListener('click', function(e){
-	var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
-	modal.open({
-		modal : true,
-		modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
-		modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
-		navBarHidden : false
-	});
+	if (e.source.toString() == '[object TiUIButton]') {
+		var modal = Alloy.createController("plotObservationsModalDisclosureIcon", {observationID:e.rowData.observationID, title:e.rowData.title, comments:e.rowData.comments, mediaID:e.rowData.mediaID}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+		});
+	} else {
+		var modal = Alloy.createController("plotObservationsModal", {observationID:e.rowData.observationID, title:e.rowData.title}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_FORMSHEET,
+			navBarHidden : false
+		});
+	}
 });
 
 // Delete event listener
