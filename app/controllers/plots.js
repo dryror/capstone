@@ -53,8 +53,12 @@ Ti.App.addEventListener("app:refreshPlots", function(e) {
 	toggleAddBtn();
 });
 
-//Plot TableView - event listener
+// Table row click event
 $.tbl.addEventListener('click', function(e){
+	//ignore row clicks in edit mode
+	if ($.tbl.editing == true) {
+		return;
+	}
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
 		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title}).getView();

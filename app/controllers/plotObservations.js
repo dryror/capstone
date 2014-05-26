@@ -141,8 +141,13 @@ $.addObservation.addEventListener('longclick', function (e) {
 	addBtn();
 });
 
-// Row click event listener
+// Table row click event
 $.tbl.addEventListener('click', function(e){
+	//ignore row clicks in edit mode
+	if ($.tbl.editing == true) {
+		return;
+	}
+	//info button clicked, display modal
 	if (e.source.toString() == '[object TiUIButton]') {
 		var modal = Alloy.createController("plotObservationsModalDisclosureIcon", {observationID:e.rowData.observationID, title:e.rowData.title, comments:e.rowData.comments, mediaID:e.rowData.mediaID}).getView();
 		modal.open({

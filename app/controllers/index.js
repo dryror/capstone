@@ -115,8 +115,9 @@ $.tbl.addEventListener('delete', function(e) {
 	toggleEditBtn();
 });
 
-//Main TableView event listener
+// Table row click event
 $.tbl.addEventListener('click', function(e) {
+	//ignore row clicks in edit mode
 	if ($.tbl.editing == true) {
 		return;
 	}

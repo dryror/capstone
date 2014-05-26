@@ -83,7 +83,12 @@ $.transectsWin.setTitleControl(titleLabel);
 
 /* Event Listeners */
 
+// Table row click event
 $.tbl.addEventListener('click', function(e){
+	//ignore row clicks in edit mode
+	if ($.tbl.editing == true) {
+		return;
+	}
 	//info icon clicked, get modal
 	if(e.source.toString() == '[object TiUIButton]') {
 		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID, title:e.rowData.title}).getView();
