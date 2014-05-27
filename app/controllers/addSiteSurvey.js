@@ -281,7 +281,7 @@ var win = Ti.UI.createWindow({
 	borderRadius : 0,
 	borderWidth: 3,
 	title : 'park names',
-	orientationModes : [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
+	//orientationModes : [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
 });
 
 
