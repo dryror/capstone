@@ -139,7 +139,7 @@ function takePhoto() {
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
 		temp.write(myPhoto);
 
-		
+
 		//set variables with values
 		photo = myPhoto;
 		utmEasting = UTMEasting;
