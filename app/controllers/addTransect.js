@@ -109,6 +109,7 @@ function takePhoto() {
 		$.transectThumbnail.visible = true;
 		$.transectThumbnail.image = myPhoto;
 		
+		//Save Photo for preview (temporary photo)
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
 		temp.write(myPhoto);
 		
@@ -183,9 +184,6 @@ function savePhoto(photo){
 
 //THUMBNAIL BUTTON - preview photo
 function previewPhoto(){
-	//var temp=Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
-	//temp.write(photo);
-	//alert("You just clicked the photo thumbnail!");
 	var modal = Alloy.createController("photoPreviewModal", {}).getView();
 		modal.open({
 			modal : true,
@@ -322,4 +320,13 @@ $.pickStake.addEventListener('click', function(e) {
 //Comments
 $.comments.addEventListener('change', function(e) {
 	//TODO
+});
+
+// Fire when addTransect Window is closed
+$.addTransectWin.addEventListener('close', function(e) {
+	//remove the temp photo - used for photo preview
+	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+	if(tempPhoto.exists){
+		tempPhoto.deleteFile();
+	}
 });
