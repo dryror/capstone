@@ -59,6 +59,19 @@ $.tbl.addEventListener('click', function(e){
 	if ($.tbl.editing == true) {
 		return;
 	}
+	
+	//check if media exists -if no photo has been taken (re-visited plot)
+	if(e.rowData.mediaID == null){
+		alert("No Photo Found!");
+		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+		});
+	}else{
+	
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
 		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID}).getView();
@@ -75,6 +88,7 @@ $.tbl.addEventListener('click', function(e){
 		var nav = Alloy.Globals.navMenu;
 		nav.openWindow(observations);   
 	}
+  }
 });
 
 //Delete - event listener
@@ -157,7 +171,7 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Retrieve existing plots from database
-		var rows = db.execute('SELECT plot_id, plot_name \
+		var rows = db.execute('SELECT plot_id, plot_name, media_id \
 							FROM plot \
 							WHERE transect_id = ?', $.tbl.transectID);
 		
@@ -165,6 +179,7 @@ function populateTable() {
 		while (rows.isValidRow()) {	
 			var plotID = rows.fieldByName('plot_id');
 			var plotName = rows.fieldByName('plot_name');
+			var mediaID = rows.fieldByName('media_id');
 			
 			var groundCoverRows = db.execute('SELECT sum(ground_cover) \
 											FROM plot_observation \
@@ -180,6 +195,7 @@ function populateTable() {
 				var newRow = Ti.UI.createTableViewRow({
 					title : plotName,
 					plotID : plotID,
+					mediaID : mediaID,
 					height: 60,
 					font: {fontSize: 20},
 					totalGroundCover: totalGroundCover,

@@ -37,15 +37,19 @@ try{
 	//var transectID = results.fieldByName('transect_id');			
 	var mediaID = results.fieldByName('media_id');		
 	var comments = results.fieldByName('comments');			
-		
 	
+	//if media does not exist
+	if(mediaID == null){
+		//enable the take photo button
+		$.photoBtn.visible = true;
+	}else{	
 	//get the media name
 	var mediaRow = db.execute('SELECT media_name \
 							FROM media \
 							WHERE media_id = ?', mediaID);
 	
-	var mediaName = mediaRow.fieldByName('media_name');
-		
+	var mediaName = mediaRow.fieldByName('media_name');	
+	
 	//GET FOLDER NAME - Retrieve site survery, year, park
 	var rows = db.execute('SELECT year, protocol_name, park_name \
 							FROM site_survey s, protocol p, park prk \
@@ -62,6 +66,8 @@ try{
 	
 	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
 	
+	
+	
 	if (imageDir.exists()) {		
 		// .resolve() provides the resolved native path for the directory.
 		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), mediaName);
@@ -75,8 +81,7 @@ try{
 			temp.write(imageFile);
 		}
 	}
-	
-		
+ }	
 }catch(e){
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
