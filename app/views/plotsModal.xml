@@ -10,7 +10,7 @@
 				<Button id="editBtn" title="Edit" onClick="editBtn" />
 			</RightNavButton>
 			
-			<View id="formView">
+			<ScrollView id="formView">
 				
 				<Label id="plotNameLbl" text="Plot Number:" />
 				<Label id="nameLbl" text="1" />
@@ -33,7 +33,7 @@
 				<Label id="dateRecordedLbl" text="Date Recorded:" />
 				<Label id="dateRecorded" text="111111" />
 				
-			</View>
+			</ScrollView>
 
 		</Window>
 	</NavigationWindow>

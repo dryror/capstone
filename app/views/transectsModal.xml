@@ -9,30 +9,32 @@
 			<RightNavButton>
 				<Button id="editBtn" title="Edit" onClick="editBtnClick" />
 			</RightNavButton>
+			
+			<ScrollView>	
+				<Label id="transectLbl" text="Transect Name:" />
+				<TextField id="transectName" />
+				<Label id="transectError" class="error" visible="false" />
 				
-			<Label id="transectLbl" text="Transect Name:" />
-			<TextField id="transectName" />
-			<Label id="transectError" class="error" visible="false" />
-			
-			<Label id="surveyorLbl" text="Surveyor:" />
-			<TextField id="surveyor" />
-			<Label id="surveyorError" class="error" visible="false" />
-			
-			<Label id="otherSurveyorsLbl" text="Other Surveyors:" />
-			<TextField id="otherSurveyors" hintText="(optional)" />
-			<Label id="otherSurveyorsError" class="error" visible="false" />
-			
-			<Label id="plotDistLbl" text="Plot Distance:" />
-			<TextField id="plotDistance" />
-			<Label id="plotDistanceError" class="error" visible="false" />
-			
-			<Label id="stakeOriLbl" text="Stake Orientation:" />
-			<TabbedBar id="stakeBar" />
-			<Label id="stakeError" class="error" visible="false" />
-			
-			<Label id="commentsLbl" text="Comments:" />
-			<TextField id="comments" hintText="(optional)" />
-			<Label id="commentsError" class="error" visible="false" />
+				<Label id="surveyorLbl" text="Surveyor:" />
+				<TextField id="surveyor" />
+				<Label id="surveyorError" class="error" visible="false" />
+				
+				<Label id="otherSurveyorsLbl" text="Other Surveyors:" />
+				<TextField id="otherSurveyors" hintText="(optional)" />
+				<Label id="otherSurveyorsError" class="error" visible="false" />
+				
+				<Label id="plotDistLbl" text="Plot Distance:" />
+				<TextField id="plotDistance" />
+				<Label id="plotDistanceError" class="error" visible="false" />
+				
+				<Label id="stakeOriLbl" text="Stake Orientation:" />
+				<TabbedBar id="stakeBar" />
+				<Label id="stakeError" class="error" visible="false" />
+				
+				<Label id="commentsLbl" text="Comments:" />
+				<TextField id="comments" hintText="(optional)" />
+				<Label id="commentsError" class="error" visible="false" />
+			</ScrollView>
 			
 		</Window>
 	</NavigationWindow>

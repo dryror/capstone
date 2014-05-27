@@ -4,7 +4,7 @@
 			<Button id="doneAddTransect" title="Done" onClick="doneBtn"/>
 		</RightNavButton>
 		
-		<View id="formView">
+		<ScrollView id="formView">
 			<Label id="plotNumberLbl" text="Plot Number:" />
 			<Label id="numberLbl" />
 			
@@ -29,6 +29,6 @@
 			
 			<Label id="info">Please confirm the stake orientation and distance along the transect for this plot.\r\n\nIf there is a deviation, you can select other and specify the deviation in the provided text field.\r\n\nWhen taking the photo, please stand with your feet on the transect line and frame the picture with the entire plot.</Label>
 				
-		</View>
+		</ScrollView>
 	</Window>
 </Alloy>

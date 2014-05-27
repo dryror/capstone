@@ -9,13 +9,15 @@
 			<RightNavButton>
 				<Button id="doneBtn" title="Done" onClick="doneBtnClick" />
 			</RightNavButton>
-				
-			<Label id="groundCoverLbl" text="Ground Cover:" />
-			<TextField id="groundCover" />
-			<Label id="percentSymbolLabel" />
-			<Label id="groundCoverError" class="error" visible="false" />
 			
-			<Label id="userInstructions" />
+			<ScrollView>	
+				<Label id="groundCoverLbl" text="Ground Cover:" />
+				<TextField id="groundCover" />
+				<Label id="percentSymbolLabel" />
+				<Label id="groundCoverError" class="error" visible="false" />
+				
+				<Label id="userInstructions" />
+			</ScrollView>
 			
 		</Window>
 	</NavigationWindow>

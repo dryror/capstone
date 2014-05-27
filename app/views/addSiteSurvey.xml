@@ -4,7 +4,7 @@
 			<Button id="doneAddSite" title="Done" onClick="doneBtn"/>
 		</RightNavButton>
 		
-		<View id="formView">
+		<ScrollView id="formView">
 			<Label id="parkLbl" text="Park Name:" />
 			<SearchBar id="parkSrch" />
 			<Label id="parkSrchError" class="error" visible="false" />
@@ -20,6 +20,6 @@
 			<View id="footerLine" />
 			
 			<Label id="info"></Label>
-		</View>
+		</ScrollView>
 	</Window>
 </Alloy>

@@ -9,13 +9,14 @@
 			<RightNavButton>
 				<Button id="doneBtn" title="Done" onClick="doneBtnClick" />
 			</RightNavButton>
-				
-			<Label id="groundCoverLbl" text="Ground Cover:" />
-			<Label id="groundCover" />
 			
-			<Label id="commentsLbl" text="Comments:" />
-			<Label id="comments" />
-
+			<ScrollView>	
+				<Label id="groundCoverLbl" text="Ground Cover:" />
+				<Label id="groundCover" />
+				
+				<Label id="commentsLbl" text="Comments:" />
+				<Label id="comments" />
+			</ScrollView>
 		</Window>
 	</NavigationWindow>
 </Alloy>
