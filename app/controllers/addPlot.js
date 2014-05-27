@@ -132,7 +132,13 @@ function takePhoto() {
 	var pic = require('camera');
 	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
 		//Set thumbnail
+		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
+		
+		//Save Photo for preview (temporary photo)
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+		temp.write(myPhoto);
+
 		
 		//set variables with values
 		photo = myPhoto;
@@ -281,6 +287,17 @@ function insertPreviousPlotRows(db) {  //expected parameter: an open database co
 	}
 }
 
+//THUMBNAIL BUTTON - preview photo
+function previewPhoto(){
+	var modal = Alloy.createController("photoPreviewModal", {}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+	});
+}
+
 /* Event Listeners */
 
 // Show and hide the deviation text field depending on what is selected
@@ -383,5 +400,10 @@ Ti.App.addEventListener('distanceDeviationChange', function(e) {
 
 // related to issue #28
 $.addPlotWin.addEventListener('close', function(e) {
+	//remove the temp photo - used for photo preview
+	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+	if(tempPhoto.exists){
+		tempPhoto.deleteFile();
+	}
 	Ti.App.fireEvent("app:refreshPlots");
 });
