@@ -12,7 +12,7 @@
 			
 			<View id="formView">
 				
-				<Label id="plotNameLbl" text="Plot Name:" />
+				<Label id="plotNameLbl" text="Plot Number:" />
 				<Label id="nameLbl" text="1" />
 				
 				<Label id="stakeLbl" text="Stake Orientation:" />

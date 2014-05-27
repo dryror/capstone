@@ -94,7 +94,7 @@ function doneBtn(e){
 			db.close();
 			//refresh and close
 			Ti.App.fireEvent("app:refreshTransects");
-			$.addTransect.close();
+			$.addTransectWin.close();
 		}
 	}
 

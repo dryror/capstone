@@ -170,7 +170,7 @@ function doneBtn(e){
 		db.close();
 		//refresh and close
 		Ti.App.fireEvent("app:refreshPlotObservations");
-		$.addPlotObservation.close();
+		$.addPlotObservationWin.close();
 	}
 }
 

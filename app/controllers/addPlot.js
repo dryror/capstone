@@ -120,7 +120,7 @@ function doneBtn(e){
 		
 		//refresh and close
 		Ti.App.fireEvent("app:refreshPlots");
-		$.addPlot.close();
+		$.addPlotWin.close();
 	}
 }
 
