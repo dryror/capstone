@@ -89,4 +89,15 @@
 	left: 220,
 	right: 40,
 	top:280
+},
+"#photoBtn": {
+	left: 40,
+	top: 340
+},
+"#plotThumbnail": {
+	width: 64,
+	height: 64,
+	left: 220,
+	top: 340,
+	borderRadius: 10
 }

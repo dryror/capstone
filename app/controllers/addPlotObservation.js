@@ -183,7 +183,7 @@ function takePhoto(){
 		$.plotThumbnail.image = myPhoto;
 		
 		//Save Photo for preview (temporary photo)
-		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
 		temp.write(myPhoto);
 		
 		//set variables with values
@@ -546,7 +546,7 @@ autocomplete_table.addEventListener('click', function(e) {
 // Fire when addTransect Window is closed
 $.addPlotObservationWin.addEventListener('close', function(e) {
 	//remove the temp photo - used for photo preview
-	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
 	if(tempPhoto.exists){
 		tempPhoto.deleteFile();
 	}

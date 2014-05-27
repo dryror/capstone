@@ -33,6 +33,9 @@
 				<Label id="dateRecordedLbl" text="Date Recorded:" />
 				<Label id="dateRecorded" text="111111" />
 				
+				<Button id="photoBtn" title="Take Photo" onClick="takePhoto" visible="false"/>
+				<ImageView id="plotThumbnail" onClick="previewPhoto" visible="false"/>
+				
 			</ScrollView>
 
 		</Window>

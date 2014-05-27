@@ -110,7 +110,7 @@ function takePhoto() {
 		$.transectThumbnail.image = myPhoto;
 		
 		//Save Photo for preview (temporary photo)
-		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
 		temp.write(myPhoto);
 		
 		//set variables with values
@@ -325,7 +325,7 @@ $.comments.addEventListener('change', function(e) {
 // Fire when addTransect Window is closed
 $.addTransectWin.addEventListener('close', function(e) {
 	//remove the temp photo - used for photo preview
-	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
 	if(tempPhoto.exists){
 		tempPhoto.deleteFile();
 	}

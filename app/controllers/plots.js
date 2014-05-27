@@ -61,7 +61,7 @@ $.tbl.addEventListener('click', function(e){
 	}
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title}).getView();
+		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
