@@ -4,6 +4,7 @@
 var args = arguments[0];
 var plotID = args.plotID;
 var plotName = args.title;
+var siteID = args.siteID;
 
 //Set the title of the modal to the plot name
 var titleLabel = Titanium.UI.createLabel({
@@ -34,8 +35,47 @@ try{
 	var stakeOrientation = results.fieldByName('stake_deviation');
 	var plotDistance = results.fieldByName('distance_deviation');
 	//var transectID = results.fieldByName('transect_id');			
-	//var mediaID = results.fieldByName('media_id');		
+	var mediaID = results.fieldByName('media_id');		
 	var comments = results.fieldByName('comments');			
+		
+	
+	//get the media name
+	var mediaRow = db.execute('SELECT media_name \
+							FROM media \
+							WHERE media_id = ?', mediaID);
+	
+	var mediaName = mediaRow.fieldByName('media_name');
+		
+	//GET FOLDER NAME - Retrieve site survery, year, park
+	var rows = db.execute('SELECT year, protocol_name, park_name \
+							FROM site_survey s, protocol p, park prk \
+							WHERE s.protocol_id = p.protocol_id \
+							AND s.park_id = prk.park_id \
+							AND site_id = ?', siteID);
+							
+   //get the name of the directory	
+	var year = rows.fieldByName('year');
+	var protocolName = rows.fieldByName('protocol_name');
+	var parkName = rows.fieldByName('park_name');
+
+	var folderName = year + ' - ' + protocolName + ' - ' + parkName;
+	
+	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);
+	
+	if (imageDir.exists()) {		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), mediaName);
+		if (imageFile.exists()) {
+			//Set thumbnail
+			$.plotThumbnail.visible = true;
+			$.plotThumbnail.image = imageFile;
+		
+			//Save Photo for preview (temporary photo)
+			var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
+			temp.write(imageFile);
+		}
+	}
+	
 		
 }catch(e){
 	var errorMessage = e.message;
@@ -81,6 +121,11 @@ var distanceOther = false;
 
 // BACK BUTTON - navigate back to plot list screen
 function backBtn(){
+	//remove the temp photo - used for photo preview  //Ti.Filesystem.tempDirectory  //applicationDataDirectory
+	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
+	if(tempPhoto.exists){
+		tempPhoto.deleteFile();
+	}
 	Ti.App.fireEvent("app:refreshPlots");
 	$.modalNav.close();
 }
@@ -186,6 +231,21 @@ function saveEdit(e){
 		//Close the database
 		db.close();
 	}
+}
+
+function takePhoto(){
+	alert("take photo button");
+}
+
+//THUMBNAIL BUTTON - preview photo
+function previewPhoto(){
+	var modal = Alloy.createController("photoPreviewModal", {}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+	});
 }
 
 /* Event Listeners */
