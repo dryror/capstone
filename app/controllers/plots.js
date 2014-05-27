@@ -62,7 +62,7 @@ $.tbl.addEventListener('click', function(e){
 	
 	//check if media exists -if no photo has been taken (re-visited plot)
 	if(e.rowData.mediaID == null){
-		alert("No Photo Found!");
+		//alert("No Photo Found!");
 		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID}).getView();
 		modal.open({
 			modal : true,
