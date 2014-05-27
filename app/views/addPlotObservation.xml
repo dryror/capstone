@@ -27,7 +27,7 @@
 			<TextField id="comments" />
 			
 			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
-			<ImageView id="plotThumbnail" />
+			<ImageView id="plotThumbnail" onClick="previewPhoto" visible="false"/>
 			
 			<Label id="info">Please select the observation type. If this is a plant observation, you can search for the Phylum, Class, Order, Family, English Name, or Scientific Name.\r\n\nAllowed percentages: 0.1%, 0.2%, 0.5%, or any integer between 0 and 100.\r\n\nA reference photo may be taken, but is not required.</Label>
 		</ScrollView>

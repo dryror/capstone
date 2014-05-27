@@ -179,7 +179,12 @@ function takePhoto(){
 	var pic = require('camera');
 	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
 		//Set thumbnail
+		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
+		
+		//Save Photo for preview (temporary photo)
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+		temp.write(myPhoto);
 		
 		//set variables with values
 		photo = myPhoto;
@@ -242,6 +247,17 @@ function savePhoto(photo){
 		imageFile = null;
 		return path;
 	}	
+}
+
+//THUMBNAIL BUTTON - preview photo
+function previewPhoto(){
+	var modal = Alloy.createController("photoPreviewModal", {}).getView();
+		modal.open({
+			modal : true,
+			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+			navBarHidden : false
+	});
 }
 
 // Event listeners
@@ -525,4 +541,13 @@ autocomplete_table.addEventListener('click', function(e) {
 	$.observationError.visible = false;
 	win.close();
 	$.observationSearch.blur();
+});
+
+// Fire when addTransect Window is closed
+$.addPlotObservationWin.addEventListener('close', function(e) {
+	//remove the temp photo - used for photo preview
+	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.applicationDataDirectory,'temp.png');
+	if(tempPhoto.exists){
+		tempPhoto.deleteFile();
+	}
 });
