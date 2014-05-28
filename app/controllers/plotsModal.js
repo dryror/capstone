@@ -6,6 +6,9 @@ var plotID = args.plotID;
 var plotName = args.title;
 var siteID = args.siteID;
 
+//init var
+var photo;
+
 //Set the title of the modal to the plot name
 var titleLabel = Titanium.UI.createLabel({
     height:34,
@@ -41,7 +44,9 @@ try{
 	//if media does not exist
 	if(mediaID == null){
 		//enable the take photo button
+		$.editBtn.fireEvent('click');
 		$.photoBtn.visible = true;
+		$.photoBtn.enabled = true;
 	}else{	
 	//get the media name
 	var mediaRow = db.execute('SELECT media_name \
@@ -157,6 +162,8 @@ function editBtn(e){
 		
 		//disable the button button during edit mode
 		$.backBtn.enabled = false;
+		$.photoBtn.enabled = true;
+		
 	} else { //if the title says "Done"
 		var errorOnPage = false;
 		if(stakeOther == true){
@@ -190,7 +197,13 @@ function editBtn(e){
 		}else{
 			plotDistance = original_plotDistance;
 		}
-	
+		/*
+		if (photo == null){
+			$.photoError.visible = true;
+			$.photoError.text = "* Please take a photo";
+			errorOnPage = true;
+		}
+		*/
 		if(errorOnPage){
 			return;
 		}else{
@@ -208,6 +221,8 @@ function editBtn(e){
 			$.comments.editable = false;
 			$.stakeDeviation.editable = false;
 			$.distanceDeviation.editable = false;
+			
+			$.photoBtn.enabled = false;
 		
 			saveEdit(e);
 		}
@@ -216,6 +231,7 @@ function editBtn(e){
 
 // SAVE EDIT - check for errors & save when done btn selected
 function saveEdit(e){
+	
 	//disable button for 1 second to prevent double entry
 	e.source.enabled = false;
 	setTimeout(function(){ e.source.enabled = true; },1000);
@@ -226,11 +242,25 @@ function saveEdit(e){
 	try{
 		//Connect to database
 		var db = Ti.Database.open('ltemaDB');
+		//Save Photo
+		if(photo != null){
+			var photoName = savePhoto(photo);
 		
-		//Insert Query - update row in plot table
-		db.execute(	'UPDATE OR FAIL plot SET stake_deviation = ?, distance_deviation = ?, comments = ? WHERE plot_id = ?', 
-					stakeOrientation, plotDistance, comments, plotID);
+			//add photo name to media table
+			db.execute( 'INSERT INTO media (media_name) VALUES (?)', photoName);
 			
+			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
+			var results = db.execute('SELECT last_insert_rowid() as mediaID');
+			var mediaID = results.fieldByName('mediaID');
+		
+			//Insert Query - update row in plot table
+			db.execute(	'UPDATE OR FAIL plot SET stake_deviation = ?, distance_deviation = ?, media_id = ?, comments = ? WHERE plot_id = ?', 
+						stakeOrientation, plotDistance, mediaID, comments, plotID);
+		}else{
+			//Insert Query - update row in plot table
+			db.execute(	'UPDATE OR FAIL plot SET stake_deviation = ?, distance_deviation = ?, comments = ? WHERE plot_id = ?', 
+						stakeOrientation, plotDistance, comments, plotID);
+		}		
 	}catch(e){
 		Ti.API.error(e.toString());	
 		//Close the database
@@ -238,9 +268,89 @@ function saveEdit(e){
 	}
 }
 
-function takePhoto(){
-	alert("take photo button");
+function takePhoto() {		
+	//remove photo error msg
+	$.photoError.visible = false;
+	
+	//call camera module and set thumbnail
+	var pic = require('camera');
+	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+		//Set thumbnail
+		$.plotThumbnail.visible = true;
+		$.plotThumbnail.image = myPhoto;
+		
+		//Save Photo for preview (temporary photo)
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
+		temp.write(myPhoto);
+		
+		//set variables with values
+		photo = myPhoto;
+		utmEasting = UTMEasting;
+		utmNorthing = UTMNorthing;
+		utmZone = n_UTMZone;
+		
+		//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
+	});
 }
+
+//Name and save photo to filesystem - do this when done btn is pressed
+function savePhoto(photo){
+	//get the name of the current site survery, year, park
+	try{
+		//Connect to database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//Query - Retrieve site survery, year, park
+		var rows = db.execute('SELECT s.year, p.protocol_name, prk.park_name \
+						FROM site_survey s, protocol p, park prk \
+						WHERE s.protocol_id = p.protocol_id \
+						AND s.park_id = prk.park_id \
+						AND site_id = ?', siteID);
+		
+		//Get requested data from each row in table
+		
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+	} catch(e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+	} finally {
+		rows.close();
+		db.close();
+	}
+	
+	//Name the directory
+	var dir = year + ' - ' + protocolName + ' - ' + parkName; 
+	//get the photo
+	var img = photo;
+	
+	//name the photo  (timestamp - utc in ms)
+	var timestamp = new Date().getTime();
+	var filename = "T" + timestamp;
+	
+	try {
+		// Create image Directory for site
+		var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
+		if (! imageDir.exists()) {
+			imageDir.createDirectory();
+		}
+		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
+		imageFile.write(img);
+		
+		var path = filename + '.png'; 
+
+	} catch(e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
+	} finally {
+		imageDir = null;
+		imageFile = null;
+		return path;
+	}
+  }
 
 //THUMBNAIL BUTTON - preview photo
 function previewPhoto(){
@@ -273,6 +383,8 @@ $.pickStake.addEventListener('click', function(e) {
 		$.comments.top += 60;
 		$.dateRecordedLbl.top += 60;
 		$.dateRecorded.top += 60;
+		$.photoBtn.top += 60;
+		$.plotThumbnail.top += 60;
 		//$.info.top += 60;
 		$.stakeDeviation.visible = true;
 		$.stakeDeviation.focus();
@@ -288,6 +400,8 @@ $.pickStake.addEventListener('click', function(e) {
 		$.comments.top -= 60;
 		$.dateRecordedLbl.top -= 60;
 		$.dateRecorded.top -= 60;
+		$.photoBtn.top -= 60;
+		$.plotThumbnail.top -= 60;
 		//$.info.top -= 60;
 		$.stakeDeviation.visible = false;
 		$.stakeDeviation.blur();
@@ -308,6 +422,8 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.comments.top += 60;
 		$.dateRecordedLbl.top += 60;
 		$.dateRecorded.top += 60;
+		$.photoBtn.top += 60;
+		$.plotThumbnail.top += 60;
 		//$.info.top += 60;
 		$.distanceDeviation.visible = true;
 		$.distanceDeviation.focus();
@@ -318,6 +434,8 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.comments.top -= 60;
 		$.dateRecordedLbl.top -= 60;
 		$.dateRecorded.top -= 60;
+		$.photoBtn.top -= 60;
+		$.plotThumbnail.top -= 60;
 		//$.info.top -= 60;
 		$.distanceDeviation.visible = false;
 		$.distanceDeviation.blur();

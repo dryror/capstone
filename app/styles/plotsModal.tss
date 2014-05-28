@@ -100,4 +100,9 @@
 	left: 220,
 	top: 340,
 	borderRadius: 10
+},
+"#photoError": {
+	left: 225,
+	top: 345,
+	color: 'red'
 }
