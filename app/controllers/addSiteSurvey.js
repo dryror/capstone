@@ -343,19 +343,21 @@ function auto_complete(search_term) {
 
 //Event Listener - when user types in the search bar
 $.parkSrch.addEventListener('change', function(e) {
-	if (e.source.value.length >= 1 ) { //&& e.source.value != last_search
+	var match = /^[A-Za-z]/;  //santatize search input by reqauiring a letter
+	if ((e.source.value.length < 1) || (!e.source.value.match(match)) ) { 
+		autocomplete_table.setData([]);
+		autocomplete_table.setData(table_data);
+		win.close();
+	} else {
 		win.open();
 		clearTimeout(timers['autocomplete']);
 		timers['autocomplete'] = setTimeout(function() {
 			//last_search = e.source.value;
 			auto_complete(e.source.value);
 		}, 300);
-	} else {
 		//if user deletes input
 		//clear the table view results
-		autocomplete_table.setData([]);
-		autocomplete_table.setData(table_data);
-		win.close();
+		
 	}
 	return false;
 });
