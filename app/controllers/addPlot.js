@@ -27,6 +27,14 @@ $.pickDistance.labels = [{title:plotDistance}, {title:"Other"}];
 var stakeOther = false;
 var distanceOther = false;
 
+// Nab Bar Title
+var labelText = 'New Plot';
+var titleLabel = Titanium.UI.createLabel({
+	text: labelText,
+	font:{fontSize:20,fontWeight:'bold'},
+});
+$.addPlotWin.setTitleControl(titleLabel);
+
 // Initialize Variables
 var photo;
 var utmEasting;

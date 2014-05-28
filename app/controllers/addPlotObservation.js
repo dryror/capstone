@@ -20,6 +20,14 @@ try{
 	db.close();
 }
 
+// Nav Bar Title
+var labelText = 'New Plot Observation';
+var titleLabel = Titanium.UI.createLabel({
+	text: labelText,
+	font:{fontSize:20,fontWeight:'bold'},
+});
+$.addPlotObservationWin.setTitleControl(titleLabel);
+
 // Initialize Variables
 var photo = null;
 
