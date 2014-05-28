@@ -6,7 +6,7 @@ var plotID = args.plotID;
 var plotName = args.title;
 var siteID = args.siteID;
 
-//init var
+//initialize variables
 var photo;
 
 //Set the title of the modal to the plot name
