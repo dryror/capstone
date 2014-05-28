@@ -34,6 +34,19 @@ $.addTransectWin.addEventListener('close', function(e) {
 	Ti.App.fireEvent("app:refreshTransects");
 });
 
+var labelText = 'New Transect';
+
+var titleLabel = Titanium.UI.createLabel({
+	top:10,
+	text: labelText,
+	textAlign:'center',
+	font:{fontSize:20,fontWeight:'bold'},
+});
+
+// Associate label to title
+$.addTransectWin.setTitleControl(titleLabel);
+
+
 /* Functions */
 	
 //validate form before inserting to database
