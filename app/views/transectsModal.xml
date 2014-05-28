@@ -34,6 +34,11 @@
 				<Label id="commentsLbl" text="Comments:" />
 				<TextField id="comments" hintText="(optional)" />
 				<Label id="commentsError" class="error" visible="false" />
+				
+				<!--<Button id="photoBtn" title="Take Photo" onClick="takePhoto" visible="false"/>-->
+				<ImageView id="transectThumbnail" onClick="previewPhoto" visible="false"/>
+				<Label id="photoError" class="error" visible="false" />
+				
 			</ScrollView>
 			
 		</Window>

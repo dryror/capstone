@@ -110,4 +110,20 @@
 "#commentsError": {
 	left: 225,
 	top: 370
+},
+"#photoBtn": {
+	left: 40,
+	top: 400
+},
+"#transectThumbnail": {
+	width: 64,
+	height: 64,
+	left: 220,
+	top: 400,
+	borderRadius: 10
+},
+"#photoError": {
+	left: 225,
+	top: 405,
+	color: 'red'
 }
