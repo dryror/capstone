@@ -161,7 +161,7 @@ $.tbl.addEventListener('delete', function(e) {
 
 function populateTable() {
 	
-	$.addPlot.enabled = true;
+	//$.addPlot.enabled = true;
 	
 	//Clear the table if there is anything in it
 	var rd = []; 
