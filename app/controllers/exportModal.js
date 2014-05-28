@@ -3,7 +3,7 @@
  */
 
 //Navigation Bar label
-var titleText = "Export A Survey";
+var titleText = "Export a Survey";
 var titleLabel = Titanium.UI.createLabel({
 	text: titleText,
 	font:{fontSize:20,fontWeight:'bold'},

@@ -528,17 +528,18 @@ function auto_complete(search_term) {
 
 //Event Listener - when user types in the search bar
 $.observationSearch.addEventListener('change', function(e) {
-	if (e.source.value.length >= 2) {
-		clearTimeout(timers['autocomplete']);
-		timers['autocomplete'] = setTimeout(function() {
-			auto_complete(e.source.value);
-		}, 500);
-	} else {
-		//if user deletes input
+	var match = /^[A-Za-z]/;  //santatize search input by reqauiring a letter
+	if ((e.source.value.length < 2) || (!e.source.value.match(match))) {
 		//clear the table view results
 		autocomplete_table.setData([]);
 		autocomplete_table.setData(table_data);
 		win.close();
+	} else {
+		clearTimeout(timers['autocomplete']);
+		timers['autocomplete'] = setTimeout(function() {
+			auto_complete(e.source.value);
+		}, 500);
+		
 	}
 });
 
