@@ -1,3 +1,15 @@
+/*
+ * Transfer completed site surveys to a desktop computer via physical connection
+ */
+
+//Navigation Bar label
+var titleText = "Export A Survey";
+var titleLabel = Titanium.UI.createLabel({
+	text: titleText,
+	font:{fontSize:20,fontWeight:'bold'},
+});
+$.exportWin.setTitleControl(titleLabel);
+
 function backBtnClick(){
 	$.modalNav.close();
 }

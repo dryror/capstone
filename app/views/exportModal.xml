@@ -1,7 +1,7 @@
 <Alloy>
 	<NavigationWindow id="modalNav">
 		
-		<Window class="container" title="Export" id="exportWin">
+		<Window class="container" id="exportWin">
 			
 			<LeftNavButton>
 				<Button id="backBtn" title="Back" onClick="backBtnClick" />
