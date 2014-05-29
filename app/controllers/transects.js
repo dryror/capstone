@@ -18,7 +18,7 @@ function populateTable() {
 		
 		//Query - Retrieve existing sites from database
 		rows = db.execute('SELECT transect_id, transect_name, surveyor, \
-						utm_zone, utm_easting, utm_northing \
+						utm_zone, utm_easting, utm_northing, media_id \
 						FROM transect \
 						WHERE site_id = ?', $.tbl.siteID); 
 		
@@ -32,7 +32,8 @@ function populateTable() {
 			var utmZone = rows.fieldByName('utm_zone');
 			var utmEasting = rows.fieldByName('utm_easting');
 			var utmNorthing = rows.fieldByName('utm_northing');
-		
+			var mediaID = rows.fieldByName('media_id');
+			
 			//create a string to display from each entry
 			var transectDesc =  transectName + ' - UTM Z:' + 
 					utmZone + ' E:' + utmEasting + ' N:' + utmNorthing; 
@@ -41,6 +42,7 @@ function populateTable() {
 				var newRow = Ti.UI.createTableViewRow({
 					title : transectDesc,
 					transectID : transectID,
+					mediaID : mediaID,
 					height: 60,
 					font: {fontSize: 20}
 				});
@@ -91,8 +93,10 @@ $.tbl.addEventListener('click', function(e){
 	if ($.tbl.editing == true) {
 		return;
 	}
-	//info icon clicked, get modal
-	if(e.source.toString() == '[object TiUIButton]') {
+	
+	//check if media exists -if no photo has been taken (re-visited transect)
+	if(e.rowData.mediaID == null){
+		//alert("No Photo Found!");
 		var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID, title:e.rowData.title}).getView();
 		modal.open({
 			modal : true,
@@ -100,11 +104,22 @@ $.tbl.addEventListener('click', function(e){
 			modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
 			navBarHidden : false
 		});
-	//row clicked, get transect view
-	} else {
-		var plots = Alloy.createController("plots", {transectID:e.rowData.transectID, siteID:$.tbl.siteID}).getView();
-		var nav = Alloy.Globals.navMenu;
-		nav.openWindow(plots);
+	}else{
+		//info icon clicked, get modal
+		if(e.source.toString() == '[object TiUIButton]') {
+			var modal = Alloy.createController("transectsModal", {transectID:e.rowData.transectID, title:e.rowData.title}).getView();
+			modal.open({
+				modal : true,
+				modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
+				modalStyle : Ti.UI.iPhone.MODAL_PRESENTATION_PAGESHEET,
+				navBarHidden : false
+			});
+		//row clicked, get transect view
+		} else {
+			var plots = Alloy.createController("plots", {transectID:e.rowData.transectID, siteID:$.tbl.siteID}).getView();
+			var nav = Alloy.Globals.navMenu;
+			nav.openWindow(plots);
+		}
 	}
 });
 

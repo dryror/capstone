@@ -35,7 +35,7 @@ try {
 	//if media does not exist
 	if(mediaID == null){
 		//enable the take photo button
-		//$.editBtn.fireEvent('click');
+		$.editBtn.fireEvent('click');
 		$.photoBtn.visible = true;
 		$.photoBtn.enabled = true;
 	}else{	
@@ -196,6 +196,7 @@ function editBtnClick(e){
 		
 		//disable the button button during edit mode
 		$.backBtn.enabled = false;
+		$.photoBtn.enabled = true;
 		
 	} else { //title is "Done"
 		//fire error-checking listeners
@@ -221,16 +222,38 @@ function editBtnClick(e){
 		$.stakeBar.labels = stakeBarLabels;
 		$.comments.editable = false;
 		
-		saveEdit();
+		$.photoBtn.enabled = false;
+		
+		saveEdit(e);
 	}
 }
 
 //Save changes to transect
-function saveEdit(){
+function saveEdit(e){
 	try {
+		//connect to the database
 		var db = Ti.Database.open('ltemaDB');
-		db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
-					$.transectName.value, $.surveyor.value, $.otherSurveyors.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);		
+		
+		//Save photo
+		if(photo != null){
+			var photoName = savePhoto(photo);
+			
+			//add photo name to media table
+			db.execute( 'INSERT INTO media (media_name) VALUES (?)', photoName);
+			
+			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
+			var results = db.execute('SELECT last_insert_rowid() as mediaID');
+			var mediaID = results.fieldByName('mediaID');
+			
+			//alert("Media ID: " +  mediaID);
+			
+			//save the new information to the database with the media_id of the new photo
+			db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ?, media_id= ? WHERE transect_id= ?',
+					$.transectName.value, $.surveyor.value, $.otherSurveyors.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, mediaID, transectID);		
+		}else{
+			db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ? WHERE transect_id= ?',
+					$.transectName.value, $.surveyor.value, $.otherSurveyors.value, $.plotDistance.value, stakeBarLabels[$.stakeBar.index].title, $.comments.value, transectID);
+		}
 	} catch (e){
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
@@ -249,6 +272,90 @@ function backBtnClick(){
 	Ti.App.fireEvent("app:refreshTransects");
 	$.modalNav.close();
 }
+
+function takePhoto() {		
+	//remove photo error msg
+	$.photoError.visible = false;
+	
+	//call camera module and set thumbnail
+	var pic = require('camera');
+	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+		//Set thumbnail
+		$.transectThumbnail.visible = true;
+		$.transectThumbnail.image = myPhoto;
+		
+		//Save Photo for preview (temporary photo)
+		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
+		temp.write(myPhoto);
+		
+		//set variables with values
+		photo = myPhoto;
+		utmEasting = UTMEasting;
+		utmNorthing = UTMNorthing;
+		utmZone = n_UTMZone;
+		
+		//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
+	});
+}
+
+//Name and save photo to filesystem - do this when done btn is pressed
+function savePhoto(photo){
+	//get the name of the current site survery, year, park
+	try{
+		//Connect to database
+		var db = Ti.Database.open('ltemaDB');
+		
+		//Query - Retrieve site survery, year, park
+		var rows = db.execute('SELECT s.year, p.protocol_name, prk.park_name \
+						FROM site_survey s, protocol p, park prk \
+						WHERE s.protocol_id = p.protocol_id \
+						AND s.park_id = prk.park_id \
+						AND site_id = ?', siteID);
+		
+		//Get requested data from each row in table
+		
+		var year = rows.fieldByName('year');
+		var protocolName = rows.fieldByName('protocol_name');
+		var parkName = rows.fieldByName('park_name');
+	} catch(e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
+	} finally {
+		rows.close();
+		db.close();
+	}
+	
+	//Name the directory
+	var dir = year + ' - ' + protocolName + ' - ' + parkName; 
+	//get the photo
+	var img = photo;
+	
+	//name the photo  (timestamp - utc in ms)
+	var timestamp = new Date().getTime();
+	var filename = "T" + timestamp;
+	
+	try {
+		// Create image Directory for site
+		var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, dir);
+		if (! imageDir.exists()) {
+			imageDir.createDirectory();
+		}
+		
+		// .resolve() provides the resolved native path for the directory.
+		var imageFile = Ti.Filesystem.getFile(imageDir.resolve(), filename + '.png');
+		imageFile.write(img);
+		
+		var path = filename + '.png'; 
+
+	} catch(e) {
+		var errorMessage = e.message;
+		Ti.App.fireEvent("app:fileSystemError", {error: errorMessage});
+	} finally {
+		imageDir = null;
+		imageFile = null;
+		return path;
+	}
+  }
 
 //THUMBNAIL BUTTON - preview photo
 function previewPhoto(){
