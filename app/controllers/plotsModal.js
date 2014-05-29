@@ -131,7 +131,7 @@ var distanceOther = false;
 
 // BACK BUTTON - navigate back to plot list screen
 function backBtn(){
-	//remove the temp photo - used for photo preview  //Ti.Filesystem.tempDirectory  //applicationDataDirectory
+	//remove the temp photo - used for photo preview 
 	var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
 	if(tempPhoto.exists){
 		tempPhoto.deleteFile();
@@ -327,7 +327,7 @@ function savePhoto(photo){
 	
 	//name the photo  (timestamp - utc in ms)
 	var timestamp = new Date().getTime();
-	var filename = "T" + timestamp;
+	var filename = "P" + timestamp;
 	
 	try {
 		// Create image Directory for site
