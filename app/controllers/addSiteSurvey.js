@@ -113,9 +113,8 @@ $.addSiteSurveyWin.addEventListener('close', function(e) {
 
 //Test for form completeness before adding to database
 function doneBtn(e){
-	//disable button for 1 second to prevent double entry
+	//disable button to prevent double entry
 	e.source.enabled = false;
-	setTimeout(function(){ e.source.enabled = true; },1000);
 	
 	var errorFlag = false;
 	if (($.parkSrch.value == null) || ($.parkSrch.value == "")) {
@@ -132,6 +131,7 @@ function doneBtn(e){
 		$.pickProtocolError.text = "Please select a protocol";
 		$.pickProtocolError.visible = true;
 		errorFlag = true;
+	//is an elseif because an unselected TabbedBar has no title to check and will error out - there might be a better way to do this
 	} else if (($.pickProtocol.labels[$.pickProtocol.index].title !== "Alpine") && ($.pickProtocol.labels[$.pickProtocol.index].title !== "Grassland")) {
 		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
 		$.pickProtocolError.visible = true;
@@ -139,8 +139,9 @@ function doneBtn(e){
 	}
 	
 	if (errorFlag === true) {
+		e.source.enabled = true;
 		return;
-	} else if (errorFlag === false) {
+	} else { //no error, insert into database and close this screen
 		$.parkSrchError.visible = false;
 		$.pickBiomeError.visible = false;
 		$.pickProtocolError.visible = false;
@@ -257,9 +258,7 @@ function doneBtn(e){
 			db.close();
 			$.addSiteSurveyWin.close();
 		}
-	} else {
-		alert ('this error should never happen, ever.');
-	}
+	} 
 }
 
 
