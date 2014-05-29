@@ -51,9 +51,8 @@ $.addTransectWin.setTitleControl(titleLabel);
 	
 //validate form before inserting to database
 function doneBtn(e){
-	//disable button for 1 second to prevent double entry
+	//disable button to prevent double entry
 	e.source.enabled = false;
-	setTimeout(function(){ e.source.enabled = true; },1000);
 	
 	// check that the following (required) fields are not empty
 	Ti.App.fireEvent('transectChange');
@@ -61,24 +60,32 @@ function doneBtn(e){
 	Ti.App.fireEvent('plotDistanceChange');
 	
 	//check photo exists and a stake orientation has been selected
+	var errorFlag = false;
 	if(photo == null && $.pickStake.index == null){
 		$.photoError.visible = true;
 		$.photoError.text = "* Please take a photo";
 		$.stakeError.visible = true;
 		$.stakeError.text = "* Must select a stake orientation";
-		return;
-	}else if (photo == null){
+		errorFlag = true;
+	}
+	if (photo == null){
 		$.photoError.visible = true;
 		$.photoError.text = "* Please take a photo";
-		return;
-	}else if($.pickStake.index == null){
+		errorFlag = true;
+	}
+	if($.pickStake.index == null){
 		$.stakeError.visible = true;
 		$.stakeError.text = "* Must select a stake orientation";
+		errorFlag = true;
+	}
+	
+	if (errorFlag === true) {
+		e.source.enabled = true;
 		return;
-	}else{
+	} else {
 		$.photoError.visible = false;
 		$.stakeError.visible = false;
-	}
+	
 		// Name and Save Photo
 		var photoName = savePhoto(photo);
 		
@@ -110,6 +117,7 @@ function doneBtn(e){
 			$.addTransectWin.close();
 		}
 	}
+}
 
 function takePhoto() {		
 	//remove photo error msg
@@ -206,9 +214,9 @@ function previewPhoto(){
 	});
 }
   
+
 /* Listeners */
 
-//TODO: Confirm all conditions with project specs, project sponsor
 // When an input field changes, fire error handler
 
 // ERROR CHECKING
@@ -332,7 +340,7 @@ $.pickStake.addEventListener('click', function(e) {
 
 //Comments
 $.comments.addEventListener('change', function(e) {
-	//TODO
+	//no restrictions on comments
 });
 
 // Fire when addTransect Window is closed

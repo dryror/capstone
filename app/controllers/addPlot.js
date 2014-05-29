@@ -45,9 +45,8 @@ var utmZone;
 /* Functions */
 
 function doneBtn(e){
-	//disable button for 1 second to prevent double entry
+	//disable button to prevent double entry
 	e.source.enabled = false;
-	setTimeout(function(){ e.source.enabled = true; },1000);
 	
 	var errorOnPage = false;
 	
@@ -90,6 +89,7 @@ function doneBtn(e){
 	}
 	
 	if (errorOnPage) {
+		e.source.enabled = true;
 		return;
 	}
 		
