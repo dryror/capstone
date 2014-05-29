@@ -210,20 +210,32 @@ function populateTable() {
 				});
 				newRow.add(groundCoverLabel);
 				
-				//create and add info icon for the row
-				var infoButton = Ti.UI.createButton({
-					style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
-					right : 15,
-					height: 60,
-					width: 60
-				});
+				//Select icon to be displayed (info or edit)
+				if(mediaID != null){
+					//create and add info icon for the row
+					var infoButton = Ti.UI.createButton({
+						style : Titanium.UI.iPhone.SystemButton.DISCLOSURE,
+						right : 15,
+						height: 60,
+						width: 60
+					});
+				}else{
+					//create and add info icon for the row
+					var infoButton = Ti.UI.createButton({
+						image : "icons/edit_file.png",
+						right : 15,
+						height: 30,
+						width: 30
+					});
+				}
 				newRow.add(infoButton);
 				
+				/*
 				//change label colour if total ground cover is less than 100%
 				if (totalGroundCover < 100) {
 					 newRow.color = "red";
 				}
-				
+				*/
 				//Add row to the table view
 				$.tbl.appendRow(newRow);
 			
@@ -246,7 +258,6 @@ function populateTable() {
 
 //EDIT BUTTON - toggle edit mode
 function editBtn(e){
-	
 	//enable or disable edit mode
 	if (e.source.title == "Edit") {
 		$.tbl.editing = true;
