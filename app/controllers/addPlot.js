@@ -88,6 +88,13 @@ function doneBtn(e){
 		errorOnPage = true;
 	}
 	
+	if(utmZone == null){
+		$.locationError.text = '* Please capture current location';
+		$.locationError.visible = true;
+		errorFlag = true;
+	}
+	
+	
 	if (errorOnPage) {
 		e.source.enabled = true;
 		return;
@@ -138,7 +145,7 @@ function takePhoto() {
 	
 	//call camera module and set thumbnail
 	var pic = require('camera');
-	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+	pic.getPhoto(function(myPhoto) {
 		//Set thumbnail
 		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
@@ -148,12 +155,8 @@ function takePhoto() {
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
 		temp.write(myPhoto);
 
-
 		//set variables with values
 		photo = myPhoto;
-		utmEasting = UTMEasting;
-		utmNorthing = UTMNorthing;
-		utmZone = n_UTMZone;
 	});
 }
 
@@ -306,6 +309,21 @@ function previewPhoto(){
 			navBarHidden : false
 	});
 }
+// UTM - get the current location 
+function getLocation(){
+	$.locationError.visible = false;
+	//get the location - UTM
+	var gps = require('gps');
+		gps.getCurrentLocation(function(UTMEasting, UTMNorthing, n_UTMZone) {
+			
+			utmEasting = UTMEasting;
+			utmNorthing = UTMNorthing;
+			utmZone = n_UTMZone;
+			
+			$.location.visible = true;
+			$.location.text = "UTM Zone: " + n_UTMZone + "\nUTM Easting: " + UTMEasting + "\nUTM Northing: " + UTMNorthing;
+		});
+}  
 
 /* Event Listeners */
 
@@ -325,6 +343,10 @@ $.pickStake.addEventListener('click', function(e) {
 		$.plotThumbnail.top += 60;
 		$.photoError.top += 60;
 		$.thumbnailHintText.top += 60;
+		$.locationBtn.top += 60;
+		$.location.top += 60;
+		$.locationError.top += 60;
+		$.footerLine.top += 60;
 		$.info.top += 60;
 		$.stakeDeviation.visible = true;
 		$.stakeDeviation.focus();
@@ -342,6 +364,10 @@ $.pickStake.addEventListener('click', function(e) {
 		$.plotThumbnail.top -= 60;
 		$.thumbnailHintText.top -= 60;
 		$.photoError.top -= 60;
+		$.locationBtn.top -= 60;
+		$.location.top -= 60;
+		$.locationError.top -= 60;
+		$.footerLine.top -= 60;
 		$.info.top -= 60;
 		$.stakeDeviation.visible = false;
 		$.stakeDeviation.blur();
@@ -361,6 +387,10 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.plotThumbnail.top += 60;
 		$.photoError.top += 60;
 		$.thumbnailHintText.top += 60;
+		$.locationBtn.top += 60;
+		$.location.top += 60;
+		$.locationError.top += 60;
+		$.footerLine.top += 60;
 		$.info.top += 60;
 		$.distanceDeviation.visible = true;
 		$.distanceDeviation.focus();
@@ -373,6 +403,10 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.plotThumbnail.top -= 60;
 		$.photoError.top -= 60;
 		$.thumbnailHintText.top -= 60;
+		$.locationBtn.top -= 60;
+		$.location.top -= 60;
+		$.locationError.top -= 60;
+		$.footerLine.top -= 60;
 		$.info.top -= 60;
 		$.distanceDeviation.visible = false;
 		$.distanceDeviation.blur();

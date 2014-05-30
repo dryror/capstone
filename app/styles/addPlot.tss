@@ -104,8 +104,33 @@
 	top: 296,
 	color: '#8D8D8D'
 },
+"#locationBtn": {
+	left: 40,
+	top: 374
+	//image: 'icons/location2.png',
+	//height: 60,
+	//width: 60
+},
+"#location": {
+	left: 225,
+	top: 379,
+	color: 'black'
+},
+"#locationError": {
+	left: 225,
+	top: 384,
+	color: 'red'
+},
+"#footerLine": {
+	height: 1,
+	top: 464,
+	left: 5,
+	right: 5,
+	borderWidth: 1,
+	borderColor:'#aaa'
+},
 "#info": {
 	left: 40,
 	right: 40,
-	top: 380
+	top: 494
 }
