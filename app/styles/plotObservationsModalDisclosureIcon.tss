@@ -31,5 +31,17 @@
 	top: 210,
 	height: 30,
 	verticalAlign: 1
+},
+"#plotObservationThumbnail": {
+	width: 64,
+	height: 64,
+	left: 275,
+	top: 270,
+	borderRadius: 10
+},
+"#photoError": {
+	left: 225,
+	top: 275,
+	color: 'red'
 }
 

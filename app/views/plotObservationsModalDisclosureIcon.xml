@@ -16,6 +16,10 @@
 				
 				<Label id="commentsLbl" text="Comments:" />
 				<Label id="comments" />
+				
+				<ImageView id="plotObservationThumbnail" onClick="previewPhoto" visible="false"/>
+				<Label id="photoError" class="error" visible="false" />
+				
 			</ScrollView>
 		</Window>
 	</NavigationWindow>
