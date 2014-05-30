@@ -84,7 +84,7 @@ $.tbl.addEventListener('click', function(e){
 	//row clicked, get transect view
 	}else{  
 		//open plot observations
-		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID}).getView();
+		var observations = Alloy.createController("plotObservations", {plotID:e.rowData.plotID, siteID:siteID}).getView();
 		var nav = Alloy.Globals.navMenu;
 		nav.openWindow(observations);   
 	}

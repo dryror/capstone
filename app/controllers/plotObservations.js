@@ -10,6 +10,7 @@
 var args = arguments[0];
 var plotID = args.plotID;
 $.tbl.plotID = plotID;
+var siteID = args.siteID;
 
 var totalPlotPercentage = 0;
 var transectID;
@@ -151,7 +152,7 @@ $.tbl.addEventListener('click', function(e){
 	}
 	//info button clicked, display modal
 	if (e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("plotObservationsModalDisclosureIcon", {observationID:e.rowData.observationID, title:e.rowData.title, comments:e.rowData.comments, mediaID:e.rowData.mediaID}).getView();
+		var modal = Alloy.createController("plotObservationsModalDisclosureIcon", {observationID:e.rowData.observationID, title:e.rowData.title, comments:e.rowData.comments, mediaID:e.rowData.mediaID, siteID:siteID}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
