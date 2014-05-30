@@ -9,7 +9,7 @@ function getPhoto(callback) {
 				
 			// THE PHOTO TAKEN
 			var myPhoto = event.media;
-			
+			/*
 			// THE UTM IS CALLED HERE
 			//get the location when the phone was taken - UTM
 				var gps = require('gps');
@@ -19,7 +19,10 @@ function getPhoto(callback) {
 					// CALLBACK - photo & utm information
 					callback(myPhoto, UTMEasting, UTMNorthing, n_UTMZone); 
 				});
-
+			*/
+				// CALLBACK - photo
+				callback(myPhoto); 
+					
 			} else {
 				alert("got the wrong type back =" + event.mediaType);
 			}
