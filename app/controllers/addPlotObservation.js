@@ -45,17 +45,21 @@ function doneBtn(e){
 	if ($.pickType.index == null) {
 		$.pickTypeError.visible = true;
 		errorOnPage = true;
+		if (($.observationSearch.value == "") || ($.observationSearch.value == null) && ($.observation.value == "") || ($.observation.value == null)){
+			$.observationError.visible = true;
+			errorOnPage = true;
+		}
 	}
 	
 	if ($.pickType.index == 0) {
-		if ($.observationSearch.value == "") {
+		if (($.observationSearch.value == "") || ($.observationSearch.value == null)){
 			$.observationError.visible = true;
 			errorOnPage = true;
 		}
 	}
 	
 	if ($.pickType.index == 1) {
-		if ($.observation.value == "") {
+		if (($.observation.value == "") || ($.observation.value == null)){
 			$.observationError.visible = true;
 			errorOnPage = true;
 		}
