@@ -78,6 +78,11 @@ function doneBtn(e){
 		$.stakeError.text = "* Must select a stake orientation";
 		errorFlag = true;
 	}
+	if(utmZone == null){
+		$.locationError.text = '* Please capture current location';
+		$.locationError.visible = true;
+		errorFlag = true;
+	}
 	
 	if (errorFlag === true) {
 		e.source.enabled = true;
@@ -125,7 +130,7 @@ function takePhoto() {
 	
 	//call camera module and set thumbnail
 	var pic = require('camera');
-	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+	pic.getPhoto(function(myPhoto) {
 		//Set thumbnail
 		$.transectThumbnail.visible = true;
 		$.transectThumbnail.image = myPhoto;
@@ -137,11 +142,6 @@ function takePhoto() {
 		
 		//set variables with values
 		photo = myPhoto;
-		utmEasting = UTMEasting;
-		utmNorthing = UTMNorthing;
-		utmZone = n_UTMZone;
-		
-		//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
 	});
 }
 
@@ -214,7 +214,22 @@ function previewPhoto(){
 			navBarHidden : false
 	});
 }
-  
+
+// UTM - get the current location 
+function getLocation(){
+	$.locationError.visible = false;
+	//get the location - UTM
+	var gps = require('gps');
+		gps.getCurrentLocation(function(UTMEasting, UTMNorthing, n_UTMZone) {
+			
+			utmEasting = UTMEasting;
+			utmNorthing = UTMNorthing;
+			utmZone = n_UTMZone;
+			
+			$.location.visible = true;
+			$.location.text = "UTM Zone: " + n_UTMZone + "\nUTM Easting: " + UTMEasting + "\nUTM Northing: " + UTMNorthing;
+		});
+}  
 
 /* Listeners */
 

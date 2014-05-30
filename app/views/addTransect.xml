@@ -39,6 +39,9 @@
 			<Label id="photoError" class="error" visible="false" />
 			<Label id="thumbnailHintText" class="error" visible="false" text="Click thumbnail to preview photo"/>
 			
+			<Button id="locationBtn" title="Capture Location" onClick="getLocation" />
+			<Label id="location" class="error" visible="false" />
+			<Label id="locationError" class="error" visible="false" />
 			
 			<View id="footerLine" />
 			<Label id="info" />
