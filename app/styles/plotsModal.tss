@@ -110,4 +110,18 @@
 	left: 225,
 	top: 345,
 	color: 'red'
+},
+"#footerLine": {
+	height: 1,
+	top: 420,
+	left: 5,
+	right: 5,
+	borderWidth: 1,
+	borderColor:'#aaa',
+},
+"#info": {
+	left: 20,
+	right: 20,
+	top: 450,
+	font: {fontSize: 20, fontStyle: 'Italic'}
 }

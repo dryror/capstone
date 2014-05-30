@@ -132,4 +132,18 @@
 	left: 225,
 	top: 405,
 	color: 'red'
+},
+"#footerLine": {
+	height: 1,
+	top: 480,
+	left: 5,
+	right: 5,
+	borderWidth: 1,
+	borderColor:'#aaa',
+},
+"#info": {
+	left: 20,
+	right: 20,
+	top: 510,
+	font: {fontSize: 20, fontStyle: 'Italic'}
 }

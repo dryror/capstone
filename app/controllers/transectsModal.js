@@ -38,6 +38,13 @@ try {
 		$.editBtn.fireEvent('click');
 		$.photoBtn.visible = true;
 		$.photoBtn.enabled = true;
+		
+		//make instructions visible
+		$.footerLine.visible = true;
+		$.info.visible = true;
+		
+		$.info.text = ('Revisiting a Transect: \n\nPlease confirm all of the information above. \n\nYou will be required to take a new photo of the existing transect.');
+		
 	}else{	
 	//get the media name
 	var mediaRow = db.execute('SELECT media_name \
@@ -284,6 +291,8 @@ function takePhoto() {
 		//Set thumbnail
 		$.transectThumbnail.visible = true;
 		$.transectThumbnail.image = myPhoto;
+		//show hint text for thumbnail
+		$.thumbnailHintText.visible = true;
 		
 		//Save Photo for preview (temporary photo)
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');

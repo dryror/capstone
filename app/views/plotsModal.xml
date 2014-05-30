@@ -38,6 +38,9 @@
 				<Label id="photoError" class="error" visible="false" />
 				<Label id="thumbnailHintText" class="error" visible="false" text="Click thumbnail to preview photo"/>
 				
+				<View id="footerLine" visible = "false"/>
+				<Label id="info" visible = "false"/>
+				
 			</ScrollView>
 
 		</Window>

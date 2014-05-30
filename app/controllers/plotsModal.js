@@ -47,6 +47,13 @@ try{
 		$.editBtn.fireEvent('click');
 		$.photoBtn.visible = true;
 		$.photoBtn.enabled = true;
+		
+		//make instructions visible
+		$.footerLine.visible = true;
+		$.info.visible = true;
+		
+		$.info.text = ('Revisiting a Plot: \n\nPlease confirm all of the information above. \n\nYou will be required to take a new photo of each existing plot.');
+		
 	}else{	
 	//get the media name
 	var mediaRow = db.execute('SELECT media_name \
@@ -279,6 +286,7 @@ function takePhoto() {
 		//Set thumbnail
 		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
+		//show hint text for thumbnail
 		$.thumbnailHintText.visible = true;
 		
 		//Save Photo for preview (temporary photo)
@@ -388,7 +396,8 @@ $.pickStake.addEventListener('click', function(e) {
 		$.photoBtn.top += 60;
 		$.plotThumbnail.top += 60;
 		$.thumbnailHintText.top += 60;
-		//$.info.top += 60;
+		$.footerLine.top += 60;
+		$.info.top += 60;
 		$.stakeDeviation.visible = true;
 		$.stakeDeviation.focus();
 		stakeOther = true;
@@ -406,7 +415,8 @@ $.pickStake.addEventListener('click', function(e) {
 		$.photoBtn.top -= 60;
 		$.plotThumbnail.top -= 60;
 		$.thumbnailHintText.top -= 60;
-		//$.info.top -= 60;
+		$.footerLine.top -= 60;
+		$.info.top -= 60;
 		$.stakeDeviation.visible = false;
 		$.stakeDeviation.blur();
 		stakeOther = false;
@@ -429,7 +439,8 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.photoBtn.top += 60;
 		$.plotThumbnail.top += 60;
 		$.thumbnailHintText.top += 60;
-		//$.info.top += 60;
+		$.footerLine.top += 60;
+		$.info.top += 60;
 		$.distanceDeviation.visible = true;
 		$.distanceDeviation.focus();
 		distanceOther = true;
@@ -442,7 +453,8 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.photoBtn.top -= 60;
 		$.plotThumbnail.top -= 60;
 		$.thumbnailHintText.top -= 60;
-		//$.info.top -= 60;
+		$.footerLine.top -= 60;
+		$.info.top -= 60;
 		$.distanceDeviation.visible = false;
 		$.distanceDeviation.blur();
 		distanceOther = false;
