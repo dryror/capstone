@@ -54,6 +54,10 @@ try{
 		
 		$.info.text = ('Revisiting a Plot: \n\nPlease confirm all of the information above. \n\nYou will be required to take a new photo of each existing plot.');
 		
+		//inform user that photo is required
+		$.photoError.text = '* Photo Required';
+		$.photoError.visible = true;
+		
 	}else{	
 	//get the media name
 	var mediaRow = db.execute('SELECT media_name \
@@ -395,6 +399,7 @@ $.pickStake.addEventListener('click', function(e) {
 		$.dateRecorded.top += 60;
 		$.photoBtn.top += 60;
 		$.plotThumbnail.top += 60;
+		$.photoError.top += 60;
 		$.thumbnailHintText.top += 60;
 		$.footerLine.top += 60;
 		$.info.top += 60;
@@ -414,6 +419,7 @@ $.pickStake.addEventListener('click', function(e) {
 		$.dateRecorded.top -= 60;
 		$.photoBtn.top -= 60;
 		$.plotThumbnail.top -= 60;
+		$.photoError.top -= 60;
 		$.thumbnailHintText.top -= 60;
 		$.footerLine.top -= 60;
 		$.info.top -= 60;
@@ -439,6 +445,7 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.photoBtn.top += 60;
 		$.plotThumbnail.top += 60;
 		$.thumbnailHintText.top += 60;
+		$.photoError.top += 60;
 		$.footerLine.top += 60;
 		$.info.top += 60;
 		$.distanceDeviation.visible = true;
@@ -453,6 +460,7 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.photoBtn.top -= 60;
 		$.plotThumbnail.top -= 60;
 		$.thumbnailHintText.top -= 60;
+		$.photoError.top -= 60;
 		$.footerLine.top -= 60;
 		$.info.top -= 60;
 		$.distanceDeviation.visible = false;

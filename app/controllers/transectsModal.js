@@ -45,6 +45,10 @@ try {
 		
 		$.info.text = ('Revisiting a Transect: \n\nPlease confirm all of the information above. \n\nYou will be required to take a new photo of the existing transect.');
 		
+		//inform user that photo is required
+		$.photoError.text = '* Photo Required';
+		$.photoError.visible = true;
+
 	}else{	
 	//get the media name
 	var mediaRow = db.execute('SELECT media_name \
@@ -231,7 +235,7 @@ function editBtnClick(e){
 		$.comments.editable = false;
 		
 		$.photoBtn.enabled = false;
-		
+				
 		saveEdit(e);
 	}
 }

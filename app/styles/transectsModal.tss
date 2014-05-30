@@ -131,7 +131,8 @@
 "#photoError": {
 	left: 225,
 	top: 405,
-	color: 'red'
+	color: 'red',
+	font: {fontSize: 20, fontStyle: 'Italic'}
 },
 "#footerLine": {
 	height: 1,
