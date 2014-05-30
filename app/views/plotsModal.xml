@@ -36,6 +36,7 @@
 				<Button id="photoBtn" title="Take Photo" onClick="takePhoto" visible="false"/>
 				<ImageView id="plotThumbnail" onClick="previewPhoto" visible="false"/>
 				<Label id="photoError" class="error" visible="false" />
+				<Label id="thumbnailHintText" class="error" visible="false" text="Click thumbnail to preview photo"/>
 				
 			</ScrollView>
 

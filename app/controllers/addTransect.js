@@ -129,6 +129,7 @@ function takePhoto() {
 		//Set thumbnail
 		$.transectThumbnail.visible = true;
 		$.transectThumbnail.image = myPhoto;
+		$.thumbnailHintText.visible = true;
 		
 		//Save Photo for preview (temporary photo)
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');

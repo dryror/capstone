@@ -55,6 +55,7 @@ try {
 			//Set thumbnail
 			$.plotObservationThumbnail.visible = true;
 			$.plotObservationThumbnail.image = imageFile;
+			$.thumbnailHintText.visible = true;
 		
 			//Save Photo for preview (temporary photo)
 			var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');

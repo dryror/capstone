@@ -37,6 +37,8 @@
 			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
 			<ImageView id="transectThumbnail" onClick="previewPhoto" visible="false"/>
 			<Label id="photoError" class="error" visible="false" />
+			<Label id="thumbnailHintText" class="error" visible="false" text="Click thumbnail to preview photo"/>
+			
 			
 			<View id="footerLine" />
 			<Label id="info" />

@@ -125,6 +125,11 @@
 	left: 225,
 	top: 405,
 	color: 'red'
+},
+"#thumbnailHintText": {
+	left: 316,
+	top: 416,
+	color: '#8D8D8D'
 }
 
 "#footerLine": {

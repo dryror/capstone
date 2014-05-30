@@ -86,7 +86,11 @@
 	top: 280,
 	borderRadius: 10
 },
-
+"#thumbnailHintText": {
+	left: 316,
+	top: 306,
+	color: '#8D8D8D'
+},
 "#info": {
 	left: 40,
 	right: 40,

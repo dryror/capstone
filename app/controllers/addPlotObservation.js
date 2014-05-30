@@ -189,6 +189,7 @@ function takePhoto(){
 		//Set thumbnail
 		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
+		$.thumbnailHintText.visible = true;
 		
 		//Save Photo for preview (temporary photo)
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');

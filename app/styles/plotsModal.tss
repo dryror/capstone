@@ -101,6 +101,11 @@
 	top: 340,
 	borderRadius: 10
 },
+"#thumbnailHintText": {
+	left: 316,
+	top: 351,
+	color: '#8D8D8D'
+},
 "#photoError": {
 	left: 225,
 	top: 345,

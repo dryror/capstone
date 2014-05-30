@@ -122,6 +122,12 @@
 	top: 400,
 	borderRadius: 10
 },
+"#thumbnailHintText": {
+	left: 316,
+	top: 416,
+	color: '#8D8D8D',
+	font: {fontSize: 20}
+},
 "#photoError": {
 	left: 225,
 	top: 405,

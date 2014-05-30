@@ -99,6 +99,11 @@
 	left: 225,
 	top: 285
 },
+"#thumbnailHintText": {
+	left: 316,
+	top: 296,
+	color: '#8D8D8D'
+},
 "#info": {
 	left: 40,
 	right: 40,

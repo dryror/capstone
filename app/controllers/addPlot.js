@@ -142,6 +142,7 @@ function takePhoto() {
 		//Set thumbnail
 		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
+		$.thumbnailHintText.visible = true;
 		
 		//Save Photo for preview (temporary photo)
 		var temp = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
@@ -323,6 +324,7 @@ $.pickStake.addEventListener('click', function(e) {
 		$.photoBtn.top += 60;
 		$.plotThumbnail.top += 60;
 		$.photoError.top += 60;
+		$.thumbnailHintText.top += 60;
 		$.info.top += 60;
 		$.stakeDeviation.visible = true;
 		$.stakeDeviation.focus();
@@ -338,6 +340,7 @@ $.pickStake.addEventListener('click', function(e) {
 		$.comments.top -= 60;
 		$.photoBtn.top -= 60;
 		$.plotThumbnail.top -= 60;
+		$.thumbnailHintText.top -= 60;
 		$.photoError.top -= 60;
 		$.info.top -= 60;
 		$.stakeDeviation.visible = false;
@@ -357,6 +360,7 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.photoBtn.top += 60;
 		$.plotThumbnail.top += 60;
 		$.photoError.top += 60;
+		$.thumbnailHintText.top += 60;
 		$.info.top += 60;
 		$.distanceDeviation.visible = true;
 		$.distanceDeviation.focus();
@@ -368,6 +372,7 @@ $.pickDistance.addEventListener('click', function(e) {
 		$.photoBtn.top -= 60;
 		$.plotThumbnail.top -= 60;
 		$.photoError.top -= 60;
+		$.thumbnailHintText.top -= 60;
 		$.info.top -= 60;
 		$.distanceDeviation.visible = false;
 		$.distanceDeviation.blur();

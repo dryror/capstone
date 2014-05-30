@@ -43,5 +43,10 @@
 	left: 225,
 	top: 275,
 	color: 'red'
+},
+"#thumbnailHintText": {
+	left: 371,
+	top: 286,
+	color: '#8D8D8D'
 }
 
