@@ -52,14 +52,14 @@ function doneBtn(e){
 	}
 	
 	if ($.pickType.index == 0) {
-		if (($.observationSearch.value == "") || ($.observationSearch.value == null)){
+		if (($.observationSearch.value == "") || ($.observationSearch.value == null) || ($.observationSearch.getValue().trim().length <= 0)){
 			$.observationError.visible = true;
 			errorOnPage = true;
 		}
 	}
 	
 	if ($.pickType.index == 1) {
-		if (($.observation.value == "") || ($.observation.value == null)){
+		if (($.observation.value == "") || ($.observation.value == null) || ($.observation.getValue().trim().length <= 0)){
 			$.observationError.visible = true;
 			errorOnPage = true;
 		}
@@ -289,7 +289,7 @@ $.pickType.addEventListener('click', function(e) {
 });
 
 $.observationSearch.addEventListener('change', function(e) {
-	if ($.observationSearch.value == "") {
+	if ($.observationSearch.value == ""){
 		$.observationError.visible = true;
 	} else {
 		$.observationError.visible = false;
