@@ -161,6 +161,10 @@ Ti.App.addEventListener("app:enableIndexAddButton", function(e) {
 	$.addSite.enabled = true;
 });
 
+Ti.App.addEventListener("app:enableIndexExportButton", function(e) {
+	$.exportData.enabled = true;
+});
+
 
 /* Functions */
 
@@ -231,6 +235,8 @@ function addBtn(){
 
 //Export data
 function exportBtn(){
+	//button de-bounce - issue #28
+	$.exportData.enabled = false;
 	var modal = Alloy.createController("exportModal").getView();
 	modal.open({
 		modal : true,

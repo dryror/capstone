@@ -11,6 +11,7 @@ var titleLabel = Titanium.UI.createLabel({
 $.exportWin.setTitleControl(titleLabel);
 
 function backBtnClick(){
+	Ti.App.fireEvent("app:enableIndexExportButton");
 	$.modalNav.close();
 }
 
