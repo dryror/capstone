@@ -356,7 +356,7 @@ $.otherSrvyName.addEventListener('change', function(e) {
 Ti.App.addEventListener('otherSurveyorChange', function(e) {
 	var field = $.otherSrvyName.value;
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
-	if (!field.match(match)) {
+	if ( (!field.match(match)) && (field !== "") ) {
 		$.otherSurveyorsError.visible = true;
 		$.otherSurveyorsError.text = "Other surveyors should have a first and last name";
 		$.otherSrvyName.borderColor = 'red';

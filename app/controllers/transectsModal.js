@@ -155,7 +155,7 @@ $.surveyor.addEventListener('change', function(e) {
 $.otherSurveyors.addEventListener('change', function(e) {
 	var field = $.otherSurveyors.value;
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
-	if (!field.match(match)) {
+	if ( (!field.match(match)) && (field !== "") ) {
 		$.otherSurveyorsError.visible = true;
 		$.otherSurveyorsError.text = "Other surveyors should have a first and last name";
 	} else {
