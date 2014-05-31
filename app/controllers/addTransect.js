@@ -13,6 +13,21 @@ var utmEasting;
 var utmNorthing;
 var utmZone;
 
+var current_latitude;
+var current_longitude;
+
+//Start continuous location capture - based on distance filter
+var gps = require('location');
+	gps.location(function(latitude, longitude, error) {
+		if(error == true){
+			//returns an error
+		}else{
+			//updated lat & long
+			current_latitude = latitude;
+			current_longitude = longitude;
+		}
+	});
+
 //set stake orientation text
 var stakeText;
 if ($.pickStake.index == 0) {
@@ -28,12 +43,12 @@ var instructions = "Some example Transect Name schemes are sequential (\"T1\", \
 					"\n" +
 					"When recording observations, remain on one side of the transect at all times (downslope if applicable).";
 $.info.text = instructions;
-
+/*
 // Related to issue #28
 $.addTransectWin.addEventListener('close', function(e) {
 	Ti.App.fireEvent("app:refreshTransects");
 });
-
+*/
 var labelText = 'New Transect';
 
 var titleLabel = Titanium.UI.createLabel({
@@ -46,6 +61,28 @@ var titleLabel = Titanium.UI.createLabel({
 // Associate label to title
 $.addTransectWin.setTitleControl(titleLabel);
 
+/* Dialog Boxes */
+
+//Enable location services for LTEMA
+var ltemaAccessDialog = Titanium.UI.createAlertDialog({
+	title : 'No Location Service Access',
+	message : "\"LTEMA\" needs Location Services enabled in order to access your current location.  Please check your device's Settings > Privacy > Location Services > LTEMA"
+});
+
+//Location Services Dialog
+var gpsDialog = Titanium.UI.createAlertDialog({
+	title : 'Location Services Disabled',
+	message : 'You currently have all location services for this device disabled. If you would like to proceed please reenable location services.',
+	buttonNames : ['OK', 'Help'],
+	ok : 0,
+	help : 1
+});
+
+//How to enable location services
+var helpDialog = Titanium.UI.createAlertDialog({
+	title : 'Enable Location Services',
+	message : 'To enable location services close the application and open' + ' Settings > Privacy > Location Services'
+});
 
 /* Functions */
 	
@@ -214,21 +251,33 @@ function previewPhoto(){
 			navBarHidden : false
 	});
 }
-
 // UTM - get the current location 
 function getLocation(){
 	$.locationError.visible = false;
+	
+	//Check if Location Services is Enabled/Disabled
+	if (Titanium.Geolocation.locationServicesEnabled == false) {
+		//notify user that location services is disabled
+		gpsDialog.show();  
+		//return;
+	}else{
+	
 	//get the location - UTM
-	var gps = require('gps');
-		gps.getCurrentLocation(function(UTMEasting, UTMNorthing, n_UTMZone) {
+	var utm = require('utm');
+			utm.LatLngToUTMRef(current_latitude, current_longitude, function(UTMEasting, UTMNorthing, longitudeZone) {
 			
 			utmEasting = UTMEasting;
 			utmNorthing = UTMNorthing;
-			utmZone = n_UTMZone;
+			utmZone = longitudeZone;
 			
-			$.location.visible = true;
-			$.location.text = "UTM Zone: " + n_UTMZone + "\nUTM Easting: " + UTMEasting + "\nUTM Northing: " + UTMNorthing;
+			if(utmZone.toString() == "NaN"){
+				ltemaAccessDialog.show();
+			}else{
+				$.location.visible = true;
+				$.location.text = "UTM Zone: " + utmZone + "\nUTM Easting: " + UTMEasting + "\nUTM Northing: " + UTMNorthing;
+			}
 		});
+	}
 }  
 
 /* Listeners */
@@ -359,6 +408,13 @@ $.comments.addEventListener('change', function(e) {
 	//no restrictions on comments
 });
 
+//Event Listener - help info for enabling location services
+gpsDialog.addEventListener('click', function(e) {
+	if (e.index === e.source.help) {
+		helpDialog.show();
+	}
+});
+
 // Fire when addTransect Window is closed
 $.addTransectWin.addEventListener('close', function(e) {
 	//remove the temp photo - used for photo preview
@@ -366,4 +422,7 @@ $.addTransectWin.addEventListener('close', function(e) {
 	if(tempPhoto.exists){
 		tempPhoto.deleteFile();
 	}
+	//Kill the GPS
+	Ti.Geolocation.removeEventListener('location', function(e) {});
+	Ti.App.fireEvent("app:refreshTransects");
 });
