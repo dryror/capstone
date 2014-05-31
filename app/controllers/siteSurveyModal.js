@@ -44,7 +44,6 @@ try {
 		index ++;
 		transectsResult.next();
 	}
-	Ti.API.info('surveyTransects:', JSON.stringify(surveyTransects));
 } catch(e) {
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
@@ -76,7 +75,6 @@ if (exported != null) {
 
 var nextTopDistance = 340;
 for (var i in surveyTransects) {
-	Ti.API.info('surveyTransects[i]:', JSON.stringify(surveyTransects[i]));
 	var loopLabel = Ti.UI.createLabel({
 		top: nextTopDistance,
 		left: 40,
