@@ -63,7 +63,7 @@ $.tbl.addEventListener('click', function(e){
 	//check if media exists -if no photo has been taken (re-visited plot)
 	if(e.rowData.mediaID == null){
 		//alert("No Photo Found!");
-		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID}).getView();
+		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID, plotName:e.rowData.plotName}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
@@ -74,7 +74,7 @@ $.tbl.addEventListener('click', function(e){
 	
 	//info button clicked, display modal
 	if(e.source.toString() == '[object TiUIButton]') {
-		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID}).getView();
+		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID, plotName:e.rowData.plotName}).getView();
 		modal.open({
 			modal : true,
 			modalTransitionStyle : Ti.UI.iPhone.MODAL_TRANSITION_STYLE_COVER_VERTICAL,
@@ -171,7 +171,7 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Retrieve existing plots from database
-		var rows = db.execute('SELECT plot_id, plot_name, media_id \
+		var rows = db.execute('SELECT plot_id, plot_name, utm_zone, utm_easting, utm_northing, media_id \
 							FROM plot \
 							WHERE transect_id = ?', $.tbl.transectID);
 		
@@ -179,6 +179,9 @@ function populateTable() {
 		while (rows.isValidRow()) {	
 			var plotID = rows.fieldByName('plot_id');
 			var plotName = rows.fieldByName('plot_name');
+			var utmZone = rows.fieldByName('utm_zone');
+			var utmEasting = rows.fieldByName('utm_easting');
+			var utmNorthing = rows.fieldByName('utm_northing');
 			var mediaID = rows.fieldByName('media_id');
 			
 			var groundCoverRows = db.execute('SELECT sum(ground_cover) \
@@ -191,9 +194,14 @@ function populateTable() {
 				totalGroundCover = 0;
 			}
 			
+			//create the title for each plot row - name and utm info
+			var plotDesc = plotName + ' - UTM Z:' + 
+					utmZone + ' E:' + utmEasting + ' N:' + utmNorthing; 
+			
 			//create a new row
 				var newRow = Ti.UI.createTableViewRow({
-					title : plotName,
+					title : plotDesc,
+					plotName : plotName,
 					plotID : plotID,
 					mediaID : mediaID,
 					height: 60,
