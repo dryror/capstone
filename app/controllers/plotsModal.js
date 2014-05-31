@@ -3,8 +3,9 @@
 // Get plotID from calling window
 var args = arguments[0];
 var plotID = args.plotID;
-var plotName = args.title;
+var plotTitle = args.title;
 var siteID = args.siteID;
+var plotName = args.plotName;
 
 //initialize variables
 var photo;
@@ -14,7 +15,7 @@ var titleLabel = Titanium.UI.createLabel({
     height:34,
     //width:350,  //long park names may need this set
     top:10,
-    text:plotName,
+    text:plotTitle,
     textAlign:'center',
     font:{fontSize:20,fontWeight:'bold'},
 });
@@ -286,7 +287,7 @@ function takePhoto() {
 	
 	//call camera module and set thumbnail
 	var pic = require('camera');
-	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+	pic.getPhoto(function(myPhoto) {
 		//Set thumbnail
 		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
@@ -299,11 +300,6 @@ function takePhoto() {
 		
 		//set variables with values
 		photo = myPhoto;
-		utmEasting = UTMEasting;
-		utmNorthing = UTMNorthing;
-		utmZone = n_UTMZone;
-		
-		//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
 	});
 }
 
