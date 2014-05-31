@@ -104,6 +104,7 @@ try {
 	} else {
 		//alert('please set the stake orientation');
 	}
+
 } catch (e) {
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});

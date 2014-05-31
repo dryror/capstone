@@ -18,12 +18,13 @@
 			<Label id="otherSurveyorsError" class="error" visible="false" />  
 			
 			<Label id="stakeLbl" text="Stake Orientation:" />
-			<TabbedBar id="pickStake">           
+			<TabbedBar id="pickStake" />
+			<!--<TabbedBar id="pickStake">           
 				<Labels>
 					<Label text="tlbr">Top Left / Bottom Right</Label>
 					<Label text="trbl">Top Right / Bottom Left</Label>
 				</Labels>         
-			</TabbedBar>
+		</TabbedBar>-->
 			<Label id="stakeError" class="error" visible="false" />
 			
 			<Label id="plotLbl" text="Plot Distance:" />

@@ -16,6 +16,16 @@ var utmZone;
 var current_latitude;
 var current_longitude;
 
+// Create Stake Orientation TabbedBar labels
+var pickStakeLabels = [
+	{title:"Top Left / Bottom Right", enabled:false},
+	{title:"Top Right / Bottom Left", enabled:false}
+];
+//Enable Stake Orientation TabbedBar
+pickStakeLabels[0].enabled = true;
+pickStakeLabels[1].enabled = true;
+$.pickStake.labels = pickStakeLabels;
+
 //Start continuous location capture - based on distance filter
 var gps = require('location');
 	gps.location(function(latitude, longitude, error) {
@@ -27,7 +37,7 @@ var gps = require('location');
 			current_longitude = longitude;
 		}
 	});
-
+/*
 //set stake orientation text
 var stakeText;
 if ($.pickStake.index == 0) {
@@ -35,7 +45,7 @@ if ($.pickStake.index == 0) {
 } else {
 	stakeText = "Top Right / Bottom Left";
 }
-
+*/
 // Instruciton text
 var instructions = "Some example Transect Name schemes are sequential (\"T1\", \"T2\"..), directional (\"South\", \"North\"..), or descriptive (\"Creekside\", \"Hillside\"..)\n\n" +
 					"Stake Orientation only affects the default value of each plot, and can be altered on a per plot basis to any custom value.\n\n" +
@@ -144,7 +154,7 @@ function doneBtn(e){
 			
 			//Insert Query - add row to transect table
 			db.execute(	'INSERT INTO transect (transect_name,surveyor,other_surveyors,plot_distance,stake_orientation,utm_zone,utm_easting,utm_northing,comments,site_id,media_id) VALUES (?,?,?,?,?,?,?,?,?,?,?)', 
-						$.tsctName.value, $.srvyName.value, $.otherSrvyName.value, $.plotDist.value, stakeText, utmZone, utmEasting, utmNorthing, $.comments.value, siteID, mediaID);
+						$.tsctName.value, $.srvyName.value, $.otherSrvyName.value, $.plotDist.value, pickStakeLabels[$.pickStake.index].title, utmZone, utmEasting, utmNorthing, $.comments.value, siteID, mediaID);
 						
 		}catch(e){
 			var errorMessage = e.message;
