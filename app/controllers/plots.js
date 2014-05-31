@@ -137,8 +137,11 @@ $.tbl.addEventListener('delete', function(e) {
 		db.execute('DELETE FROM plot WHERE plot_id = ?', currentPlotID);
 		
 		// Make the last row editable
-		var lastRow = $.tbl.data[0].rowCount - 1;
-		$.tbl.data[0].rows[lastRow].editable = true;
+		if ($.tbl.data[0]) {
+			var lastRow = $.tbl.data[0].rowCount - 1;
+			$.tbl.data[0].rows[lastRow].editable = true;
+		}
+		
 		
 		// Cycle toggle on the table to show the next row can be deleted
 		$.tbl.editing = false;
@@ -251,8 +254,10 @@ function populateTable() {
 		}
 		
 		// Make the last row editable
-		var lastRow = $.tbl.data[0].rowCount - 1;
-		$.tbl.data[0].rows[lastRow].editable = true;
+		if ($.tbl.data[0]) {
+			var lastRow = $.tbl.data[0].rowCount - 1;
+			$.tbl.data[0].rows[lastRow].editable = true;
+		}
 		
 	} catch(e){
 		var errorMessage = e.message;
