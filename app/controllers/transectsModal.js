@@ -291,7 +291,7 @@ function takePhoto() {
 	
 	//call camera module and set thumbnail
 	var pic = require('camera');
-	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
+	pic.getPhoto(function(myPhoto) {
 		//Set thumbnail
 		$.transectThumbnail.visible = true;
 		$.transectThumbnail.image = myPhoto;
@@ -304,11 +304,6 @@ function takePhoto() {
 		
 		//set variables with values
 		photo = myPhoto;
-		utmEasting = UTMEasting;
-		utmNorthing = UTMNorthing;
-		utmZone = n_UTMZone;
-		
-		//alert("UTMEasting: " + UTMEasting + "\nUTMNorthing: " + UTMNorthing + "\nUTMZone: " + n_UTMZone);
 	});
 }
 
