@@ -103,9 +103,9 @@ $.parkSrch.addEventListener('blur', function(e) {
 	win.close();
 });
 
-// related to issue #28
+// Enabled site survey list screen Add button, related to issue #28
 $.addSiteSurveyWin.addEventListener('close', function(e) {
-	Ti.App.fireEvent("app:refreshSiteSurveys");
+	Ti.App.fireEvent("app:enableIndexAddButton");
 });
 
 
@@ -256,6 +256,7 @@ function doneBtn(e){
 			previousSurveys.close();
 			results.close();
 			db.close();
+			Ti.App.fireEvent("app:refreshSiteSurveys");
 			$.addSiteSurveyWin.close();
 		}
 	} 

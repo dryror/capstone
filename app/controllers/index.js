@@ -157,6 +157,10 @@ Ti.App.addEventListener("app:refreshSiteSurveys", function(e) {
 	populateTable();
 });
 
+Ti.App.addEventListener("app:enableIndexAddButton", function(e) {
+	$.addSite.enabled = true;
+});
+
 
 /* Functions */
 
