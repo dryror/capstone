@@ -128,7 +128,7 @@ function doneBtn(e){
 	if(utmZone == null){
 		$.locationError.text = '* Please capture current location';
 		$.locationError.visible = true;
-		errorFlag = true;
+		errorOnPage = true;
 	}
 	
 	
