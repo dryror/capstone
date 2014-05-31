@@ -2,6 +2,12 @@
 var yourDb = Titanium.Database.open('ltemaDB');
 yourDb.remove();
 
+//Initially remove the event that triggers the GPS location to be continuously captured
+Ti.Geolocation.removeEventListener('location', function(e) {});
+
+//Prompt the user to allow applicaiton to use location services
+Titanium.Geolocation.getCurrentPosition(function(e) {});
+
 var db = Ti.Database.install('/taxonomy.sqlite', 'taxonomy');
 db.close();
 
