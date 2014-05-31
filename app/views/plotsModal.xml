@@ -28,7 +28,7 @@
 				<Label id="distanceOtherError" class="error" visible="false" text="* Plot distance must be specified"/>
 				
 				<Label id="commentLbl" text="Comments:" />
-				<TextField id="comments" />
+				<TextField id="comments" hintText="(optional)"/>
 				
 				<Label id="dateRecordedLbl" text="Date Recorded:" />
 				<Label id="dateRecorded" text="111111" />
