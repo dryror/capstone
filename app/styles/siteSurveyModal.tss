@@ -22,7 +22,6 @@
 	left: 200,
 	top: 100
 },
-
 "#protocolLbl": {
 	left: 40,
 	top: 160,
@@ -38,6 +37,11 @@
 "#exportDate": {
 	left: 200,
 	top: 220
+},
+"#transectsLbl": {
+	left: 40,
+	top: 280
 }
+
 
 

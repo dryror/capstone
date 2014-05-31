@@ -23,6 +23,8 @@
 				
 				<Label id="exportLbl" text="Last Export:" />
 				<Label id="exportDate" text="Not Exported"/>
+				
+				<Label id="transectsLbl" text="Transects:">
 			</ScrollView>
 			
 		</Window>

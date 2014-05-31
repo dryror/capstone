@@ -23,23 +23,29 @@ try {
 	var exported = row.fieldByName('exported');
 	
 	transectsResult = db.execute (
-		'SELECT transect_name, utm_easting, utm_northing, media_id \
+		'SELECT transect_id, transect_name, utm_easting, utm_northing, media_id \
 		FROM transect \
 		WHERE site_id = ?', siteID);
 	
 	var surveyTransects = [];
 	var index = 0;
 	while (transectsResult.isValidRow()) {
+		var transectID = transectsResult.fieldByName('transect_id');
 		var transectName = transectsResult.fieldByName('transect_name');
 		var utmEasting = transectsResult.fieldByName('utm_easting');
 		var utmNorthing = transectsResult.fieldByName('utm_northing');
 		var mediaID = transectsResult.fieldByName('media_id');
+		// count # of plots in this survey
+		var numPlotsResult = db.execute ('SELECT plot_id FROM plot WHERE transect_id = ?', transectID);
+		var numPlots = numPlotsResult.getRowCount();
+		numPlotsResult.close();
 		
 		surveyTransects[index] = {
 			transectName:transectName,
 			utmEasting:utmEasting,
 			utmNorthing:utmNorthing,
-			mediaID:mediaID
+			mediaID:mediaID,
+			numPlots: numPlots
 		};
 		index ++;
 		transectsResult.next();
@@ -72,25 +78,31 @@ if (exported != null) {
 	var d = new Date(utc);
 	$.exportDate.text = d.toDateString();
 }
-
-var nextTopDistance = 340;
-for (var i in surveyTransects) {
+//Detailed Transect Info
+var nextTopDistance = 370;  //positioning is off compared to static .tss values, hackish
+for (var i in surveyTransects) {  //array of objects describing the transects of this survey
 	var loopLabel = Ti.UI.createLabel({
 		top: nextTopDistance,
-		left: 40,
+		left: 60,
 		font: {fontSize: 20}
 	});
 	var utmLabel = Ti.UI.createLabel({
-		top: nextTopDistance,
-		left: 200,
+		top: nextTopDistance + 30,
+		left: 75,
+		font: {fontSize: 20}
+	});
+	var numPlotsLabel = Ti.UI.createLabel({
+		top: nextTopDistance + 60,
+		left: 75,
 		font: {fontSize: 20}
 	});
 	loopLabel.text = surveyTransects[i].transectName;
-	var utmText = "Easting: " + surveyTransects[i].utmEasting + " - Northing: " + surveyTransects[i].utmNorthing;
-	utmLabel.text = utmText;
+	utmLabel.text = "Easting: " + surveyTransects[i].utmEasting + " - Northing: " + surveyTransects[i].utmNorthing;
+	numPlotsLabel.text = "Plots: " + numPlots;
 	$.modalNav.add(loopLabel);
 	$.modalNav.add(utmLabel);
-	nextTopDistance += 60;
+	$.modalNav.add(numPlotsLabel);
+	nextTopDistance += 100;
 }
 
 /* Functions */
