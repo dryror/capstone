@@ -584,9 +584,12 @@ win.addEventListener('open', function(e) {
 	if ( (win.orientation === 4) || (win.orientation === 3) ) {  //LANDSCAPE_LEFT and LANDSCAPE_RIGHT
 		$.formView.scrollTo(0,95);
 		win.top = 98;
+	} else {
+		$.formView.scrollTo(0,0);
 	}
 });
 // reset view on close
 win.addEventListener('close', function(e) {
 	$.formView.scrollTo(0,0);
+	$.observationSearch.blur();  //dismisses keyboard
 });
