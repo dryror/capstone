@@ -27,6 +27,7 @@
 			<TextField id="comments" />
 			
 			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
+			<Label id="photoHint" text="(optional)" />
 			<ImageView id="plotThumbnail" onClick="previewPhoto" visible="false"/>
 			<Label id="thumbnailHintText" class="error" visible="false" text="Click thumbnail to preview photo"/>
 			

@@ -203,6 +203,7 @@ function takePhoto(){
 	var pic = require('camera');
 	pic.getPhoto(function(myPhoto, UTMEasting, UTMNorthing, n_UTMZone) {
 		//Set thumbnail
+		$.photoHint.visible = false;
 		$.plotThumbnail.visible = true;
 		$.plotThumbnail.image = myPhoto;
 		$.thumbnailHintText.visible = true;

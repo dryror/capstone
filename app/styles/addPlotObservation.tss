@@ -80,6 +80,13 @@
 	left: 40,
 	top: 280,
 },
+"#photoHint": {
+	left: 220,
+	right: 40,
+	top: 287,
+	color: 'Gray',
+	font: {fontSize: 18}
+},
 "#plotThumbnail": {
 	width: 64,
 	height: 64,
@@ -89,7 +96,7 @@
 },
 "#thumbnailHintText": {
 	left: 316,
-	top: 306,
+	top: 287,
 	color: '#8D8D8D'
 },
 
