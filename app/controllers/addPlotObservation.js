@@ -585,6 +585,7 @@ win.addEventListener('open', function(e) {
 		win.top = 98;
 	} else {
 		$.formView.scrollTo(0,0);
+		win.top = 198;  //reset in case user rotates the device between result window opens
 	}
 });
 // reset view on close
