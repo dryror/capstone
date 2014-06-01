@@ -591,5 +591,4 @@ win.addEventListener('open', function(e) {
 // reset view on close
 win.addEventListener('close', function(e) {
 	$.formView.scrollTo(0,0);
-	$.observationSearch.blur();  //dismisses keyboard
 });
