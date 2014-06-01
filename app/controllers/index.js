@@ -1,3 +1,8 @@
+/*
+ *  List screen to view, add, or delete site surveys
+ * 
+ */
+
 //Run these two commands to reset db if testing delete functions
 var yourDb = Titanium.Database.open('ltemaDB');
 yourDb.remove();

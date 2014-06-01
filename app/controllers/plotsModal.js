@@ -1,6 +1,9 @@
-/* A screen to view and edit plot details */
+/*
+ *  A screen to view and edit plot details 
+ * 
+ * expected args: plotID, title, siteID, plotName
+ */
 
-// Get plotID from calling window
 var args = arguments[0];
 var plotID = args.plotID;
 var plotTitle = args.title;

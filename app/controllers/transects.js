@@ -1,4 +1,9 @@
-//get siteID from calling window
+/*
+ *  List screen to view, add, or delete plots
+ * 
+ * expected args: siteID, parkName
+ */
+
 var args = arguments[0];
 $.tbl.siteID = args.siteID;
 var parkName = args.parkName;

@@ -1,4 +1,9 @@
-// Get the transectID for this plot
+/*
+ * Plot observations creation screen with validation
+ * 
+ * expected args: plotID
+ */
+
 var args = arguments[0];
 var plotID = args.plotID;
 

@@ -1,6 +1,9 @@
-/* A screen to view and edit transect details */
+/*
+ *  A screen to view and edit transect details 
+ * 
+ * expected args: transectID, title
+ */
 
-// Get transectID from calling window
 var args = arguments[0];
 var transectID = args.transectID;
 var title = args.title;
@@ -133,7 +136,6 @@ $.comments.editable = false;
 
 // When an input field changes, fire error handler
 $.transectName.addEventListener('change', function (e) {
-	//e.source.value = e.source.value.replace(/['"]/,"");
 	if ($.transectName.value.length < 2) {
 		$.transectError.visible = true;
 		$.transectError.text = "* Please use at least 2 characters in a transect name";
@@ -141,8 +143,8 @@ $.transectName.addEventListener('change', function (e) {
 		$.transectError.visible = false;
 	}
 });
+
 $.surveyor.addEventListener('change', function(e) {
-	//e.source.value = e.source.value.replace(/['"]/,"");
 	var field = e.value;
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/; 
 	if (!field.match(match)) {
@@ -152,6 +154,7 @@ $.surveyor.addEventListener('change', function(e) {
 		$.surveyorError.visible = false;
 	}
 });
+
 $.otherSurveyors.addEventListener('change', function(e) {
 	var field = $.otherSurveyors.value;
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
@@ -178,14 +181,8 @@ $.plotDistance.addEventListener('change', function(e) {
 });
 
 $.comments.addEventListener('change', function(e) {
-	//e.source.value = e.source.value.replace(/['"]/,""); 
+	//no comment field validation needed
 });
-
-// TESTING - an example of restricting the keyboard input
-//Listen and replace bad input on transectName
-//$.transectName.addEventListener('change', function (e) {
-//	e.source.value = e.source.value.replace(/[^0-9a-zA-Z ()_,.-]/,"");
-//});
 
 
 /* Functions */
@@ -257,8 +254,6 @@ function saveEdit(e){
 			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
 			var results = db.execute('SELECT last_insert_rowid() as mediaID');
 			var mediaID = results.fieldByName('mediaID');
-			
-			//alert("Media ID: " +  mediaID);
 			
 			//save the new information to the database with the media_id of the new photo
 			db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ?, media_id= ? WHERE transect_id= ?',

@@ -1,5 +1,5 @@
 /*
- * Transect Creation Screen - including validation
+ * Transect creation screen with validation
  * 
  * expected args: siteID
  */

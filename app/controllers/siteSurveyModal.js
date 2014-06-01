@@ -1,4 +1,7 @@
-/* A screen to dislay or possibly edit site survey details */
+/* 
+ * A screen to view site survey details 
+ * 
+ */
 
 //get siteID from calling window
 var args = arguments[0];

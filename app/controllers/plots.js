@@ -1,6 +1,9 @@
-/* List screen to view, add, or delete plots */
+/*
+ *  List screen to view, add, or delete plots
+ * 
+ * expected args: transectID, siteID 
+ */
 
-//get transectID from calling window
 var args = arguments[0];
 var transectID = args.transectID;
 $.tbl.transectID = transectID;
@@ -62,7 +65,6 @@ $.tbl.addEventListener('click', function(e){
 	
 	//check if media exists -if no photo has been taken (re-visited plot)
 	if(e.rowData.mediaID == null){
-		//alert("No Photo Found!");
 		var modal = Alloy.createController("plotsModal", {plotID:e.rowData.plotID, title:e.rowData.title, siteID:siteID, plotName:e.rowData.plotName}).getView();
 		modal.open({
 			modal : true,
@@ -163,8 +165,6 @@ $.tbl.addEventListener('delete', function(e) {
 /* Functions */
 
 function populateTable() {
-	
-	//$.addPlot.enabled = true;
 	
 	//Clear the table if there is anything in it
 	var rd = []; 

@@ -1,4 +1,7 @@
-/* Site survey creation screen with validation */
+/* 
+ *  Site survey creation screen with validation 
+ * 
+ */
 
 // Tabbed Bar Labels
 var pickBiomeLabels = [];

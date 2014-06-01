@@ -1,10 +1,9 @@
 /*
- * Lists all observed speices in a single plot
+ * List screen to view, add, or delete plot observations
  * 
- * Expected Args: plotID
+ * Expected Args: plotID, siteID
  * 
  * Ground coverage must be at least 100% for the plot to be considered complete
- * 
  */
 
 var args = arguments[0];
