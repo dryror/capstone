@@ -2,7 +2,7 @@
 	backgroundColor:"white"
 },
 ".error": {
-	font: {fontSize: 16},
+	font: {fontSize: 18},
 	color: "Red"
 },
 
@@ -49,5 +49,5 @@
 	left: 150,
 	top: 270,
 	color: 'Gray',
-	font: {fontSize: 16}
+	font: {fontSize: 18}
 }

@@ -3,7 +3,7 @@
 },
 
 ".error": {
-	font: {fontSize: 16},
+	font: {fontSize: 18},
 	color: "Gray"
 },
 
@@ -58,4 +58,5 @@
 "#doneError": {
 	right: 20,
 	top: 160,
+	font: {fontSize: 18}
 }

@@ -2,6 +2,7 @@
 	backgroundColor:"white"
 },
 ".error": {
+	font: {fontSize: 18},
 	color: "red"
 },
 "Label": {

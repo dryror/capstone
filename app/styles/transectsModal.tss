@@ -1,6 +1,10 @@
 ".container": {
 	backgroundColor:"white"
 },
+".error": {
+	font: {fontSize: 18},
+	color: "Red"
+},
 
 "Label": {
 	font: {fontSize: 20}
@@ -10,11 +14,6 @@
 },
 "Button": {
 	font: {fontSize: 20}
-},
-
-".error": {
-	font: {fontSize: 14},
-	color: "Red"
 },
 
 "#transectLbl": {

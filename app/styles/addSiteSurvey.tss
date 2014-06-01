@@ -2,13 +2,13 @@
 ".container": {
 	backgroundColor:"white"
 },
-"Label": {
-	font: {fontSize: 20}
+".error": {
+	font: {fontSize: 18},
+	color: "Red"
 },
 
-".error": {
-	font: {fontSize: 14},
-	color: "Red"
+"Label": {
+	font: {fontSize: 20}
 },
 
 "#parkLbl": {
