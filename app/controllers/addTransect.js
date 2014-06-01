@@ -37,38 +37,22 @@ var gps = require('location');
 			current_longitude = longitude;
 		}
 	});
-/*
-//set stake orientation text
-var stakeText;
-if ($.pickStake.index == 0) {
-	stakeText = "Top Left / Bottom Right";
-} else {
-	stakeText = "Top Right / Bottom Left";
-}
-*/
-// Instruciton text
-var instructions = "Some example Transect Name schemes are sequential (\"T1\", \"T2\"..), directional (\"South\", \"North\"..), or descriptive (\"Creekside\", \"Hillside\"..)\n\n" +
-					"Stake Orientation only affects the default value of each plot, and can be altered on a per plot basis to any custom value.\n\n" +
-					"When taking the plot's photo, hold the device directly overhead and have the borders of the plot marker touch two sides of the photo.\n\n" +
-					"\n" +
-					"When recording observations, remain on one side of the transect at all times (downslope if applicable).\n\n\n";
-$.info.text = instructions;
-/*
-// Related to issue #28
-$.addTransectWin.addEventListener('close', function(e) {
-	Ti.App.fireEvent("app:refreshTransects");
-});
-*/
-var labelText = 'New Transect';
 
+// Instruciton text
+var instructions = 
+	"Some example Transect Name schemes are sequential (\"T1\", \"T2\"..), directional (\"South\", \"North\"..), or descriptive (\"Creekside\", \"Hillside\"..)\n\n" +
+	"Stake Orientation only affects the default value of each plot, and can be altered on a per plot basis to any custom value.\n\n" +
+	"When taking the plot's photo, hold the device directly overhead and have the borders of the plot marker touch two sides of the photo.\n\n" +
+	"When recording observations, remain on one side of the transect at all times (downslope if applicable).\n\n\n";
+$.info.text = instructions;
+
+// Nav Bar title label
 var titleLabel = Titanium.UI.createLabel({
 	top:10,
-	text: labelText,
+	text: 'New Transect',
 	textAlign:'center',
 	font:{fontSize:20,fontWeight:'bold'},
 });
-
-// Associate label to title
 $.addTransectWin.setTitleControl(titleLabel);
 
 /* Dialog Boxes */
@@ -325,28 +309,9 @@ Ti.App.addEventListener('surveyorChange', function(e) {
 	if (!field.match(match)) {
 		$.surveyorError.visible = true;
 		$.surveyorError.text = "* Please provide the first and last name of the head surveyor";
-		//$.srvyName.borderColor = 'red';
-		//$.srvyName.borderRadius = 8;
 	} else {
 		$.surveyorError.visible = false;
-		//$.srvyName.borderColor = 'transparent';
 	}
-/*
-	if ($.srvyName.value.length < 2) {
-		$.surveyorError.visible = true;
-		$.surveyorError.text = "* Surveyor should have at least 2 characters";
-		$.srvyName.borderColor = 'red';
-		$.srvyName.borderRadius = 8;
-	} else if (!field.test(nameRegEx)) {
-		$.surveyorError.visible = true;
-		$.surveyorError.text = "* Surveyor's name is invalid";
-		$.srvyName.borderColor = 'red';
-		$.srvyName.borderRadius = 8;
-	} else {
-		$.surveyorError.visible = false;
-		$.srvyName.borderColor = 'transparent';
-	}
-	*/
 });
 
 //Other Surveyors - error checking
@@ -359,29 +324,9 @@ Ti.App.addEventListener('otherSurveyorChange', function(e) {
 	if ( (!field.match(match)) && (field !== "") ) {
 		$.otherSurveyorsError.visible = true;
 		$.otherSurveyorsError.text = "* Please give the first and last name of at least one surveyor";
-		//$.otherSrvyName.borderColor = 'red';
-		//$.otherSrvyName.borderRadius = 8;
 	} else {
 		$.otherSurveyorsError.visible = false;
-		//$.otherSrvyName.borderColor = 'transparent';
 	}
-	/*
-	// first & last name regex
-	var nameRegEx = /^[a-zA-Z]{1}[a-zA-Z\.\-'\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-'\s]*$/;
-	var field = $.otherSrvyName.value;
-	if ($.otherSrvyName.value.length < 2) {
-		$.otherSurveyorsError.visible = true;
-		$.otherSurveyorsError.text = "* Surveyor should have at least 2 characters";
-	} else if (!field.test(nameRegEx)) {
-		$.otherSurveyorsError.visible = true;
-		$.otherSurveyorsError.text = "* Surveyor's name is invalid";
-		$.otherSrvyName.borderColor = 'red';
-		$.otherSrvyName.borderRadius = 8;
-	} else {
-		$.otherSurveyorsError.visible = false;
-		$.otherSrvyName.borderColor = 'transparent';
-	}
-	*/
 });
 
 //Plot Distance
@@ -394,16 +339,11 @@ Ti.App.addEventListener('plotDistanceChange', function(e) {
 	if ($.plotDist.value < 2) {
 		$.plotDistanceError.visible = true;
 		$.plotDistanceError.text = "* Please use a spacing between plots of at least 2 meters";
-		//$.plotDist.borderColor = 'red';
-		//$.plotDist.borderRadius = 8;
 	} else if ($.plotDist.value > 30) {
 		$.plotDistanceError.visible = true;
 		$.plotDistanceError.text = "* Please use a spacing between plots of at most 30 meters";
-		//$.plotDist.borderColor = 'red';
-		//$.plotDist.borderRadius = 8;
 	} else {
 		$.plotDistanceError.visible = false;
-		//$.plotDist.borderColor = 'transparent';
 	}
 });
 
