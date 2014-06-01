@@ -580,7 +580,6 @@ $.addPlotObservationWin.addEventListener('close', function(e) {
 
 // scroll view to fit search window on screen
 win.addEventListener('open', function(e) {
-	Ti.API.info('orient', win.orientation);
 	if ( (win.orientation === 4) || (win.orientation === 3) ) {  //LANDSCAPE_LEFT and LANDSCAPE_RIGHT
 		$.formView.scrollTo(0,95);
 		win.top = 98;
