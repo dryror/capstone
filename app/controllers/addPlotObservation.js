@@ -357,10 +357,10 @@ var timers = [];
 var win = Ti.UI.createWindow({
 	borderColor : "#C0C0C0",
 	scrollable : true,
-	height: 330,
+	height: 318,
 	left : 220,
 	right : 40,
-	top : 198,
+	top : 98,
 	borderRadius : 0,
 	borderWidth: 3,
 	title : 'park names',
@@ -576,4 +576,13 @@ $.addPlotObservationWin.addEventListener('close', function(e) {
 	if(tempPhoto.exists){
 		tempPhoto.deleteFile();
 	}
+});
+
+// scroll view to fit search window on screen
+win.addEventListener('open', function(e) {
+	$.formView.scrollTo(0,95);
+});
+// reset view on close
+win.addEventListener('close', function(e) {
+	$.formView.scrollTo(0,0);
 });
