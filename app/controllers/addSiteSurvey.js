@@ -22,20 +22,13 @@ try {
 	$.pickBiome.labels = pickBiomeLabels;
 }
 
-/* Nav Bar Label */
-
-// Build title label
-
-var labelText = 'New Site Survey';
-
+// Nav Bar title label
 var titleLabel = Titanium.UI.createLabel({
 	top:10,
-	text: labelText,
+	text: 'New Site Survey',
 	textAlign:'center',
 	font:{fontSize:20,fontWeight:'bold'},
 });
-
-// Associate label to title
 $.addSiteSurveyWin.setTitleControl(titleLabel);
 
 // Instruciton text
@@ -79,18 +72,12 @@ $.pickBiome.addEventListener('click', function(e) {
 	
 	//refresh TabbedBar
 	$.pickProtocol.labels = pickProtocolLabels;
-	
-	//TODO: obtain user feedback, disabled for testing
-	//auto-select protocol if there's only one
-	//if ($.pickProtocol.labels.length == 1) {
-	//	$.pickProtocol.index = 0;
-	//}
 });
 
 // Check for unsupported protocols
 $.pickProtocol.addEventListener('click', function(e) {
 	if ((pickProtocolLabels[e.index].title !== "Alpine") && (pickProtocolLabels[e.index].title !== "Grassland")) {
-		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
+		$.pickProtocolError.text = "* Unsupported protocol by LTEMA at this time";
 		$.pickProtocolError.visible = true;
 	} else {
 		$.pickProtocolError.visible = false;
@@ -245,8 +232,7 @@ function doneBtn(e){
 				plots.close();
 				transects.close();
 			}
-				
-			//Ti.App.fireEvent("app:refreshSiteSurveys");		
+					
 		} catch (e){
 			var errorMessage = e.message;
 			Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
@@ -267,21 +253,19 @@ function doneBtn(e){
 
 // SEARCH BAR ACTIONS
 
-//var last_search = null;
 var timers = 0;
 
 //create the popup window to show search results
 var win = Ti.UI.createWindow({
 	borderColor : "#C0C0C0",
 	scrollable : true,
-	height: 330,
+	height: 281,
 	left : 200,
 	right : 40,
 	top : 135,
 	borderRadius : 0,
 	borderWidth: 3,
 	title : 'park names',
-	//orientationModes : [Ti.UI.PORTRAIT, Ti.UI.UPSIDE_PORTRAIT]
 });
 
 
@@ -343,7 +327,7 @@ function auto_complete(search_term) {
 
 //Event Listener - when user types in the search bar
 $.parkSrch.addEventListener('change', function(e) {
-	var match = /^[A-Za-z]/;  //santatize search input by reqauiring a letter
+	var match = /^[A-Za-z]/;  //santatize search input by reqauiring a letter as the first character
 	if ((e.source.value.length < 1) || (!e.source.value.match(match)) ) { 
 		autocomplete_table.setData([]);
 		autocomplete_table.setData(table_data);
@@ -352,12 +336,8 @@ $.parkSrch.addEventListener('change', function(e) {
 		win.open();
 		clearTimeout(timers['autocomplete']);
 		timers['autocomplete'] = setTimeout(function() {
-			//last_search = e.source.value;
 			auto_complete(e.source.value);
-		}, 300);
-		//if user deletes input
-		//clear the table view results
-		
+		}, 300);		
 	}
 	return false;
 });
