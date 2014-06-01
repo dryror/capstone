@@ -136,7 +136,7 @@ $.transectName.addEventListener('change', function (e) {
 	//e.source.value = e.source.value.replace(/['"]/,"");
 	if ($.transectName.value.length < 2) {
 		$.transectError.visible = true;
-		$.transectError.text = "Transect name should be at least 2 characters";
+		$.transectError.text = "* Please use at least 2 characters in a transect name";
 	} else {
 		$.transectError.visible = false;
 	}
@@ -147,7 +147,7 @@ $.surveyor.addEventListener('change', function(e) {
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/; 
 	if (!field.match(match)) {
 		$.surveyorError.visible = true;
-		$.surveyorError.text = "Head surveyor should have a first and last name";
+		$.surveyorError.text = "* Please provide the first and last name of the head surveyor";
 	} else {
 		$.surveyorError.visible = false;
 	}
@@ -157,7 +157,7 @@ $.otherSurveyors.addEventListener('change', function(e) {
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
 	if ( (!field.match(match)) && (field !== "") ) {
 		$.otherSurveyorsError.visible = true;
-		$.otherSurveyorsError.text = "Other surveyors should have a first and last name";
+		$.otherSurveyorsError.text = "* Please give the first and last name of at least one surveyor";
 	} else {
 		$.otherSurveyorsError.visible = false;
 	}
@@ -168,10 +168,10 @@ $.plotDistance.addEventListener('change', function(e) {
 	e.source.value = e.source.value.replace(/[^0-9]+/,"");
 	if ($.plotDistance.value < 2) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "The distance between each plot should be at least 2 meters";
+		$.plotDistanceError.text = "* Please use a spacing between plots of at least 2 meters";
 	} else if ($.plotDistance.value > 30) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "The distance between each plot should be at most 30 meters";
+		$.plotDistanceError.text = "* Please use a spacing between plots of at most 30 meters";
 	} else {
 		$.plotDistanceError.visible = false;
 	}

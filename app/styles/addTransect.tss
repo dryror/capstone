@@ -148,7 +148,8 @@
 },
 "#location": {
 	left: 225,
-	top: 499
+	top: 499,
+	color: 'black'
 },
 "#locationError": {
 	left: 225,

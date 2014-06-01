@@ -118,22 +118,22 @@ function doneBtn(e){
 	
 	var errorFlag = false;
 	if (($.parkSrch.value == null) || ($.parkSrch.value == "")) {
-		$.parkSrchError.text = "Please select a park";
+		$.parkSrchError.text = "* Please select a park";
 		$.parkSrchError.visible = true;
 		errorFlag = true;
 	}
 	if ($.pickBiome.index == null) {
-		$.pickBiomeError.text = "Please select a biome";
+		$.pickBiomeError.text = "* Please select a biome";
 		$.pickBiomeError.visible = true;
 		errorFlag - true;
 	}
 	if (($.pickProtocol.index == null) || ($.pickProtocol.index == -1)) {
-		$.pickProtocolError.text = "Please select a protocol";
+		$.pickProtocolError.text = "* Please select a protocol";
 		$.pickProtocolError.visible = true;
 		errorFlag = true;
 	//is an elseif because an unselected TabbedBar has no title to check and will error out - there might be a better way to do this
 	} else if (($.pickProtocol.labels[$.pickProtocol.index].title !== "Alpine") && ($.pickProtocol.labels[$.pickProtocol.index].title !== "Grassland")) {
-		$.pickProtocolError.text = "Unsupported protocol by LTEMA at this time";
+		$.pickProtocolError.text = "* Unsupported protocol by LTEMA at this time";
 		$.pickProtocolError.visible = true;
 		errorFlag = true;
 	}

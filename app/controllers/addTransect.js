@@ -112,7 +112,7 @@ function doneBtn(e){
 		$.photoError.visible = true;
 		$.photoError.text = "* Please take a photo";
 		$.stakeError.visible = true;
-		$.stakeError.text = "* Must select a stake orientation";
+		$.stakeError.text = "* Please select a stake orientation";
 		errorFlag = true;
 	}
 	if (photo == null){
@@ -122,7 +122,7 @@ function doneBtn(e){
 	}
 	if($.pickStake.index == null){
 		$.stakeError.visible = true;
-		$.stakeError.text = "* Must select a stake orientation";
+		$.stakeError.text = "* Please select a stake orientation";
 		errorFlag = true;
 	}
 	if(utmZone == null){
@@ -303,12 +303,12 @@ $.tsctName.addEventListener('change', function (e) {
 Ti.App.addEventListener('transectChange', function() {
 	if ($.tsctName.value.length < 2) {
 		$.transectError.visible = true;
-		$.transectError.text = "* Transect name should be at least 2 characters";
-		$.tsctName.borderColor = 'red';
-		$.tsctName.borderRadius = 8;
+		$.transectError.text = "* Please use at least 2 characters in a transect name";
+		//$.tsctName.borderColor = 'red';
+		//$.tsctName.borderRadius = 8;
 	} else {
 		$.transectError.visible = false;
-		$.tsctName.borderColor = 'transparent';
+		//$.tsctName.borderColor = 'transparent';
 	}
 });
 
@@ -324,12 +324,12 @@ Ti.App.addEventListener('surveyorChange', function(e) {
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
 	if (!field.match(match)) {
 		$.surveyorError.visible = true;
-		$.surveyorError.text = "Head surveyor should have a first and last name";
-		$.srvyName.borderColor = 'red';
-		$.srvyName.borderRadius = 8;
+		$.surveyorError.text = "* Please provide the first and last name of the head surveyor";
+		//$.srvyName.borderColor = 'red';
+		//$.srvyName.borderRadius = 8;
 	} else {
 		$.surveyorError.visible = false;
-		$.srvyName.borderColor = 'transparent';
+		//$.srvyName.borderColor = 'transparent';
 	}
 /*
 	if ($.srvyName.value.length < 2) {
@@ -358,12 +358,12 @@ Ti.App.addEventListener('otherSurveyorChange', function(e) {
 	var match = /^[a-zA-Z]{1}[a-zA-Z\.\-',"\s]+\s{1}[a-zA-Z]{1}[a-zA-Z\.\-',"\s]*$/;
 	if ( (!field.match(match)) && (field !== "") ) {
 		$.otherSurveyorsError.visible = true;
-		$.otherSurveyorsError.text = "Other surveyors should have a first and last name";
-		$.otherSrvyName.borderColor = 'red';
-		$.otherSrvyName.borderRadius = 8;
+		$.otherSurveyorsError.text = "* Please give the first and last name of at least one surveyor";
+		//$.otherSrvyName.borderColor = 'red';
+		//$.otherSrvyName.borderRadius = 8;
 	} else {
 		$.otherSurveyorsError.visible = false;
-		$.otherSrvyName.borderColor = 'transparent';
+		//$.otherSrvyName.borderColor = 'transparent';
 	}
 	/*
 	// first & last name regex
@@ -393,17 +393,17 @@ $.plotDist.addEventListener('change', function(e) {
 Ti.App.addEventListener('plotDistanceChange', function(e) {
 	if ($.plotDist.value < 2) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "* Plot distance should be at least 2 meters";
-		$.plotDist.borderColor = 'red';
-		$.plotDist.borderRadius = 8;
+		$.plotDistanceError.text = "* Please use a spacing between plots of at least 2 meters";
+		//$.plotDist.borderColor = 'red';
+		//$.plotDist.borderRadius = 8;
 	} else if ($.plotDist.value > 30) {
 		$.plotDistanceError.visible = true;
-		$.plotDistanceError.text = "* Plot distance should be at most 30 meters";
-		$.plotDist.borderColor = 'red';
-		$.plotDist.borderRadius = 8;
+		$.plotDistanceError.text = "* Please use a spacing between plots of at most 30 meters";
+		//$.plotDist.borderColor = 'red';
+		//$.plotDist.borderRadius = 8;
 	} else {
 		$.plotDistanceError.visible = false;
-		$.plotDist.borderColor = 'transparent';
+		//$.plotDist.borderColor = 'transparent';
 	}
 });
 
