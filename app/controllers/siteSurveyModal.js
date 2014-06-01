@@ -101,7 +101,7 @@ for (var i in surveyTransects) {  //array of objects describing the transects of
 	});
 	loopLabel.text = surveyTransects[i].transectName;
 	utmLabel.text = "Easting: " + surveyTransects[i].utmEasting + " - Northing: " + surveyTransects[i].utmNorthing;
-	numPlotsLabel.text = "Plots: " + numPlots;
+	numPlotsLabel.text = "Plots: " + surveyTransects[i].numPlots;
 	$.modalNav.add(loopLabel);
 	$.modalNav.add(utmLabel);
 	$.modalNav.add(numPlotsLabel);
