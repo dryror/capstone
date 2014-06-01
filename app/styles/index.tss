@@ -26,7 +26,7 @@
 }
 "#exportData": {
 	top: 10,
-	left: 20,
+	left: 14,
 	height: 60,
 	width: 110,
 }
