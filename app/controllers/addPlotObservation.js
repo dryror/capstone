@@ -360,7 +360,7 @@ var win = Ti.UI.createWindow({
 	height: 318,
 	left : 220,
 	right : 40,
-	top : 98,
+	top : 198,
 	borderRadius : 0,
 	borderWidth: 3,
 	title : 'park names',
@@ -580,7 +580,11 @@ $.addPlotObservationWin.addEventListener('close', function(e) {
 
 // scroll view to fit search window on screen
 win.addEventListener('open', function(e) {
-	$.formView.scrollTo(0,95);
+	Ti.API.info('orient', win.orientation);
+	if ( (win.orientation === 4) || (win.orientation === 3) ) {  //LANDSCAPE_LEFT and LANDSCAPE_RIGHT
+		$.formView.scrollTo(0,95);
+		win.top = 98;
+	}
 });
 // reset view on close
 win.addEventListener('close', function(e) {
