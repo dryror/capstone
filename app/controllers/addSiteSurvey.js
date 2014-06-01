@@ -43,7 +43,7 @@ var instructions = "Start typing in the search bar to find a park.\n\n" +
 					"Picking a Biome will show its Protocols to choose from.\n\n" +
 					"Pick a Protocol and click the Done button to create the new site survey.\n\n" +
 					"\n" +
-					"LTEMA currently supports the Grassland and Alpine protocols.";
+					"LTEMA currently supports the Grassland and Alpine protocols.\n\n";
 $.info.text = instructions;
 
 /* Event Listeners */

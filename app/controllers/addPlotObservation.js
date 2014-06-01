@@ -28,6 +28,13 @@ var titleLabel = Titanium.UI.createLabel({
 });
 $.addPlotObservationWin.setTitleControl(titleLabel);
 
+// User instructions
+var instructions = 
+	"Please select the observation type. If this is a plant observation, you can search for the Phylum, Class, Order, Family, English Name, or Scientific Name.\n\n" + 
+	"Allowed percentages: 0.1%, 0.2%, 0.5%, or any integer between 0 and 100.\n\n" +
+	"A reference photo may be taken, but is not required.\n\n\n";
+$.info.text = instructions;
+
 // Initialize Variables
 var photo = null;
 

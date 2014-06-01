@@ -27,13 +27,20 @@ $.pickDistance.labels = [{title:plotDistance}, {title:"Other"}];
 var stakeOther = false;
 var distanceOther = false;
 
-// Nab Bar Title
+// Nav Bar Title
 var labelText = 'New Plot';
 var titleLabel = Titanium.UI.createLabel({
 	text: labelText,
 	font:{fontSize:20,fontWeight:'bold'},
 });
 $.addPlotWin.setTitleControl(titleLabel);
+
+// User Instructions
+var instructions = 
+	"Please confirm the stake orientation and distance along the transect for this plot.\n\n" + 
+	"If there is a deviation, you can select other and specify the deviation in the provided text field.\n\n" +
+	"When taking the photo, please stand with your feet on the transect line and frame the picture with the entire plot.\n\n\n";
+$.info.text = instructions;
 
 // Initialize Variables
 var photo;

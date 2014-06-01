@@ -165,8 +165,8 @@
 	borderColor:'#aaa'
 },
 "#info": {
-	left: 20,
-	right: 20,
+	left: 80,
+	right: 80,
 	top: 614,
-	font: {fontSize: 20, fontStyle: 'Italic'}
+	font: {fontSize: 18}
 }

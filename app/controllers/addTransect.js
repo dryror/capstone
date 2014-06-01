@@ -51,7 +51,7 @@ var instructions = "Some example Transect Name schemes are sequential (\"T1\", \
 					"Stake Orientation only affects the default value of each plot, and can be altered on a per plot basis to any custom value.\n\n" +
 					"When taking the plot's photo, hold the device directly overhead and have the borders of the plot marker touch two sides of the photo.\n\n" +
 					"\n" +
-					"When recording observations, remain on one side of the transect at all times (downslope if applicable).";
+					"When recording observations, remain on one side of the transect at all times (downslope if applicable).\n\n\n";
 $.info.text = instructions;
 /*
 // Related to issue #28

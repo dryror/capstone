@@ -92,8 +92,18 @@
 	top: 306,
 	color: '#8D8D8D'
 },
+
+"#footerLine": {
+	height: 1,
+	top: 360,
+	left: 5,
+	right: 5,
+	borderWidth: 1,
+	borderColor:'#aaa'
+},
 "#info": {
-	left: 40,
-	right: 40,
-	top: 380
+	left: 80,
+	right: 80,
+	top: 390,
+	font: {fontSize: 18}
 }

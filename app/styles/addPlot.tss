@@ -131,7 +131,8 @@
 	borderColor:'#aaa'
 },
 "#info": {
-	left: 40,
-	right: 40,
-	top: 494
+	left: 80,
+	right: 80,
+	top: 494,
+	font: {fontSize: 18}
 }
