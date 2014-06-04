@@ -158,7 +158,7 @@
 },
 "#footerLine":{
 	height: 1,
-	top: 584,
+	top: 599, //584
 	left: 5,
 	right: 5,
 	borderWidth: 1,

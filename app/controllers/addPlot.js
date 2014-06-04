@@ -55,16 +55,18 @@ var utmZone;
 
 var current_latitude;
 var current_longitude;
+var current_accuracy;
 
 //Start continuous location capture - based on distance filter
 var gps = require('location');
-	gps.location(function(latitude, longitude, error) {
+	gps.location(function(latitude, longitude, accuracy, error) {
 		if(error == true){
 			//returns an error
 		}else{
 			//updated lat & long
 			current_latitude = latitude;
 			current_longitude = longitude;
+			current_accuracy = accuracy;
 		}
 	});
 
@@ -381,7 +383,7 @@ function getLocation(){
 				ltemaAccessDialog.show();
 			}else{
 				$.location.visible = true;
-				$.location.text = "UTM Zone: " + utmZone + "\nUTM Easting: " + UTMEasting + "\nUTM Northing: " + UTMNorthing;
+				$.location.text = "UTM Zone: " + utmZone + "\nUTM Easting: " + UTMEasting + "\nUTM Northing: " + UTMNorthing  + "\nAccuracy: " + Math.round(current_accuracy);
 			}
 		});
 	}

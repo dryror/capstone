@@ -1,6 +1,7 @@
 function location(callback){
 var longitude;
 var latitude;
+var accuracy;
 var error;
 //Turn on the GPS
 if (Ti.Geolocation.locationServicesEnabled) {
@@ -20,11 +21,12 @@ if (Ti.Geolocation.locationServicesEnabled) {
 	        	error = false;
 	            longitude = e.coords.longitude;
 				latitude = e.coords.latitude;
+				accuracy = e.coords.accuracy;
 				
 				//callback(latitude, longitude, error);
 				//Ti.API.info(e.coords);
 	        }
-	        callback(latitude, longitude, error);
+	        callback(latitude, longitude, accuracy, error);
 	    });
 	} else {
 		 error = true;
