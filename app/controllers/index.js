@@ -4,17 +4,14 @@
  */
 
 //Run these two commands to reset db if testing delete functions
-var yourDb = Titanium.Database.open('ltemaDB');
-yourDb.remove();
+//var yourDb = Titanium.Database.open('ltemaDB');
+//yourDb.remove();
 
 //Initially remove the event that triggers the GPS location to be continuously captured
 Ti.Geolocation.removeEventListener('location', function(e) {});
 
 //Prompt the user to allow applicaiton to use location services
 Titanium.Geolocation.getCurrentPosition(function(e) {});
-
-var db = Ti.Database.install('/taxonomy.sqlite', 'taxonomy');
-db.close();
 
 populateTable();
 
@@ -24,8 +21,8 @@ function populateTable() {
 	var rd = []; 
 	$.tbl.data = rd;
 	try {
-		//Install and open database
-		var db = Ti.Database.install('/ltema.sqlite', 'ltemaDB');
+		//open database
+		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Retrieve existing sites from database
 		rows = db.execute('SELECT site_id, year, protocol_name, park_name \
