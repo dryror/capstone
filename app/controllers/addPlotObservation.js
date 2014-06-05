@@ -400,6 +400,9 @@ function auto_complete(search_term) {
 			var rsFamily = db.execute('SELECT family_name FROM family WHERE UPPER(family_name) LIKE UPPER(?)', search_term + '%');
 			totalRowCount += rsFamily.getRowCount();
 			
+			var rsGenus = db.execute('SELECT genus_name FROM genus WHERE UPPER(genus_name) LIKE UPPER(?)', search_term + '%');
+			totalRowCount += rsGenus.getRowCount();
+			
 			var rsEnglish = db.execute('SELECT english_name ' + 'FROM species ' + 'WHERE UPPER(english_name) LIKE UPPER(?)', search_term + '%');
 			totalRowCount += rsEnglish.getRowCount();
 			
@@ -485,6 +488,30 @@ function auto_complete(search_term) {
 						rsFamily.next();
 					}
 					rsFamily.close();
+				}
+				
+				// Add genus name to results
+				if (rsGenus.getRowCount() > 0) {
+					var gnSection = Ti.UI.createTableViewSection({
+						headerTitle: "Genus Name"
+					});
+					
+					autocomplete_table.appendSection(gnSection);
+					
+					while (rsGenus.isValidRow()) {
+						var genusName = rsGenus.fieldByName('genus_name');
+		
+						//create a new row
+						var gnRow = Ti.UI.createTableViewRow({
+							title : genusName,
+							indentionLevel: 1
+						});
+		
+						//Add row to the table view
+						autocomplete_table.appendRow(gnRow);
+						rsGenus.next();
+					}
+					rsGenus.close();
 				}
 				
 				// Add english name to results
