@@ -10,6 +10,10 @@
 //
 // Alloy.Globals.someGlobalFunction = function(){};
 
+//install both the Application & Reference database
+Ti.Database.install('ltema.sqlite', 'ltemaDB');
+Ti.Database.install('taxonomy.sqlite', 'taxonomy');
+
 if( Ti.App.deployType !== 'production' )
 {
 	var behave = require('behave');
