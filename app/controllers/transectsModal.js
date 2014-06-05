@@ -22,7 +22,7 @@ $.stakeBar.labels = stakeBarLabels;
 try {
 	var db = Ti.Database.open('ltemaDB');
 	
-	resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, other_surveyors, plot_distance, stake_orientation, comments, site_id, media_id \
+	var resultRow = db.execute(	'SELECT transect_id, transect_name, surveyor, other_surveyors, plot_distance, stake_orientation, comments, site_id, media_id \
 							FROM transect t \
 							WHERE transect_id = ?', transectID);
 	
@@ -112,6 +112,7 @@ try {
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
+	rows.close();
 	resultRow.close();
 	db.close();
 }
@@ -254,6 +255,7 @@ function saveEdit(e){
 			//get the id of the last row inserted into the database - *not sure if this is acceptable sql code to use?
 			var results = db.execute('SELECT last_insert_rowid() as mediaID');
 			var mediaID = results.fieldByName('mediaID');
+			results.close();
 			
 			//save the new information to the database with the media_id of the new photo
 			db.execute( 'UPDATE OR FAIL transect SET transect_name= ?, surveyor= ?, other_surveyors= ?, plot_distance= ?, stake_orientation= ?, comments= ?, media_id= ? WHERE transect_id= ?',

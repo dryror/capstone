@@ -11,7 +11,7 @@ var title = args.title;
 //Query the database, assign returned ground cover to TextField
 try {
 	var db = Ti.Database.open('ltemaDB');
-	resultRow = db.execute(	'SELECT ground_cover \
+	var resultRow = db.execute(	'SELECT ground_cover \
 						FROM plot_observation \
 						WHERE observation_id = ?', observationID);
 	var groundCover = resultRow.fieldByName('ground_cover');

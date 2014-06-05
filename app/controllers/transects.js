@@ -22,7 +22,7 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Retrieve existing sites from database
-		rows = db.execute('SELECT transect_id, transect_name, surveyor, \
+		var rows = db.execute('SELECT transect_id, transect_name, surveyor, \
 						utm_zone, utm_easting, utm_northing, media_id \
 						FROM transect \
 						WHERE site_id = ?', $.tbl.siteID); 

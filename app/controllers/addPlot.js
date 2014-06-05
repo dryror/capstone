@@ -14,7 +14,7 @@ try {
 	var plotNumber = results.rowCount + 1;
 	$.numberLbl.text = "P"+plotNumber;
 	
-	results = db.execute('SELECT site_id, stake_orientation, plot_distance FROM transect WHERE transect_id = ?', transectID);
+	var results = db.execute('SELECT site_id, stake_orientation, plot_distance FROM transect WHERE transect_id = ?', transectID);
 	var siteID = results.fieldByName('site_id');
 	var stakeOrientation = results.fieldByName('stake_orientation');
 	var plotDistance = results.fieldByName('plot_distance');
@@ -22,7 +22,7 @@ try {
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 } finally {
-	//results.close();
+	results.close();
 	db.close();
 }
 
@@ -276,7 +276,7 @@ function insertPreviousPlotRows(db) {  //expected parameter: an open database co
 		
 		//get all the plot_id's of this screen's transect
 		var plotIDs = [];
-		plotsResult = db.execute('SELECT plot_id FROM plot WHERE transect_id = ?', transectID);
+		var plotsResult = db.execute('SELECT plot_id FROM plot WHERE transect_id = ?', transectID);
 		while (plotsResult.isValidRow()) {
 			plotIDs.push(plotsResult.fieldByName('plot_id'));
 			plotsResult.next();
@@ -286,7 +286,7 @@ function insertPreviousPlotRows(db) {  //expected parameter: an open database co
 		var uniquePlotObservationTitles = [];
 		
 		//add current plot's titles to the unique list if indeed unique
-		uniquesResult = db.execute ('SELECT observation FROM plot_observation WHERE plot_id = ?', plotID);
+		var uniquesResult = db.execute ('SELECT observation FROM plot_observation WHERE plot_id = ?', plotID);
 		while (uniquesResult.isValidRow()) {
 			var newObs = uniquesResult.fieldByName('observation');
 			//seach for matches
@@ -306,7 +306,7 @@ function insertPreviousPlotRows(db) {  //expected parameter: an open database co
 		var validPlotObservationIDs = [];
 		for (var i=0; i < plotIDs.length; i++) {
 			if (plotIDs[i] < plotID) {  //assuming all plotIDs are squential
-				obsResult = db.execute('SELECT observation_id, observation FROM plot_observation WHERE plot_id = ?', plotIDs[i]);
+				var obsResult = db.execute('SELECT observation_id, observation FROM plot_observation WHERE plot_id = ?', plotIDs[i]);
 				while (obsResult.isValidRow()){
 					var obsID = obsResult.fieldByName('observation_id');
 					var obsTitle = obsResult.fieldByName('observation');

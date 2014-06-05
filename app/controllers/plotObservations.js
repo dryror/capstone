@@ -31,7 +31,7 @@ function populateTable() {
 		var db = Ti.Database.open('ltemaDB');
 		
 		//Query - Observations of a plot
-		rows = db.execute('SELECT observation_id, observation, ground_cover, comments, media_id \
+		var rows = db.execute('SELECT observation_id, observation, ground_cover, comments, media_id \
 						FROM plot_observation \
 						WHERE plot_id = ?', $.tbl.plotID); 
 		
@@ -99,7 +99,7 @@ var plotName ="";
 try {
 	var db = Ti.Database.open('ltemaDB');
 	
-	resultRow = db.execute (	'SELECT pa.park_name, ta.transect_name, pl.plot_name \
+	var resultRow = db.execute (	'SELECT pa.park_name, ta.transect_name, pl.plot_name \
 								FROM park pa, transect ta, site_survey ss, plot pl \
 								WHERE ss.site_id = ta.site_id \
 								AND pa.park_id = ss.park_id \

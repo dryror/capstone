@@ -21,7 +21,7 @@ var transectName ="";
 try {
 	var db = Ti.Database.open('ltemaDB');
 	
-	resultRow = db.execute (	'SELECT p.park_name, t.transect_name \
+	var resultRow = db.execute (	'SELECT p.park_name, t.transect_name \
 								FROM park p, transect t, site_survey s \
 								WHERE s.site_id = t.site_id \
 								AND p.park_id = s.park_id \
@@ -153,9 +153,9 @@ $.tbl.addEventListener('delete', function(e) {
 		var errorMessage = e.message;
 		Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 	} finally {
-		//rows.close();
-		//plotFiles.close();
-		//plotObservationFiles.close();
+		rows.close();
+		plotFiles.close();
+		plotObservationFiles.close();
 		db.close();
 		toggleEditBtn();
 	}

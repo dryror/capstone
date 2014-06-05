@@ -14,7 +14,7 @@ var siteID = args.siteID;
 //Query the database, assign returned ground cover to TextField
 try {
 	var db = Ti.Database.open('ltemaDB');
-	resultRow = db.execute(	'SELECT ground_cover \
+	var resultRow = db.execute(	'SELECT ground_cover \
 						FROM plot_observation \
 						WHERE observation_id = ?', observationID);
 	var groundCover = resultRow.fieldByName('ground_cover');
@@ -30,7 +30,9 @@ try {
 							FROM media \
 							WHERE media_id = ?', mediaID);
 	
-	var mediaName = mediaRow.fieldByName('media_name');	
+	var mediaName = mediaRow.fieldByName('media_name');
+	
+	mediaRow.close();
 	
 	//GET FOLDER NAME - Retrieve site survery, year, park
 	var rows = db.execute('SELECT year, protocol_name, park_name \
@@ -43,7 +45,9 @@ try {
 	var year = rows.fieldByName('year');
 	var protocolName = rows.fieldByName('protocol_name');
 	var parkName = rows.fieldByName('park_name');
-
+	
+	rows.close();
+	
 	var folderName = year + ' - ' + protocolName + ' - ' + parkName;
 	
 	var imageDir = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, folderName);

@@ -11,7 +11,7 @@ var siteID = args.siteID;
 try {
 	var db = Ti.Database.open('ltemaDB');
 	
-	row = db.execute(
+	var row = db.execute(
 		'SELECT site_id, year, protocol_name, park_name, biome_name, exported \
 		FROM site_survey s, protocol p, park prk, biome bio \
 		WHERE p.biome_id = bio.biome_id \
@@ -25,7 +25,7 @@ try {
 	var parkName = row.fieldByName('park_name');
 	var exported = row.fieldByName('exported');
 	
-	transectsResult = db.execute (
+	var transectsResult = db.execute (
 		'SELECT transect_id, transect_name, utm_easting, utm_northing, media_id \
 		FROM transect \
 		WHERE site_id = ?', siteID);

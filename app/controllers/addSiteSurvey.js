@@ -293,7 +293,7 @@ function auto_complete(search_term) {
 			var db = Ti.Database.open('ltemaDB');
 			
 			//Query - Retrieve matching park names from database
-			rows = db.execute('SELECT park_name ' + 'FROM park ' + 'WHERE park_name LIKE ?', search_term + '%');
+			var rows = db.execute('SELECT park_name ' + 'FROM park ' + 'WHERE park_name LIKE ?', search_term + '%');
 			
 			//Ti.API.info(rows.getRowCount());
 			
