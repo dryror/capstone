@@ -6,7 +6,8 @@ var error;
 //Turn on the GPS
 if (Ti.Geolocation.locationServicesEnabled) {
 	    Ti.Geolocation.purpose = 'Determine Location';
-	    Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;
+	    //Ti.Geolocation.accuracy = Ti.Geolocation.ACCURACY_BEST;  //this line seems to be buggy
+	    Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_NEAREST_TEN_METERS;
 	    Ti.Geolocation.distanceFilter = 0;
 	    Ti.Geolocation.preferredProvider = Ti.Geolocation.PROVIDER_GPS;
 		//error = false;
