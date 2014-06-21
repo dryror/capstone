@@ -7,7 +7,7 @@
 		<TableView class="table" id="tbl">
 			<HeaderView id="mainHeader">
 				<View id="headerView">
-					<Button id="addTransect" title="Add" onClick="addBtn"/>
+					<Button id="addTransect" title="Add Transect" onClick="addBtn"/>
 				</View>
 			</HeaderView>
 		</TableView>

@@ -7,7 +7,7 @@
 		<TableView class="table" id="tbl">
 			<HeaderView id="mainHeader">
 				<View id="headerView">
-					<Button id="addObservation" title="Add" />
+					<Button id="addObservation" title="Add Plot Observation" />
 				</View>
 			</HeaderView>
 			

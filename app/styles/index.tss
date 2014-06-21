@@ -17,7 +17,7 @@
 	bottom: 0,
 	left: 20,
 	height: 60,
-	width: 80
+	width: 180
 },
 
 //FooterView
@@ -26,7 +26,7 @@
 }
 "#exportData": {
 	top: 10,
-	left: 14,
+	left: 12,
 	height: 60,
 	width: 110,
 }

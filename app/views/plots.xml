@@ -7,7 +7,7 @@
 		<TableView class="table" id="tbl">
 			<HeaderView id="mainHeader">
 				<View id="headerView">
-					<Button id="addPlot" title="Add" onClick="addBtn"/>
+					<Button id="addPlot" title="Add Plot" onClick="addBtn"/>
 					<Label id="addPlotError" class="error" visible="false" text="*Total Ground Coverage is less than 100%"/>
 				</View>
 			</HeaderView>

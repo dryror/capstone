@@ -16,11 +16,11 @@
 	bottom: 0,
 	left: 20,
 	height: 60,
-	width: 80
+	width: 100
 },
 "#addPlotError":{
 	bottom: 0,
-	left: 100,
+	left: 140,
 	height: 60,
 	color: '#8D8D8D',
 	font: {fontSize: 18}

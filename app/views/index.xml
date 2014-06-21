@@ -8,7 +8,7 @@
 			<TableView class="table" id="tbl">
 				<HeaderView id="mainHeader">
 					<View id="headerView">
-						<Button id="addSite" title="Add" onClick="addBtn"/>
+						<Button id="addSite" title="Add Site Survey" onClick="addBtn"/>
 					</View>
 				</HeaderView>
 				<FooterView id="mainFooter">
