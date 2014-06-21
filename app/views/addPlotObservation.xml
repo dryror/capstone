@@ -24,7 +24,7 @@
 			<Label id="percentError" class="error" visible="false" text="* Please enter percent coverage" />
 			
 			<Label id="commentLbl" text="Comments:" />
-			<TextField id="comments" />
+			<TextField id="comments" hintText="(optional)" />
 			
 			<Button id="photoBtn" title="Take Photo" onClick="takePhoto" />
 			<Label id="photoHint" text="(optional)" />
