@@ -9,7 +9,7 @@ In collaboration with Sierra Systems Group Inc.
 
 ### Long Term Ecological Monitoring Application
 
-LTEMA's purpose is to record field data for BC Parks according to LTEM environmental monitoring protocols.  The application streamlines the process of collecting ground cover observations.
+LTEMA streamlines the process of collecting ground cover observations for BC Parks and the LTEM environmental monitoring protocols.
 
 #### Key Features
 - validates input on-site and in real-time
