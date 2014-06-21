@@ -59,6 +59,7 @@ $.groundCover.addEventListener('change', function (e) {
 // Make keyboard appear when opening nav window (needs the event listener to work)
 $.modalNav.addEventListener("open", function(e) {
 	$.groundCover.focus();
+	$.groundCover.setSelection(0, $.groundCover.value.length);  //selects all text in field (next key press replaces previous value)
 	$.doneBtn.enabled = false;  //initially disable Done button until a change is made
 });
 
