@@ -107,7 +107,10 @@ try{
 	var errorMessage = e.message;
 	Ti.App.fireEvent("app:dataBaseError", {error: errorMessage});
 }finally{
-	rows.close();
+	if(mediaID != null){
+		mediaRow.close();
+		rows.close();
+	}
 	results.close();
 	db.close();
 }
