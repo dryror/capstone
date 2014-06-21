@@ -9,7 +9,7 @@ In collaboration with Sierra Systems Group Inc.
 
 ### Long Term Ecological Monitoring Application
 
-LTEMA streamlines the process of collecting ground cover observations for BC Parks and the LTEM environmental monitoring protocols.
+LTEMA streamlines the process of collecting ground cover observations for BC Parks and the LTEM environmental monitoring protocols. Developed using Titanium and targeting the iPad, the application replaces the current pen-and-paper method of recording observations.
 
 #### Key Features
 - validates input on-site and in real-time
