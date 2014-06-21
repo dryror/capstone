@@ -148,6 +148,7 @@ function doneBtn(e){
 	
 	if (errorOnPage) {
 		e.source.enabled = true;
+		$.comments.blur();
 		return;
 	}
 		

@@ -130,6 +130,7 @@ function doneBtn(e){
 	
 	if (errorFlag === true) {
 		e.source.enabled = true;
+		$.parkSrch.blur();
 		return;
 	} else { //no error, insert into database and close this screen
 		$.parkSrchError.visible = false;

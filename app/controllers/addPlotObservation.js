@@ -88,6 +88,10 @@ function doneBtn(e){
 	
 	if (errorOnPage) {
 		e.source.enabled = true;
+		$.observationSearch.blur();
+		$.observation.blur();
+		$.percent.blur();
+		$.comments.blur();
 		return;
 	}
 	

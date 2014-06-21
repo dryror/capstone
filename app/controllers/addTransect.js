@@ -119,6 +119,11 @@ function doneBtn(e){
 	
 	if (errorFlag === true) {
 		e.source.enabled = true;
+		$.tsctName.blur();
+		$.srvyName.blur();
+		$.otherSrvyName.blur();
+		$.plotDist.blur();
+		$.comments.blur();
 		return;
 	} else {
 		$.photoError.visible = false;
