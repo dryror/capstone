@@ -8,7 +8,7 @@
 			<HeaderView id="mainHeader">
 				<View id="headerView">
 					<Button id="addPlot" title="Add Plot" onClick="addBtn"/>
-					<Label id="addPlotError" class="error" visible="false" text="*Total Ground Coverage is less than 100%"/>
+					<Label id="addPlotError" class="error" visible="false" text="*Total Coverage is less than 100%"/>
 				</View>
 			</HeaderView>
 			<!--Placeholder row for testing screens-->

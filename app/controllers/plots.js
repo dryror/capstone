@@ -299,6 +299,7 @@ function addBtn(){
 //ADD BUTTON TOGGLE
 function toggleAddBtn(){
 	var incompletePlotCount = 0;
+	var exceedTotalCoverageMax = false;
 	//check if any rows exists
 	if(showTotalRowNumber() > 0){
 		//loop via plot list and check total ground cover
@@ -307,6 +308,10 @@ function toggleAddBtn(){
 	        	//disable add plot button
 	        	incompletePlotCount += 1;	
 				//$.tbl.data[0].rows[i].color = "red";
+			//check if the total coverage exceeds 400%
+	        }else if($.tbl.data[0].rows[i].totalGroundCover > 400){
+	        	//disable add plot button
+	        	exceedTotalCoverageMax = true;
 	        }
 	    }
 	 }  
@@ -314,6 +319,10 @@ function toggleAddBtn(){
 	    if(incompletePlotCount > 0){
 	    	//disable add plot button
 	    	$.addPlot.enabled = false;
+			$.addPlotError.visible = true;
+		}else if(exceedTotalCoverageMax == true){
+			$.addPlot.enabled = false;
+			$.addPlotError.text = "*Total Ground Coverage exceeds 400%";
 			$.addPlotError.visible = true;
 	    }else{
 	    	//enable add plot button

@@ -223,6 +223,7 @@ $.tbl.addEventListener('delete', function(e) {
 	}
 	//check if Edit button should be enabled/disabled - if no rows exist
 	toggleEditBtn();
+	toggleDoneBtn();
 });
 
 $.plotObservationsWin.addEventListener('close', function(e) {
@@ -244,8 +245,14 @@ function editBtn(e){
 	} else { 
 		$.tbl.editing = false;
 		e.source.title = "Edit";
-		$.addObservation.enabled = true;
-		$.done.enabled = true;
+		if(totalPlotPercentage >= 400){
+			$.done.enabled = false;
+			$.addObservation.enabled = false;
+		}else{
+			$.addObservation.enabled = true;
+			$.done.enabled = true;
+		}
+		
 	}
 }
 
@@ -259,9 +266,10 @@ function toggleEditBtn(){
 		$.editObservation.enabled = false;
 		//reset screen behaviour for zero rows
 		$.editObservation.title = "Edit";
-		$.addObservation.enabled = true;
-		$.tbl.editing = false;
 		$.done.enabled = false;
+		$.addObservation.enabled = true;
+		
+		$.tbl.editing = false;
 	}else{
 		//enable Edit Button
 		$.editObservation.enabled = true;
@@ -288,13 +296,18 @@ function toggleDoneBtn(){
 		$.done.enabled = false;
 		$.doneError.text = "Ground cover must be at least 100%";
 		$.doneError.visible = true;
-	} else if (totalPlotPercentage > 400) {
+	} else if (totalPlotPercentage >= 400) {
+		//disable the add observation button
+		$.addObservation.enabled = false;
+		
 		$.done.enabled = false;
 		$.doneError.text = "Ground cover must be no greater than 400%";
 		$.doneError.visible = true;
 	} else {
 		$.done.enabled = true;
 		$.doneError.visible = false;
+		//disable the add observation button
+		$.addObservation.enabled = true;
 	}
 }
 
