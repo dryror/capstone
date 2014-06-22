@@ -11,7 +11,7 @@
 			
 			<View id="formView">
 				<Label id="surveyLbl" text="Survey:" />
-				<Label id="selectLbl" text="Select" onClick="surveyBtn"/>
+				<Label id="selectLbl" text="Select" />
 				<Button id="exportBtn" title="Export" onClick="exportBtn">
 			</View>	
 			<View id="surveyPkrView" visible="false">

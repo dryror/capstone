@@ -68,7 +68,13 @@ try {
 	}
 	
 	// Add the rows to the picker
-	$.surveyPkr.add(data);
+	if (data.length > 0) {
+		$.surveyPkr.add(data);
+		$.selectLbl.text = "Select";
+		$.selectLbl.addEventListener('click', surveyBtn);
+	} else {
+		$.selectLbl.text = "Please complete a survey before exporting";
+	}
 	
 } catch (e) {
 	var errorMessage = e.message;
