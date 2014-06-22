@@ -40,11 +40,12 @@ var titleLabel = Titanium.UI.createLabel({
 });
 $.addPlotWin.setTitleControl(titleLabel);
 
-// User Instructions
+// User Instructions	
 var instructions = 
-	"Please confirm the stake orientation and distance along the transect for this plot.\n\n" + 
-	"If there is a deviation, you can select other and specify the deviation in the provided text field.\n\n" +
-	"When taking the photo, please stand with your feet on the transect line and frame the picture with the entire plot.\n\n\n";
+	"Please confirm the stake orientation and plot spacing along the transect for this plot.\n\n" + 
+	"If there is a deviation, select \"other\" and specify the deviation in the provided text field.\n\n" +
+	"When taking the photo, please stand with your feet on the transect line and frame the picture with the entire plot. If your shadow obscures the photo, step to one side and make a note of this in the comments section.\n\n" +
+	"When capturing a plot's location, hold the device inside the plot marker to get the best reading possible.\n\n\n";
 $.info.text = instructions;
 
 // Initialize Variables

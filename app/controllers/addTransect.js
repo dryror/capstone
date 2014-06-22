@@ -42,10 +42,12 @@ var gps = require('location');
 
 // Instruciton text
 var instructions = 
+	"When conducting a site survey, remain on one side of the transect at all times (downslope if applicable) to avoid disturbing the observations.\n\n" +
 	"Some example Transect Name schemes are sequential (\"T1\", \"T2\"..), directional (\"South\", \"North\"..), or descriptive (\"Creekside\", \"Hillside\"..)\n\n" +
 	"Stake Orientation only affects the default value of each plot, and can be altered on a per plot basis to any custom value.\n\n" +
-	"When taking the plot's photo, hold the device directly overhead and have the borders of the plot marker touch two sides of the photo.\n\n" +
-	"When recording observations, remain on one side of the transect at all times (downslope if applicable).\n\n\n";
+	"Plot Distance is the default distance, in meters, between each plot. Individual plot deviations can be noted when adding a plot.\n\n" +
+	"When taking the transect's photo, stand at one end and face the other. Capture the transect and the horizon. This photo will assist in locating the transect when revisiting the site.\n\n" +
+	"Capture Location should be completed from the same spot the photo is taken.\n\n\n";
 $.info.text = instructions;
 
 // Nav Bar title label
