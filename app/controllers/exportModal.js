@@ -257,7 +257,12 @@ function makeCSV() {
 					generalSurveyTxt += dq + comments + dq + c;
 					
 					generalSurveyTxt += dq + results[transect][plot][observation].ground_cover + dq + c;
-					generalSurveyTxt += dq + results[transect][plot][observation].observation_photo + dq + nl;
+					var observationPhoto = results[transect][plot][observation].observation_photo;
+					if (observationPhoto != null) {
+						generalSurveyTxt += dq + observationPhoto + dq + nl;
+					} else {
+						generalSurveyTxt += nl;
+					}
 				}					
 			}
 		}
