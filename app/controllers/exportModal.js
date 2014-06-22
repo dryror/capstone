@@ -214,6 +214,12 @@ function makeCSV() {
 			
 			for (var observation in results[transect][plot]) {
 				if (typeof results[transect][plot][observation] === 'object' && results[transect][plot][observation] != null) {
+					
+					// Skip the entry if the ground cover is 0
+					if (results[transect][plot][observation].ground_cover == 0) {
+						continue;
+					}
+					
 					// Convert utc to date and time
 					var utc = parseInt(results[transect][plot].utc);
 					var d = new Date(utc);
@@ -257,6 +263,7 @@ function makeCSV() {
 					generalSurveyTxt += dq + comments + dq + c;
 					
 					generalSurveyTxt += dq + results[transect][plot][observation].ground_cover + dq + c;
+					
 					var observationPhoto = results[transect][plot][observation].observation_photo;
 					if (observationPhoto != null) {
 						generalSurveyTxt += dq + observationPhoto + dq + nl;
