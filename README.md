@@ -13,11 +13,14 @@ LTEMA streamlines the process of collecting ground cover observations for BC Par
 
 #### Key Features
 - validates input on-site and in real-time
+- searches multiple taxonomy levels simultaneously
 - integrates GPS and camera into the site survey process
 - exports data and linked photos in one bundle
 - pre-populates a revisted site with static measurements
 
+<br>
 
+========
 ##### Project Team:
 Nick Gulajec <br>
 Blair White <br>
