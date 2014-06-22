@@ -20,7 +20,6 @@ LTEMA streamlines the process of collecting ground cover observations for BC Par
 
 <br>
 
-========
 ##### Project Team:
 Nick Gulajec <br>
 Blair White <br>
