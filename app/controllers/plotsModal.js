@@ -283,8 +283,19 @@ function saveEdit(e){
 		}		
 	}catch(e){
 		Ti.API.error(e.toString());	
+	}finally{
 		//Close the database
 		db.close();
+		//close the window when user hits done button if a photo has been taken.
+		if(photo != null){
+			//remove the temp photo - used for photo preview 
+			var tempPhoto = Ti.Filesystem.getFile(Titanium.Filesystem.tempDirectory,'temp.png');
+			if(tempPhoto.exists){
+				tempPhoto.deleteFile();
+			}
+			Ti.App.fireEvent("app:refreshPlots");
+			$.modalNav.close();
+		}
 	}
 }
 
