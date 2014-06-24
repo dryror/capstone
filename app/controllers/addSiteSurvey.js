@@ -107,11 +107,27 @@ function doneBtn(e){
 	e.source.enabled = false;
 	
 	var errorFlag = false;
-	if (($.parkSrch.value == null) || ($.parkSrch.value == "")) {
+	if (($.parkSrch.value == "") || ($.parkSrch.value == null) && ($.parkSrch.value == "") || ($.parkSrch.value == null)) {
 		$.parkSrchError.text = "* Please select a park";
 		$.parkSrchError.visible = true;
 		errorFlag = true;
+	}else{
+		try{
+			//Check if the park name that was entered matches one from the database list of park names
+			var db = Ti.Database.open('ltemaDB');
+			var parkResultExists = db.execute('SELECT park_id FROM park WHERE park_name =?', $.parkSrch.value);
+			if(parkResultExists.rowCount <= 0){
+				$.parkSrchError.text = "* Please select a park";
+				$.parkSrchError.visible = true;
+				errorFlag = true;
+			}
+		}catch(e){
+		
+		}finally{
+			db.close();
+		}
 	}
+	
 	if ($.pickBiome.index == null) {
 		$.pickBiomeError.text = "* Please select a biome";
 		$.pickBiomeError.visible = true;
