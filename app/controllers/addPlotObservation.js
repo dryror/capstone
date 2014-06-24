@@ -305,6 +305,7 @@ $.pickType.addEventListener('click', function(e) {
 		$.observationOtherQuickPick.index = -1;
 		$.observationLbl.visible = true;
 		$.observationSearch.visible = true;
+		$.percentLbl.text = "Foliar Coverage:";
 	}
 	if ( (observationOtherFlag === true) && ($.pickType.index === 0) ) {  //plant
 		$.observationLbl.visible = false;
@@ -338,6 +339,7 @@ $.pickType.addEventListener('click', function(e) {
 		$.observationOtherQuickPickLbl.visible = true;
 		$.observationOtherQuickPick.visible = true;
 		//$.observation.visible = true;
+		$.percentLbl.text = "Coverage:";
 	}
 });
 
