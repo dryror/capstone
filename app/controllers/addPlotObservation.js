@@ -25,6 +25,10 @@ try{
 	db.close();
 }
 
+// Set Common Other label and flag
+$.observationOtherQuickPick.labels = [{title:"Bare Soil"}, {title:"Rock"}, {title:"Litter"}, {title:"Biocrust"}, {title:"Scat"}, {title:"(other)"}];
+var observationOtherFlag = false;
+
 // Nav Bar Title
 var labelText = 'New Plot Observation';
 var titleLabel = Titanium.UI.createLabel({
@@ -294,14 +298,93 @@ function previewPhoto(){
 
 $.pickType.addEventListener('click', function(e) {
 	$.pickTypeError.visible = false;
-	if ($.pickType.index == 0) {
+	if ( (observationOtherFlag === false) && ($.pickType.index === 0) ) {  //plant
 		$.observation.visible = false;
 		$.observation.value = "";
+		$.observationOtherQuickPickLbl.visible = false;
+		$.observationOtherQuickPick.index = -1;
+		$.observationLbl.visible = true;
 		$.observationSearch.visible = true;
-	} else {
+	}
+	if ( (observationOtherFlag === true) && ($.pickType.index === 0) ) {  //plant
+		$.observationLbl.visible = false;
+		$.observation.visible = false;
+		$.observation.value = "";
+		$.observationOtherQuickPickLbl.visible = false;
+		$.observationOtherQuickPick.visible = false;
+		$.observationOtherQuickPick.index = -1;
+		$.observationLbl.top -= 60;
+		$.observation.top -= 60;
+		$.observationError.top -= 60;
+		$.percentLbl.top -= 60;
+		$.percent.top -= 60;
+		$.percentError.top -= 60;
+		$.commentLbl.top -= 60;
+		$.comments.top -= 60;
+		$.photoBtn.top -= 60;
+		$.photoHint.top -= 60;
+		$.plotThumbnail.top -= 60;
+		$.thumbnailHintText.top -= 60;
+		$.footerLine.top -= 60;
+		$.info.top -= 60;
+		$.observationLbl.visible = true;
+		$.observationSearch.visible = true;
+		observationOtherFlag = false;
+	}
+	if ($.pickType.index === 1) {  //other
+		$.observationLbl.visible = false;
 		$.observationSearch.visible = false;
 		$.observationSearch.value = "";
+		$.observationOtherQuickPickLbl.visible = true;
+		$.observationOtherQuickPick.visible = true;
+		//$.observation.visible = true;
+	}
+});
+
+$.observationOtherQuickPick.addEventListener('click', function(e) {
+	$.observationError.visible = false;
+	if (e.index === 5) {  //other other selected
+		$.observation.value = "";
+		$.observationLbl.top += 60;
+		$.observation.top += 60;
+		$.observationError.top += 60;
+		$.percentLbl.top += 60;
+		$.percent.top += 60;
+		$.percentError.top += 60;
+		$.commentLbl.top += 60;
+		$.comments.top += 60;
+		$.photoBtn.top += 60;
+		$.photoHint.top += 60;
+		$.plotThumbnail.top += 60;
+		$.thumbnailHintText.top += 60;
+		$.footerLine.top += 60;
+		$.info.top += 60;
+		$.observationLbl.visible = true;
 		$.observation.visible = true;
+		observationOtherFlag = true;
+	} else {  //common other selected
+		var quickPick = e.source.labels[e.index].title;
+		$.observation.value = quickPick;
+		
+		if (observationOtherFlag === true) {
+			$.observationLbl.visible = false;
+			$.observation.visible = false;
+			$.observationLbl.top -= 60;
+			$.observation.top -= 60;
+			$.observationError.top -= 60;
+			$.percentLbl.top -= 60;
+			$.percent.top -= 60;
+			$.percentError.top -= 60;
+			$.commentLbl.top -= 60;
+			$.comments.top -= 60;
+			$.photoBtn.top -= 60;
+			$.photoHint.top -= 60;
+			$.plotThumbnail.top -= 60;
+			$.thumbnailHintText.top -= 60;
+			$.footerLine.top -= 60;
+			$.info.top -= 60;
+			observationOtherFlag = false;
+		}
 	}
 });
 

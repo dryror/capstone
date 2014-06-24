@@ -50,6 +50,17 @@
 	top: 138
 },
 
+"#observationOtherQuickPickLbl": {
+	left: 40,
+	top: 100
+},
+"#observationOtherQuickPick": {
+	left: 220,
+	right: 40,
+	top: 100,
+	borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED
+},
+
 "#percentLbl": {
 	left: 40,
 	top: 160
