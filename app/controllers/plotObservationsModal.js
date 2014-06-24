@@ -11,10 +11,15 @@ var title = args.title;
 //Query the database, assign returned ground cover to TextField
 try {
 	var db = Ti.Database.open('ltemaDB');
-	var resultRow = db.execute(	'SELECT ground_cover \
+	var resultRow = db.execute(	'SELECT ground_cover, count \
 						FROM plot_observation \
 						WHERE observation_id = ?', observationID);
 	var groundCover = resultRow.fieldByName('ground_cover');
+	var count = resultRow.fieldByName('count');
+	//Set the label depending on the oberservation type
+	if(count == 0){
+		$.groundCoverLbl.text = "	Cover:";
+	}
 	$.groundCover.value = groundCover;
 } catch (e) {
 	var errorMessage = e.message;

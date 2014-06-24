@@ -11,7 +11,7 @@
 			</RightNavButton>
 			
 			<ScrollView>	
-				<Label id="groundCoverLbl" text="Ground Cover:" />
+				<Label id="groundCoverLbl" text="Foliar Cover:" />
 				<TextField id="groundCover" />
 				<Label id="percentSymbolLabel" />
 				<Label id="groundCoverError" class="error" visible="false" />
