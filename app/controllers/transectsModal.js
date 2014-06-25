@@ -282,6 +282,7 @@ function saveEdit(e){
 			Ti.App.fireEvent("app:refreshTransects");
 			$.modalNav.close();
 		}
+		$.photoError.visible = true;
 	}	
 }
 

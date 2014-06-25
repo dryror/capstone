@@ -296,6 +296,7 @@ function saveEdit(e){
 			Ti.App.fireEvent("app:refreshPlots");
 			$.modalNav.close();
 		}
+		$.photoError.visible = true;
 	}
 }
 
