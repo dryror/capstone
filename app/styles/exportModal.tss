@@ -39,4 +39,18 @@
 	height: 'auto',
 	style: Titanium.UI.iPhone.ProgressBarStyle.DEFAULT,
 	font: {fontSize: 20}
+},
+"#footerLine": {
+	height: 1,
+	top: 165,  //479
+	left: 5,
+	right: 5,
+	borderWidth: 1,
+	borderColor:'#aaa'
+},
+"#info": {
+	left: 80,
+	right: 80,
+	top: 180,
+	font: {fontSize: 18}
 }

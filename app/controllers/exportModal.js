@@ -10,6 +10,14 @@ var titleLabel = Titanium.UI.createLabel({
 });
 $.exportWin.setTitleControl(titleLabel);
 
+// User Instructions	
+var instructions = 
+	"Please press the Select button above.\n\n" + 
+	"Use the picker below to select the Site Survey you wish to prepare for export and press Done.\n\n" +
+	"Press the Export button and wait for the confirmation that the Survey is ready for export.\n\n" +
+	"You can now connect your device to iTunes to retrieve the Survey folder.\n\n";
+$.info.text = instructions;
+
 function backBtnClick(){
 	Ti.App.fireEvent("app:enableIndexExportButton");
 	$.modalNav.close();
@@ -74,6 +82,7 @@ try {
 		$.selectLbl.addEventListener('click', surveyBtn);
 	} else {
 		$.selectLbl.text = "Please complete a survey before exporting";
+		$.info.text = "Please complete a survey before exporting.\n\n";
 	}
 	
 } catch (e) {
