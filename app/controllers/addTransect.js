@@ -96,6 +96,19 @@ function doneBtn(e){
 	
 	//check photo exists and a stake orientation has been selected
 	var errorFlag = false;
+	
+	if($.transectError.visible) {
+		errorFlag = true;
+	}
+	
+	if($.surveyorError.visible) {
+		errorFlag = true;
+	}
+	
+	if($.plotDistanceError.visible) {
+		errorFlag = true;
+	}
+	
 	if(photo == null && $.pickStake.index == null){
 		$.photoError.visible = true;
 		$.photoError.text = "* Please take a photo";
@@ -118,7 +131,7 @@ function doneBtn(e){
 		$.locationError.visible = true;
 		errorFlag = true;
 	}
-	
+		
 	if (errorFlag === true) {
 		e.source.enabled = true;
 		$.tsctName.blur();
