@@ -492,7 +492,7 @@ function auto_complete(search_term) {
 			var rsGenus = db.execute('SELECT genus_name FROM genus WHERE UPPER(genus_name) LIKE UPPER(?)', search_term + '%');
 			totalRowCount += rsGenus.getRowCount();
 			
-			var rsEnglish = db.execute('SELECT english_name ' + 'FROM species ' + 'WHERE UPPER(english_name) LIKE UPPER(?)', search_term + '%');
+			var rsEnglish = db.execute('SELECT DISTINCT english_name ' + 'FROM species ' + 'WHERE UPPER(english_name) LIKE UPPER(?)', search_term + '%');
 			totalRowCount += rsEnglish.getRowCount();
 			
 			var rsScientific = db.execute('SELECT s.species_code, g.genus_name || " " || s.species_name AS scientific_name \
