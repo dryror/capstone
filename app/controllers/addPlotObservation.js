@@ -40,7 +40,7 @@ $.addPlotObservationWin.setTitleControl(titleLabel);
 // User instructions
 var instructions = 
 	"Please select the observation type. If this is a plant observation, you can search for the Phylum, Class, Order, Family, English Name, or Scientific Name.\n\n" + 
-	"Allowed percentages: 0.1%, 0.2%, 0.5%, or any integer between 0 and 100.\n\n" +
+	"Allowed Coverage percentages: 0.1%, 0.2%, 0.5%, or any integer between 0 and 100.\n\n" +
 	"A reference photo may be taken, but is not required. If an observation requires further identification, and has not been previously photographed in this transect, this photo will help to later identify an unknown species. Please add any info to the comments section that may be useful in later identification.\n\n\n";
 $.info.text = instructions;
 
