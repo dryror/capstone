@@ -18,12 +18,12 @@
 			<TabbedBar id="observationOtherQuickPick" visible="false" />
 			
 			<Label id="observationLbl" text="Observation:" />
-			<TextField id="observation" visible="false" />
+			<TextField id="observation" visible="false" hintText="Enter other observation"/>
 			<SearchBar id="observationSearch" />
 			<Label id="observationError" class="error" visible="false" text="* Please enter observation" />
 			
 			<Label id="percentLbl" text="Percent Coverage:" />
-			<TextField id="percent" />
+			<TextField id="percent" hintText="(see instructions below)" />
 			<Label id="percentError" class="error" visible="false" text="* Please enter percent coverage" />
 			
 			<Label id="commentLbl" text="Comments:" />

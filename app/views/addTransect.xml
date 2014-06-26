@@ -6,15 +6,15 @@
 		
 		<ScrollView id="formView">
 			<Label id="tsctNameLbl" text="Transect Name:" />
-			<TextField id="tsctName" />
+			<TextField id="tsctName" hintText="(see instructions below)" />
 			<Label id="transectError" class="error" visible="false" />
 			
 			<Label id="srvyNameLbl" text="Head Surveyor:" />
-			<TextField id="srvyName" hintText="First and Last Name"/>
+			<TextField id="srvyName" hintText="Enter a first and last name"/>
 			<Label id="surveyorError" class="error" visible="false" />
 			
 			<Label id="otherSrvyNameLbl" text="Other Surveyors:" />
-			<TextField id="otherSrvyName" hintText="First and Last Name (optional)"/>	       
+			<TextField id="otherSrvyName" hintText="(optional) First and last names"/>	       
 			<Label id="otherSurveyorsError" class="error" visible="false" />  
 			
 			<Label id="stakeLbl" text="Stake Orientation:" />

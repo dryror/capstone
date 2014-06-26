@@ -35,11 +35,11 @@ var titleLabel = Titanium.UI.createLabel({
 $.addSiteSurveyWin.setTitleControl(titleLabel);
 
 // Instruciton text
-var instructions = "Start typing in the search bar to find a park.\n\n" +
-					"Picking a Biome will show its Protocols to choose from.\n\n" +
+var instructions =  "Type in the search bar to find a park.\n\n" +
+					"Pick a Biome to show the Protocols to choose from.\n\n" +
 					"Pick a Protocol and click the Done button to create the new site survey.\n\n" +
 					"\n" +
-					"LTEMA currently supports the Grassland and Alpine protocols.\n\n";
+					"LTEMA currently supports the Grassland and Alpine protocols.\n\n\n";
 $.info.text = instructions;
 
 /* Event Listeners */
