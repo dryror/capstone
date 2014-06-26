@@ -45,6 +45,7 @@ function populateTable() {
 			var newRow = Ti.UI.createTableViewRow({
 				title : observation,
 				observationID : observationID,
+				groundCover : groundCover,
 				comments: comments,
 				mediaID: mediaID,
 				height: 60,
@@ -205,11 +206,21 @@ $.tbl.addEventListener('delete', function(e) {
 		
 		while(observationFiles.isValidRow()) {
 			var fileName = observationFiles.fieldByName('media_name');
-			deleteImage(fileName, folder);
+			if (fileName != null) {
+				deleteImage(fileName, folder);
+			}
 			observationFiles.next();
 		}
 		
 		db.execute('DELETE FROM plot_observation WHERE observation_id = ?', observationID);
+		
+		// Update the coverage total
+		totalPlotPercentage -= e.rowData.groundCover;
+		$.percent.text = totalPlotPercentage;
+		
+		//check if Edit button should be enabled/disabled - if no rows exist
+		toggleEditBtn();
+		toggleDoneBtn();
 		
 	} catch(e) {
 		var errorMessage = e.message;
@@ -219,11 +230,7 @@ $.tbl.addEventListener('delete', function(e) {
 		rows.close();
 		observationFiles.close();
 		db.close();
-		populateTable();
 	}
-	//check if Edit button should be enabled/disabled - if no rows exist
-	toggleEditBtn();
-	toggleDoneBtn();
 });
 
 $.plotObservationsWin.addEventListener('close', function(e) {
@@ -252,8 +259,8 @@ function editBtn(e){
 			$.addObservation.enabled = true;
 			$.done.enabled = true;
 		}
-		
 	}
+	toggleDoneBtn();
 }
 
 //Enable or Disable the Edit button
